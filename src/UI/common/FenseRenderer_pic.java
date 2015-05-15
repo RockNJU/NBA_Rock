@@ -13,7 +13,7 @@ import javax.swing.table.TableCellRenderer;
 
 import UI.main.init;
 
-public class FenseRenderer implements TableCellRenderer {
+public class FenseRenderer_pic implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -26,7 +26,13 @@ public class FenseRenderer implements TableCellRenderer {
             renderer.setForeground(Color.black);
             renderer.setBackground(init.syslightblue);
         }
-       
+        if(column==1){        
+        	ImageIcon icon = (ImageIcon) value;
+        	JLabel label = new JLabel(icon);// 创建进度条
+        	label.setBackground(table.getSelectionBackground());
+        	if (isSelected)// 把选择的标签设置为不透明
+        		label.setOpaque(true);
+        }
         return renderer;
         
     }

@@ -163,6 +163,13 @@ public class init extends JFrame {
 		add(rightpanel);
 		
 
+		addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowOpened(WindowEvent e) {
+	             do_this_windowOpened(e);
+	            
+	        }
+	    });
 		
 		
 		playerbutton = new JButton(new ImageIcon("newpic/球员信息-平常.png"));
@@ -360,8 +367,8 @@ public class init extends JFrame {
 		playerbutton.setContentAreaFilled(false);
 		matchbutton.setContentAreaFilled(false);
 		//最小化but
-		min = new JButton(new ImageIcon("newpic/rnormal.png"));
-		min.setBounds(870, 6, 22, 22);
+		min = new JButton(new ImageIcon("newpic/缩小.png"));
+		min.setBounds(1025, 1, 16, 17);
 		contentPane.add(min);
 		min.setBorderPainted(false);
 		min.setFocusPainted(false);
@@ -370,25 +377,25 @@ public class init extends JFrame {
             
             @Override
             public void mouseReleased(MouseEvent e) {
-            	min.setIcon(new ImageIcon("newpic/rnormal.png"));
+            	//min.setIcon(new ImageIcon("newpic/rnormal.png"));
                 // TODO Auto-generated method stub                
             }           
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub    
-            	min.setIcon(new ImageIcon("newpic/ractive.png"));
+            	//min.setIcon(new ImageIcon("newpic/ractive.png"));
             }          
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-            	min.setIcon(new ImageIcon("newpic/rover.png"));
+            	//min.setIcon(new ImageIcon("newpic/rover.png"));
             }           
             @Override
             public void mouseEntered(MouseEvent e) {
             	
                 // TODO Auto-generated method stub
             	
-            	min.setIcon(new ImageIcon("newpic/ractive.png"));
+            	//min.setIcon(new ImageIcon("newpic/ractive.png"));
             	
             }            
             @Override
@@ -400,8 +407,8 @@ public class init extends JFrame {
 					
 		
 				//tuichubut
-				exit = new JButton(new ImageIcon("newpic/cnormal.png"));
-				exit.setBounds(921, 6, 22, 22);
+				exit = new JButton(new ImageIcon("newpic/关闭.png"));
+				exit.setBounds(1044, 1, 16, 17);
 			    exit.setBorderPainted(false);
 				exit.setFocusPainted(false);
 				exit.setContentAreaFilled(false);
@@ -456,7 +463,7 @@ public class init extends JFrame {
 	        new Thread() {// 创建新线程
 	            public void run() {
 	            	Rectangle rec = getBounds();
-	                for (int i = 0; i <= 1060; i += 10) {// 循环拉伸窗体
+	                for (int i = 0; i <= 1060; i += 5) {// 循环拉伸窗体
 	                	 setBounds(rec.x+530-i/2 , rec.y, i, height);// 不断设置窗体大小与位置
 	                     try {
 	                        Thread.sleep(1);// 线程休眠1毫秒

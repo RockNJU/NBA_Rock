@@ -35,7 +35,7 @@ import javax.swing.table.TableRowSorter;
 
 import UI.main.init;
 
-public class CreateTable extends JPanel{
+public class CreateTable_pic extends JPanel{
 
 	    	
 	private static final long serialVersionUID = 1L;
@@ -51,7 +51,7 @@ public class CreateTable extends JPanel{
 		Font fsmall;
 		  Color a=new Color(255,219,151);
 		 // int tablew=0;
-		public CreateTable(String title[], Object datas[][],int x,int y,int width,int height,int rowheight,Font Fbig,Font Fsmall){
+		public CreateTable_pic(String title[], Object datas[][],int x,int y,int width,int height,int rowheight,Font Fbig,Font Fsmall){
 			/*这本身是一个Panel,panel 是可以直接用的，传进信息便可以了直接使用*/
 			/*title 是表头信息，data 是传进来的数据，二维字符串数组,x,y 是表格的坐标，wideth,height 是大小的设置*/
 			//this.setLayout(null);
@@ -77,15 +77,35 @@ public class CreateTable extends JPanel{
 			
 			
 			table.setRowHeight(rowHeight);
-			table.setBackground(init.syslightblue);
-			table.setSelectionBackground(new Color(67, 54, 49));
-			table.setSelectionForeground(Color.WHITE);
+			table.setBackground(init.syslightblue);			
 			table.setFont(fsmall);
 			table.getTableHeader().setFont(fbig);
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			table.setFillsViewportHeight(true); 
 			table.setAutoCreateRowSorter(true);
-			table.setDefaultRenderer(Object.class, new FenseRenderer());
+			 TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象
+		        table.setRowHeight(32);
+		        
+		        column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+		                    @Override
+		                    public Component getTableCellRendererComponent(
+		                            JTable table, Object value, boolean isSelected,
+		                            boolean hasFocus, int row, int column) {
+		                        ImageIcon icon = (ImageIcon) value;
+		                        JLabel label = new JLabel(icon);// 创建进度条	
+		                        if (row % 2 == 0) {
+		                            label.setForeground(Color.black);
+		                            label.setBackground(Color.WHITE);
+		                        } else {
+		                            label.setForeground(Color.black);
+		                            label.setBackground(init.syslightblue);
+		                        }
+		                        label.setOpaque(true);
+		                        return label;// 把进度条作为渲染控件
+		                    }
+		                });
+			
+			table.setDefaultRenderer(Object.class, new FenseRenderer_pic());
 			table.setOpaque(false);// 初始化表格为透明
 			//table.setEnabled(false);
 			// 其他一些属性
@@ -102,7 +122,8 @@ public class CreateTable extends JPanel{
 			    //设置表头的文字颜色
 			     tableH.setForeground(Color.DARK_GRAY);
 			    tableH.setOpaque(false);
-
+			    
+			   
 			
 			
 			//FitTableColumns(table);		
@@ -137,9 +158,34 @@ public class CreateTable extends JPanel{
 					return false;
 				}
 			});
-			table.repaint();
-			//FitTableColumns(table);
-			this.repaint();
+			
+			  TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象
+		        table.setRowHeight(32);
+		        
+		        column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+		                    @Override
+		                    public Component getTableCellRendererComponent(
+		                            JTable table, Object value, boolean isSelected,
+		                            boolean hasFocus, int row, int column) {
+		                        ImageIcon icon = (ImageIcon) value;
+		                        JLabel label = new JLabel(icon);// 创建进度条
+		                        if (row % 2 == 0) {
+		                        	label.setForeground(Color.black);
+		                        	label.setBackground(Color.WHITE);
+		                        } else {
+		                        	label.setForeground(Color.black);
+		                        	label.setBackground(init.syslightblue);
+		                        }
+		                        //label.setBackground(table.getSelectionBackground());
+		                        if (isSelected)// 把选择的标签设置为不透明
+		                            label.setOpaque(true);
+		                        return label;// 把进度条作为渲染控件
+		                        
+		                    }
+		                });
+		        table.repaint();
+				//FitTableColumns(table);
+				this.repaint();
 		}
 		
 		
@@ -199,7 +245,7 @@ public class CreateTable extends JPanel{
 			           
 			         }
 			         header.setResizingColumn(column); // 此行很重要
-			         column.setWidth(12+width+myTable.getIntercellSpacing().width);
+			         column.setWidth(22+width+myTable.getIntercellSpacing().width);
 			        
 			     }
 		}
