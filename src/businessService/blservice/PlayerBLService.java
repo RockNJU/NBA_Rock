@@ -6,8 +6,14 @@ import VO.*;
 
 public interface PlayerBLService{
 	
+
+	//TODO 首字母获得球员
+	public ArrayList<PlayerInfoVO> getPlayerInfoByFirstChar(String firstchar);
+	
 	public PlayerSeasonDataVO getAPlayerSeasonMatch(String season,String name);//根据球员姓名获取球员的某个赛季的比赛数据
-	public PlayerInfoVO getPlayerInfo(String name);   //根据球员的名字获取球员的基本信息
+
+	//TODO 这个是你已经实现的、但是我需要改成ArrayList为返回值、并且name是部分，就是字母或单姓
+	public ArrayList<PlayerInfoVO> getPlayerInfo(String name);   //根据球员的名字获取球员的基本信息
 	public ArrayList<PlayerInfoVO> getAllPlayerInfo();           //获取所有球员的基本信息
 	public ArrayList<PlayerSeasonDataVO> sort(String season,String position,String partition,String item);/*为筛选球员，较之前有赛季的要求*/
 	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String season,String sortItem);//获取赛季的热点球员,传入的参数是赛季和筛选项目

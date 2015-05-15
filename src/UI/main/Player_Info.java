@@ -67,6 +67,7 @@ public class Player_Info extends JPanel {
 			//btnNewButton.setContentAreaFilled(false);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Player.textField.setText("");
 					playerinfolist.updateTable(playerinfotitle, getinfodata(init.pbl.getPlayerInfoByFirstChar(btnNewButton.getToolTipText())));
 				}
 			});
