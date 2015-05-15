@@ -40,8 +40,8 @@ public class Player_Info extends JPanel {
 		
 		
 		/*
-		A = new JButton("A");
-		A.setFont(f);
+		JButton A = new JButton("A");
+		A.setFont(new Font("Bauhaus 93", Font.PLAIN, 12));
 		A.setBackground(init.sysdarkblue);
 		A.setBorderPainted(false);
 		A.setBounds(24, 10, 40, 40);
@@ -63,19 +63,19 @@ public class Player_Info extends JPanel {
 			//ImageIcon image = new ImageIcon("pic/TEAMPNG/"+butname[i]+".png");
 			//image.setImage(image.getImage().getScaledInstance(90,90,Image.SCALE_DEFAULT)); 		
 			final String tempa = butname[i];
-			final JButton btnNewButton = new JButton(tempa);
+			final JButton charbut = new JButton(tempa);
 			//btnNewButton.setContentAreaFilled(false);
-			btnNewButton.addActionListener(new ActionListener() {
+			charbut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Player.textField.setText("");
-					playerinfolist.updateTable(playerinfotitle, getinfodata(init.pbl.getPlayerInfoByFirstChar(btnNewButton.getToolTipText())));
+					playerinfolist.updateTable(playerinfotitle, getinfodata(init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText())));
 				}
 			});
-			add(btnNewButton);
-			btnNewButton.setFont(f);
-			btnNewButton.setBackground(init.sysdarkblue);
-			btnNewButton.setBorderPainted(false);
-			btnNewButton.setBounds(34+38*i, 13, 35, 35);
+			add(charbut);
+			charbut.setFont(f);
+			charbut.setBackground(init.sysdarkblue);
+			charbut.setBorderPainted(false);
+			charbut.setBounds(34+38*i, 13, 35, 35);
 		}
 		
 		JLabel menubg = new JLabel();

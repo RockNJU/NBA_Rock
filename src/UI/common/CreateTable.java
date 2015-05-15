@@ -50,7 +50,7 @@ public class CreateTable extends JPanel{
 		Font fbig;
 		Font fsmall;
 		  Color a=new Color(255,219,151);
-		 // int tablew=0;
+		 int setcolor=-1;
 		public CreateTable(String title[], Object datas[][],int x,int y,int width,int height,int rowheight,Font Fbig,Font Fsmall){
 			/*这本身是一个Panel,panel 是可以直接用的，传进信息便可以了直接使用*/
 			/*title 是表头信息，data 是传进来的数据，二维字符串数组,x,y 是表格的坐标，wideth,height 是大小的设置*/
@@ -119,6 +119,7 @@ public class CreateTable extends JPanel{
 			
 		}
 		
+		
 	
 		public JScrollPane getJScrollPane(){
 			return roll;
@@ -146,6 +147,61 @@ public class CreateTable extends JPanel{
 		public JTable getTable(){
 			return table;
 		}
+		
+		//指定列ziti颜色
+		public void setcolor(int c){
+			JTable jt=getTable();
+			if(c!=-1){
+				for(int i=0;i<jt.getColumnCount();i++){
+					if(i==c){
+						TableColumn column=jt.getColumnModel().getColumn(i);
+						column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+		                    @Override
+		                    public Component getTableCellRendererComponent(
+		                            JTable table, Object value, boolean isSelected,
+		                            boolean hasFocus, int row, int column) {
+		                    	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		                    	 if (row % 2 == 0) {
+			                           
+			                            renderer.setBackground(Color.WHITE);
+			                        } else {
+			                          
+			                            renderer.setBackground(init.syslightblue);
+			                        }
+		                    	renderer.setForeground(Color.red);
+		                    	Font temp=fsmall.deriveFont(Font.BOLD);
+		                    	renderer.setFont(temp);
+		                    	
+		                        return renderer;// 把进度条作为渲染控件
+		                    }
+		                });
+					}else{
+						TableColumn column=jt.getColumnModel().getColumn(i);
+						column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+		                    @Override
+		                    public Component getTableCellRendererComponent(
+		                            JTable table, Object value, boolean isSelected,
+		                            boolean hasFocus, int row, int column) {
+		                    	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		                    	 if (row % 2 == 0) {
+			                           
+			                            renderer.setBackground(Color.WHITE);
+			                        } else {
+			                          
+			                            renderer.setBackground(init.syslightblue);
+			                        }
+		                    	renderer.setForeground(Color.black);
+		                    	
+		                    	
+		                        return renderer;// 把进度条作为渲染控件
+		                    }
+		                });
+					}
+				}
+				
+			}
+			
+		}
 		//得到选中单元格的数据
 		public String getValueAt(int selectedRow, int i) {
 			return 	table.getValueAt(selectedRow, i).toString();
@@ -164,6 +220,15 @@ public class CreateTable extends JPanel{
 			return table.getSelectedRow();
 		}
 
+		public int getCoByName(String name){
+			int x=-1;
+			for(int i=0;i<getTable().getColumnCount();i++){
+				if(headTitle[i].equals(name))
+					x=i;
+				return x;
+			}
+			return -1;			
+		}
 		public void setLastRowWidth(int w){
 			 table.getColumnModel().getColumn(headTitle.length-1).setPreferredWidth(w); 
 		}

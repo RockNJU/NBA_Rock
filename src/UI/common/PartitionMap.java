@@ -8,7 +8,7 @@ public class PartitionMap {
 	  
 		
 	   public PartitionMap(){
-		   map.put("无", "  ");
+		   map.put("所有分区", "  ");
 		   map.put("东区", "E");
 		   map.put("西区", "W");
 		   
@@ -19,7 +19,7 @@ public class PartitionMap {
 		   map.put("西北部", "Northwest");
 		   map.put("东南", "Southeast");
 		   
-		   map.put( "  ","无");
+		   map.put( "  ","所有分区");
 		   map.put("E","东区" );
 		   map.put( "W","西区");
 		   
