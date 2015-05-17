@@ -463,7 +463,7 @@ public class init extends JFrame {
 	        new Thread() {// 创建新线程
 	            public void run() {
 	            	Rectangle rec = getBounds();
-	                for (int i = 0; i <= 1060; i += 5) {// 循环拉伸窗体
+	                for (int i = 0; i <= 1060; i += 10) {// 循环拉伸窗体
 	                	 setBounds(rec.x+530-i/2 , rec.y, i, height);// 不断设置窗体大小与位置
 	                     try {
 	                        Thread.sleep(1);// 线程休眠1毫秒

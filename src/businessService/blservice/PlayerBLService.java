@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import VO.*;
 
 public interface PlayerBLService{
-	
+	//TODO 大于等于什么的筛选---之前写的是根据表格的、并不能适用、
+	//传入的值为 赛季、赛季类型、查找依据、符号（这个符号有可能是中文字符也有可能是英文字符）、值
+	public ArrayList<PlayerSeasonDataVO> sort_super(String season,String type,String item,String sign,int num);
 
 	//TODO 首字母获得球员
 	public ArrayList<PlayerInfoVO> getPlayerInfoByFirstChar(String firstchar);
@@ -15,7 +17,9 @@ public interface PlayerBLService{
 	//TODO 这个是你已经实现的、但是我需要改成ArrayList为返回值、并且name是部分，就是字母或单姓
 	public ArrayList<PlayerInfoVO> getPlayerInfo(String name);   //根据球员的名字获取球员的基本信息
 	public ArrayList<PlayerInfoVO> getAllPlayerInfo();           //获取所有球员的基本信息
-	public ArrayList<PlayerSeasonDataVO> sort(String season,String position,String partition,String item);/*为筛选球员，较之前有赛季的要求*/
+	
+	//TODO 需要加上赛季类型
+	public ArrayList<PlayerSeasonDataVO> sort(String season,String type,String position,String partition,String item);/*为筛选球员，较之前有赛季的要求*/
 	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String season,String sortItem);//获取赛季的热点球员,传入的参数是赛季和筛选项目
 	
 	public ArrayList<PlayerSeasonDataVO> getPlayerSeasonData(String season);  //按照传入的赛季获取整个赛季中的所有球员的赛季数据
