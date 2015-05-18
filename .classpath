@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/batik-all-1.7.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/commons-io-1.3.2.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/freemarker-2.3.8.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/miglayout-3.7.4-swing.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/mysql-connector-java-5.0.8.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/ognl-2.6.11.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/org.apache.commons.logging.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/sqlite-jdbc-3.8.7.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/struts2-core-2.0.11.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/xml-apis-ext.jar"/>
+	<classpathentry kind="lib" path="D:/360Downloads/ibm工具/所需架包/xwork-2.0.4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
