@@ -68,6 +68,8 @@ public class init extends JFrame {
 	public static PlayerBLService pbl=rmi.getPlayerObject();
 	public static TeamBLService tbl=rmi.getTeamObject();
 	public static MatchBLService mbl=rmi.getMatchObject();
+	public static String defaultseason=tbl.getdefaultseason();
+	public static String defaulttype="³£¹æÈü";
 	/**
 	 * Launch the application.
 	 */

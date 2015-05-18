@@ -18,14 +18,14 @@ import javax.swing.border.EmptyBorder;
 
 import UI.common.SortItem_Map;
 
-public class SortPlayerFrame extends JDialog {
+public class SortPlayer extends JDialog {
 	SortItem_Map map = new SortItem_Map();
 	ArrayList<JButton> jbs = new ArrayList<JButton>();
 	private JPanel contentPane;
 	/**
 	 * Create the panel.
 	 */
-	public SortPlayerFrame() {
+	public SortPlayer() {
 		setLayout(null);
 		setSize(500,350);
 		setUndecorated(true);// 取消窗体修饰效果************
@@ -243,45 +243,6 @@ public class SortPlayerFrame extends JDialog {
 			});
 		}
 		
-		JButton sure = new JButton("\u786E\u5B9A");
-		sure.setFont(new Font("华康雅宋体W9", Font.PLAIN, 20));
-		sure.setBounds(353, 304, 100, 36);
-		add(sure);
-		sure.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				Player_Data.termsort();
-				setVisible(false);
-				Player_Data.clearclick();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 		
 		contentPane.setBackground(init.sysdarkblue);
 		

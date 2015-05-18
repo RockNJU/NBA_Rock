@@ -56,13 +56,14 @@ public class Player_Data extends JPanel{
 	public static  JButton choose;
 	public static  JButton sort_super;
 	public static JPanel choosep;
+	public static JButton sort_terms;
 	public static int choosetimes=0;
-	SortPlayerFrame spp;
+	SortPlayer spp;
 	JButton sort;
 	JButton sort_point;
 	JButton sort_rebound;
 	JButton sort_assist;
-	JRadioButton avg_tol;
+	public static JRadioButton avg_tol;
 	public static String butisclick="according"; 
 	public static String[] playerAvgdatatitle = { "序号", "球员名称", "所属球队", "参赛场数",
 		"先发场数", "场均篮板", "场均助攻", "场均得分", "投篮命中率(%)", "三分命中率(%)",
@@ -110,7 +111,7 @@ public class Player_Data extends JPanel{
 		partition = new JComboBox();
 		partition.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		partition.setToolTipText("\u6240\u5C5E\u7403\u961F\u5206\u533A");
-		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u533A", "\u897F\u533A", "\u5927\u897F\u6D0B", "\u4E2D\u90E8", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317\u90E8", "\u592A\u5E73\u6D0B"}));
+		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u533A", "\u897F\u533A", "\u5927\u897F\u6D0B", "\u4E2D\u592E", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317", "\u592A\u5E73\u6D0B"}));
 		partition.setEditable(true);
 		partition.setBounds(126, 15, 89, 30);
 		add(partition);
@@ -188,7 +189,7 @@ public class Player_Data extends JPanel{
 		signs = new JComboBox();
 		signs.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		signs.setToolTipText("\u7B5B\u9009\u6761\u4EF6");
-		signs.setModel(new DefaultComboBoxModel(new String[] {"\uFF1E", "\u2265", "\uFF1C", "\u2264", "="}));
+		signs.setModel(new DefaultComboBoxModel(new String[] {">", "<", "≥", "≤", "="}));
 		signs.setEditable(true);
 		signs.setBounds(653, 15, 45, 30);
 		add(signs);
@@ -200,45 +201,223 @@ public class Player_Data extends JPanel{
 		num.setColumns(10);
 		
 		
+		final ImageIcon imageup = new ImageIcon("newpic/up.png");
+		imageup.setImage(imageup.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT));
+		final ImageIcon imagedown = new ImageIcon("newpic/down.png");
+		imagedown.setImage(imagedown.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT));
+		
 		term1 = new JTextField();
 		term1.setBounds(522, 55, 105, 30);
 		add(term1);
 		term1.setColumns(10);
 		
-		up1 =new JButton("\u5347");
+		
+		
+		
+		up1 =new JButton(imageup);
 		up1.setFont(new Font("宋体", Font.PLAIN, 10));
-		up1.setBounds(627, 55, 30,30);
+		up1.setBounds(627, 62, 20,20);
+		up1.setToolTipText("升序");
 		add(up1);
+		up1.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(up1.getToolTipText().equals("升序")){
+					up1.setIcon(imagedown);
+					up1.setToolTipText("降序");
+				}else{
+					up1.setIcon(imageup);
+					up1.setToolTipText("升序");
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		
 		term2 = new JTextField();
-		term2.setBounds(667, 55, 105, 30);
+		term2.setBounds(660, 55, 105, 30);
 		add(term2);
 		term2.setColumns(10);
 		
-		up2 =new JButton("\u5347");
+		up2 =new JButton(imageup);
 		up2.setFont(new Font("宋体", Font.PLAIN, 10));
-		up2.setBounds(772, 55, 30,30);
+		up2.setBounds(765, 62, 20,20);
+		up2.setToolTipText("升序");
 		add(up2);
+		up2.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(up2.getToolTipText().equals("升序")){
+					up2.setIcon(imagedown);
+					up2.setToolTipText("降序");
+				}else{
+					up2.setIcon(imageup);
+					up2.setToolTipText("升序");
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		term3 = new JTextField();
-		term3.setBounds(812, 55, 105, 30);
+		term3.setBounds(802, 55, 105, 30);
 		add(term3);
 		term1.setColumns(10);
 		
-		up3 =new JButton("\u5347");
+		up3 =new JButton(imageup);
 		up3.setFont(new Font("宋体", Font.PLAIN, 10));
-		up3.setBounds(916, 55, 30,30);
+		up3.setBounds(906, 62, 20,20);
+		up3.setToolTipText("升序");
 		add(up3);
+		up3.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(up3.getToolTipText().equals("升序")){
+					up3.setIcon(imagedown);
+					up3.setToolTipText("降序");
+				}else{
+					up3.setIcon(imageup);
+					up3.setToolTipText("升序");
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		final ImageIcon image9 = new ImageIcon("newpic/筛选-筛选.png");
+		image9.setImage(image9.getImage().getScaledInstance(75, 25,Image.SCALE_DEFAULT));
+		final ImageIcon image10 = new ImageIcon("newpic/筛选-筛选浮.png");
+		image10.setImage(image10.getImage().getScaledInstance(75, 25,Image.SCALE_DEFAULT));
 		
+		sort_terms=new JButton();
+		sort_terms = new JButton(image9);
+		sort_terms.setToolTipText("\u663E\u793A\u67E5\u627E\u7684\u7403\u5458\u4FE1\u606F");
+		sort_terms.setBounds(940, 57, 75, 25);
+		add(sort_terms);
+		sort_terms.setContentAreaFilled(false);
+		sort_terms.setVisible(true);
+		sort_terms.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				sort_terms.setIcon(image9);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+				// TODO Auto-generated method stub
+				sort_terms.setIcon(image10);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+            	//保存历史记录
+			      Calendar ca = Calendar.getInstance();
+				 String time = ca.getTime().toString();
+				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
+						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
+						+","+playerseason.getSelectedItem().toString().substring(0, 5));
+					sh.add_player_History(his);
+				termsort();
+			
+			}
+
+		});
 		
 		//1037 164
 		//choosep.setLocation(537, 84);
 		//add(choosep);
 		//choosep.setVisible(false);
 		
-		choose =new JButton("\u9009\u62E9");
+		choose =new JButton(new ImageIcon("newpic/set.png"));
 		choose.setFont(new Font("宋体", Font.PLAIN, 10));
-		choose.setBounds(959, 55, 80,30);
+		choose.setBounds(1018, 63, 20,20);
 		add(choose);
 		choose.addMouseListener(new MouseListener(){
 
@@ -246,17 +425,15 @@ public class Player_Data extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				choosetimes++;
 				if(choosetimes%2==1){
-					spp=new SortPlayerFrame();
+					spp=new SortPlayer();
 					spp.setLocation(init.SysStart_X+537, init.SysStart_Y+164);
 					spp.setVisible(true);
 					term1.setText("");
 					term2.setText("");
 					term3.setText("");
 				}else{
-					spp.setVisible(false);
-				}
-				// TODO Auto-generated method stub
-				
+					spp.dispose();
+				}				
 			}
 
 			@Override
@@ -306,8 +483,7 @@ public class Player_Data extends JPanel{
 						playerdatalist.updateTable(playerAvgdatatitle, playerdata);
 						playerdatalist.FitTableColumns(playerdatalist.getTable());
 						playerdatalist.setcolor(getcl(butisclick));
-					}
-					
+					}			
 				}else{
 					if(butisclick.equals("according")){
 						playerdata=getTotaldata(pdvo);
@@ -425,7 +601,7 @@ public class Player_Data extends JPanel{
 				Position = map1.getItem(Position);
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
-				
+				avg_tol.setSelected(true);
 				pdvo = init.pbl.sort(Season,seasontype.getSelectedItem().toString(),Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
@@ -481,7 +657,7 @@ public class Player_Data extends JPanel{
 						+","+playerseason.getSelectedItem().toString()
 						.substring(0, 5));
 					sh.add_player_History(his);
-				
+					avg_tol.setSelected(true);
 				// TODO
 				String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
@@ -540,6 +716,7 @@ public class Player_Data extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "助攻";
+				avg_tol.setSelected(true);
             	//保存历史记录
 			      Calendar ca = Calendar.getInstance();
 				 String time = ca.getTime().toString();
@@ -689,13 +866,21 @@ public class Player_Data extends JPanel{
 					sh.add_player_History(his);
 				
 				// TODO
-
+					String Position = position.getSelectedItem().toString();
+					String Partition = partition.getSelectedItem().toString();
+					
+					PlayerPosition_Map map1 = new PlayerPosition_Map();
+					PartitionMap map2 = new PartitionMap();
+					SortItem_Map map3 = new SortItem_Map();
+					Position = map1.getItem(Position);
+					Partition = map2.getItem(Partition);
+				
 				String According = according_super.getSelectedItem().toString();
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
-				PlayerPosition_Map map1 = new PlayerPosition_Map();
-				SortItem_Map map3 = new SortItem_Map();
+				
 				According = map3.getItem(According);
-				pdvo = init.pbl.sort_super(Season, seasontype.getSelectedItem().toString(), According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
+				
+				pdvo = init.pbl.sort_super(Season, seasontype.getSelectedItem().toString(),Position,Partition, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -891,8 +1076,7 @@ public class Player_Data extends JPanel{
 				re[i][5] = OftenUseMethod.changedouble(da.get(i).getReboundNum());
 				re[i][6] = OftenUseMethod.changedouble(da.get(i).getAssistNum());
 				re[i][7] = OftenUseMethod.changedouble(da.get(i).getPointNum());
-				re[i][8] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getShootPercentage()));
-				
+				re[i][8] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getShootPercentage()));				
 				re[i][9] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getT_shootPercentage()));
 				re[i][10] =OftenUseMethod.changeper( OftenUseMethod.changedouble(da.get(i).getFreeThrowPercentage()));
 				re[i][11] = OftenUseMethod.changedouble(da.get(i).getO_ReboundNum());
@@ -927,7 +1111,7 @@ public class Player_Data extends JPanel{
 		
 		
 	}
-	int getcl(String name){
+	static int getcl(String name){
 		if(name.equals("参赛场数")){
 			return 3;
 		}else if(name.equals("先发场数")){
@@ -1013,9 +1197,64 @@ public class Player_Data extends JPanel{
 
 	public static void termsort() {
 		// TODO Auto-generated method stub
-		System.out.println("ddd");
-	}
-	public static void clearclick(){
-		choosetimes=0;
+		
+		
+		String[] textforsort = {null,null,null};
+		boolean[] upordown = {true,true,true};
+		boolean isaverage = avg_tol.isSelected();
+		SortItem_Map map = new SortItem_Map();
+		
+		
+		if(!term1.getText().equals("")){
+			textforsort[0] = map.getItem(term1.getText());
+			if(up1.getToolTipText().equals("降序")){
+				upordown[0] = false;
+			}
+		}
+		else{
+			textforsort[0] = map.getItem("参赛场数");
+		}
+		if(!term2.getText().equals("")){
+			textforsort[1] = map.getItem(term2.getText());
+			if(up2.getToolTipText().equals("降序")){
+				upordown[1] = false;
+			}
+		}else{
+			textforsort[0] = map.getItem("得分");
+		}
+		if(!term3.getText().equals("")){
+			textforsort[2] = map.getItem(term3.getText());
+			if(up3.getToolTipText().equals("降序")){
+				upordown[2] = false;
+			}
+		}else{
+			textforsort[0] = map.getItem("助攻");
+		}
+		String Position = position.getSelectedItem().toString();
+		String Partition = partition.getSelectedItem().toString();
+		String Season = playerseason.getSelectedItem().toString().substring(0, 5);
+		String Type=seasontype.getSelectedItem().toString();
+		PlayerPosition_Map map1 = new PlayerPosition_Map();
+		PartitionMap map2 = new PartitionMap();
+		Position = map1.getItem(Position);
+		Partition = map2.getItem(Partition);
+		if(isaverage == true){		
+			pdvo = init.pbl.sort(Season,Type, Position, Partition,textforsort,upordown);
+			playerdata = getAveragedata(pdvo);
+			playerdatalist.updateTable(playerAvgdatatitle, playerdata);
+			playerdatalist.FitTableColumns(playerdatalist.getTable());
+		}
+		else{
+			
+			pdvo = init.pbl.sort(Season,Type, Position, Partition, textforsort,upordown);
+			playerdata = getTotaldata(pdvo);
+			playerdatalist.updateTable(playerTotaldatatitle, playerdata);
+			playerdatalist.FitTableColumns(playerdatalist.getTable());
+		}
+		ArrayList<Integer> c=new ArrayList<Integer>();
+		c.add(getcl(term1.getText()));
+		c.add(getcl(term2.getText()));
+		c.add(getcl(term3.getText()));
+		playerdatalist.setcolors(c);
 	}
 }

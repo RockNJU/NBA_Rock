@@ -56,8 +56,19 @@ public class Player extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
-				Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
+				//Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
+				//Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
+				if(Player_Data.avg_tol.isSelected()){
+					Object info2[][]=Player_Data.getAveragedata(init.pbl.keyfind(textField.getText()));
+					Player_Data.playerdatalist.updateTable(Player_Data.playerAvgdatatitle, info2);
+					Player_Data.playerdatalist.FitTableColumns(Player_Data.playerdatalist.getTable());
+				}else{
+					Object info2[][]=Player_Data.getTotaldata(init.pbl.keyfind(textField.getText()));
+					Player_Data.playerdatalist.updateTable(Player_Data.playerTotaldatatitle, info2);
+					Player_Data.playerdatalist.FitTableColumns(Player_Data.playerdatalist.getTable());
+				}
+				
+				
 				
 			}
 
