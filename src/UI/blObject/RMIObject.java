@@ -38,14 +38,9 @@ public class RMIObject {
 		PlayerBLService player=m.getPlayerObject();
 		MatchBLService mac=m.getMatchObject();
 		
-		PlayerSeasonDataVO v=player.getAPlayerSeasonMatch("12-13", "LeBron James");
+	
 		
-		System.out.println("姓名："+v.getName()+"    球员位置："+v.getPosition()
-				+"   先发场数："+v.getStartingNum()+"  罚球命中率："+v.getFreeThrowPercentage());
-		 
-		
-		
-		 ArrayList<PlayerSeasonDataVO> pl=player.sort("13-14", "C", "  ", "offensiveReboundEff_avg");
+		 //ArrayList<PlayerSeasonDataVO> pl=player.sort("13-14", "C", "  ", "offensiveReboundEff_avg");
 		/*
 		for(int i=0;i<pl.size();i++){
 			System.out.println("姓名："+pl.get(i).getName()+"    球员位置："+pl.get(i).getPosition()
