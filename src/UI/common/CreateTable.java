@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.Icon;
@@ -146,6 +147,60 @@ public class CreateTable extends JPanel{
 		
 		public JTable getTable(){
 			return table;
+		}
+		
+		public void setcolors(ArrayList<Integer> c){
+			JTable jt=getTable();
+			for(int i=0;i<jt.getColumnCount();i++){
+				TableColumn column=jt.getColumnModel().getColumn(i);
+				column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+	                @Override
+	                public Component getTableCellRendererComponent(
+	                        JTable table, Object value, boolean isSelected,
+	                        boolean hasFocus, int row, int column) {
+	                	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	                	 if (row % 2 == 0) {
+	                           
+	                            renderer.setBackground(Color.WHITE);
+	                        } else {
+	                          
+	                            renderer.setBackground(init.syslightblue);
+	                        }
+	                	renderer.setForeground(Color.black);
+	                	
+	                	
+	                    return renderer;// 把进度条作为渲染控件
+	                }
+	            });
+			}
+			for(int k=0;k<c.size();k++){
+				for(int i=0;i<jt.getColumnCount();i++){
+					if(i==c.get(k)){
+						TableColumn column=jt.getColumnModel().getColumn(i);
+						column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+		                    @Override
+		                    public Component getTableCellRendererComponent(
+		                            JTable table, Object value, boolean isSelected,
+		                            boolean hasFocus, int row, int column) {
+		                    	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		                    	 if (row % 2 == 0) {			                           
+			                            renderer.setBackground(Color.WHITE);
+			                        } else {
+			                          
+			                            renderer.setBackground(init.syslightblue);
+			                        }
+		                    	renderer.setForeground(Color.red);
+		                    	Font temp=fsmall.deriveFont(Font.BOLD);
+		                    	renderer.setFont(temp);
+		                    	
+		                        return renderer;// 把进度条作为渲染控件
+		                    }
+		                });
+					}
+				}
+			
+			}
+			
 		}
 		
 		//指定列ziti颜色
