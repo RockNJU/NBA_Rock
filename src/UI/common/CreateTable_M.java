@@ -36,7 +36,7 @@ import javax.swing.table.TableRowSorter;
 
 import UI.main.init;
 
-public class CreateTable extends JPanel{
+public class CreateTable_M extends JPanel{
 
 	    	
 	private static final long serialVersionUID = 1L;
@@ -52,7 +52,7 @@ public class CreateTable extends JPanel{
 		Font fsmall;
 		  Color a=new Color(255,219,151);
 		 int setcolor=-1;
-		public CreateTable(String title[], Object datas[][],int x,int y,int width,int height,int rowheight,Font Fbig,Font Fsmall){
+		public CreateTable_M(String title[], Object datas[][],int x,int y,int width,int height,int rowheight,Font Fbig,Font Fsmall){
 			/*这本身是一个Panel,panel 是可以直接用的，传进信息便可以了直接使用*/
 			/*title 是表头信息，data 是传进来的数据，二维字符串数组,x,y 是表格的坐标，wideth,height 是大小的设置*/
 			//this.setLayout(null);
@@ -83,7 +83,7 @@ public class CreateTable extends JPanel{
 			table.setSelectionForeground(Color.WHITE);
 			table.setFont(fsmall);
 			table.getTableHeader().setFont(fbig);
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			table.setFillsViewportHeight(true); 
 			table.setAutoCreateRowSorter(true);
 			table.setDefaultRenderer(Object.class, new FenseRenderer());

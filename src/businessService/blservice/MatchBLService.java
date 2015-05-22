@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
 public interface MatchBLService {
+	//TODO 获得最后有比赛的日期
+	String getLastHavingMatchDate();
+	
+	//TODO 获得传入日期后最近一场比赛的日期 这里的date 2014-01-02类型有问题可以改
+	String getNextHavingMatchDate(String date);
+	
 	
 	ArrayList<MatchVO> getMatchByTeamTime(String date); 
 	            /*  根据输入的日期获取这一天所有的比赛信息
@@ -16,9 +22,9 @@ public interface MatchBLService {
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item);//获取当天的热点球员，传入的是热点项目
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,int n);//获取当天的热点球员，传入的是热点项目
 	
-	//TODO 获得赛季以供选择，形式最好是"13-14赛季",这个是公用的、
+	// 获得赛季以供选择，形式最好是"13-14赛季",这个是公用的、
 	public ArrayList<String> getAllSeason();
-	//TODO 
+
 	ArrayList<MatchVO> getMatchBySeason(String season,String teamA);
 
 }
