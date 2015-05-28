@@ -41,7 +41,7 @@ public class Player_Data extends JPanel{
 	public static JComboBox position;
 	public static JComboBox partition;
 	public static JComboBox playerseason;
-	public static JComboBox seasontype;
+	public static String seasontype="常规赛";
 	public static CreateTable playerdatalist;
 	public static JComboBox according;
 	public static JComboBox according_super;
@@ -63,6 +63,8 @@ public class Player_Data extends JPanel{
 	JButton sort_point;
 	JButton sort_rebound;
 	JButton sort_assist;
+	static JButton normal;
+	static JButton after;
 	public static JRadioButton avg_tol;
 	public static String butisclick="according"; 
 	public static String[] playerAvgdatatitle = { "序号", "姓名", "球队", "场数",
@@ -132,30 +134,41 @@ public class Player_Data extends JPanel{
 			playerseason.addItem(seasons.get(o));
 		}
 		playerseason.setEditable(true);
-		playerseason.setBounds(243, 15, 117, 30);
+		playerseason.setBounds(243, 15, 89, 30);
 		add(playerseason);
 		playerseason.setVisible(true);
 		
 		/**
 		 * TODO 赛季形式
 		 */
-		seasontype = new JComboBox();
-		seasontype.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		seasontype.setToolTipText("赛季");
-/*
-		ArrayList<String> types = init.mbl.getAllSeasonType();
-		if (seasons.size() == 0 || seasons == null) {
-			seasons.add("13-14赛季");
-		}
-		for (int o = 0; o < seasons.size(); o++) {
-			playerseason.addItem(seasons.get(o));
-		}*/
-		seasontype.setModel(new DefaultComboBoxModel(types));
-		seasontype.setEditable(true);
-		seasontype.setBounds(389, 15, 70, 30);
-		add(seasontype);
-		seasontype.setVisible(true);
-		
+		normal=new JButton(new ImageIcon("newpic/常规赛浮.png"));
+		normal.setLocation(358, 15);
+		normal.setSize(55, 30);
+		add(normal);
+		normal.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
+				seasontype="常规赛";
+			}			
+		});
+		after=new JButton(new ImageIcon("newpic/季后赛.png"));
+		after.setLocation(413, 15);
+		after.setSize(55, 30);
+		add(after);
+		after.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛浮.png"));
+				seasontype="季后赛";
+			}			
+		});
 		/**
 		 * 球员进行筛选排列的依据
 		 * 
@@ -602,7 +615,7 @@ public class Player_Data extends JPanel{
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
 				avg_tol.setSelected(true);
-				pdvo = init.pbl.sort(Season,seasontype.getSelectedItem().toString(),Position, Partition, According);
+				pdvo = init.pbl.sort(Season,seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -669,7 +682,7 @@ public class Player_Data extends JPanel{
 				Position = map1.getItem(Position);
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
-				pdvo = init.pbl.sort(Season, seasontype.getSelectedItem().toString(),Position, Partition, According);
+				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -737,7 +750,7 @@ public class Player_Data extends JPanel{
 				Position = map1.getItem(Position);
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
-				pdvo = init.pbl.sort(Season, seasontype.getSelectedItem().toString(),Position, Partition, According);
+				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -754,7 +767,7 @@ public class Player_Data extends JPanel{
 		});
 		sort = new JButton(image7);
 		sort.setToolTipText("\u663E\u793A\u67E5\u627E\u7684\u7403\u5458\u4FE1\u606F");
-		sort.setBounds(384, 52, 75, 27);
+		sort.setBounds(384, 54, 75, 27);
 		add(sort);
 		sort.setContentAreaFilled(false);
 		sort.setVisible(true);
@@ -806,7 +819,7 @@ public class Player_Data extends JPanel{
 				Position = map1.getItem(Position);
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
-				pdvo = init.pbl.sort(Season, seasontype.getSelectedItem().toString(),Position, Partition, According);
+				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -880,7 +893,7 @@ public class Player_Data extends JPanel{
 				
 				According = map3.getItem(According);
 				
-				pdvo = init.pbl.sort_super(Season, seasontype.getSelectedItem().toString(),Position,Partition, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
+				pdvo = init.pbl.sort_super(Season, seasontype,Position,Partition, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
 				/*init.currenttext=null;
@@ -1233,7 +1246,7 @@ public class Player_Data extends JPanel{
 		String Position = position.getSelectedItem().toString();
 		String Partition = partition.getSelectedItem().toString();
 		String Season = playerseason.getSelectedItem().toString().substring(0, 5);
-		String Type=seasontype.getSelectedItem().toString();
+		String Type=seasontype;
 		PlayerPosition_Map map1 = new PlayerPosition_Map();
 		PartitionMap map2 = new PartitionMap();
 		Position = map1.getItem(Position);

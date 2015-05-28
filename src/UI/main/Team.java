@@ -2,6 +2,8 @@ package UI.main;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class Team extends JPanel{
 	JButton allteams;
 	final JButton find;
 	public static JComboBox Teamseason;
-	public static JComboBox seasontype;
+	public static String seasontype;
+	JButton normal,after;
 	public JComboBox according;
 	public JComboBox according_super;
 	public JComboBox signs;
@@ -100,22 +103,34 @@ public class Team extends JPanel{
 		/**
 		 * TODO 赛季形式
 		 */
-		seasontype = new JComboBox();
-		seasontype.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		seasontype.setToolTipText("赛季");
-/*
-		ArrayList<String> types = init.mbl.getAllSeasonType();
-		if (seasons.size() == 0 || seasons == null) {
-			seasons.add("13-14赛季");
-		}
-		for (int o = 0; o < seasons.size(); o++) {
-			Teamseason.addItem(seasons.get(o));
-		}*/
-		seasontype.setModel(new DefaultComboBoxModel(Player_Data.types));
-		seasontype.setEditable(true);
-		seasontype.setBounds(166, 46, 70, 30);
-		add(seasontype);
-		seasontype.setVisible(true);
+		normal=new JButton(new ImageIcon("newpic/常规赛浮.png"));
+		normal.setLocation(256, 46);
+		normal.setSize(55, 30);
+		add(normal);
+		normal.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
+				seasontype="常规赛";
+			}			
+		});
+		after=new JButton(new ImageIcon("newpic/季后赛.png"));
+		after.setLocation(311, 46);
+		after.setSize(55, 30);
+		add(after);
+		after.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛浮.png"));
+				seasontype="季后赛";
+			}			
+		});
 		
 		/**
 		 * 进行筛选排列的依据
@@ -126,7 +141,7 @@ public class Team extends JPanel{
 		according.setToolTipText("\u6392\u5E8F\u4F9D\u636E");
 		according.setModel(new DefaultComboBoxModel(new String[] {"\u6295\u7BEE\u51FA\u624B\u6570", "\u6295\u7BEE\u547D\u4E2D\u6570", "\u4E09\u5206\u547D\u4E2D\u6570", "\u4E09\u5206\u51FA\u624B\u6570", "\u7F5A\u7403\u547D\u4E2D\u6570", "\u7F5A\u7403\u51FA\u624B\u6570", "\u8FDB\u653B\u7BEE\u677F", "\u9632\u5B88\u7BEE\u677F", "\u62A2\u65AD", "\u76D6\u5E3D", "\u5931\u8BEF", "\u72AF\u89C4", "\u6295\u7BEE\u547D\u4E2D\u7387", "\u4E09\u5206\u547D\u4E2D\u7387", "\u7F5A\u7403\u547D\u4E2D\u7387", "\u80DC\u7387", "\u8FDB\u653B\u56DE\u5408", "\u8FDB\u653B\u6548\u7387", "\u9632\u5B88\u6548\u7387", "\u8FDB\u653B\u7BEE\u677F\u7387", "\u9632\u5B88\u7BEE\u677F\u7387", "\u62A2\u65AD\u7387", "\u52A9\u653B\u7387"}));
 		according.setEditable(true);
-		according.setBounds(264, 46, 94, 30);
+		according.setBounds(152, 46, 94, 30);
 		add(according);
 		according.setVisible(true);
 		
@@ -643,8 +658,8 @@ public class Team extends JPanel{
 					SortItem_Map map3 = new SortItem_Map();
 					According = map3.getItem(According);
 					
-					//tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
-					tdvo = init.tbl.sort(Season, seasontype.getSelectedItem().toString(),According);
+					//tdvo = init.tbl.sort(Season,seasontype, According);
+					tdvo = init.tbl.sort(Season, seasontype,According);
 					//System.out.println(Season + Position + Partition + According);
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
@@ -706,8 +721,8 @@ public class Team extends JPanel{
 					SortItem_Map map3 = new SortItem_Map();
 					According = map3.getItem(According);
 					
-					//tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
-					tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
+					//tdvo = init.tbl.sort(Season,seasontype, According);
+					tdvo = init.tbl.sort(Season,seasontype, According);
 					//System.out.println(Season + Position + Partition + According);
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
@@ -769,8 +784,8 @@ public class Team extends JPanel{
 					SortItem_Map map3 = new SortItem_Map();
 					According = map3.getItem(According);
 					
-					//tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
-					tdvo = init.tbl.sort(Season, seasontype.getSelectedItem().toString(),According);
+					//tdvo = init.tbl.sort(Season,seasontype, According);
+					tdvo = init.tbl.sort(Season, seasontype,According);
 					//System.out.println(Season + Position + Partition + According);
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
@@ -832,8 +847,8 @@ public class Team extends JPanel{
 					SortItem_Map map3 = new SortItem_Map();
 					According = map3.getItem(According);
 					
-					//tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
-					tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(), According);
+					//tdvo = init.tbl.sort(Season,seasontype, According);
+					tdvo = init.tbl.sort(Season,seasontype, According);
 					//System.out.println(Season + Position + Partition + According);
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
@@ -896,7 +911,7 @@ public class Team extends JPanel{
 				
 				According = map3.getItem(According);
 				
-				tdvo = init.tbl.sort_super(Season, seasontype.getSelectedItem().toString(), According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
+				tdvo = init.tbl.sort_super(Season, seasontype, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
 				//System.out.println(Season + Position + Partition + According);
 				teamdata = getAveragedata(tdvo);
 				/*init.currenttext=null;
@@ -1195,10 +1210,10 @@ public class Team extends JPanel{
 		}
 		
 		String Season = Teamseason.getSelectedItem().toString().substring(0, 5);
-		String Type=seasontype.getSelectedItem().toString();	
+		String Type=seasontype;	
 		if(isaverage == true){		
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
-			tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(),textforsort,upordown);
+			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);
 			teamdata = getAveragedata(tdvo);
 			teamdatalist.updateTable(teamAveragetitle, teamdata);
 			teamdatalist.FitTableColumns(teamdatalist.getTable());
@@ -1206,7 +1221,7 @@ public class Team extends JPanel{
 		else{
 			
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
-			tdvo = init.tbl.sort(Season,seasontype.getSelectedItem().toString(),textforsort,upordown);
+			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);
 			teamdata = getTotaldata(tdvo);
 			teamdatalist.updateTable(teamTotaltitle, teamdata);
 			teamdatalist.FitTableColumns(teamdatalist.getTable());

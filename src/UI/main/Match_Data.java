@@ -2,6 +2,8 @@ package UI.main;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
@@ -34,7 +36,8 @@ public class Match_Data extends JPanel {
 	static CreateTable_M matchdatalist;
 	static Object[][] matchdata;
 	static ArrayList<MatchVO> mdvo;
-	static  JComboBox matchtype;
+	static  String matchtype;
+	JButton normal,after;
 	static JComboBox matchseason;
 	static String[] matchtitle={"序号","日期","赛季","主队","比分",
 		"客队","第一节比分","第二节比分","第三节比分","第四节比分","加时赛比分"};
@@ -78,23 +81,38 @@ public class Match_Data extends JPanel {
 		/**
 		 * TODO 赛季形式
 		 */
-		matchtype = new JComboBox();
-		matchtype.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		matchtype.setToolTipText("赛季");
-/*
-		ArrayList<String> types = init.mbl.getAllSeasonType();
-		if (seasons.size() == 0 || seasons == null) {
-			seasons.add("13-14赛季");
-		}
-		for (int o = 0; o < seasons.size(); o++) {
-			playerseason.addItem(seasons.get(o));
-		}*/
-		matchtype.setModel(new DefaultComboBoxModel(Player_Data.types));
-		matchtype.setEditable(true);
-		matchtype.setBounds(686, 22, 70, 30);
-		add(matchtype);
-		matchtype.setVisible(true);
-		
+
+
+		normal=new JButton(new ImageIcon("newpic/常规赛浮.png"));
+		normal.setLocation(671, 22);
+		normal.setSize(55, 30);
+		add(normal);
+		normal.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
+
+				matchtype="常规赛";
+			}			
+		});
+		after=new JButton(new ImageIcon("newpic/季后赛.png"));
+		after.setLocation(726, 22);
+		after.setSize(55, 30);
+		add(after);
+		after.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛浮.png"));
+				matchtype="季后赛";
+			}			
+		});
 		/**
 		 * 球队筛选的依据
 		 */
