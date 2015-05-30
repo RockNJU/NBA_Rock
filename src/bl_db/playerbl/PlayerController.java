@@ -225,7 +225,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
-					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block-sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
 					+ "SUM(tunrnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,"
 					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
@@ -234,7 +234,8 @@ public class PlayerController implements PlayerBLService{
 					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
 					+ "AVG(blockEfficiency) as blockEff,"
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
-					+ "FROM player_season_data GROUP BY season,type,name";
+					+ "FROM player_season_data WHERE season='"+season+"' AND type='"+type+"'"
+					+ " GROUP BY season,type,name";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String name,PlayerInfoVO info,String teamName,
