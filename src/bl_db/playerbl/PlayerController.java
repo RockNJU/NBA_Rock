@@ -218,7 +218,7 @@ public class PlayerController implements PlayerBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT name,division,partition,position,teamAbb,SUM(matchNum) as match_num, "
+			String str="SELECT name,division,partition,position,teamAbb,COUNT(*) as match_num, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
@@ -226,16 +226,16 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
-					+ "SUM(tunrnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,"
 					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
 					+ "AVG(assistEfficiency)as assistEff,AVG(reboundEfficiency) as reboundEff,"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
-					+ "AVG(blockEfficiency) as blockEff,"
+					
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
-					+ "FROM player_season_data WHERE season='"+season+"' AND type='"+type+"'"
-					+ " GROUP BY season,type,name";
+					+ "FROM player_season_data,playerinfo WHERE season='"+season+"' AND type='"+type+"'"
+					+ "GROUP BY season,type,name";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String name,PlayerInfoVO info,String teamName,

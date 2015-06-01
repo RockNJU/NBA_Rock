@@ -110,7 +110,7 @@ public class TeamController implements TeamBLService{
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
-					+ "SUM(tunrnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,AVG(offenRound) as o_round_sum,"
 					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
 					+ "AVG(assistEfficiency)as assistEff,AVG(reboundEfficiency) as reboundEff,"
