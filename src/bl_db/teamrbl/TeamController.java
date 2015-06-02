@@ -40,9 +40,10 @@ public class TeamController implements TeamBLService{
 	       
 	      while (rs.next())
 	      {
-	    	  infoList.add(new TeamInfoVO(rs.getString("fullName"),rs.getString("teamAbb"),
-	    			  rs.getString("location"),rs.getString("division"),
-	    			  rs.getString("partition"),rs.getString("homeGround"),rs.getString("formedTime")));
+	    	  infoList.add(new TeamInfoVO(rs.getString("fullName"),
+	    			  rs.getString("teamAbb"),rs.getString("location"),
+	    			  rs.getString("division"),rs.getString("partition"),
+	    			  rs.getString("homeGround"),rs.getString("formedTime")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -102,8 +103,8 @@ public class TeamController implements TeamBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT teamAbb,division,partition,position,teamAbb,"
-					+ "SUM(matchNum) as match_num,SUM(winNum) as win_sum "
+			String str="SELECT team,teamAbb,"
+					+ "COUNT(*) as match_num,SUM(winNum) as win_sum "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
 					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
@@ -112,14 +113,13 @@ public class TeamController implements TeamBLService{
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
 					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,AVG(offenRound) as o_round_sum,"
-					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
-					+ "AVG(assistEfficiency)as assistEff,AVG(reboundEfficiency) as reboundEff,"
+					+ "AVG(efficiency) as eff"
+					+ "AVG(assistEfficiency)as assistEff"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
-					+ "AVG(defenseEfficiency) as defenseEff,"
-					+ "AVG(blockEfficiency) as blockEff"
+					+ "AVG(defenseEfficiency) as defenseEff "
 					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
-					+ " GROUP BY season,type,teamAbb";
+					+ " GROUP BY season,type,team";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
@@ -171,10 +171,104 @@ public class TeamController implements TeamBLService{
 		return list;
 	}
 
+	
+	
+/***********************************************************
+ * 	
+ ***********************************************************/
+	private String getSign(String sign){
+		String result=null;
+		switch(sign){
+		case "<":
+			result="<";
+			break;
+		case ">":
+			result=">";
+			break;
+		case "≤":	
+			result="<=";
+			break;
+		case "≥":
+			result=">=";
+			break;
+		default:
+			result="=";
+			
+		}
+		return result;
+	}
+	
 	@Override
 	public ArrayList<TeamSeasonDataVO> sort_super(String season, String type,
 			String item, String sign, int num) {
-		// TODO Auto-generated method stub
+		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
+		sign=getSign(sign);
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+          
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="SELECT team,teamAbb,"
+					+ "COUNT(*) as match_num,SUM(winNum) as win_sum,"
+					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
+					+ "AVG(defenseEfficiency) as defenseEff,"
+					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
+					+ " GROUP BY season,type,team HAVING '"+item+"'"+""+sign+" "+num+"";
+			ResultSet  rs=stmt.executeQuery(str);
+			/********************************
+			 * String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
+	int fieldGoal,int shootNum,int T_fieldGoal,int T_shootNum,
+	int freeThrowGoalNum,int freeThrowNum,int O_ReboundNum,
+	int D_ReboundNum,int assistNum,int stealNum,int reboundNum,int blockNum,
+	int turnoverNum,int foulNum,int points,
+	double offenseRound,double offenseEfficiency,
+	double defenseEfficiency,double O_ReboundEfficiency,double D_ReboundEfficiency,
+	double stealEfficiency ,double assistEfficiency,TeamMatchVO first_match
+			 *******************************/
+			char chr=39;
+			while(rs.next()){
+				 
+				list.add(new TeamSeasonDataVO(season,rs.getString("teamAbb"),null,
+						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),rs.getDouble("o_round_sum"),
+						rs.getDouble("offenseEff"),rs.getDouble("defenseEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("assistEff"),
+						null));
+				 
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
 		return null;
 	}
 

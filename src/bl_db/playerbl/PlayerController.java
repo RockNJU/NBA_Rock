@@ -13,13 +13,11 @@ import VO.SingleMatchPersonalDataVO;
 import businessService.blservice.PlayerBLService;
 import businesslogic.bl.center.HotSort;
 
-/*
- * 使用数据库的逻辑层
- * 的球 员模块的代码实现
- * 接口与迭代二的都相同
- * 往后会考虑添加新的功能
+/********************************************************
+ * 使用数据库的逻辑层 的球 员模块的代码实现
+ * 接口与迭代二的都相同 往后会考虑添加新的功能
  * 再考虑新接口的添加
- * */
+ * *****************************************************/
 public class PlayerController implements PlayerBLService{
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
@@ -268,7 +266,8 @@ public class PlayerController implements PlayerBLService{
 						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
 						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
 						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
-						rs.getDouble("blockEff"),rs.getInt("double_sum"),rs.getInt("three_sum"),
+						rs.getDouble("blockEff"),rs.getInt("double_sum"),
+						rs.getInt("three_sum"),
 						null));
 			}
 			  stmt.close();
@@ -331,20 +330,25 @@ public class PlayerController implements PlayerBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT name,division,partition,position,teamAbb,SUM(matchNum) as match_num, "
+			String str="SELECT name,division,partition,position,"
+					+ "teamAbb,SUM(matchNum) as match_num, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block-sum,"
 					+ "SUM(tunrnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,"
 					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
-					+ "AVG(assistEfficiency)as assistEff,AVG(reboundEfficiency) as reboundEff,"
-					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
-					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(reboundEfficiency) as reboundEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,"
+					+ "AVG(usingPercentage) as usingPct,"
 					+ "AVG(blockEfficiency) as blockEff,"
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
 					+ "FROM player_season_data where name='"+name+"' GROUP BY season,type,name";
