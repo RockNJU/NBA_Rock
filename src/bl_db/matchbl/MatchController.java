@@ -160,8 +160,33 @@ public class MatchController implements MatchBLService{
 
 	@Override
 	public ArrayList<String> getAllSeason() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> list=new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="select season from matchinfo";
+			ResultSet  rs=stmt.executeQuery(str);
+		 
+			while(rs.next()){
+				list.add(rs.getString("season"));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return list;
 	}
 
 	@Override

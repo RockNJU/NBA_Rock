@@ -11,6 +11,7 @@ import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
+import bl_db.common.Sign;
 import businessService.blservice.TeamBLService;
 import businesslogic.bl.center.HotSort;
 
@@ -103,6 +104,8 @@ public class TeamController implements TeamBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
+			
+			
 			String str="SELECT team,teamAbb,"
 					+ "COUNT(*) as match_num,SUM(winNum) as win_sum "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
@@ -113,7 +116,6 @@ public class TeamController implements TeamBLService{
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
 					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,AVG(offenRound) as o_round_sum,"
-					+ "AVG(efficiency) as eff"
 					+ "AVG(assistEfficiency)as assistEff"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
@@ -176,33 +178,13 @@ public class TeamController implements TeamBLService{
 /***********************************************************
  * 	
  ***********************************************************/
-	private String getSign(String sign){
-		String result=null;
-		switch(sign){
-		case "<":
-			result="<";
-			break;
-		case ">":
-			result=">";
-			break;
-		case "¡Ü":	
-			result="<=";
-			break;
-		case "¡Ý":
-			result=">=";
-			break;
-		default:
-			result="=";
-			
-		}
-		return result;
-	}
+	
 	
 	@Override
 	public ArrayList<TeamSeasonDataVO> sort_super(String season, String type,
 			String item, String sign, int num) {
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
-		sign=getSign(sign);
+		sign=Sign.getSign(sign);
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException
@@ -217,11 +199,11 @@ public class TeamController implements TeamBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT team,teamAbb,"
+			String str="SELECT team,teamAbb,type,"
 					+ "COUNT(*) as match_num,SUM(winNum) as win_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
@@ -230,9 +212,9 @@ public class TeamController implements TeamBLService{
 					+ "AVG(assistEfficiency)as assistEff,"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
-					+ "AVG(defenseEfficiency) as defenseEff,"
-					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
-					+ " GROUP BY season,type,team HAVING '"+item+"'"+""+sign+" "+num+"";
+					+ "AVG(defenseEfficiency) as defenseEff "
+					+ "FROM team_seasonn_data WHERE season='"+season+"' AND type='"+type+"'"
+					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+"";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
