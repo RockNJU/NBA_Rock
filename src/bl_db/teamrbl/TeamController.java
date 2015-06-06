@@ -107,6 +107,9 @@ public class TeamController implements TeamBLService{
 	
 	
 	private ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type){
+		
+		
+		System.out.println("ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type)*******");
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 	
       
@@ -120,7 +123,7 @@ public class TeamController implements TeamBLService{
 	        stmt = conn.createStatement(); 
 					
 			String str="SELECT team,teamAbb,"
-					+ "COUNT(*) as match_num,SUM(winNum) as win_sum, "
+					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
 					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
@@ -130,10 +133,12 @@ public class TeamController implements TeamBLService{
 					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
 					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
 					+ "AVG(assistEfficiency)as assistEff,"
-					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
 					+ "AVG(defenseEfficiency) as defenseEff "
-					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
+					+ "FROM team_season_data,teaminfo WHERE season='"+season+"'"
+					+ " AND type='"+type+"' AND　teaminfo.team=team_season_data.team"
 					+ " GROUP BY season,type,team";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
@@ -148,7 +153,8 @@ public class TeamController implements TeamBLService{
 			 *******************************/
 			char chr=39;
 			while(rs.next()){
-				list.add(new TeamSeasonDataVO(season,rs.getString("teamAbb"),null,
+				System.out.println("球队----|||："+rs.getString("team"));
+				list.add(new TeamSeasonDataVO(season,rs.getString("team"),null,
 						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
 						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
 						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
@@ -169,8 +175,9 @@ public class TeamController implements TeamBLService{
 			e.printStackTrace();
 		}//
 		
-		HotSort sort=new HotSort();
-		return sort.hotTeam_Sort(list,"winRate");/*默认以得分排序，返回一个赛季的球员的数据*/
+		return list;
+		//HotSort sort=new HotSort();
+		//return sort.hotTeam_Sort(list,"winRate");/*默认以得分排序，返回一个赛季的球员的数据*/
 		
 	}
 	
@@ -323,7 +330,8 @@ public class TeamController implements TeamBLService{
 	
 	public static void main(String args[]){
 		TeamController team=new TeamController();
-		ArrayList<TeamSeasonDataVO> list=team.getTeam_seasonData("12-13","常规赛");
+		
+		ArrayList<TeamSeasonDataVO> list=team.getTeam_seasonData("11-12","常规赛");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();
 		 for(int i=0;i<list.size();i++){
 			System.out.println("球队数据：  队名"+list.get(i).getTeamName()+"   得分:"+list.get(i).getPointNum());

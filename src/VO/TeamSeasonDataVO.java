@@ -90,11 +90,11 @@ public class TeamSeasonDataVO {
 		 last_five_match.add(first_match);
 		this.season=season;
 		this.teamAbb = teamName; 
-		this.info=info;
-		this.league=info.getDivision();
+		/*this.info=info;
+		//this.league=info.getDivision();
 		this.partition=info.getPartition();
 		this.fullName=info.getTeamAbb();
-		
+		*/
 		this.matchNum = matchNum ; 
 		this.winNum = winNum;
 		this.fieldGoal = fieldGoal ;  
