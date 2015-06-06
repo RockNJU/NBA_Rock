@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
-import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import bl_db.common.Sign;
 import businessService.blservice.TeamBLService;
@@ -19,7 +18,7 @@ public class TeamController implements TeamBLService{
 
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
-    String pwd="ghl13";		
+    String pwd="ghl13";
     
     String currentSeason;
     ArrayList<TeamInfoVO> infoList;
@@ -41,10 +40,18 @@ public class TeamController implements TeamBLService{
 	       
 	      while (rs.next())
 	      {
-	    	  infoList.add(new TeamInfoVO(rs.getString("fullName"),
-	    			  rs.getString("teamAbb"),rs.getString("location"),
-	    			  rs.getString("division"),rs.getString("partition"),
-	    			  rs.getString("homeGround"),rs.getString("formedTime")));
+	    	  /*
+	    	   * String city,String team,String TEname,
+			String location,String division,String partition,
+			String home,String time,String caoch_name,
+			String caoch_Ename,String teamAbb
+	    	   * */
+	    	  infoList.add(new TeamInfoVO(rs.getString("city"),
+	    			  rs.getString("team"),rs.getString("TEname"),
+	    			  rs.getString("location"),rs.getString("division"),
+	    			  rs.getString("partition"),rs.getString("homeGround"),
+	    			  rs.getString("formedTime"),rs.getString("coach_name"),
+	    			  rs.getString("coach_Ename"),rs.getString("teamAbb")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -58,14 +65,14 @@ public class TeamController implements TeamBLService{
 	
 	
 	private String getCurrentSeason(){
-		try {
+		/*try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-      
+      */
          Statement stmt;
 		try {
 			Connection conn;
@@ -86,26 +93,24 @@ public class TeamController implements TeamBLService{
 		return "14-15";/*默认情况下*/
 	}
 	
-	
+	void test(){
+		
+	}
 	
 	
 	private ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type){
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
       
          Statement stmt;
 		try {
 			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
-			
-			
+			 Class.forName("org.sqlite.JDBC");  
+	         conn = DriverManager.getConnection(url,user, pwd);
+	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
+	        conn.setAutoCommit(false);  
+	        stmt = conn.createStatement(); 
+					
 			String str="SELECT team,teamAbb,"
 					+ "COUNT(*) as match_num,SUM(winNum) as win_sum "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
@@ -151,7 +156,7 @@ public class TeamController implements TeamBLService{
 			}
 			  stmt.close();
 		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -282,33 +287,10 @@ public class TeamController implements TeamBLService{
 		return sort.hotTeam_Sort(list, condition, reverse);
 	}
 
-	@Override
-	public ArrayList<TeamSeasonDataVO> getAllTeamSeasonData(String season) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public double getTeamWinNum(String season, String teamAbb) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ArrayList<TeamSeasonDataVO> sort(String[] condition,
-			boolean[] reverse) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ArrayList<TeamSeasonDataVO> getHotTeam(String season, String item) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TeamSeasonDataVO> getHotTeam(String item) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -318,5 +300,97 @@ public class TeamController implements TeamBLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename,
+			String item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public ArrayList<TeamInfoVO> getTeamInfoList(){
+		return infoList;
+	}
+	
+	public static void main(String args[]){
+		TeamController team=new TeamController();
+	//	ArrayList<TeamSeasonDataVO> list=team.getTeam_seasonData("12-13","常规赛");
+		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();
+		/*for(int i=0;i<list.size();i++){
+			System.out.println("球队数据：  队名"+list.get(i).getTeamName()+"   得分:"+list.get(i).getPointNum());
+		}*/
+		
+		team.sort("11-12","常规赛","pointNum","≥",90);
+		
+		for(int i=0;i<infoList.size();i++){
+			System.out.println("球队信息："+infoList.get(i).getTeam()+";"+infoList.get(i).getDivision());
+		}
+	}
+	
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	public void sort(String season, String type,
+			String item, String sign, int num) {
+	 
+		System.out.println(type);
+		sign=Sign.getSign(sign);
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+          
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			
+			 /*String str="SELECT type,team,COUNT(*) as match_num,SUM(winNum) as win_sum,"
+			 		+ "AVG(pointNum)as point_sum FROM team_seasonn_data "
+			 		+ "WHERE type='常规赛' group by team,type HAVING AVG(pointNum)>90";
+			//String str="SELECT *FROM team_seasonn_data";*/
+			String str="SELECT team,teamAbb,type,"
+					+ "COUNT(*) as match_num,SUM(winNum) as win_sum,"
+					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
+					+ "AVG(defenseEfficiency) as defenseEff "
+					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
+					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+"";
+					 
+			ResultSet  rs=stmt.executeQuery(str);
+			 
+			char chr=39;
+			
+			while(rs.next()){
+				System.out.println(rs.getString("type")+";"+rs.getString("team")+";"+rs.getString("point_sum"));
+						
+				 
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		 
+	}
+	
 
 }

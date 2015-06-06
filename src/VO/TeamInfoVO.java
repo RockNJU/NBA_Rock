@@ -12,35 +12,38 @@ public class TeamInfoVO implements Serializable{
  
 	 * 
 	 * */
-	private String fullName;			 
-	private String teamAbb;             
+	private String city;
+	private String TEname;			 
+	private String team;             
 	private String location;			 
 	private String  division;			 
 	private String partition;			 
 	private String homeGround;			 
-	private String formedTime;			 
-	
-	public TeamInfoVO(String fullName,String abb,String location,String d,
-			String partition,String home,String time){
-		this.fullName=fullName;
-		this.teamAbb=abb;
+	private String formedTime;
+	private String caoch_name;
+	private String caoch_Ename;
+	private String teamAbb;
+
+	public TeamInfoVO(String city,String team,String TEname,
+			String location,String division,String partition,
+			String home,String time,String caoch_name,
+			String caoch_Ename,String teamAbb){
+		this.teamAbb=teamAbb;
+		this.city=city;
+		this.team=team;
 		this.location=location;
-		this.division=d;
+		this.division=division;
 		this.partition=partition;
 		this.homeGround=home;
 		this.formedTime=time;
-		
+		this.caoch_name=caoch_name;
+		this.caoch_Ename=caoch_Ename;
 		
 	}
 
-	public String getFullName() {
-		return fullName;
-	}
-
-	public String getTeamAbb() {
+	public String getTeamAbb(){
 		return teamAbb;
 	}
-
 	public String getLocation() {
 		return location;
 	}
@@ -59,5 +62,30 @@ public class TeamInfoVO implements Serializable{
 
 	public String getFormedTime() {
 		return formedTime;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public String getTEname() {
+		return TEname;
+	}
+
+
+	public String getTeam() {
+		return team;
+	}
+
+
+	public String getCaoch_name() {
+		return caoch_name;
+	}
+
+
+	public String getCaoch_Ename() {
+		return caoch_Ename;
 	}
 }

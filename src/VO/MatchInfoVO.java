@@ -11,11 +11,14 @@ public class MatchInfoVO {
 	private String team_G;      //客队名称
 	private String score;       //球队比分
 	private String type;        //比赛类型，即常规赛还是季后赛
+	private String isOver;
 	private ArrayList<String> sc; //每小节的比分
 	
 	
 	public MatchInfoVO(String date,String time,String teamH,
-			String teamG,String score,String type,ArrayList<String> cs){
+			String teamG,String isOver,
+			String score,String type,ArrayList<String> cs){
+		this.isOver=isOver;
 		this.date=date;
 		this.time=time;
 		this.team_H=teamH;
@@ -24,6 +27,10 @@ public class MatchInfoVO {
 		this.score=score;
 	}
 
+	
+	public String getIsOver(){
+		return isOver;
+	}
 	public String getMatchType(){
 		return type;
 	}

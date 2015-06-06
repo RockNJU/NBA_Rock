@@ -93,7 +93,7 @@ public class TeamSeasonDataVO {
 		this.info=info;
 		this.league=info.getDivision();
 		this.partition=info.getPartition();
-		this.fullName=info.getFullName();
+		this.fullName=info.getTeamAbb();
 		
 		this.matchNum = matchNum ; 
 		this.winNum = winNum;
