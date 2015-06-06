@@ -66,7 +66,7 @@ public class TeamData implements TeamDataService{
                     	String str[]=line.split("¨U");
                     	String info[]=str[1].split("©¦");
                     	teamInfoList.add(new TeamInfoVO(info[0].trim(),info[1].trim(),info[2].trim(),info[3].trim(),
-                    			info[4].trim(),info[5].trim(),info[6].trim()));
+                    			info[4].trim(),info[5].trim(),info[6].trim(), line, line, line, line));
                        // System.out.println(line);
                         num++;
                     }

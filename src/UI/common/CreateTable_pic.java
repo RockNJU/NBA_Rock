@@ -80,7 +80,7 @@ public class CreateTable_pic extends JPanel{
 			table.setBackground(init.syslightblue);			
 			table.setFont(fsmall);
 			table.getTableHeader().setFont(fbig);
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		//	table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			table.setFillsViewportHeight(true); 
 			table.setAutoCreateRowSorter(true);
 			 TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象

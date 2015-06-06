@@ -101,7 +101,7 @@ public class CreateTable_M extends JPanel{
 			    //设置表头的背景色
 			    tableH.setBackground(init.syslightblue);
 			    //设置表头的文字颜色
-			     tableH.setForeground(Color.DARK_GRAY);
+			    tableH.setForeground(Color.DARK_GRAY);
 			    tableH.setOpaque(false);
 
 			

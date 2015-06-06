@@ -56,7 +56,7 @@ public class DateChooser extends JPanel{
     private JP2 jp2;
     private JP3 jp3;
     private JP4 jp4;
-    private Font font=new Font("ËÎÌו",Font.PLAIN,12);
+    private Font font=new Font("÷ÚÌו",Font.PLAIN,12);
     private final LabelManager lm=new LabelManager();
     public JLabel showDate;//,toSelect;
     private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");

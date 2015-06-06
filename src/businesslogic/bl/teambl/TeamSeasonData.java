@@ -24,7 +24,7 @@ public class TeamSeasonData {
 				return infoList.get(i);
 			}
 		}
-		return new TeamInfoVO(teamAbb, teamAbb,"--", "--", "--", "--", "--");
+		return new TeamInfoVO(teamAbb, teamAbb,"--", "--", "--", "--", "--", teamAbb, teamAbb, teamAbb, teamAbb);
 	}
 	
 	public void updateTeamSeasonData(TeamMatchVO vo){
@@ -68,7 +68,7 @@ public class TeamSeasonData {
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 		for(int i=0;i<teamSeasonList.size();i++){
 			if(teamSeasonList.get(i).getTeamName().contains(item)||
-					teamSeasonList.get(i).getInfo().getFullName().equals(item)||
+					teamSeasonList.get(i).getInfo().getTeam().equals(item)||
 					teamSeasonList.get(i).getInfo().getDivision().equals(item)||
 					teamSeasonList.get(i).getInfo().getPartition().contains(item)||
 					teamSeasonList.get(i).getInfo().getLocation().equals(item)

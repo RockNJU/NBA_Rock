@@ -36,7 +36,7 @@ public class HotPlayers extends JPanel {
 	PlayerBLService pbs = init.rmi.getPlayerObject();
 	Object[] no1=new Object[4];
 	Object [][] data;
-	CreateTable_pic ctfh;
+	static CreateTable_pic ctfh;
 	SortItem_Map map1 = new SortItem_Map();
 	TeamName_Map map3 = new TeamName_Map();	
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
@@ -186,6 +186,7 @@ public class HotPlayers extends JPanel {
 		ctfh = new CreateTable_pic(title,data,
 				381, 0,655, 205,43,
 				new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 14));
+		setclwidth();
 		add(ctfh);
 		
 		ctfh.getTable().addMouseListener(new MouseAdapter() {
@@ -279,5 +280,14 @@ public class HotPlayers extends JPanel {
 		
 		}
 		return re;
+	}
+	public static void setclwidth(){
+		ctfh.setNthWidth(0, 45);
+		ctfh.setNthWidth(1, 50);
+		ctfh.setNthWidth(2, 160);		
+		ctfh.setNthWidth(3, 100);
+		ctfh.setNthWidth(4, 100);
+		ctfh.setNthWidth(5, 100);
+	
 	}
 }
