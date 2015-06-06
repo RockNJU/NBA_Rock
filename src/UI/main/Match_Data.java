@@ -263,10 +263,8 @@ public class Match_Data extends JPanel {
 			nm.setVisible(true);
 		}
 		matchdata=getdata(mdvo);
-		matchdatalist = new CreateTable_M(matchtitle, matchdata, 10, 60,1040, 560, 25,
+		matchdatalist = new CreateTable_M(matchtitle, matchdata, 10, 70,1040, 520, 25,
 					new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 12));			
-		matchdatalist.setSize(1040, 520);
-		matchdatalist.setLocation(10, 70);
 		//matchdatalist.FitTableColumns(matchdatalist.getTable());
 		setclwidth();
 		add(matchdatalist);

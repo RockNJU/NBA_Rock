@@ -4,24 +4,21 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable_M;
 import UI.common.TeamName_Map;
 import VO.MatchInfoVO;
-
 import javax.swing.DefaultComboBoxModel;
 
 
@@ -30,14 +27,16 @@ public class Match_Process extends JPanel {
 	JButton ChooseByMonth;
 	JButton ChooseByWeek;
 	JComboBox teams;
-	JComboBox pro_season;
+	JComboBox pro_season, pro_season1;
 	JComboBox pro_month;
 	JComboBox pro_date;
 	JComboBox pro_day;
-	String[] pro_title={"日期","类型","主队","比分","客队","链接"};//这个日期是（XX日XX点）
-	Object[][] pro_data;//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
+	JButton sort1,sort2;
+	String[] pro_title={"日期","类型","主队","比分","客队","链接","",""};//这个日期是（XX日XX点）
+	Object[][] pro_data=null;//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
 	CreateTable_M ctm;	
 	ArrayList<MatchInfoVO> mivo;
+	int[] havingMatchMonths={10,11,12,1,2,3,4,5,6};
 	/**
 	 * Create the panel.
 	 */
@@ -61,19 +60,19 @@ public class Match_Process extends JPanel {
 			pro_season.addItem(seasons.get(o));
 		}
 		pro_season.setEditable(true);
-		pro_season.setBounds(45, 22, 89, 30);
+		pro_season.setBounds(38, 65, 89, 30);
 		add(pro_season);
 		pro_season.setVisible(true);
 		pro_season.setSelectedItem(init.defaultseason+"赛季");
 		
 		pro_month=new JComboBox();
-		pro_month.setModel(new DefaultComboBoxModel(new String[] {"所有月份","1月","2月",
+		pro_month.setModel(new DefaultComboBoxModel(new String[] {"1月","2月",
 				"3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"}));
 		pro_month.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		pro_month.setToolTipText("月份");
 		add(pro_month);
 		pro_month.setEditable(true);
-		pro_month.setBounds(170, 22, 89, 30);
+		pro_month.setBounds(175, 65, 89, 30);
 		add(pro_month);
 		pro_month.setSelectedItem("6月");
 		pro_month.setVisible(true);
@@ -85,12 +84,12 @@ public class Match_Process extends JPanel {
 				String[] a=pro_season.getSelectedItem().toString().substring(0, 5).split("-");
 				String month=pro_month.getSelectedItem().toString().substring(0, pro_month.getSelectedItem().toString().length()-1);
 				String year;
-				if(Integer.valueOf(month)>=8){
+				if(Integer.parseInt(month)>=8){
 					year="20"+a[1];
 				}else{
 					year="20"+a[0];
 				}		
-				c.set(Integer.valueOf(year),Integer.valueOf( month),1);
+				c.set(Integer.parseInt(year),Integer.parseInt( month),1);
 				c.add(Calendar.DAY_OF_YEAR, -1);
 				int day=c.get(Calendar.DAY_OF_MONTH);
 				pro_day.removeAllItems();
@@ -108,11 +107,31 @@ public class Match_Process extends JPanel {
 		pro_day.setToolTipText("日期");
 		add(pro_day);
 		pro_day.setEditable(true);
-		pro_day.setBounds(296, 22, 89, 30);
+		pro_day.setBounds(319, 65, 89, 30);
 		add(pro_day);
 		pro_day.setVisible(true);
 		
 		
+		
+		/**
+		 * TODO 赛季
+		 */
+		pro_season1 = new JComboBox();
+		pro_season1.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+		pro_season1.setToolTipText("赛季");
+
+		
+		if (seasons.size() == 0 || seasons == null) {
+			seasons.add("13-14赛季");
+		}
+		for (int o = 0; o < seasons.size(); o++) {
+			pro_season1.addItem(seasons.get(o));
+		}
+		pro_season1.setEditable(true);
+		pro_season1.setBounds(613, 65, 89, 30);
+		add(pro_season1);
+		pro_season1.setVisible(true);
+		pro_season1.setSelectedItem(init.defaultseason+"赛季");
 		/**
 		 * 球队筛选的依据
 		 */
@@ -125,7 +144,6 @@ public class Match_Process extends JPanel {
 		
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
 		TeamName_Map ma=new TeamName_Map();
-		content.put("所有球队", null);
 	    for(int i=0;i<teamsarray.length;i++){
 	    	ImageIcon image=new ImageIcon("newpic/TEAMPNG/"+teamsarray[i]+".png");
 	    	image.setImage(image.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
@@ -135,11 +153,94 @@ public class Match_Process extends JPanel {
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
 		teams.setRenderer(renderer);
 	     
-		teams.setBounds(450, 18, 164, 42);		
+		teams.setBounds(738, 61, 164, 42);		
 		add(teams);
 		teams.setVisible(true);
 		
 		
+		final ImageIcon image7 = new ImageIcon("newpic/筛选-筛选.png");
+		image7.setImage(image7.getImage().getScaledInstance(75, 27,Image.SCALE_DEFAULT));
+		final ImageIcon image8 = new ImageIcon("newpic/筛选-筛选浮.png");
+		image8.setImage(image8.getImage().getScaledInstance(75, 27,Image.SCALE_DEFAULT));
+		
+
+		
+		sort1 = new JButton(image7);
+		sort1.setToolTipText("");
+		sort1.setBounds(474, 68, 75, 27);
+		add(sort1);
+		sort1.setContentAreaFilled(false);
+		sort1.setVisible(true);
+		sort1.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				sort1.setIcon(image7);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+				// TODO Auto-generated method stub
+				sort1.setIcon(image8);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				
+			}
+
+		});
+		sort2 = new JButton(image7);
+		sort2.setToolTipText("");
+		sort2.setBounds(958, 71, 75, 27);
+		add(sort2);
+		sort2.setContentAreaFilled(false);
+		sort2.setVisible(true);
+		sort2.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				sort2.setIcon(image7);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+				// TODO Auto-generated method stub
+				sort2.setIcon(image8);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				
+			}
+
+		});
 		ChooseByMonth=new JButton();
 		ChooseByMonth.setLocation(880, 21);
 		ChooseByMonth.setText("按月查看");
@@ -152,16 +253,18 @@ public class Match_Process extends JPanel {
 		ChooseByWeek.setSize(80, 30);
 		add(ChooseByWeek);
 		
+		ctm=new CreateTable_M(pro_title, pro_data,10, 123,1040, 480, 25,new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
+		add(ctm);
 		
 		JLabel menubg = new JLabel();
 		menubg.setBackground(init.syslightblue);;
-		menubg.setBounds(10, 10, 1040, 94);
+		menubg.setBounds(10, 10, 1040, 105);
 		add(menubg);
 		menubg.setOpaque(true);
 	}
 	
-	
-	public Object[][] getProdata(ArrayList<MatchInfoVO> da){
+	//对加入了日期的da进行修改
+	public Object[][] getProdata_HavingDays(ArrayList<MatchInfoVO> da){
 		if(da==null){
 			Object[][] re=new Object[1][8];
 			re[0][0] = "";
@@ -178,19 +281,106 @@ public class Match_Process extends JPanel {
 			Object[][] re=new Object[da.size()][8];
 			TeamName_Map mm=new TeamName_Map();
 			//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
-			for(int i=0;i<da.size();i++){		
-				re[i][0]=da.get(i).getDate().substring(da.get(i).getDate().length()-2,da.get(i).getDate().length())+"日 "+da.get(i).getTime()+da.get(i).getIsOver();
-				re[i][1]=da.get(i).getMatchType();
-				re[i][2]=mm.getFullName(da.get(i).getTeam_H());
-				re[i][3]=da.get(i).getScore();
-				re[i][4]=mm.getFullName(da.get(i).getTeam_G());
-				re[i][5]="视频/直播";
-				re[i][6]="文字直播";
-				re[i][7]="技术统计";				
+			for(int i=0;i<da.size();i++){
+				if(da.get(i).getIsOver().equals("")){
+					re[i][0] =da.get(i).getDate();
+					re[i][1] = "";
+					re[i][2] = "";
+					re[i][3] = "";
+					re[i][4] = "";
+					re[i][5]="";
+					re[i][6]="";
+					re[i][7]="";	
+				}else{
+					re[i][0]=da.get(i).getTime()+da.get(i).getIsOver();
+					re[i][1]=da.get(i).getMatchType();
+					re[i][2]=mm.getFullName(da.get(i).getTeam_H());
+					re[i][3]=da.get(i).getScore();
+					re[i][4]=mm.getFullName(da.get(i).getTeam_G());
+					re[i][5]="视频/直播";
+					re[i][6]="文字直播";
+					re[i][7]="技术统计";		
+				}
 			}		
 			return re;
 		
 		}
 		
 	}
+	
+	//将每个日期作为一个matchInfoVO加入
+	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,String[] dates){
+		ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
+		MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
+		ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
+		for(int i=0;i<dates.length;i++){
+			daymivo.setDate(dates[i]);
+			String[] ddd=dates[i].split("-");
+			re.add(daymivo);
+			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString(), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
+		    for(int m=0;m<temp.size();m++){
+		    	re.add(temp.get(m));
+		    }		
+		}
+		return re;		
+	}
+	
+	//对加入月份的da进行修改
+		public Object[][] getProdata_HavingMonths(ArrayList<MatchInfoVO> da){
+			if(da==null){
+				Object[][] re=new Object[1][8];
+				re[0][0] = "";
+				re[0][1] = "";
+				re[0][2] = "";
+				re[0][3] = "";
+				re[0][4] = "";
+				re[0][5]="视频/直播";
+				re[0][6]="文字直播";
+				re[0][7]="技术统计";	
+				return re;
+			}
+			else{
+				Object[][] re=new Object[da.size()][8];
+				TeamName_Map mm=new TeamName_Map();
+				//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
+				for(int i=0;i<da.size();i++){
+					if(da.get(i).getIsOver().equals("")){
+						re[i][0] =da.get(i).getDate();
+						re[i][1] = "";
+						re[i][2] = "";
+						re[i][3] = "";
+						re[i][4] = "";
+						re[i][5]="";
+						re[i][6]="";
+						re[i][7]="";	
+					}else{
+						re[i][0]=da.get(i).getDate().substring(da.get(i).getDate().length()-2, da.get(i).getDate().length())+"日"+da.get(i).getTime()+da.get(i).getIsOver();
+						re[i][1]=da.get(i).getMatchType();
+						re[i][2]=mm.getFullName(da.get(i).getTeam_H());
+						re[i][3]=da.get(i).getScore();
+						re[i][4]=mm.getFullName(da.get(i).getTeam_G());
+						re[i][5]="视频/直播";
+						re[i][6]="文字直播";
+						re[i][7]="技术统计";		
+					}
+				}		
+				return re;			
+			}			
+		}
+		
+		//将每个月作为一个matchInfoVO加入
+		public ArrayList<MatchInfoVO> changeProdata_ForATeam(ArrayList<MatchInfoVO> da,int[] havingMatchMonths,String teamabb){
+			ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
+			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
+			ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
+			for(int i=0;i<havingMatchMonths.length;i++){
+				daymivo.setDate(String.valueOf(havingMatchMonths[i])+"月的比赛");
+				re.add(daymivo);
+				temp=init.mbl.getPro_ForTeam(pro_season1.getSelectedItem().toString(), havingMatchMonths[i], teamabb);
+			    for(int m=0;m<temp.size();m++){
+			    	re.add(temp.get(m));
+			    }		
+			}
+			return re;		
+		}
 }
