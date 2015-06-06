@@ -57,4 +57,10 @@ public class MatchInfoVO {
 	public String getTeam_G() {
 		return team_G;
 	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
 }
