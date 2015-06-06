@@ -139,11 +139,7 @@ public class MatchController implements MatchBLService{
 		return null;
 	}
 
-	@Override
-	public MatchVO getMatchByTeam(String data, String teamA) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item) {
@@ -151,13 +147,7 @@ public class MatchController implements MatchBLService{
 		return null;
 	}
 
-	@Override
-	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,
-			int n) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public ArrayList<String> getAllSeason() {
 		ArrayList<String> list=new ArrayList<>();

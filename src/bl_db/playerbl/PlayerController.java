@@ -85,10 +85,15 @@ public class PlayerController implements PlayerBLService{
 				ResultSet  rs=stmt.executeQuery(str);
 				char chr=39;
 				while(rs.next()){
-					infoList.add(new PlayerInfoVO(rs.getString("name").replace('’', chr),rs.getString("number"),
-		    			  rs.getString("position"),rs.getString("height"),
-		    			  rs.getDouble("weight"),rs.getString("birth"),
-		    			  rs.getInt("age"),rs.getInt("exp"),rs.getString("school").replace('’', chr)));
+					/*String name,String num,String p,String height,
+			String weight,String birth,int age ,int exp
+			,String school,String Ename*/
+					
+					infoList.add(new PlayerInfoVO(rs.getString("name").replace('’', chr),
+							rs.getString("number"), rs.getString("position"),
+							rs.getString("height"),rs.getString("weight"),rs.getString("birth"),
+		    			  rs.getInt("age"),rs.getInt("exp"),
+		    			  rs.getString("school").replace('’', chr),rs.getString("Ename")));
 				}
 				  stmt.close();
 			      conn.close();//使用完后就关闭数据库
@@ -123,7 +128,7 @@ public class PlayerController implements PlayerBLService{
 		
 	}
 
-	@Override
+	
 	public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,
 			String teamAbb) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
@@ -141,16 +146,20 @@ public class PlayerController implements PlayerBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT name,number,position,height,weight,birth,age,exp,school"
-					+ " FROM playerinfo,player_season_data WHERE player_season_data.teamAbb= '"+teamAbb+"' "
-				    + "AND player_season_data.season='"+season+"' playerinfo.name=player_season_data.name";
+			String str="SELECT name,number,position,"
+					+ "height,weight,birth,age,exp,school"
+					+ " FROM playerinfo,player_season_data "
+					+ "WHERE player_season_data.teamAbb= '"+teamAbb+"' "
+				    + "AND player_season_data.season='"+season+"' "
+				    + "playerinfo.name=player_season_data.name";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
-				list.add(new PlayerInfoVO(rs.getString("name").replace('’', chr),rs.getString("number"),
-	    			  rs.getString("position"),rs.getString("height"),
-	    			  rs.getDouble("weight"),rs.getString("birth"),
-	    			  rs.getInt("age"),rs.getInt("exp"),rs.getString("school").replace('’', chr)));
+				list.add(new PlayerInfoVO(rs.getString("name").replace('’', chr),
+						rs.getString("number"), rs.getString("position"),
+						rs.getString("height"),rs.getString("weight"),rs.getString("birth"),
+	    			  rs.getInt("age"),rs.getInt("exp"),
+	    			  rs.getString("school").replace('’', chr),rs.getString("Ename")));
 			}
 			  stmt.close();
 		      conn.close();//使用完后就关闭数据库
@@ -169,14 +178,14 @@ public class PlayerController implements PlayerBLService{
 		return null;
 	}
 
-	@Override
+	 
 	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem) {
 		ArrayList<PlayerSeasonDataVO> list= getAllPlayerSeasonData(currentSeason,"常规赛");
 		HotSort sort=new HotSort();
 		return sort.hotPlayer_Sort(list,sortItem);
 	}
 
-	@Override
+	 
 	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem,
 			int n) {
 		ArrayList<PlayerSeasonDataVO> list= getAllPlayerSeasonData(currentSeason,"常规赛");
@@ -189,19 +198,9 @@ public class PlayerController implements PlayerBLService{
 		return result;
 	}
 
-	@Override
-	public ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item,
-			int n) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
-	@Override
-	public ArrayList<PlayerSeasonDataVO> getSortInfo(String position,
-			String league, String age, String[] condition, boolean[] reverse) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 /*****************************************************************************
  * 以下包含type的部分都是迭代三要求做的，type即为比赛类型（ＮＢＡ的常规赛和季后赛，季前赛）
  ****************************************************************************/
@@ -223,8 +222,8 @@ public class PlayerController implements PlayerBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT name,division,partition,position,"
-					+ "teamAbb,COUNT(*) as match_num, "
+			String str="SELECT * FROM (SELECT player.name,division,partition,position,"
+					+ "teamAbb,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
@@ -245,7 +244,8 @@ public class PlayerController implements PlayerBLService{
 					
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
 					+ "FROM player_season_data,playerinfo WHERE season='"+season+"' AND type='"+type+"'"
-					+ "GROUP BY season,type,name";
+					+ "GROUP BY season,type,name)as "
+					+ "data right join playerinfo as info on data.name =info.name";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String name,PlayerInfoVO info,String teamName,
@@ -314,7 +314,7 @@ public class PlayerController implements PlayerBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT name,division,partition,"
+			String str="SELECT * FROM (SELECT name,division,partition,"
 					+ "position,teamAbb,COUNT(*) as match_num, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
@@ -338,7 +338,8 @@ public class PlayerController implements PlayerBLService{
 					+ "FROM player_season_data,playerinfo,teaminfo WHERE season='"+season+"' "
 					+ "AND type='"+type+"' AND teaminfo.team=player_season_data.team "
 					+ "AND player_season_data.name=playerinfo.name"
-					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+"";
+					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+") as "
+					+ "data right join teaminfo as info on data.team =info.team";
 			ResultSet  rs=stmt.executeQuery(str);
 	
 			char chr=39;
@@ -394,7 +395,7 @@ public class PlayerController implements PlayerBLService{
 		return sort.hotPlayer_Sort(list,item);
 	}
 
-	@Override
+	
 	public PlayerSeasonDataVO getAPlayerSeasonMatch(String season, String type,
 			String name) {
 		 
@@ -529,6 +530,25 @@ public class PlayerController implements PlayerBLService{
 		}
 		return list;
 		 //当数据库中没有对应球员的基础数据时，返回一个表示未知的信息
+	}
+
+	@Override
+	public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(
+			String name, String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,
+			String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	public static void main(String args[]){
+		PlayerController pl=new PlayerController();
 	}
 
 }

@@ -1,25 +1,27 @@
 package VO;
 
-import java.io.Serializable;
 
-public class PlayerInfoVO implements Serializable{
-	/**
+public class PlayerInfoVO {
+	/*
 	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	 *  
+	 * 
+	 * */
 	private String name;			
 	private String number;
-	private String position;		 
-	private String height;			 
-	private double weight;					 
-	private String birth;				 
+	private String position;				 
+	private String height;					 
+	private String weight;					 
+	private String birth;					 
 	private int age;						
 	private int exp;						 
-	private String school;				 
+	private String school;
+	private String Ename;
 	
 	public PlayerInfoVO(String name,String num,String p,String height,
-			double weight,String birth,int age ,int exp
-			,String school){
+			String weight,String birth,int age ,int exp
+			,String school,String Ename){
+		this.Ename=Ename;
 		this.name=name;
 		this.number=num;
 		this.position=p;
@@ -31,6 +33,11 @@ public class PlayerInfoVO implements Serializable{
 		this.school=school;
 		
 	}
+	
+	public String getEname(){
+		return Ename;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -43,7 +50,7 @@ public class PlayerInfoVO implements Serializable{
 	public String getHeight() {
 		return height;
 	}
-	public double getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 	public String getBirth() {

@@ -77,24 +77,27 @@ public class TeamSeasonDataVO {
 	private ArrayList<TeamMatchVO> last_five_match;
 
     	
-	public TeamSeasonDataVO(String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
+	public TeamSeasonDataVO(String season,String teamName,
+			TeamInfoVO info,int matchNum,int winNum,
 	int fieldGoal,int shootNum,int T_fieldGoal,int T_shootNum,
 	int freeThrowGoalNum,int freeThrowNum,int O_ReboundNum,
-	int D_ReboundNum,int assistNum,int stealNum,int reboundNum,int blockNum,
+	int D_ReboundNum,int assistNum,
+	int stealNum,int reboundNum,int blockNum,
 	int turnoverNum,int foulNum,int points,
 	double offenseRound,double offenseEfficiency,
-	double defenseEfficiency,double O_ReboundEfficiency,double D_ReboundEfficiency,
-	double stealEfficiency ,double assistEfficiency,TeamMatchVO first_match){
+	double defenseEfficiency,double O_ReboundEfficiency,
+	double D_ReboundEfficiency,double stealEfficiency ,
+	double assistEfficiency,TeamMatchVO first_match){
 		
 		last_five_match=new ArrayList<>();
 		 last_five_match.add(first_match);
 		this.season=season;
 		this.teamAbb = teamName; 
-		/*this.info=info;
+		 this.info=info;
 		//this.league=info.getDivision();
 		this.partition=info.getPartition();
 		this.fullName=info.getTeamAbb();
-		*/
+		 
 		this.matchNum = matchNum ; 
 		this.winNum = winNum;
 		this.fieldGoal = fieldGoal ;  
