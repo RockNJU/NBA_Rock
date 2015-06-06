@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
 import VO.TeamSeasonDataVO;
@@ -24,8 +23,11 @@ public class TeamController implements TeamBLService{
     ArrayList<TeamInfoVO> infoList;
 	
 	public TeamController(){
+		infoList=new ArrayList<>();
 		currentSeason=getCurrentSeason();
 		readTeamBasicInfo();
+		
+		System.out.println("大小："+infoList.size());
 	}
 	
 	
@@ -46,12 +48,17 @@ public class TeamController implements TeamBLService{
 			String home,String time,String caoch_name,
 			String caoch_Ename,String teamAbb
 	    	   * */
-	    	  infoList.add(new TeamInfoVO(rs.getString("city"),
+	    	  
+	    	  //System.out.println("？--？   "+rs.getString("teamAbb"));
+	    	  
+	    	infoList.add(new TeamInfoVO(rs.getString("city"),
 	    			  rs.getString("team"),rs.getString("TEname"),
 	    			  rs.getString("location"),rs.getString("division"),
 	    			  rs.getString("partition"),rs.getString("homeGround"),
 	    			  rs.getString("formedTime"),rs.getString("coach_name"),
 	    			  rs.getString("coach_Ename"),rs.getString("teamAbb")));
+	    	
+	    	//System.out.println("？--？   "+rs.getString("teamAbb"));
 	        //return vo;
 	      }
 	      conn.close();
@@ -65,14 +72,15 @@ public class TeamController implements TeamBLService{
 	
 	
 	private String getCurrentSeason(){
-		/*try {
+		
+		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-      */
+      
          Statement stmt;
 		try {
 			Connection conn;
@@ -112,16 +120,16 @@ public class TeamController implements TeamBLService{
 	        stmt = conn.createStatement(); 
 					
 			String str="SELECT team,teamAbb,"
-					+ "COUNT(*) as match_num,SUM(winNum) as win_sum "
+					+ "COUNT(*) as match_num,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
 					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
-					+ "SUM(pointNum)as point_sum,AVG(offenRound) as o_round_sum,"
-					+ "AVG(assistEfficiency)as assistEff"
+					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency)as assistEff,"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
 					+ "AVG(defenseEfficiency) as defenseEff "
@@ -207,14 +215,14 @@ public class TeamController implements TeamBLService{
 			String str="SELECT team,teamAbb,type,"
 					+ "COUNT(*) as match_num,SUM(winNum) as win_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
-					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum) as t_shoot_sum,"
 					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
-					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
-					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
-					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
-					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
-					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
-					+ "AVG(assistEfficiency)as assistEff,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum) as d_rebound_sum,"
+					+ "SUM(assistNum) as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum) as rebound_sum,SUM(blockNum) as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum) as foul_sum,"
+					+ "SUM(pointNum) as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency) as assistEff,"
 					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
 					+ "AVG(defenseEfficiency) as defenseEff "
@@ -234,7 +242,7 @@ public class TeamController implements TeamBLService{
 			char chr=39;
 			while(rs.next()){
 				 
-				list.add(new TeamSeasonDataVO(season,rs.getString("teamAbb"),null,
+				list.add(new TeamSeasonDataVO(season,rs.getString("team"),null,
 						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
 						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
 						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
@@ -315,82 +323,22 @@ public class TeamController implements TeamBLService{
 	
 	public static void main(String args[]){
 		TeamController team=new TeamController();
-	//	ArrayList<TeamSeasonDataVO> list=team.getTeam_seasonData("12-13","常规赛");
+		ArrayList<TeamSeasonDataVO> list=team.getTeam_seasonData("12-13","常规赛");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();
-		/*for(int i=0;i<list.size();i++){
+		 for(int i=0;i<list.size();i++){
 			System.out.println("球队数据：  队名"+list.get(i).getTeamName()+"   得分:"+list.get(i).getPointNum());
-		}*/
+		} 
 		
-		team.sort("11-12","常规赛","pointNum","≥",90);
-		
+		 /*
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("球队信息："+infoList.get(i).getTeam()+";"+infoList.get(i).getDivision());
-		}
+		}*/
 	}
 	
 	
 	/***************************************************************
 	 * 
 	 ***************************************************************/
-	public void sort(String season, String type,
-			String item, String sign, int num) {
-	 
-		System.out.println(type);
-		sign=Sign.getSign(sign);
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-          
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
-			
-			 /*String str="SELECT type,team,COUNT(*) as match_num,SUM(winNum) as win_sum,"
-			 		+ "AVG(pointNum)as point_sum FROM team_seasonn_data "
-			 		+ "WHERE type='常规赛' group by team,type HAVING AVG(pointNum)>90";
-			//String str="SELECT *FROM team_seasonn_data";*/
-			String str="SELECT team,teamAbb,type,"
-					+ "COUNT(*) as match_num,SUM(winNum) as win_sum,"
-					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
-					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
-					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
-					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
-					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
-					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
-					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
-					+ "AVG(assistEfficiency)as assistEff,"
-					+ "AVG(o_reboundEfficiency) as o_reboundEff,AVG(d_reboundEfficiency) as d_reboundEff,"
-					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
-					+ "AVG(defenseEfficiency) as defenseEff "
-					+ "FROM team_season_data WHERE season='"+season+"' AND type='"+type+"'"
-					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+"";
-					 
-			ResultSet  rs=stmt.executeQuery(str);
-			 
-			char chr=39;
-			
-			while(rs.next()){
-				System.out.println(rs.getString("type")+";"+rs.getString("team")+";"+rs.getString("point_sum"));
-						
-				 
-			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//
-		
-		 
-	}
 	
 
 }
