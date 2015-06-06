@@ -51,7 +51,7 @@ public class Player_Info extends JPanel {
 		
 		pivo = init.pbl.getAllPlayerInfo();
 		playerinfodata=getinfodata(pivo);
-		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 10, 60,1040, 515, 25,
+		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 10, 60,1040, 515, 35,
 				new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 12));
 		add(playerinfolist);
 		playerinfolist.FitTableColumns(playerinfolist.getTable());

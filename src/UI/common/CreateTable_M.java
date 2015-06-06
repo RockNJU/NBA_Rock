@@ -345,6 +345,35 @@ public class CreateTable_M extends JPanel{
 
 
 
+		public void setAllWhite() {
+			JTable jt=getTable();
+			for(int i=0;i<jt.getColumnCount();i++){
+				TableColumn column=jt.getColumnModel().getColumn(i);
+				column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+	                @Override
+	                public Component getTableCellRendererComponent(
+	                        JTable table, Object value, boolean isSelected,
+	                        boolean hasFocus, int row, int column) {
+	                	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	                	 if (row % 2 == 0) {
+	                           
+	                            renderer.setBackground(init.syslightblue);
+	                        } else {
+	                          
+	                            renderer.setBackground(init.syslightblue);
+	                        }
+	                	renderer.setForeground(Color.black);
+	                	
+	                	
+	                    return renderer;// 把进度条作为渲染控件
+	                }
+	            });
+			}
+			
+		}
+
+
+
 		
 		
 }

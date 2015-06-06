@@ -80,11 +80,10 @@ public class CreateTable_pic extends JPanel{
 			table.setBackground(init.syslightblue);			
 			table.setFont(fsmall);
 			table.getTableHeader().setFont(fbig);
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			table.setFillsViewportHeight(true); 
 			table.setAutoCreateRowSorter(true);
 			 TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象
-		        table.setRowHeight(32);
 		        
 		        column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
 		                    @Override
@@ -110,9 +109,7 @@ public class CreateTable_pic extends JPanel{
 			//table.setEnabled(false);
 			// 其他一些属性
 			table.setShowGrid(false);
-			table.getSelectionModel().setSelectionMode(
-					ListSelectionModel.SINGLE_SELECTION); // 只允许单选
-
+			table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // 只允许单选
 			table.setDragEnabled(false); // 不许乱拖动
 			table.getTableHeader().setReorderingAllowed(false);
 			 //获得表头
@@ -123,13 +120,10 @@ public class CreateTable_pic extends JPanel{
 			     tableH.setForeground(Color.DARK_GRAY);
 			    tableH.setOpaque(false);
 			    
-			   
-			
-			
-			//FitTableColumns(table);		
+	
 			roll=new JScrollPane(table);
 			roll.getViewport().setBackground(init.syslightblue);
-			roll.setPreferredSize(new Dimension(width,height-10)); 
+			roll.setPreferredSize(new Dimension(width,height)); 
 			roll.setLocation(0, 0);
 			roll.setVisible(true);
 			this.setBackground(init.syslightblue);
@@ -160,7 +154,7 @@ public class CreateTable_pic extends JPanel{
 			});
 			
 			  TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象
-		        table.setRowHeight(32);
+		        table.setRowHeight(rowHeight);
 		        
 		        column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
 		                    @Override
@@ -184,7 +178,6 @@ public class CreateTable_pic extends JPanel{
 		                    }
 		                });
 		        table.repaint();
-				//FitTableColumns(table);
 				this.repaint();
 		}
 		
@@ -192,6 +185,7 @@ public class CreateTable_pic extends JPanel{
 		public JTable getTable(){
 			return table;
 		}
+		
 		//得到选中单元格的数据
 		public String getValueAt(int selectedRow, int i) {
 			return 	table.getValueAt(selectedRow, i).toString();
@@ -216,7 +210,10 @@ public class CreateTable_pic extends JPanel{
 		public void setLastSecondRowWidth(int w){
 			 table.getColumnModel().getColumn(headTitle.length-2).setPreferredWidth(w); 
 		}
-		
+		//设置第n列的宽度
+		public void setNthWidth(int n,int w){
+			this.getTable().getColumnModel().getColumn(n).setWidth(w);
+		}
 		//隐藏表单
 		public void hideColumn(int index){ 
 		    TableColumn tc= table.getColumnModel().getColumn(index); 

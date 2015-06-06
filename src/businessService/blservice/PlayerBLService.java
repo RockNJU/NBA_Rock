@@ -6,6 +6,13 @@ import VO.*;
 
 public interface PlayerBLService{
 	
+	//TODO 2015-5-31
+	//由于你说你准备把vo里近五场比赛删掉，我也不管了，我要的方法我都写出来
+	//获得近五场——只有姓名，赛季当前默认，赛季类型就可以选择吧，这样我界面方便点
+	public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(String name,String type);
+	//获得一个球员所有赛季的数据
+	public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,String type);
+	
 	//需要的方法——热点方面我没有看
 	//TODO 大于等于什么的筛选---之前写的是根据表格的、并不能适用、
 	//传入的值为 赛季、赛季类型、查找依据、符号（这个符号有可能是中文字符也有可能是英文字符）、值
@@ -26,6 +33,7 @@ public interface PlayerBLService{
 	public ArrayList<PlayerSeasonDataVO> sort(String season,String type,String position,String partition,
 			 String[] condition,boolean[] reverse);/*为筛选球员，实现多级排序，较之前有赛季的要求*/
 
+	
 	
 	//------------------------------------------------------------------------------------
 	//区域内方法暂时没有用到

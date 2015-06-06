@@ -148,6 +148,9 @@ public class CreateTable extends JPanel{
 		public JTable getTable(){
 			return table;
 		}
+		public JScrollPane getRoll(){
+			return roll;
+		}
 		//指定多列字体的颜色
 		public void setcolors(ArrayList<Integer> c){
 			JTable jt=getTable();
@@ -208,6 +211,32 @@ public class CreateTable extends JPanel{
 			getTable().getColumnModel().getColumn(n).setWidth(w);
 		}
 		
+		public void setOpa(){
+			JTable jt=getTable();
+			for(int i=0;i<jt.getColumnCount();i++){
+			TableColumn column=jt.getColumnModel().getColumn(i);
+			column.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+                @Override
+                public Component getTableCellRendererComponent(
+                        JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+                	 JLabel renderer = (JLabel) new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                	 if (row % 2 == 0) {
+                           
+                            renderer.setBackground(Color.WHITE);
+                        } else {
+                          
+                            renderer.setBackground(init.syslightblue);
+                        }
+                	renderer.setForeground(Color.red);
+                	Font temp=fsmall.deriveFont(Font.BOLD);
+                	renderer.setFont(temp);
+                	renderer.setOpaque(false);
+                    return renderer;// 把进度条作为渲染控件
+                }
+            });
+			}
+		}
 		//指定列字体的颜色
 		public void setcolor(int c){
 			JTable jt=getTable();

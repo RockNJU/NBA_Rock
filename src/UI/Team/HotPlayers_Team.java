@@ -1,4 +1,4 @@
-package UI.main;
+package UI.Team;
 
 import javax.swing.JPanel;
 
@@ -13,27 +13,30 @@ import javax.swing.table.TableColumn;
 
 import businessService.blservice.MatchBLService;
 import businessService.blservice.PlayerBLService;
+import businessService.blservice.TeamBLService;
 import UI.common.CreateTable_pic;
 import UI.common.CreateTableforhot;
 import UI.common.OftenUseMethod;
 import UI.common.PlayerPosition_Map;
 import UI.common.SortItem_Map;
 import UI.common.TeamName_Map;
+import UI.main.init;
 import VO.PlayerSeasonDataVO;
 import VO.SingleMatchPersonalDataVO;
 
+public class HotPlayers_Team extends JPanel {
 
-
-
-public class HotPlayers extends JPanel {
+	/**
+	 * Create the panel.
+	 */
 	String saiji = init.defaultseason;
-	ArrayList<SingleMatchPersonalDataVO> smpd;
+
 	ArrayList<PlayerSeasonDataVO> psdv;
-	String according;
+	String teamna;
 	String type;
 	//RMIObject rmi = new RMIObject();
 	MatchBLService mbs = init.rmi.getMatchObject();
-	PlayerBLService pbs = init.rmi.getPlayerObject();
+	TeamBLService tbs = init.rmi.getTeamObject();
 	Object[] no1=new Object[4];
 	Object [][] data;
 	CreateTable_pic ctfh;
@@ -44,36 +47,14 @@ public class HotPlayers extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public HotPlayers(String tmpsaccording,String tmptype) {
+	public HotPlayers_Team(String teamname,String tmptype) {
 		
-		this.according=tmpsaccording;
+		this.teamna=teamname;
 		this.type=tmptype;
 		String[] title = {"序号","肖像","姓名","位置","球队",this.type};
-		if(tmpsaccording.equals("每日")){
-			smpd = mbs.getTodayHotPlayer(map1.getItem(tmptype));
-			no1[0]=smpd.get(0).getPlayerName();
-			no1[1]=map3.getFullName(smpd.get(0).getTeamName());
-			no1[2]=smpd.get(0).getPlayerPosition();
-			if(type.equals("得分总")){
-				no1[3]=smpd.get(0).getPointNum();
-			}
-			else if(type.equals("篮板数")){
-				no1[3]=smpd.get(0).getReboundNum();
-			}
-			else if(type.equals("助攻数")){
-				no1[3]=smpd.get(0).getAssistNum();
-			}
-			else if(type.equals("抢断数")){
-				no1[3]=smpd.get(0).getStealNum();
-			}
-			else if(type.equals("盖帽数")){
-				no1[3]=smpd.get(0).getBlockNum();
-			}
-			
-			data=getdata(smpd);
-		}
-		else if(tmpsaccording.equals("赛季")){
-			psdv = pbs.getSeasonHotPlayer(init.defaultseason,map1.getItem(tmptype));
+
+	
+			psdv = tbs.getKingPlayerForATeam(init.defaultseason,map1.getItem(tmptype));
 			data=getdata1(psdv);
 			no1[0]=psdv.get(0).getName();
 			no1[1]=map3.getFullName(psdv.get(0).getTeamName());
@@ -105,42 +86,8 @@ public class HotPlayers extends JPanel {
 			else{
 				no1[3] = -1;
 			}				
-		}
-		else{
-			psdv = pbs.getMost_Progress_Player(map1.getItem(tmptype));
-			data=getdata1(psdv);		
-			no1[0]=psdv.get(0).getName();
-			no1[1]=map3.getFullName(psdv.get(0).getTeamName());
-			no1[2]=psdv.get(0).getPosition();
-			if(type.equals("得分")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getPointNum_avg()));
-			}
-			else if(type.equals("篮板")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getReboundNum_avg()));
-			}
-			else if(type.equals("助攻")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getAssistNum_avg()));
-			}
-			else if(type.equals("抢断")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getStealNum_avg()));
-			}
-			else if(type.equals("盖帽")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getBlockNum_avg()));
-			}
-			else if(type.equals("三分命中率")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getT_shootPercentage()));
-			}
-			else if(type.equals("投篮命中率")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getShootPercentage()));
-			}
-			else if(type.equals("罚球命中率")){
-				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getFreeThrowPercentage()));
-			}
-			else{
-				no1[3] = -1;
-			}		
-		}					
-
+		
+		
 		setLayout(null);
 		setOpaque(false);
 		setSize(1040,220);
@@ -197,11 +144,6 @@ public class HotPlayers extends JPanel {
 				}
 			}
 		});
-		
-		
-	
-		
-	
 	}
 	
 
@@ -239,6 +181,10 @@ public class HotPlayers extends JPanel {
 	}
 	
 	public Object[][] getdata1(ArrayList<PlayerSeasonDataVO> da){
+		if(da==null){
+			Object re[][]=new Object[4][6];
+			return re;
+		}else{
 		Object[][] re=new Object[4][6];
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
@@ -280,4 +226,6 @@ public class HotPlayers extends JPanel {
 		}
 		return re;
 	}
+	}
 }
+

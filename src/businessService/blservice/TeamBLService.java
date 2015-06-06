@@ -2,6 +2,7 @@ package businessService.blservice;
 import java.util.ArrayList;
 
 import VO.PlayerInfoVO;
+import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
 import VO.TeamSeasonDataVO;
 import VO.TeamVO;
@@ -9,7 +10,10 @@ import VO.TeamVO;
 public interface TeamBLService {
 	//TODO 2015/5/18 加
 	public ArrayList<String> getTeamByPartition(String partition);
-	
+	//TODO
+	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename, String item);
+
+		
 	public ArrayList<TeamSeasonDataVO> sort_super(String season,String type,String item,String sign,int num);
 	//TODO 获得默认赛季
 	public String getdefaultseason();
@@ -40,7 +44,6 @@ public interface TeamBLService {
 	//TODO 不知道你们的根据关键词查找到底理解的什么意思，我觉得是输入关键词，返回符合要求的队伍arraylist，另外觉得不用考虑赛季
 	public ArrayList<TeamSeasonDataVO> find(String text);
 
-	
 	
 	
 }
