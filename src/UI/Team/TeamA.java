@@ -18,6 +18,7 @@ import UI.common.CreateTable;
 import UI.common.CreateTable_M;
 import UI.common.OftenUseMethod;
 import UI.common.TeamName_Map;
+import UI.main.init;
 import VO.SingleMatchPersonalDataVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
@@ -35,12 +36,13 @@ public class TeamA extends JPanel {
 	Object[][]TeamA_data;
 	ArrayList<TeamMatchVO> smdvo=null;
 	ArrayList<TeamSeasonDataVO> tsdvo=null;
-	JButton lastmatches,lastyears,normal,after;
+	JButton lastmatches,lastyears,process,normal,after;
 	JRadioButton isAvg;
 	String seasontype;
 	String tabletype;
 	String isAvgorTotal;
 	String na;
+	
 	public TeamA(String name) {
 		setSize(1042,580);
 		setLayout(null);
@@ -207,10 +209,13 @@ public class TeamA extends JPanel {
 				// TODO Auto-generated method stub
 				lastmatches.setIcon(new ImageIcon("newpic/近五场浮.png"));
 				lastyears.setIcon(new ImageIcon("newpic/近几年.png"));
+				process.setIcon(new ImageIcon("newpic/按钮赛程.png"));
+				normal.setEnabled(true);
+				after.setEnabled(true);
 				tabletype="近五场";
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
-				//smdvo=UI.main.init.pbl.getLastFiveMatchData(na, seasontype);
+				smdvo=UI.main.init.tbl.getLastFiveMatchData(na, seasontype);
 				TeamA_data=getLastFiveMatch(smdvo);
 				TeamA_list.setOpaque(false);
 				//PlayerA_list.setOpa();
@@ -229,11 +234,14 @@ public class TeamA extends JPanel {
 				// TODO Auto-generated method stub
 				lastmatches.setIcon(new ImageIcon("newpic/近五场.png"));
 				lastyears.setIcon(new ImageIcon("newpic/近几年浮.png"));
+				process.setIcon(new ImageIcon("newpic/按钮赛程.png"));
 				tabletype="近几年";
+				normal.setEnabled(true);
+				after.setEnabled(true);
 				isAvg.setSelected(true);
 				isAvg.setEnabled(true);
 				
-				//psvo=UI.main.init.pbl.getAPlayerSaeasonData(na, seasontype);				
+				tsdvo=UI.main.init.tbl.getATeamSeasonData(na, seasontype);				
 				TeamA_data=getyearavg(tsdvo);
 				TeamA_list = new CreateTable(TeamA_matchtitle, TeamA_data, 10, 260,1025, 320, 25,
 						new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
@@ -244,9 +252,37 @@ public class TeamA extends JPanel {
 				TeamA_list.getRoll().getViewport().setOpaque(false);
 			}			
 		});
+		process=new JButton(new ImageIcon("newpic/按钮赛程.png"));
+		process.setBounds(240, 219, 48, 30);
+		add(process);
+		process.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-gsenerated method stub
+				lastmatches.setIcon(new ImageIcon("newpic/近五场.png"));
+				lastyears.setIcon(new ImageIcon("newpic/近几年.png"));
+				process.setIcon(new ImageIcon("newpic/按钮赛程浮.png"));
+				tabletype="赛程";
+				after.setEnabled(false);
+				normal.setEnabled(false);
+				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
+				isAvg.setSelected(true);
+				isAvg.setEnabled(false);
+				
+				
+				smdvo=UI.main.init.tbl. getASeasonMatchData(na, init.defaultseason);
+				TeamA_data=getLastFiveMatch(smdvo);
+				TeamA_list.setOpaque(false);
+				//PlayerA_list.setOpa();
+				TeamA_list.FitTableColumns(TeamA_list.getTable());
+				TeamA_list.getRoll().getViewport().setOpaque(false);
+			}			
+		});
 		
 		normal=new JButton(new ImageIcon("newpic/常规赛浮.png"));
-		normal.setLocation(288, 219);
+		normal.setLocation(340, 219);
 		normal.setSize(55, 30);
 		add(normal);
 		normal.addActionListener(new ActionListener(){
@@ -260,7 +296,7 @@ public class TeamA extends JPanel {
 			}			
 		});
 		after=new JButton(new ImageIcon("newpic/季后赛.png"));
-		after.setLocation(343, 219);
+		after.setLocation(395, 219);
 		after.setSize(55, 30);
 		add(after);
 		after.addActionListener(new ActionListener(){
@@ -277,7 +313,7 @@ public class TeamA extends JPanel {
 		isAvg = new JRadioButton("\u573A\u5747\u6570\u636E");
 		isAvg.setSelected(true);
 		isAvg.setFont(new Font("华文细黑", Font.PLAIN, 15));
-		isAvg.setBounds(461, 221, 100, 23);
+		isAvg.setBounds(513, 221, 100, 23);
 		isAvg.setEnabled(false);
 		add(isAvg);
 		isAvg.addActionListener(new ActionListener(){

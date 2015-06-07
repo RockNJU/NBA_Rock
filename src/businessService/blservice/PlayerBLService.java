@@ -36,6 +36,8 @@ public interface PlayerBLService{
 		public  ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item);
 		//折线图对比某项数据，球员名称,数据数量（10场，20场，30场，整个赛季）,对应数据名称（平均得分，三分等等））	如果没有数据，则对应位置返回0
 		public double[] getPlayerOneData(String name,String num,String what);
+		//获得一个球员整个赛季的比赛
+		public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String na, String season);
 	
 
 	/**	

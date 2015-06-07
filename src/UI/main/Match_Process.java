@@ -60,24 +60,55 @@ public class Match_Process extends JPanel {
 		setLayout(null);
 		setSize(1060, 600);
 		setOpaque(false);
-
+		
 		Date da=new Date();		
 		dc=new DateChooser(180,35,da);
 		dc.setSize(120, 34);
-		dc.setLocation(38, 45);
+		dc.setLocation(71, 61);
 		add(dc);
 		dc.setVisible(false);
+		dc.showDate.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}			
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub				
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub			
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub			
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub			
+			}		
+		});
 		
 		dateshow=new JLabel();
 		dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
-		dateshow.setLocation(324, 45);
-		dateshow.setFont(new Font("华文细黑", Font.BOLD, 15));
-		dateshow.setSize(193, 30);
+		dateshow.setLocation(366, 61);
+		dateshow.setFont(new Font("华文细黑", Font.BOLD, 17));
+		dateshow.setForeground(init.syspurpleblue);
+		dateshow.setSize(227, 30);
 		add(dateshow);
 		dateshow.setVisible(false);
 		lastsevendays=new JButton();
 		lastsevendays.setText("\u524D\u4E03\u5929");
-		lastsevendays.setLocation(199, 45);
+		lastsevendays.setLocation(232, 61);
 		lastsevendays.setSize(100, 30);
 		add(lastsevendays);
 		lastsevendays.addActionListener(new ActionListener(){
@@ -88,6 +119,7 @@ public class Match_Process extends JPanel {
 				String temp[]=dateshow.getText().split("至");
 				try {
 					dateshow.setText(getSevenDaysBefore(temp[0],7)+"至"+getSevenDaysBefore(temp[1],7));
+				    changetable_Week(getSevenDaysBefore(temp[0],7));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -97,7 +129,7 @@ public class Match_Process extends JPanel {
 		});
 		lastsevendays.setVisible(false);
 		nextsevendays=new JButton();
-		nextsevendays.setLocation(552, 45);
+		nextsevendays.setLocation(628, 61);
 		nextsevendays.setText("\u540E\u4E03\u5929");
 		nextsevendays.setSize(100, 30);
 		add(nextsevendays);
@@ -109,6 +141,7 @@ public class Match_Process extends JPanel {
 				String temp[]=dateshow.getText().split("至");
 				try {
 					dateshow.setText(getSevenDaysLater(temp[0],7)+"至"+getSevenDaysLater(temp[1],7));
+					changetable_Week(getSevenDaysLater(temp[0],7));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -277,12 +310,18 @@ public class Match_Process extends JPanel {
 				}else{
 					temp=new String[1];
 					temp[0]=getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString()));
-				}		
+				}	
+				try {
 			    mivo=init.mbl.getPro_ByMonth(se, m);
-			    mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);
+			    
+					mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);
+				
 			    pro_data=getProdata_HavingDays(mivo);
 			    ctm.updateTable(pro_title, pro_data);
-				
+			    } catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		});
@@ -437,12 +476,12 @@ public class Match_Process extends JPanel {
 	}
 	
 	//将每个日期作为一个matchInfoVO加入
-	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,String[] dates){
+	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,String[] dates) throws ParseException{
 		ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
 		MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
 		ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
 		for(int i=0;i<dates.length;i++){
-			daymivo.setDate(dates[i]);
+			daymivo.setDate(dates[i]+" "+getWeekOfDate(dates[i]));
 			String[] ddd=dates[i].split("-");
 			re.add(daymivo);
 			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString(), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
@@ -496,6 +535,7 @@ public class Match_Process extends JPanel {
 			}			
 		}
 		
+		
 		//将每个月作为一个matchInfoVO加入
 		public ArrayList<MatchInfoVO> changeProdata_ForATeam(int[] havingMatchMonths,String teamabb){
 			ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
@@ -520,12 +560,40 @@ public class Match_Process extends JPanel {
 				return "20"+y[0];
 			}
 		}
+		public String getSeason(int year,int month){
+			
+			if(month==1||month==2||month==3||month==4||month==5||month==6||month==7||month==8){
+				return String.valueOf(year-1).substring(2, 4)+"-"+String.valueOf(year).substring(2, 4);
+			}else{
+				return String.valueOf(year).substring(2, 4)+"-"+String.valueOf(year+1).substring(2, 4);
+			}
+		}
 		public String change(int a){
 			DecimalFormat df = new DecimalFormat("00");    
 			String temp=String.valueOf(df.format(a));
 			return temp;
 		}
-		
+		public void changetable_Week(String date1) throws ParseException{
+			ArrayList<MatchInfoVO> re=new ArrayList<MatchInfoVO>();
+			ArrayList<MatchInfoVO> temp=new ArrayList<MatchInfoVO>();	
+			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
+			for(int i=0;i<7;i++){	
+				
+				String date=getSevenDaysLater(date1, i);
+				daymivo.setDate(date+" "+getWeekOfDate(date));
+				String s_s_s[]=date.split("-");
+				int year=Integer.parseInt(s_s_s[0]);
+				int mon=Integer.parseInt(s_s_s[1]);
+				int day=Integer.parseInt(s_s_s[2]);
+				temp=init.mbl.getPro_ByDay(getSeason(year,mon), mon, day);
+				for(int m=0;m<temp.size();m++){
+					re.add(temp.get(m));
+				}
+			}
+			mivo=re;
+			pro_data=getProdata_HavingDays(re);
+			ctm.updateTable(pro_title, pro_data);
+		}
 		
 		String getSevenDaysLater(String da,int ds) throws ParseException{
 			String pattern = "yyyy-MM-dd";
@@ -555,5 +623,25 @@ public class Match_Process extends JPanel {
 			  
 			  return  today_plus;
 		}
-		
+		/** * 获取指定日期是星期几
+		  * 参数为null时表示获取当前日期是星期几
+		  * @param date
+		  * @return
+		 * @throws ParseException 
+		*/
+		public static String getWeekOfDate(String da) throws ParseException {      
+		    String[] weekOfDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};        
+		    Calendar calendar = Calendar.getInstance();
+		    String pattern = "yyyy-MM-dd";
+			 SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			 Date date = sdf.parse(da);
+		    if(date != null){        
+		         calendar.setTime(date);      
+		    }        
+		    int w = calendar.get(Calendar.DAY_OF_WEEK) - 1;      
+		    if (w < 0){        
+		        w = 0;      
+		    }      
+		    return weekOfDays[w];    
+		}
 }

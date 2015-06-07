@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
+import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import VO.TeamVO;
 
@@ -13,7 +14,8 @@ public interface TeamBLService {
 	public ArrayList<String> getTeamByPartition(String partition);
 	//TODO
 	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename, String item);
-
+	//获得球队 按赛季来的   整个赛季的数据
+	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String na,String seasontype);
 		
 	public ArrayList<TeamSeasonDataVO> sort_super(String season,String type,String item,String sign,int num);
 
@@ -26,6 +28,10 @@ public interface TeamBLService {
 		public ArrayList<TeamSeasonDataVO> find(String text);
 	public ArrayList<TeamSeasonDataVO> getHotTeam(String season,String item);
 	//根据赛季和筛选的条件 获取赛季热点球队，即排名前五的球队
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String na,String seasontype);
+	//蝴蝶一个球队整个赛季的比赛
+	public ArrayList<TeamMatchVO> getASeasonMatchData(String na,String season);
+	
 	/*
 	//TODO 2015/5/18 加
 	
@@ -44,11 +50,10 @@ public interface TeamBLService {
 	public ArrayList<TeamSeasonDataVO> sort(String[] condition,boolean[] reverse);  //根据多重排序的实现 属性对球队进行排序后返回
 
 	//===========================测试所需方法===========
-	public ArrayList<TeamSeasonDataVO> getHotTeam(String item);   
-	//根据筛选的条件 获取赛季热点球队，所有的  ，不仅仅是前5
 
 	
 */
+	
 	
 	
 }
