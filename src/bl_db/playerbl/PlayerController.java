@@ -171,7 +171,86 @@ public class PlayerController implements PlayerBLService{
 		
 		return list;
 	}
-
+/****************************************
+ * 
+ * @param name
+ * @param item
+ * @param season
+ * @return   获取某个赛季的  某个球员的某乡数据的总和
+ */
+	private int sumItem(String name,String item,String season){
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			ResultSet  rs;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			
+			String sqlStr="SELECT SUM("+item+") AS sum FROM player_season_data"
+					+ " where name='"+name+"' AND season='"+currentSeason+"'";
+			rs=stmt.executeQuery(sqlStr);
+			int sum=rs.getInt("sum");
+		
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		      return sum;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return 0;    //当数据库中没有对应的记录的时候，返回默认的 0	
+	}
+	
+	private int get_Last_Five(String name,String season,String item){
+		int sum=0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+		/*Select DISTINCT TOP 10 *
+		FROM 成绩表
+		orDER BY 成绩表.分数 DESC; */
+		
+		
+         Statement stmt;
+		try {
+			Connection conn;
+			ResultSet  rs;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			
+			String sqlStr="SELECT * FROM (SELECT "+item+" FROM player_season_data"
+					+ " where name='"+name+"' AND season='"+currentSeason+"') ORDER BY　data desc";
+			rs=stmt.executeQuery(sqlStr);
+			while(rs.next()){
+				sum=sum+rs.getInt("item");
+			}
+			
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		      return sum;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return 0;    //当数据库中没有对应的记录的时候，返回默认的 0	
+	}
+	
+	
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item) {
 		// TODO Auto-generated method stub
@@ -262,8 +341,12 @@ public class PlayerController implements PlayerBLService{
 		 int threeNum,SingleMatchPersonalDataVO firstMatch
 			 *******************************/
 			char chr=39;
+			int rebound_rate=0;
+			int point_rate=0;
+			int assist_rate=0;
+			
 			while(rs.next()){
-				list.add(new PlayerSeasonDataVO(season,rs.getString("name"),null,
+				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(season,rs.getString("name"),null,
 						rs.getString("team"),rs.getString("division"),
 						rs.getString("partition"),rs.getString("position"),
 						rs.getInt("match_sum"),rs.getInt("starting_sum"),
@@ -280,7 +363,8 @@ public class PlayerController implements PlayerBLService{
 						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
 						rs.getDouble("blockEff"),rs.getInt("double_sum"),
 						rs.getInt("three_sum"),
-						null));
+						null);
+				list.add(vo);
 			}
 			  stmt.close();
 		      conn.close();//使用完后就关闭数据库
@@ -590,7 +674,7 @@ public class PlayerController implements PlayerBLService{
 	
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(
-			String name, String type) {
+			String name) {
 		ArrayList<SingleMatchPersonalDataVO> list=get_A_season_records(currentSeason, name);
 		ArrayList<SingleMatchPersonalDataVO> result=new ArrayList<>();
 		
@@ -616,9 +700,11 @@ public class PlayerController implements PlayerBLService{
 		PlayerController pl=new PlayerController();
 	}
 
+	
 	@Override
 	public double[] getPlayerOneData(String name, int num, String item) {
-		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		
+		double list[]=null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException
@@ -630,31 +716,36 @@ public class PlayerController implements PlayerBLService{
          Statement stmt;
 		try {
 			Connection conn;
+			ResultSet  rs;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="SELECT * FROM (SELECT * FROM "
-					+ "palyer_season_data where season='"+currentSeason+"' AND name='"+name+"') as "
-					+ "data right join teaminfo as info on data.team =info.team";
-			ResultSet  rs=stmt.executeQuery(str);
+			
+			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data"
+					+ " where name='"+name+"' AND season='"+currentSeason+"'";
+			rs=stmt.executeQuery(sqlStr);
+			int n=rs.getInt("num");
+			
+			
+			if(num>n){
+				num=n;
+			}
+			
+			list=new double[num];
+			list=addValue(list,num);
+	        conn.commit();
+			
+			String str="SELECT "+item+" FROM palyer_season_data where "
+					+ " name='"+name+"' AND season='"+currentSeason+"'";
+			 rs=stmt.executeQuery(str);
 			char chr=39;
+			
+			int count=0;
+			
 			while(rs.next()){
-				
-				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
-						rs.getString("date"),rs.getString("name"),
-						rs.getString("team"),rs.getString("division"),
-						rs.getString("partition"), rs.getString("position"),
-						rs.getDouble("time"),rs.getInt("fieldGoal"),
-						rs.getInt("shootNum"), rs.getInt("t_fieldGoal"),
-						rs.getInt("t_shootNum"),rs.getInt("freeTrowGoal"),
-						rs.getInt("freeTrowNum"),rs.getInt("o_ReboundNum"),
-						rs.getInt("d_ReboundNum"),rs.getInt("reboundNum"),
-						rs.getInt("assistNum"),rs.getInt("stealNum"),
-						rs.getInt("blockNum"),rs.getInt("tunoverNum"), 
-						rs.getInt("foulNum"),rs.getInt("pointNum"), 
-						rs.getDouble("assistEffiency"),rs.getInt("reboundEfficiency"),
-						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
-						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
-						rs.getDouble("blockEfficiency")));
+				list[count]=rs.getDouble(item);
+				if(count==num){
+					break;
+				}
 			}
 			  stmt.close();
 		      conn.close();//使用完后就关闭数据库
@@ -663,7 +754,23 @@ public class PlayerController implements PlayerBLService{
 			e.printStackTrace();
 		}//
 		
-		return null;
+		return list;
+	}
+
+	
+	private double[] addValue(double list[],int num){
+		for(int i=0;i<num;i++){
+			list[i]=0;
+		}
+		return list;
+	}
+	
+	
+	
+	@Override
+	public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String name,
+			String season) {
+		return get_A_season_records(season,name);
 	}
 
 }

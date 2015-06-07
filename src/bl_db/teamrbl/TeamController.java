@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
+import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import bl_db.common.Sign;
 import businessService.blservice.TeamBLService;
@@ -353,6 +355,28 @@ public class TeamController implements TeamBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("Çò¶ÓÐÅÏ¢£º"+infoList.get(i).getTeam()+";"+infoList.get(i).getDivision());
 		}*/
+	}
+
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String na,
+			String seasontype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamMatchVO> getASeasonMatchData(String name, String season) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

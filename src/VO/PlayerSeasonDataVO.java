@@ -221,6 +221,7 @@ public class PlayerSeasonDataVO {
 						 last_f_rebound.add(reboundNum);
 	}
 	
+
 	
 	
 	public String getName(){
@@ -798,6 +799,27 @@ public class PlayerSeasonDataVO {
 
 	public String getLeague() {
 		return league;
+	}
+
+
+
+
+	public void setL_f_point_rate(double l_f_point_rate) {
+		this.l_f_point_rate = l_f_point_rate;
+	}
+
+
+
+
+	public void setL_f_assist_rate(double l_f_assist_rate) {
+		this.l_f_assist_rate = l_f_assist_rate;
+	}
+
+
+
+
+	public void setL_f_rebound_rate(double l_f_rebound_rate) {
+		this.l_f_rebound_rate = l_f_rebound_rate;
 	}
 
 	
