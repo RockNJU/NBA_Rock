@@ -34,6 +34,9 @@ public interface PlayerBLService{
 		public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,String type);
 		//进步最快球员，according
 		public  ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item);
+		//折线图对比某项数据，球员名称,数据数量（10场，20场，30场，整个赛季）,对应数据名称（平均得分，三分等等））	如果没有数据，则对应位置返回0
+		public double[] getPlayerOneData(String name,String num,String what);
+	
 
 	/**	
 	//需要的方法——热点方面我没有看	
@@ -44,6 +47,9 @@ public interface PlayerBLService{
 		public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,String teamAbb);    
 		//根据球队的缩写获取球队所有的球员姓名，其实你可以考虑返回所有的基本信息，这容易做到	
 	//--------------------------------------------------------------------
+	 * 
+		
+	 *
 		/////////////////////////以下接口仅为测试服务		
 		public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem);//获取最新赛季的热点球员,传入的参数是赛季和筛选项目
 		public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem,int n);//获取最新赛季的热点球员,传入筛选项目和返回数据个数
