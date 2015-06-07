@@ -29,7 +29,6 @@ import javax.swing.Icon;
 
 import businessService.blservice.PlayerBLService;
 import UI.blObject.RMIObject;
-import UI.main.ContrastPlayer;
 import UI.main.init;
 import VO.PlayerSeasonDataVO;
 import VO.PlayerVO;
