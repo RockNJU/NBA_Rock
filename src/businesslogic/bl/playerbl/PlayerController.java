@@ -18,7 +18,6 @@ public class PlayerController implements PlayerBLService {
 				
 		}
 		
-		@Override
 		public PlayerSeasonDataVO getAPlayerSeasonMatch(String season,
 				String name) {
 			ArrayList<PlayerSeasonDataVO> list=getPlayerSeasonData(season);
@@ -29,17 +28,7 @@ public class PlayerController implements PlayerBLService {
 			}
 			return null;
 		}
-		@Override
-		public PlayerInfoVO getPlayerInfo(String name) {
-			// TODO Auto-generated method stub
-			ArrayList<PlayerInfoVO> list=playerFactory.getInfoList();
-			for(int i=0;i<list.size();i++){
-				if(list.get(i).getName().equals(name)){
-					return list.get(i);
-				}
-			}
-			return null;
-		}
+		
 		@Override
 		public ArrayList<PlayerInfoVO> getAllPlayerInfo() {
 			// TODO Auto-generated method stub
@@ -66,7 +55,6 @@ public class PlayerController implements PlayerBLService {
 		}
 	///////////////////////////////////////一下部分是排序所需
 		
-		@Override
 		public ArrayList<PlayerSeasonDataVO> sort(String season,
 				String position, String partition, String item) {
 			// TODO Auto-generated method stub
@@ -150,7 +138,6 @@ public class PlayerController implements PlayerBLService {
 			// TODO Auto-generated method stub
 			return playerFactory.get_Related_Player(text);
 		}
-		@Override
 		public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,String teamAbb) {
 			// TODO Auto-generated method stub
 			return playerFactory.get_A_Team_Player(season, teamAbb);
@@ -169,7 +156,6 @@ public class PlayerController implements PlayerBLService {
 			}
 			 return result;
 		}
-		@Override
 		public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem) {
 			// TODO Auto-generated method stub
 			ArrayList<PlayerSeasonDataVO> result=new ArrayList<>();
@@ -181,7 +167,6 @@ public class PlayerController implements PlayerBLService {
 			}
 			return result;
 		}
-		@Override
 		public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(
 				String sortItem, int n) {
 			// TODO Auto-generated method stub
@@ -194,7 +179,6 @@ public class PlayerController implements PlayerBLService {
 			}
 			return result;
 		}
-		@Override
 		public ArrayList<PlayerSeasonDataVO> sort(String season,
 				String position, String partition, String[] condition,
 				boolean[] reverse) {
@@ -306,7 +290,6 @@ public class PlayerController implements PlayerBLService {
 			return result;
 		}
 		
-		@Override
 		public ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(
 				String item, int n) {
 			// TODO Auto-generated method stub
@@ -320,7 +303,6 @@ public class PlayerController implements PlayerBLService {
 			}
 			return result; 
 		}
-		@Override
 		public ArrayList<PlayerSeasonDataVO> getSortInfo(String position,
 				String league, String age, String[] condition, boolean[] reverse) {
 			
@@ -359,6 +341,53 @@ public class PlayerController implements PlayerBLService {
 			HotSort sort=new HotSort();
 			return sort.hotPlayer_Sort(result, condition,
 					  reverse);
+		}
+		@Override
+		public ArrayList<PlayerSeasonDataVO> sort_super(String season,
+				String type, String position, String partition, String item,
+				String sign, int num) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<PlayerInfoVO> getPlayerInfoByFirstChar(String firstchar) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<PlayerInfoVO> getPlayerInfo(String name) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<PlayerSeasonDataVO> sort(String season, String type,
+				String position, String partition, String item) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<PlayerSeasonDataVO> sort(String season, String type,
+				String position, String partition, String[] condition,
+				boolean[] reverse) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(
+				String name, String type) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,
+				String type) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public double[] getPlayerOneData(String name, String num, String what) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	
 }
