@@ -3,6 +3,7 @@ package UI.main;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -57,8 +58,15 @@ public class Match extends JPanel{
 				if(change.getToolTipText().equals("切换到赛程")){
 					change.setToolTipText("切换到数据");
 					change.setIcon(new ImageIcon("newpic/数据前.png"));
-					Match_Process p=new Match_Process();
-					change(p);
+					Match_Process p;
+					try {
+						p = new Match_Process();
+					
+						change(p);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}else{
 					change.setToolTipText("切换到赛程");
 					change.setIcon(new ImageIcon("newpic/赛程前.png"));

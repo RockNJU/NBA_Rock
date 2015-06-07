@@ -6,30 +6,45 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable_M;
+import UI.common.DateChooser;
 import UI.common.TeamName_Map;
 import VO.MatchInfoVO;
+
 import javax.swing.DefaultComboBoxModel;
 
 
 public class Match_Process extends JPanel {
 
+	String Mon_Week="Month";
 	JButton ChooseByMonth;
 	JButton ChooseByWeek;
+	
+	DateChooser dc;
+	JLabel dateshow;
+	JButton lastsevendays;
+	JButton nextsevendays;
 	JComboBox teams;
 	JComboBox pro_season, pro_season1;
 	JComboBox pro_month;
-	JComboBox pro_date;
 	JComboBox pro_day;
 	JButton sort1,sort2;
 	String[] pro_title={"日期","类型","主队","比分","客队","链接","",""};//这个日期是（XX日XX点）
@@ -39,12 +54,69 @@ public class Match_Process extends JPanel {
 	int[] havingMatchMonths={10,11,12,1,2,3,4,5,6};
 	/**
 	 * Create the panel.
+	 * @throws ParseException 
 	 */
-	public Match_Process() {
+	public Match_Process() throws ParseException {
 		setLayout(null);
 		setSize(1060, 600);
 		setOpaque(false);
+
+		Date da=new Date();		
+		dc=new DateChooser(180,35,da);
+		dc.setSize(120, 34);
+		dc.setLocation(38, 45);
+		add(dc);
+		dc.setVisible(false);
 		
+		dateshow=new JLabel();
+		dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
+		dateshow.setLocation(324, 45);
+		dateshow.setFont(new Font("华文细黑", Font.BOLD, 15));
+		dateshow.setSize(193, 30);
+		add(dateshow);
+		dateshow.setVisible(false);
+		lastsevendays=new JButton();
+		lastsevendays.setText("\u524D\u4E03\u5929");
+		lastsevendays.setLocation(199, 45);
+		lastsevendays.setSize(100, 30);
+		add(lastsevendays);
+		lastsevendays.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String temp[]=dateshow.getText().split("至");
+				try {
+					dateshow.setText(getSevenDaysBefore(temp[0],7)+"至"+getSevenDaysBefore(temp[1],7));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		lastsevendays.setVisible(false);
+		nextsevendays=new JButton();
+		nextsevendays.setLocation(552, 45);
+		nextsevendays.setText("\u540E\u4E03\u5929");
+		nextsevendays.setSize(100, 30);
+		add(nextsevendays);
+		nextsevendays.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String temp[]=dateshow.getText().split("至");
+				try {
+					dateshow.setText(getSevenDaysLater(temp[0],7)+"至"+getSevenDaysLater(temp[1],7));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+		});
+		nextsevendays.setVisible(false);
 		/**
 		 * TODO 赛季
 		 */
@@ -197,8 +269,19 @@ public class Match_Process extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
+				String se=pro_season.getSelectedItem().toString();
+                int m=Integer.parseInt(pro_month.getSelectedItem().toString().substring(0, pro_month.getSelectedItem().toString().length()-1));			
+				String temp[];
+				if(pro_day.getSelectedItem().toString().equals("所有日期")){
+					temp=init.mbl.getDatesOfPro_ByMonth(se,m);
+				}else{
+					temp=new String[1];
+					temp[0]=getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString()));
+				}		
+			    mivo=init.mbl.getPro_ByMonth(se, m);
+			    mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);
+			    pro_data=getProdata_HavingDays(mivo);
+			    ctm.updateTable(pro_title, pro_data);
 				
 			}
 
@@ -235,9 +318,11 @@ public class Match_Process extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
-				
+                String tabb=teams.getSelectedItem().toString();	
+					
+			    mivo=changeProdata_ForATeam(havingMatchMonths, tabb);
+			    pro_data=getProdata_HavingMonths(mivo);
+			    ctm.updateTable(pro_title, pro_data);
 			}
 
 		});
@@ -246,13 +331,56 @@ public class Match_Process extends JPanel {
 		ChooseByMonth.setText("按月查看");
 		ChooseByMonth.setSize(80, 30);
 		add(ChooseByMonth);
+		ChooseByMonth.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Mon_Week="Month";
+				pro_season.setVisible(true);
+				pro_season1.setVisible(true);
+				pro_month.setVisible(true);				
+				pro_day.setVisible(true);
+				teams.setVisible(true);
+				sort1.setVisible(true);
+				sort2.setVisible(true);
+				dc.setVisible(false);
+				dateshow.setVisible(false);
+				lastsevendays.setVisible(false);
+				nextsevendays.setVisible(false);
+				
+			}
+			
+		});
 		
 		ChooseByWeek=new JButton();
 		ChooseByWeek.setLocation(959, 21);
 		ChooseByWeek.setText("按周查看");
 		ChooseByWeek.setSize(80, 30);
 		add(ChooseByWeek);
+		ChooseByWeek.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Mon_Week="Week";
+				pro_season.setVisible(false);
+				pro_season1.setVisible(false);
+				pro_month.setVisible(false);				
+				pro_day.setVisible(false);
+				teams.setVisible(false);
+				sort1.setVisible(false);
+				sort2.setVisible(false);
+				dc.setVisible(true);
+				dateshow.setVisible(true);
+				lastsevendays.setVisible(true);
+				nextsevendays.setVisible(true);
+				
+			}
+			
+		});
 		
+		//mivo=init.mbl.getPro_NotOver(init.defaultseason, 6);
+		//String[] tempdates=init.mbl.getDatesOfPro_ByMonth(init.defaultseason, 6);
+		//pro_data=getProdata_HavingDays(changeProdata_ChooseAllTeam_ByDate(mivo,tempdates));
 		ctm=new CreateTable_M(pro_title, pro_data,10, 123,1040, 480, 25,new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(ctm);
 		
@@ -369,7 +497,7 @@ public class Match_Process extends JPanel {
 		}
 		
 		//将每个月作为一个matchInfoVO加入
-		public ArrayList<MatchInfoVO> changeProdata_ForATeam(ArrayList<MatchInfoVO> da,int[] havingMatchMonths,String teamabb){
+		public ArrayList<MatchInfoVO> changeProdata_ForATeam(int[] havingMatchMonths,String teamabb){
 			ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
 			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
 			ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
@@ -383,4 +511,49 @@ public class Match_Process extends JPanel {
 			}
 			return re;		
 		}
+		
+		public String getYear(String season,int month){
+			String[] y=season.split("-");
+			if(month==1||month==2||month==3||month==4||month==5||month==6||month==7||month==8){
+				return "20"+y[1];
+			}else{
+				return "20"+y[0];
+			}
+		}
+		public String change(int a){
+			DecimalFormat df = new DecimalFormat("00");    
+			String temp=String.valueOf(df.format(a));
+			return temp;
+		}
+		
+		
+		String getSevenDaysLater(String da,int ds) throws ParseException{
+			String pattern = "yyyy-MM-dd";
+			  SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			 Date date = sdf.parse(da);
+			  Calendar c = Calendar.getInstance();
+			  c.setTime(date);
+			  Date today = c.getTime();
+			  for(int i=0;i<ds;i++){	
+				  c.add(Calendar.DAY_OF_YEAR, +1);			 
+			  }
+			  String today_plus =sdf.format( c.getTime());
+			  
+			  return  today_plus;
+		}
+		String getSevenDaysBefore(String da,int ds) throws ParseException{
+			 String pattern = "yyyy-MM-dd";
+			  SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			 Date date = sdf.parse(da);
+			  Calendar c = Calendar.getInstance();
+			  c.setTime(date);
+			  Date today = c.getTime();
+			  for(int i=0;i<ds;i++){	
+				  c.add(Calendar.DAY_OF_YEAR, -1);			 
+			  }
+			  String today_plus =sdf.format( c.getTime());
+			  
+			  return  today_plus;
+		}
+		
 }

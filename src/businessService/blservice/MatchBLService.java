@@ -5,11 +5,13 @@ import VO.MatchInfoVO;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
 public interface MatchBLService {
+	//获得默认赛季、本月的未进行的所有比赛的赛程
+	public ArrayList<MatchInfoVO> getPro_NotOver(String season,int month);
+	
 	   //获得赛程（某赛季、某月的赛程）所需要的方法(no need)
-	   //public ArrayList<MatchInfoVO> getPro_ByMonth(String season,String month);
+	   public ArrayList<MatchInfoVO> getPro_ByMonth(String season,int month);
 	   
 	   //对上面获得的ArrayList<MatchInfoVO>进行处理,获得   （某赛季、某月的赛程）【是上个方法的返回值】中有比赛的日期
-	   //
 	   public String[] getDatesOfPro_ByMonth(String season,int month);
 	   //获得赛程（某赛季、某月、某天的赛程）所需要的方法    month和day可以商榷
 	   public ArrayList<MatchInfoVO> getPro_ByDay(String season,int month,int day);
@@ -38,6 +40,9 @@ public interface MatchBLService {
 		public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,int n);//获取当天的热点球员，传入的是热点项目
 		
 
+		
+		
+		
 		
 		/*
 	
