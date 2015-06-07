@@ -53,8 +53,8 @@ public class temp_linechart extends JFrame {
 	
 	PlayerSeasonDataVO playera;
 	PlayerSeasonDataVO playerb;
-	RMIObject rmi = new RMIObject();
-	PlayerBLService pbs = rmi.getPlayerObject();
+	//RMIObject rmi = new RMIObject();
+	//PlayerBLService pbs = rmi.getPlayerObject();
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -115,7 +115,7 @@ public class temp_linechart extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setBounds(0, 0, 1042, 580);
-		contentPane.setBackground(init.syslightblue);
+		contentPane.setBackground(new Color(183,221,222));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
