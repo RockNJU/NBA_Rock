@@ -264,7 +264,7 @@ public class PlayerController implements PlayerBLService{
 			char chr=39;
 			while(rs.next()){
 				list.add(new PlayerSeasonDataVO(season,rs.getString("name"),null,
-						rs.getString("teamAbb"),rs.getString("division"),
+						rs.getString("team"),rs.getString("division"),
 						rs.getString("partition"),rs.getString("position"),
 						rs.getInt("match_sum"),rs.getInt("starting_sum"),
 						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
@@ -461,7 +461,8 @@ public class PlayerController implements PlayerBLService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
-		return new PlayerSeasonDataVO(season, name, null, "??", "??", "??", "??",
+		return new PlayerSeasonDataVO(season, name,new PlayerInfoVO(name, "??","??","??"
+				, "??","??", 0, 0,"??","??"), "??", "??", "??", "??",
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);/* 当在数据库中没有查询到的情况下  ,返回一个表示未知的数据*/
 	}
@@ -495,7 +496,8 @@ public class PlayerController implements PlayerBLService{
 		return vo;
 	}
 	
-	private ArrayList<PlayerSeasonDataVO> sort_position(ArrayList<PlayerSeasonDataVO>list,String position){
+	private ArrayList<PlayerSeasonDataVO> sort_position(
+			ArrayList<PlayerSeasonDataVO>list,String position){
 		/*这个地方有待思考*/
 		ArrayList<PlayerSeasonDataVO> vo=new ArrayList<>();
 		for(int i=0;i<list.size();i++){
@@ -532,11 +534,74 @@ public class PlayerController implements PlayerBLService{
 		 //当数据库中没有对应球员的基础数据时，返回一个表示未知的信息
 	}
 
+	
+	private ArrayList<SingleMatchPersonalDataVO> get_A_season_records(String season,
+			String name) {
+		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="SELECT * FROM (SELECT * FROM "
+					+ "palyer_season_data where season='"+currentSeason+"' AND name='"+name+"') as "
+					+ "data right join teaminfo as info on data.team =info.team";
+			ResultSet  rs=stmt.executeQuery(str);
+			char chr=39;
+			while(rs.next()){
+				
+				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
+						rs.getString("date"),rs.getString("name"),
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"), rs.getString("position"),
+						rs.getDouble("time"),rs.getInt("fieldGoal"),
+						rs.getInt("shootNum"), rs.getInt("t_fieldGoal"),
+						rs.getInt("t_shootNum"),rs.getInt("freeTrowGoal"),
+						rs.getInt("freeTrowNum"),rs.getInt("o_ReboundNum"),
+						rs.getInt("d_ReboundNum"),rs.getInt("reboundNum"),
+						rs.getInt("assistNum"),rs.getInt("stealNum"),
+						rs.getInt("blockNum"),rs.getInt("tunoverNum"), 
+						rs.getInt("foulNum"),rs.getInt("pointNum"), 
+						rs.getDouble("assistEffiency"),rs.getInt("reboundEfficiency"),
+						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
+						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
+						rs.getDouble("blockEfficiency")));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return list;
+		
+	}
+	
+	
+	
+	
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(
 			String name, String type) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<SingleMatchPersonalDataVO> list=get_A_season_records(currentSeason, name);
+		ArrayList<SingleMatchPersonalDataVO> result=new ArrayList<>();
+		
+		int count=0;
+		for(int i=0;i<list.size();i++){
+			result.add(list.get(i));
+			count++;
+			if(count==5)
+				break;			
+		}	
+		return list;
 	}
 
 	@Override
@@ -549,6 +614,56 @@ public class PlayerController implements PlayerBLService{
 	
 	public static void main(String args[]){
 		PlayerController pl=new PlayerController();
+	}
+
+	@Override
+	public double[] getPlayerOneData(String name, int num, String item) {
+		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="SELECT * FROM (SELECT * FROM "
+					+ "palyer_season_data where season='"+currentSeason+"' AND name='"+name+"') as "
+					+ "data right join teaminfo as info on data.team =info.team";
+			ResultSet  rs=stmt.executeQuery(str);
+			char chr=39;
+			while(rs.next()){
+				
+				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
+						rs.getString("date"),rs.getString("name"),
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"), rs.getString("position"),
+						rs.getDouble("time"),rs.getInt("fieldGoal"),
+						rs.getInt("shootNum"), rs.getInt("t_fieldGoal"),
+						rs.getInt("t_shootNum"),rs.getInt("freeTrowGoal"),
+						rs.getInt("freeTrowNum"),rs.getInt("o_ReboundNum"),
+						rs.getInt("d_ReboundNum"),rs.getInt("reboundNum"),
+						rs.getInt("assistNum"),rs.getInt("stealNum"),
+						rs.getInt("blockNum"),rs.getInt("tunoverNum"), 
+						rs.getInt("foulNum"),rs.getInt("pointNum"), 
+						rs.getDouble("assistEffiency"),rs.getInt("reboundEfficiency"),
+						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
+						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
+						rs.getDouble("blockEfficiency")));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return null;
 	}
 
 }

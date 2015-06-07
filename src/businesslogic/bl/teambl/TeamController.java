@@ -166,4 +166,26 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 		return null;
 	}
 
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String na,
+			String seasontype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamMatchVO> getASeasonMatchData(String name, String season) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

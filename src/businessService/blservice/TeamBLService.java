@@ -28,9 +28,9 @@ public interface TeamBLService {
 		public ArrayList<TeamSeasonDataVO> find(String text);
 	public ArrayList<TeamSeasonDataVO> getHotTeam(String season,String item);
 	//根据赛季和筛选的条件 获取赛季热点球队，即排名前五的球队
-	public ArrayList<TeamMatchVO> getLastFiveMatchData(String na,String seasontype);
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name);
 	//蝴蝶一个球队整个赛季的比赛
-	public ArrayList<TeamMatchVO> getASeasonMatchData(String na,String season);
+	public ArrayList<TeamMatchVO> getASeasonMatchData(String name,String season);
 	
 	/*
 	//TODO 2015/5/18 加

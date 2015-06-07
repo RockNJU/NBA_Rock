@@ -374,7 +374,7 @@ public class PlayerController implements PlayerBLService {
 		}
 		@Override
 		public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(
-				String name, String type) {
+				String name) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -385,7 +385,13 @@ public class PlayerController implements PlayerBLService {
 			return null;
 		}
 		@Override
-		public double[] getPlayerOneData(String name, String num, String what) {
+		public double[] getPlayerOneData(String name, int num, String what) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(
+				String na, String season) {
 			// TODO Auto-generated method stub
 			return null;
 		}

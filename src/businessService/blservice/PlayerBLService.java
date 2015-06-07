@@ -29,13 +29,13 @@ public interface PlayerBLService{
 		//TODO
 		//由于你说你准备把vo里近五场比赛删掉，我也不管了，我要的方法我都写出来
 		//获得近五场——只有姓名，赛季当前默认，赛季类型就可以选择吧，这样我界面方便点
-		public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(String name,String type);
+		public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(String name);
 		//获得一个球员所有赛季的数据
 		public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,String type);
 		//进步最快球员，according
 		public  ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item);
 		//折线图对比某项数据，球员名称,数据数量（10场，20场，30场，整个赛季）,对应数据名称（平均得分，三分等等））	如果没有数据，则对应位置返回0
-		public double[] getPlayerOneData(String name,String num,String what);
+		public double[] getPlayerOneData(String name,int num,String what);
 		//获得一个球员整个赛季的比赛
 		public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String na, String season);
 	
