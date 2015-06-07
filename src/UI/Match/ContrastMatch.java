@@ -1,4 +1,4 @@
-package UI.Player;
+package UI.Match;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +23,7 @@ import UI.main.init;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
-public class ContrastPlayer extends JDialog {
+public class ContrastMatch extends JDialog {
 	String[] outputcontent = new String[8];
 	int now = 0;
 	int chossentime = 0;
@@ -33,7 +33,7 @@ public class ContrastPlayer extends JDialog {
 	/**
 	 * Create the panel.
 	 */
-	public ContrastPlayer() {
+	public ContrastMatch() {
 		getContentPane().setLayout(null);
 		setSize(500,350);
 		setUndecorated(true);// 取消窗体修饰效果************
@@ -49,18 +49,18 @@ public class ContrastPlayer extends JDialog {
 		label.setBounds(10, 0, 188, 36);
 		contentPane.add(label);
 		
-		final JRadioButton 参赛场数 = new JRadioButton("参赛场数");
-		参赛场数.setBounds(20, 31, 106, 36);
-		参赛场数.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
-		参赛场数.setOpaque(false);
-		contentPane.add(参赛场数);
-		jbs.add(参赛场数);
-		final JRadioButton 先发场数 = new JRadioButton("\u5148\u53D1\u573A\u6570");
-		先发场数.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
-		先发场数.setBounds(133, 31, 95, 36);
-		先发场数.setOpaque(false);
-		contentPane.add(先发场数);
-		jbs.add(先发场数);
+		final JRadioButton 比赛得分 = new JRadioButton("\u6BD4\u8D5B\u5F97\u5206");
+		比赛得分.setBounds(20, 31, 106, 36);
+		比赛得分.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
+		比赛得分.setOpaque(false);
+		contentPane.add(比赛得分);
+		jbs.add(比赛得分);
+		final JRadioButton 比赛失分 = new JRadioButton("\u6BD4\u8D5B\u5931\u5206");
+		比赛失分.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
+		比赛失分.setBounds(133, 31, 95, 36);
+		比赛失分.setOpaque(false);
+		contentPane.add(比赛失分);
+		jbs.add(比赛失分);
 		final JRadioButton 篮板 = new JRadioButton("\u7BEE\u677F");
 		篮板.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		篮板.setBounds(242, 31, 67, 36);
@@ -274,10 +274,10 @@ public class ContrastPlayer extends JDialog {
 		for(final JRadioButton jrtemp:jbs){
 			jrtemp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(chossentime<=7&&(jrtemp.isSelected()==true)){
+					if(chossentime<7&&(jrtemp.isSelected()==true)){
 						chossentime++;
 					}
-					else if(chossentime>7&&(jrtemp.isSelected()==true)){
+					else if(chossentime>=7&&(jrtemp.isSelected()==true)){
 						jrtemp.setSelected(false);
 					}
 					else if((jrtemp.isSelected()==false)){

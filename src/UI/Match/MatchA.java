@@ -3,6 +3,8 @@ package UI.Match;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -12,9 +14,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import UI.Player.ContrastPlayer;
+import UI.main.init;
 
 public class MatchA extends JPanel {
 	
@@ -266,6 +272,18 @@ public class MatchA extends JPanel {
 		
 		//¶Ô±È
 		paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ContrastMatch cp = new ContrastMatch();
+				cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
+				cp.setVisible(true);
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
+		btnNewButton.setBounds(491, 210, 60, 23);
+		this.add(btnNewButton);		
 		
 	}
 	

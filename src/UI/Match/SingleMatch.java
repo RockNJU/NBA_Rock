@@ -79,12 +79,16 @@ public class SingleMatch extends JDialog {
 		 * 可以对初始界面做出欢迎字样的改进
 		 */
 		
+
+
+		
 		rightpanel=new MatchA();
 		rightpanel.setBounds(9,30,1042,582);
 		rightpanel.setOpaque(false);
 		rightpanel.setLayout(null);
 		getContentPane().add(rightpanel);
 
+		
 		
 		A = new JButton(new ImageIcon("newpic/球员信息-平常.png"));
     	A.setToolTipText("\u57FA\u672C\u4FE1\u606F");
@@ -115,6 +119,15 @@ public class SingleMatch extends JDialog {
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
+            	
+        		rightpanel.removeAll();
+        		datastatistics da = new datastatistics();
+        		da.setBounds(9,30,1042,582);
+        		da.setOpaque(true);
+        		da.setLayout(null);
+        		getContentPane().add(da);
+        		
+            	
             	A.setToolTipText("球员信息 ");
             	A.setIcon(new ImageIcon("newpic/球员信息-选中.png"));
             	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
@@ -249,6 +262,8 @@ public class SingleMatch extends JDialog {
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
+
+            	
             	D.setIcon(new ImageIcon("newpic/热门信息-选中.png"));
             	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
             	A.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
