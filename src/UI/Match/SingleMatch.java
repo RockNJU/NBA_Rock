@@ -1,6 +1,7 @@
 package UI.Match;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -33,20 +34,22 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class SingleMatch extends JDialog {
-
 	private final JPanel contentPanel = new JPanel();
-
 	
-	public JPanel rightpanel;
+	public JPanel basicmatch;
+	public JPanel datastastic;
 	public JButton A;
 	public JButton B;
 	public JButton C;
 	public JButton D;
 
-	/**
-	 * Launch the application.
-	 */
+	 final CardLayout cardLayout = new CardLayout();
+	JPanel jp = new JPanel();
+
 	public static void main(String[] args) {
 		try {
             UIManager
@@ -63,9 +66,7 @@ public class SingleMatch extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
+
 	@SuppressWarnings("null")
 	public SingleMatch(String name) {
 		getContentPane().setLayout(null);
@@ -73,24 +74,28 @@ public class SingleMatch extends JDialog {
 		setUndecorated(true);// 取消窗体修饰效果************		
 		setLocation(UI.main.init.SysStart_X,UI.main.init.SysStart_Y+70);
 
-		/**
-		 * TODO 
-		 * 
-		 * 可以对初始界面做出欢迎字样的改进
-		 */
-		
+		jp.setBounds(9,30,1042,582);
+		jp.setLayout(cardLayout);
+		getContentPane().add(jp);
 
+		basicmatch=new MatchA();
+		basicmatch.setBounds(9,30,1042,582);
+		basicmatch.setOpaque(false);
+		basicmatch.setLayout(null);
+		jp.add(basicmatch,"基础");
 
-		
-		rightpanel=new MatchA();
-		rightpanel.setBounds(9,30,1042,582);
-		rightpanel.setOpaque(false);
-		rightpanel.setLayout(null);
-		getContentPane().add(rightpanel);
-
-		
+		datastastic = new datastatistics();
+		datastastic.setBounds(9,30,1042,582);
+		datastastic.setOpaque(false);
+		datastastic.setLayout(null);
+		jp.add(datastastic,"统计");
 		
 		A = new JButton(new ImageIcon("newpic/球员信息-平常.png"));
+		A.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 cardLayout.previous(jp);
+			}
+		});
     	A.setToolTipText("\u57FA\u672C\u4FE1\u606F");
 		A.setBounds(228, 0, 112, 30);
 		A.setContentAreaFilled(false);
@@ -120,12 +125,7 @@ public class SingleMatch extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
             	
-        		rightpanel.removeAll();
-        		datastatistics da = new datastatistics();
-        		da.setBounds(9,30,1042,582);
-        		da.setOpaque(true);
-        		da.setLayout(null);
-        		getContentPane().add(da);
+
         		
             	
             	A.setToolTipText("球员信息 ");

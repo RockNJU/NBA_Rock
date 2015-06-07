@@ -285,6 +285,13 @@ public class MatchA extends JPanel {
 		btnNewButton.setBounds(491, 210, 60, 23);
 		this.add(btnNewButton);		
 		
+		ImageIcon image = new ImageIcon("newpic/±ÈÈü»ù´¡.jpg");
+		image.setImage(image.getImage().getScaledInstance(1042, 580,Image.SCALE_DEFAULT)); 		
+		JLabel photo = new JLabel(image);		
+		photo.setBounds(0,0, 1042, 580);		
+		photo.setOpaque(false);
+		this.add(photo);
+		
 	}
 	
 	public void paintunder(int num,String[] contrat,double[] dataforB,double[] dataforA){
