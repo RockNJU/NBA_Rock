@@ -1,4 +1,4 @@
-package UI.Player;
+package UI.main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,7 +18,6 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import UI.common.SortItem_Map;
-import UI.main.init;
 
 import javax.swing.JRadioButton;
 import javax.swing.JButton;

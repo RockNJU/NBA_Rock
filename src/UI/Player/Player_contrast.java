@@ -1,4 +1,4 @@
-package UI.main;
+package UI.Player;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -28,8 +28,9 @@ import javax.swing.JButton;
 import javax.swing.Icon;
 
 import businessService.blservice.PlayerBLService;
-import UI.Player.ContrastPlayer;
 import UI.blObject.RMIObject;
+import UI.main.ContrastPlayer;
+import UI.main.init;
 import VO.PlayerSeasonDataVO;
 import VO.PlayerVO;
 
@@ -40,8 +41,8 @@ public class Player_contrast extends JFrame {
 	
 	PlayerSeasonDataVO playera;
 	PlayerSeasonDataVO playerb;
-	RMIObject rmi = new RMIObject();
-	PlayerBLService pbs = rmi.getPlayerObject();
+//	RMIObject rmi = new RMIObject();
+//	PlayerBLService pbs = rmi.getPlayerObject();
 	
 	String[] paintcontent = {"球队胜率","得分","助攻","篮板","三分","罚球","投篮"};
 	int paintcontentnum = 7;
