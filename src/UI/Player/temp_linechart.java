@@ -193,7 +193,7 @@ public class temp_linechart extends JFrame {
 		
 
 		二十场.setIcon(new ImageIcon("newpic//20场.png"));
-		二十场.setBounds(124, 10, 51, 23);
+		二十场.setBounds(68, 10, 51, 23);
 		contentPane.add(二十场);
 		二十场.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,7 +215,7 @@ public class temp_linechart extends JFrame {
 		
 
 		三十场.setIcon(new ImageIcon("newpic//30场.png"));
-		三十场.setBounds(68, 10, 51, 23);
+		三十场.setBounds(124, 10, 51, 23);
 		contentPane.add(三十场);
 		三十场.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
