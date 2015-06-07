@@ -46,7 +46,7 @@ public class MatchController implements MatchBLService{
 	    	  }
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),
-	    			  rs.getString("score"),rs.getString("type"),list));
+	    			  rs.getString("score"),rs.getString("type"),score, list));
 	        //return vo;
 	      }
 	      conn.close();
@@ -85,7 +85,7 @@ public class MatchController implements MatchBLService{
 	    	  }
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),
-	    			  rs.getString("score"),rs.getString("type"),list));
+	    			  rs.getString("score"),rs.getString("type"),score, list));
 	        //return vo;
 	      }
 	      conn.close();

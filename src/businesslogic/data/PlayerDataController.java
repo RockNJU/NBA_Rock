@@ -81,14 +81,15 @@ public class PlayerDataController implements PlayerDataService {
 		        		if(!strList.get(7).equals("R")){
 		        			exp=Integer.parseInt(strList.get(7));
 		        		}
-		        		/*String name,int num,String p,String height,
-			double weight,String birth,int age ,int exp
-			,String school*/
+		        		/*String name,String num,String p,String height,
+			String weight,String birth,int age ,int exp
+			,String school,String Ename
+		        		 * */
 		        		//System.out.println(i+"-------"+strList.get(0)+";"+strList.get(1)+";"+strList.get(4)+";"+strList.get(6));
 		        		playerList.add(new PlayerInfoVO(strList.get(0) ,strList.get(1),
-		        				strList.get(2),strList.get(3),Double.parseDouble(strList.get(4)),
+		        				strList.get(2),strList.get(3),strList.get(4),
 		        				strList.get(5),Integer.parseInt(strList.get(6)),
-		        				exp,strList.get(8)));
+		        				exp,strList.get(8),"--"));
 		        		strList.clear();
 		        	}//end for
 		  
