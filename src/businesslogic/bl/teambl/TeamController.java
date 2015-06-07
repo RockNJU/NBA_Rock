@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import businessService.blservice.TeamBLService;
 import businesslogic.bl.center.HotSort;
+import VO.PlayerSeasonDataVO;
 import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
@@ -29,24 +30,20 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 		return teamFactory.get_A_teamInfo(teamAbb);
 	}
 
-	@Override
 	public ArrayList<TeamSeasonDataVO> getAllTeamSeasonData(String season) {
 		// TODO Auto-generated method stub
 		return teamFactory.getALLTeamSeasonData(season);
 	}
 
-	@Override
 	public TeamSeasonDataVO get_A_TeamSeasonData(String season, String teamAbb) {
 		// TODO Auto-generated method stub
 		return teamFactory.get_A_TeamSeasonData(season, teamAbb);
 	}
 
-	@Override
 	public double getTeamWinNum(String season, String teamAbb) {
 		// TODO Auto-generated method stub
 		return teamFactory.get_A_TeamSeasonData(season, teamAbb).getWinRate();
 	}
-	@Override
 	public ArrayList<TeamSeasonDataVO> sort(String season, String sortItem) {
 		// TODO Auto-generated method stub
 		ArrayList<TeamSeasonDataVO> list=teamFactory.getALLTeamSeasonData(season);
@@ -77,14 +74,12 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 	}
 
 
-	@Override
 	public TeamInfoVO get_A_TeamInfo(String s,String teamAbb) {
 		// TODO Auto-generated method stub
 		return teamFactory.get_A_teamInfo(teamAbb);
 	}
 
 
-	@Override
 	public ArrayList<TeamSeasonDataVO> sort(String season, String[] condition,
 			boolean[] reverse) {
 		ArrayList<TeamSeasonDataVO> list=teamFactory.getALLTeamSeasonData(season);
@@ -93,7 +88,6 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 	}
 
 
-	@Override
 	public ArrayList<TeamSeasonDataVO> sort(String[] condition,
 			boolean[] reverse) {
 		ArrayList<TeamSeasonDataVO> list=teamFactory.getALLTeamSeasonData(
@@ -103,7 +97,6 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 	}
 
 
-	@Override
 	public ArrayList<TeamSeasonDataVO> getHotTeam(String item) {
 		ArrayList<TeamSeasonDataVO> list=teamFactory.getALLTeamSeasonData(
 				teamFactory.getLastDay().getSeason());
@@ -124,6 +117,53 @@ public class TeamController implements TeamBLService,TeamInfo_player{
 			}
 		}
 		return result;
+	}
+
+
+	@Override
+	public String getdefaultseason() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename,
+			String item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> sort_super(String season, String type,
+			String item, String sign, int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> getAllTeamSeasonData(String season,
+			String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> sort(String season, String type,
+			String sortItem) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<TeamSeasonDataVO> sort(String season, String type,
+			String[] condition, boolean[] reverse) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

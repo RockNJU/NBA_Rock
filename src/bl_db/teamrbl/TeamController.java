@@ -316,8 +316,9 @@ public class TeamController implements TeamBLService{
 
 	@Override
 	public ArrayList<TeamSeasonDataVO> getHotTeam(String season, String item) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<TeamSeasonDataVO> list=getTeam_seasonData(season,"³£¹æÈü");
+		HotSort sort=new HotSort();
+		return sort.hotTeam_Sort(list, item);
 	}
 
 	@Override

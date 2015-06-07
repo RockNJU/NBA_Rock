@@ -23,7 +23,7 @@ public class TeamDataFactory {
 	 public TeamInfoVO get_A_teamInfo(String teamAbb){
 		 for(int i=0;i<infoList.size();i++){
 			 if(infoList.get(i).getTeamAbb().equals(teamAbb)|
-					 infoList.get(i).getFullName().equals(teamAbb)){
+					 infoList.get(i).getTeam().equals(teamAbb)){
 				 return infoList.get(i);
 			 }
 		 }

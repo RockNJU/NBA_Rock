@@ -2,6 +2,7 @@ package businesslogic.bl.playerbl;
 
 import java.util.ArrayList;
  
+
 import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
 import VO.SingleMatchPersonalDataVO;
@@ -37,7 +38,12 @@ public class PlayerSeasonData {
 				return infoList.get(i);
 						
 		}
-		return new PlayerInfoVO(name, "--", "--", "--", 0, "--", 0, 0, "--");
+		
+		/*String name,String num,String p,String height,
+			String weight,String birth,int age ,int exp
+			,String school,String Ename*/
+		
+		return new PlayerInfoVO(name, "--", "--", "--", "--", "--", 0, 0, "--","--");
 	}
 	
 	public void updatePlayerSeasonData(SingleMatchPersonalDataVO vo){

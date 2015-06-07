@@ -1,8 +1,10 @@
 package businesslogic.bl.matchbl;
 
 import java.util.ArrayList;
+
 import businessService.blservice.MatchBLService;
 import businesslogic.bl.center.HotSort;
+import VO.MatchInfoVO;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
 
@@ -32,7 +34,6 @@ public class MatchController implements MatchBLService{
 		return matchFactory.get_A_Day_match(date);
 	}
 
-	@Override
 	public MatchVO getMatchByTeam(String date, String team) {
 		// TODO Auto-generated method stub
 		return matchFactory.get_A_match(date, team);
@@ -60,6 +61,49 @@ public class MatchController implements MatchBLService{
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,
 			int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_NotOver(String season, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_ByMonth(String season, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String[] getDatesOfPro_ByMonth(String season, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_ByDay(String season, int month, int day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_ForTeam(String season, int month,
+			String teamabb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLastHavingMatchDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getNextHavingMatchDate(String date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
