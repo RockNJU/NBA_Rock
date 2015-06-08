@@ -353,7 +353,7 @@ public class CreateTable extends JPanel{
 			           
 			         }
 			         header.setResizingColumn(column); // 此行很重要
-			         column.setWidth(12+width+myTable.getIntercellSpacing().width);
+			         column.setWidth(width+myTable.getIntercellSpacing().width);
 			        
 			     }
 		}

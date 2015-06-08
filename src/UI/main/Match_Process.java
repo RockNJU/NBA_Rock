@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +31,7 @@ import UI.common.TeamName_Map;
 import VO.MatchInfoVO;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.Border;
 
 
 public class Match_Process extends JPanel {
@@ -40,6 +42,7 @@ public class Match_Process extends JPanel {
 	
 	DateChooser dc;
 	JLabel dateshow;
+	JButton sure;
 	JButton lastsevendays;
 	JButton nextsevendays;
 	JComboBox teams;
@@ -64,51 +67,44 @@ public class Match_Process extends JPanel {
 		Date da=new Date();		
 		dc=new DateChooser(180,35,da);
 		dc.setSize(120, 34);
-		dc.setLocation(71, 61);
+		dc.setLocation(627, 61);
 		add(dc);
 		dc.setVisible(false);
-		dc.showDate.addMouseListener(new MouseListener(){
+		
+		sure=new JButton("sure");
+		sure.setBounds(782, 65, 100, 30);
+		add(sure);
+		sure.addActionListener(new ActionListener(){
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
+					
 					dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}			
+				}	
 			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub				
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub			
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub			
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub			
-			}		
+			
 		});
+		sure.setVisible(false);
 		
 		dateshow=new JLabel();
 		dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
-		dateshow.setLocation(366, 61);
-		dateshow.setFont(new Font("华文细黑", Font.BOLD, 17));
+		dateshow.setLocation(172, 65);
+		dateshow.setFont(new Font("华文细黑", Font.BOLD, 18));
 		dateshow.setForeground(init.syspurpleblue);
 		dateshow.setSize(227, 30);
 		add(dateshow);
+		dateshow.setOpaque(true);
+		dateshow.setBorder(BorderFactory.createLineBorder(init.sysdarkblue));
+		
 		dateshow.setVisible(false);
 		lastsevendays=new JButton();
 		lastsevendays.setText("\u524D\u4E03\u5929");
-		lastsevendays.setLocation(232, 61);
+		lastsevendays.setLocation(38, 65);
 		lastsevendays.setSize(100, 30);
 		add(lastsevendays);
 		lastsevendays.addActionListener(new ActionListener(){
@@ -129,7 +125,7 @@ public class Match_Process extends JPanel {
 		});
 		lastsevendays.setVisible(false);
 		nextsevendays=new JButton();
-		nextsevendays.setLocation(628, 61);
+		nextsevendays.setLocation(428, 65);
 		nextsevendays.setText("\u540E\u4E03\u5929");
 		nextsevendays.setSize(100, 30);
 		add(nextsevendays);
@@ -250,7 +246,7 @@ public class Match_Process extends JPanel {
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
 		TeamName_Map ma=new TeamName_Map();
 	    for(int i=0;i<teamsarray.length;i++){
-	    	ImageIcon image=new ImageIcon("newpic/TEAMPNG/"+teamsarray[i]+".png");
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
 	    	image.setImage(image.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
 	    	content.put(ma.getFullName(teamsarray[i]), image);
 	    }
@@ -258,7 +254,7 @@ public class Match_Process extends JPanel {
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
 		teams.setRenderer(renderer);
 	     
-		teams.setBounds(738, 61, 164, 42);		
+		teams.setBounds(738, 52, 120, 52);		
 		add(teams);
 		teams.setVisible(true);
 		
@@ -304,20 +300,17 @@ public class Match_Process extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				String se=pro_season.getSelectedItem().toString();
                 int m=Integer.parseInt(pro_month.getSelectedItem().toString().substring(0, pro_month.getSelectedItem().toString().length()-1));			
-				String temp[];
+				ArrayList<String> temp=new ArrayList<String>();
 				if(pro_day.getSelectedItem().toString().equals("所有日期")){
 					temp=init.mbl.getDatesOfPro_ByMonth(se,m);
 				}else{
-					temp=new String[1];
-					temp[0]=getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString()));
+					temp.add(getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
 				}	
 				try {
-			    mivo=init.mbl.getPro_ByMonth(se, m);
-			    
-					mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);
-				
-			    pro_data=getProdata_HavingDays(mivo);
-			    ctm.updateTable(pro_title, pro_data);
+					mivo=init.mbl.getPro_ByMonth(se, m);			    
+					mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);		
+					pro_data=getProdata_HavingDays(mivo);
+					ctm.updateTable(pro_title, pro_data);
 			    } catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -386,7 +379,7 @@ public class Match_Process extends JPanel {
 				dateshow.setVisible(false);
 				lastsevendays.setVisible(false);
 				nextsevendays.setVisible(false);
-				
+				sure.setVisible(false);
 			}
 			
 		});
@@ -412,7 +405,7 @@ public class Match_Process extends JPanel {
 				dateshow.setVisible(true);
 				lastsevendays.setVisible(true);
 				nextsevendays.setVisible(true);
-				
+				sure.setVisible(true);
 			}
 			
 		});
@@ -476,13 +469,13 @@ public class Match_Process extends JPanel {
 	}
 	
 	//将每个日期作为一个matchInfoVO加入
-	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,String[] dates) throws ParseException{
+	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,ArrayList<String> dates) throws ParseException{
 		ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
 		MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
 		ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
-		for(int i=0;i<dates.length;i++){
-			daymivo.setDate(dates[i]+" "+getWeekOfDate(dates[i]));
-			String[] ddd=dates[i].split("-");
+		for(int i=0;i<dates.size();i++){
+			daymivo.setDate(dates.get(i)+" "+getWeekOfDate(dates.get(i)));
+			String[] ddd=dates.get(i).split("-");
 			re.add(daymivo);
 			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString(), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
 		    for(int m=0;m<temp.size();m++){

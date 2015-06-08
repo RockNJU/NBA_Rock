@@ -74,7 +74,7 @@ public class Match_Data extends JPanel {
 			matchseason.addItem(seasons.get(o));
 		}
 		matchseason.setEditable(true);
-		matchseason.setBounds(540, 22, 117, 30);
+		matchseason.setBounds(534, 20, 117, 30);
 		add(matchseason);
 		matchseason.setVisible(true);
 		
@@ -84,7 +84,7 @@ public class Match_Data extends JPanel {
 
 
 		normal=new JButton(new ImageIcon("newpic/常规赛浮.png"));
-		normal.setLocation(671, 22);
+		normal.setLocation(665, 20);
 		normal.setSize(55, 30);
 		add(normal);
 		normal.addActionListener(new ActionListener(){
@@ -100,7 +100,7 @@ public class Match_Data extends JPanel {
 			}			
 		});
 		after=new JButton(new ImageIcon("newpic/季后赛.png"));
-		after.setLocation(726, 22);
+		after.setLocation(720, 20);
 		after.setSize(55, 30);
 		add(after);
 		after.addActionListener(new ActionListener(){
@@ -122,12 +122,12 @@ public class Match_Data extends JPanel {
 				"MIA","MIL","MIN","NOP","NYK",
 				"OKC","ORL","PHI","PHX","POR",
 				"SAC","SAS","TOR","UTA","WAS"};
-		
+		ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
 		TeamName_Map ma=new TeamName_Map();
 	    for(int i=0;i<teamsarray.length;i++){
-	    	ImageIcon image=new ImageIcon("newpic/TEAMPNG/"+teamsarray[i]+".png");
-	    	image.setImage(image.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
+	    	image.setImage(image.getImage().getScaledInstance(48,48,Image.SCALE_DEFAULT));
 	    	content.put(ma.getFullName(teamsarray[i]), image);
 	    }  
 	   
@@ -135,7 +135,7 @@ public class Match_Data extends JPanel {
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
 		teams.setRenderer(renderer);
 	     
-		teams.setBounds(351, 18, 164, 42);		
+		teams.setBounds(382, 8, 120, 52);		
 		add(teams);
 		teams.setVisible(true);
 		
@@ -202,7 +202,7 @@ public class Match_Data extends JPanel {
 		find.setBackground(init.syslightblue);
 		find.setFocusPainted(false);
 		find.setOpaque(false);
-		find.setBounds(791,25,75, 25);
+		find.setBounds(794,23,75, 25);
 		//
 		find.setToolTipText("查询");		
 		this.add(find);
@@ -217,7 +217,7 @@ public class Match_Data extends JPanel {
             	String Team=teams.getSelectedItem().toString();
             	//System.out.println(Team);
             	matchdatalist.setVisible(true);
-            	mdvo=init.mbl.getMatchBySeason(Season, Team);
+            	mdvo=init.mbl.getMatchBySeason(Season,matchtype, Team);
             	if(mdvo==null||mdvo.size()==0){
             		Match_Data.nm=new NoMatches();
 					Match_Data.nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);

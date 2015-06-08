@@ -189,7 +189,8 @@ public class SingleTeam extends JDialog {
             	B.setToolTipText("队伍信息");
             	C.setToolTipText("比赛信息 ");
             
-				
+            	TeamC a=new TeamC(na);
+            	change(a);
             }
         });
 
@@ -237,7 +238,8 @@ public class SingleTeam extends JDialog {
             	D.setToolTipText("热门信息 ");
             	B.setToolTipText("队伍信息");
             	C.setToolTipText("比赛信息");
-            
+            	TeamD a=new TeamD(na);
+            	change(a);
             }
         });
 	
@@ -276,6 +278,22 @@ public class SingleTeam extends JDialog {
 		rightpanel.repaint();
 	}
 	static void change(TeamB ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0,1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
+	static void change(TeamC ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0, 1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
+	static void change(TeamD ppanel){
 		rightpanel.removeAll();
 		rightpanel.add(ppanel);
 		ppanel.setVisible(true);

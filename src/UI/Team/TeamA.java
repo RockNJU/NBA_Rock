@@ -210,12 +210,14 @@ public class TeamA extends JPanel {
 				lastmatches.setIcon(new ImageIcon("newpic/近五场浮.png"));
 				lastyears.setIcon(new ImageIcon("newpic/近几年.png"));
 				process.setIcon(new ImageIcon("newpic/按钮赛程.png"));
-				normal.setEnabled(true);
-				after.setEnabled(true);
+				normal.setEnabled(false);
+				after.setEnabled(false);
+				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				tabletype="近五场";
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
-				smdvo=UI.main.init.tbl.getLastFiveMatchData(na, seasontype);
+				smdvo=UI.main.init.tbl.getLastFiveMatchData(na);
 				TeamA_data=getLastFiveMatch(smdvo);
 				TeamA_list.setOpaque(false);
 				//PlayerA_list.setOpa();

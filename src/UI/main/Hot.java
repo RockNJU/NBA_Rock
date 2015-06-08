@@ -266,7 +266,7 @@ public class Hot extends JPanel {
 		HotPlayers hp = new HotPlayers("每日","得分总");
 		p1=new JPanel();
 		p1.setLayout(null);
-		p1.setBounds(10, 90, 1040,227);
+		p1.setBounds(10, 58, 1040,266);
 		p1.setOpaque(false);
 		p1.add(hp);
 		add(p1);
@@ -277,7 +277,7 @@ public class Hot extends JPanel {
 		HotTeams ht = new HotTeams("球队赛季","得分");
 		p2.setLayout(null);
 		p2.setOpaque(false);
-		p2.setBounds(10, 409, 1040,220);
+		p2.setBounds(10, 372, 1040,257);
 		p2.add(ht);
 		add(p2);
 		

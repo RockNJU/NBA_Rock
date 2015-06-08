@@ -28,11 +28,12 @@ public class SinglePlayer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	public JPanel rightpanel;
+	public static JPanel rightpanel;
 	public JButton A;
 	public JButton B;
 	public JButton C;
 	public JButton D;
+	String na;
 	/**
 	 * Launch the application.
 	 */
@@ -61,6 +62,7 @@ public class SinglePlayer extends JDialog {
 		setUndecorated(true);// 取消窗体修饰效果************		
 		setLocation(UI.main.init.SysStart_X,UI.main.init.SysStart_Y+70);
 
+		this.na=name;
 		/**
 		 * TODO 
 		 * 
@@ -101,16 +103,17 @@ public class SinglePlayer extends JDialog {
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
-            	A.setToolTipText("球员信息 ");
+            	
             	A.setIcon(new ImageIcon("newpic/球员信息-选中.png"));
             	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
             	D.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
             	C.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
-
+            	A.setToolTipText("球员信息 ");
             	D.setToolTipText("热门信息");
             	B.setToolTipText("队伍信息");
             	C.setToolTipText("比赛信息");	
-            	
+            	PlayerA a=new PlayerA(na);
+            	change(a);
             	
             }
         });
@@ -153,6 +156,9 @@ public class SinglePlayer extends JDialog {
             	B.setToolTipText("队伍信息 ");
             	C.setToolTipText("比赛信息");
             	
+            	PlayerB b=new PlayerB(na);
+            	change(b);
+            	
             }
         });
 
@@ -193,10 +199,8 @@ public class SinglePlayer extends JDialog {
             	D.setToolTipText("热门信息");
             	B.setToolTipText("队伍信息");
             	C.setToolTipText("比赛信息 ");
-            	Match p;		
-            	//currentpanel="match";
-            	//System.out.println(currentpanel);
-				
+            	PlayerC c=new PlayerC(na);
+				change(c);
             }
         });
 
@@ -243,8 +247,7 @@ public class SinglePlayer extends JDialog {
             	A.setToolTipText("球员信息");
             	D.setToolTipText("热门信息 ");
             	B.setToolTipText("队伍信息");
-            	C.setToolTipText("比赛信息");
-            	Hot p;			
+            	C.setToolTipText("比赛信息");		
             	
             }
         });
@@ -275,5 +278,28 @@ public class SinglePlayer extends JDialog {
 		setLocationRelativeTo(null);
 		
 	}
-
+	static void change(PlayerA ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0, 1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
+	static void change(PlayerB ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0,1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
+	static void change(PlayerC ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0,1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
 }
