@@ -21,7 +21,7 @@ public class MatchController implements MatchBLService{
     
     String currentSeason;
 	
-	private ArrayList<MatchInfoVO> getMatchInfo(String season){
+	private ArrayList<MatchInfoVO> getMatchInfo(String date1,String date2){
 		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 		
 		try
@@ -29,24 +29,26 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE season='"+season+"'");
+	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE date BETWEEN '"+date1+"' AND '"+date2+"'");
 	       /***************
 	        * String date,String time,String teamH,
 			String teamG,String type,ArrayList<String> cs
 	        ************/
 	       String score;
-	       ArrayList<String> list=new ArrayList<>();
+ 
 	      while (rs.next())
 	      {    
 	    	  
 	    	  score=rs.getString("sc");
-	    	  String str[]=score.split(";");
-	    	  for(int i=0;i<str.length;i++){
-	    		  list.add(str[i]);
-	    	  }
+	    	 
+	    	  /*String date,String time,String teamH,
+			String teamG,String isOver,
+			String score,String type,ArrayList<String> cs,String link*/
+	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
-	    			  rs.getString("teamH"),rs.getString("teamG"),
-	    			  rs.getString("score"),rs.getString("type"),score, list));
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"),
+	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -74,18 +76,14 @@ public class MatchController implements MatchBLService{
 			String teamG,String type,ArrayList<String> cs
 	        ************/
 	       String score;
-	       ArrayList<String> list=new ArrayList<>();
 	      while (rs.next())
 	      {    
 	    	  
 	    	  score=rs.getString("sc");
-	    	  String str[]=score.split(";");
-	    	  for(int i=0;i<str.length;i++){
-	    		  list.add(str[i]);
-	    	  }
+	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
-	    			  rs.getString("teamH"),rs.getString("teamG"),
-	    			  rs.getString("score"),rs.getString("type"),score, list));
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -139,15 +137,6 @@ public class MatchController implements MatchBLService{
 		return null;
 	}
 
-	
-
-	@Override
-	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 	@Override
 	public ArrayList<String> getAllSeason() {
 		ArrayList<String> list=new ArrayList<>();
@@ -168,7 +157,7 @@ public class MatchController implements MatchBLService{
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
-				list.add(rs.getString("season"));
+				list.add(rs.getString("season")+"赛季");
 			}
 			  stmt.close();
 		      conn.close();//使用完后就关闭数据库
@@ -179,7 +168,6 @@ public class MatchController implements MatchBLService{
 		return list;
 	}
 
-	@Override
 	public ArrayList<MatchVO> getMatchBySeason(String season, String teamA) {
 		// TODO Auto-generated method stub
 		return null;
@@ -188,45 +176,33 @@ public class MatchController implements MatchBLService{
 	@Override
 	public ArrayList<MatchInfoVO> getPro_NotOver(String season, int month) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<MatchInfoVO> getPro_ByMonth(String season, int month) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String[] getDatesOfPro_ByMonth(String season, int month) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<MatchInfoVO> getPro_ByDay(String season, int month, int day) {
-ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 		
-		/************************
-		 * 待好好想一想，未完成
-		 * 
-		 * ***/
+		/******************************
+		 * 某个赛季某个月的还没有进行比赛的比赛赛程
+		 * ****************************/
+		
+	ArrayList<MatchInfoVO> infoList = new ArrayList<>();
+		
+	ArrayList<String> daylist=getData(season,month);
 		try
 	    {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE date=day");
-	        
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM(SELEFT * FROM matchinfo WHERE "
+	       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"') WHERE isOver='未赛'");
+	       /***************
+	        * String date,String time,String teamH,
+			String teamG,String type,ArrayList<String> cs
+	        ************/
 	       String score;
-	       
 	      while (rs.next())
-	      {      
-	    	  score=rs.getString("sc");
-	    	  infoList.add(new MatchInfoVO(rs.getString("date"),
-	    			  rs.getString("time"),rs.getString("teamH"),
-	    			  rs.getString("teamG"),rs.getString("score"),
-	    			  rs.getString("type"),score, getScores(score)));
+	      {        	  
+	    	  score=rs.getString("scores");
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), 
+	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -236,6 +212,111 @@ ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 	      System.out.println("Error : " + ex.toString());
 	    }
 	
+		return infoList;
+		
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_ByMonth(String season, int month) {
+		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
+		
+		ArrayList<String> daylist=getData(season,month);
+			try
+		    {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			    Connection conn = DriverManager.getConnection(url,user, pwd);
+			     Statement stmt = conn.createStatement();
+		       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE "
+		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
+		       /***************
+		        * String date,String time,String teamH,
+				String teamG,String type,ArrayList<String> cs
+		        ************/
+		       String score;
+		      while (rs.next())
+		      {        	  
+		    	  score=rs.getString("scores");
+		    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+		    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+		    			  rs.getString("score"),rs.getString("type"), 
+		    			  getScores(score),rs.getString("link")));
+		        //return vo;
+		      }
+		      conn.close();
+		      stmt.close();
+		}catch (Exception ex)
+		    {
+		      System.out.println("Error : " + ex.toString());
+		    }
+		
+			return infoList;
+	}
+
+	@Override
+	public ArrayList<String> getDatesOfPro_ByMonth(String season, int month) {
+		/*************************************************
+		 * 获取某个赛季某个月有比赛的所有日期
+		 ********************************************/
+		
+        ArrayList<String> list = new ArrayList<>();
+		
+		ArrayList<String> daylist=getData(season,month);
+			try
+		    {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			    Connection conn = DriverManager.getConnection(url,user, pwd);
+			     Statement stmt = conn.createStatement();
+		       ResultSet  rs=stmt.executeQuery("SELEFT date FROM matchinfo WHERE "
+		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
+		      while (rs.next())
+		      {        	  
+		    	  list.add(rs.getString("date"));
+		      }
+		      conn.close();
+		      stmt.close();
+		}catch (Exception ex)
+		    {
+		      System.out.println("Error : " + ex.toString());
+		    }
+		
+			return list;
+		 
+	}
+
+	@Override
+	public ArrayList<MatchInfoVO> getPro_ByDay(String season, int month, int day) {
+		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
+		
+		/************************
+		 *获取某个赛季某个月的，某一天的比赛记录
+		 * 
+		 * *******************/
+		String date=getDate(season,month,day);
+		
+		try
+	    {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		    Connection conn = DriverManager.getConnection(url,user, pwd);
+		     Statement stmt = conn.createStatement();
+	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE date='"+date+"'");
+	        
+	       String score;
+	       
+	      while (rs.next())
+	      {      
+	    	  score=rs.getString("scores");
+	    	  
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
+	        //return vo;
+	      }
+	      conn.close();
+	      stmt.close();
+	}catch (Exception ex)
+	    {
+	      System.out.println("Error : " + ex.toString());
+	    }
 		return infoList;
 	}
 
@@ -262,11 +343,10 @@ ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 	       
 	      while (rs.next())
 	      {      
-	    	  score=rs.getString("sc");
-	    	  infoList.add(new MatchInfoVO(rs.getString("date"),
-	    			  rs.getString("time"),rs.getString("teamH"),
-	    			  rs.getString("teamG"),rs.getString("score"),
-	    			  rs.getString("type"),score, getScores(score)));
+	    	  score=rs.getString("scores");
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -298,6 +378,32 @@ ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 	}
 
 	
+	
+	private String getDate(String season,int month,int dy){
+		String sl[]=season.split("-");
+		 String mon;
+		 String day;
+		String year;
+		if(month>=10){
+			year=sl[0];
+			mon=""+month;
+		}else{
+			year=sl[1];
+			mon="0"+month;
+		}
+		
+		if(dy<10){
+			day="0"+dy;
+		}else{
+			day=""+dy;
+		}
+		
+		year="20"+year;		
+		return (year+"-"+mon+"-"+day);
+		
+	}
+	
+	
 	private ArrayList<String> getData(String season,int month){
 		ArrayList<String>list=new ArrayList<>();
 		
@@ -311,9 +417,6 @@ ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 			year=sl[1];
 			mon="0"+month;
 		}
-		
-		
-		
 		
 		year="20"+year;
 		list.add(year+"-"+mon+"-"+"01");
@@ -338,6 +441,13 @@ ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 				day=month+"-"+"31";
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<MatchVO> getMatchBySeason(String season, String type,
+			String teamA) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 		

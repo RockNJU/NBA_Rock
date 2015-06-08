@@ -688,13 +688,6 @@ public class PlayerController implements PlayerBLService{
 		return list;
 	}
 
-	@Override
-	public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,
-			String type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 	public static void main(String args[]){
 		PlayerController pl=new PlayerController();
@@ -771,6 +764,32 @@ public class PlayerController implements PlayerBLService{
 	public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String name,
 			String season) {
 		return get_A_season_records(season,name);
+	}
+
+	@Override
+	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PlayerSeasonDataVO> getAPlayerSeasonData(String name,
+			String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlayerInfoVO getAPlayerInfo(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlayerSeasonDataVO getAPlayerSeasonData(String season, String type,
+			String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

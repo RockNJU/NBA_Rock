@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class MatchInfoVO {
 	/*比赛信息，包含的信息有比赛日期，比赛的两支队伍的缩写*/
 	
+	
+	String season;
 	private String date;		//比赛日期，格式xxxx-xx-xx
 	private String time;        //比赛的具体日期。
 	private String team_H;		//主队名称
@@ -13,11 +15,11 @@ public class MatchInfoVO {
 	private String type;        //比赛类型，即常规赛还是季后赛
 	private String isOver;
 	private ArrayList<String> sc; //每小节的比分
-	
+	String link;
 	
 	public MatchInfoVO(String date,String time,String teamH,
 			String teamG,String isOver,
-			String score,String type,ArrayList<String> cs){
+			String score,String type,ArrayList<String> cs,String link){
 		this.isOver=isOver;
 		this.date=date;
 		this.time=time;
@@ -25,9 +27,13 @@ public class MatchInfoVO {
 		this.team_G=teamG;
 		this.sc=cs;
 		this.score=score;
+		this.type=type;
+		this.link=link;
 	}
 
-	
+	public String getLink(){
+		return link;
+	}
 	public String getIsOver(){
 		return isOver;
 	}
