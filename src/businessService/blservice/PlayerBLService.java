@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import VO.*;
 
 public interface PlayerBLService{
-	
+	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item);//获取当天的热点球员，传入的是热点项目
+
 	//TODO 大于等于什么的筛选---之前写的是根据表格的、并不能适用、
 		//传入的值为 赛季、赛季类型、查找依据、符号（这个符号有可能是中文字符也有可能是英文字符）、值
 		public ArrayList<PlayerSeasonDataVO> sort_super(String season,String type,String position,String partition,String item,String sign,int num);
@@ -31,19 +32,20 @@ public interface PlayerBLService{
 		//获得近五场——只有姓名，赛季当前默认，赛季类型就可以选择吧，这样我界面方便点
 		public ArrayList<SingleMatchPersonalDataVO> getLastFiveMatchData(String name);
 		//获得一个球员所有赛季的数据
-		public ArrayList<PlayerSeasonDataVO> getAPlayerSaeasonData(String name,String type);
+		public ArrayList<PlayerSeasonDataVO> getAPlayerSeasonData(String name,String type);
 		//进步最快球员，according
 		public  ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item);
 		//折线图对比某项数据，球员名称,数据数量（10场，20场，30场，整个赛季）,对应数据名称（平均得分，三分等等））	如果没有数据，则对应位置返回0
 		public double[] getPlayerOneData(String name,int num,String what);
 		//获得一个球员整个赛季的比赛
 		public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String na, String season);
-	
-
+		//TODO 需要加上赛季类型//根据球员姓名获取球员的某个赛季的比赛数据
+		
+		public PlayerInfoVO getAPlayerInfo(String name);
+		public PlayerSeasonDataVO getAPlayerSeasonData(String season,String type,String name);
 	/**	
 	//需要的方法——热点方面我没有看	
-	//TODO 需要加上赛季类型//根据球员姓名获取球员的某个赛季的比赛数据
-	public PlayerSeasonDataVO getAPlayerSeasonMatch(String season,String type,String name);	
+		
 	//------------------------------------------------------------------------------------
 	//区域内方法暂时没有用到
 		public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,String teamAbb);    

@@ -12,7 +12,7 @@ public interface MatchBLService {
 	   public ArrayList<MatchInfoVO> getPro_ByMonth(String season,int month);
 	   
 	   //对上面获得的ArrayList<MatchInfoVO>进行处理,获得   （某赛季、某月的赛程）【是上个方法的返回值】中有比赛的日期
-	   public String[] getDatesOfPro_ByMonth(String season,int month);
+	   public ArrayList<String> getDatesOfPro_ByMonth(String season,int month);
 	   //获得赛程（某赛季、某月、某天的赛程）所需要的方法    month和day可以商榷
 	   public ArrayList<MatchInfoVO> getPro_ByDay(String season,int month,int day);
 	  
@@ -24,13 +24,12 @@ public interface MatchBLService {
 		
 		//TODO 获得传入日期后最近一场比赛的日期 这里的date 2014-01-02 形式有问题可以改
 		String getNextHavingMatchDate(String date);
-		public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item);//获取当天的热点球员，传入的是热点项目
-
+		
 		// 获得赛季以供选择，形式最好是"13-14赛季",这个是公用的、
 		public ArrayList<String> getAllSeason();
 		
 		
-		ArrayList<MatchVO> getMatchBySeason(String season,String teamA);
+		ArrayList<MatchVO> getMatchBySeason(String season,String type,String teamA);
 		
 		ArrayList<MatchVO> getMatchByTeamTime(String date);			
         //  根据输入的日期获取这一天所有的比赛信息
