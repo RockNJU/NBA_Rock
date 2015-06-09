@@ -366,7 +366,7 @@ public class Match_Controller implements MatchBLService{
 	private ArrayList<String> getScores(String score){
 		ArrayList<String> list=new ArrayList<>();
   	  String str[]=score.split(";");
-  	  for(int i=0;i<str.length;i++){
+  	  for(int i=1;i<str.length;i++){
   		  list.add(str[i]);
   	  }
   	  return list;
@@ -458,16 +458,17 @@ public class Match_Controller implements MatchBLService{
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("¿ì´¬");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
 			
-			//ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "ºþÈË");
+			ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "ºþÈË");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
 			//ArrayList<String> list=match.getDatesOfPro_ByMonth("14-15", 1);
-			ArrayList<String> list=match.getData("14-15", 2);
+			//ArrayList<String> list=match.getData("14-15", 2);
 			
 			for(int i=0;i<list.size();i++){
-				/*System.out.println("date£º"+list.get(i).getDate()+"; "
+				 System.out.println("date£º"+list.get(i).getDate()+"; "
 						+ " score:"+list.get(i).getScore()+"; "
-								+ " teamH:"+list.get(i).getTeam_H()+"; teamG: "+list.get(i).getTeam_G());
-			*/
+								+ " teamH:"+list.get(i).getTeam_H()+"; teamG: "+
+						list.get(i).getTeam_G()+list.get(i).getScores());
+			 
 				System.out.println("----:"+list.get(i));
 			}
 		}
