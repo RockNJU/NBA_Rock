@@ -11,6 +11,7 @@ import VO.MatchInfoVO;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
 import VO.TeamInfoVO;
+import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 
 public class Match_Controller implements MatchBLService{
@@ -18,7 +19,6 @@ public class Match_Controller implements MatchBLService{
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
     String pwd="ghl13";		
-    
     String currentSeason;
 	
 	private ArrayList<MatchInfoVO> getMatchInfo(String date1,String date2){

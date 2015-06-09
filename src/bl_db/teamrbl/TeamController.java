@@ -48,8 +48,8 @@ public class TeamController implements TeamBLService{
 	    	  
 	    	  //System.out.println("？--？   "+rs.getString("teamAbb"));
 	    	  
-	    	infoList.add(new TeamInfoVO(rs.getString("city"),
-	    			  rs.getString("team"),rs.getString("TEname"),
+	    	infoList.add(new TeamInfoVO(rs.getString("team"),
+	    			  rs.getString("Cname"),rs.getString("TEname"),
 	    			  rs.getString("location"),rs.getString("division"),
 	    			  rs.getString("partition"),rs.getString("homeGround"),
 	    			  rs.getString("formedTime"),rs.getString("coach_name"),
@@ -158,12 +158,12 @@ public class TeamController implements TeamBLService{
 				
 				list.add(new TeamSeasonDataVO(season,rs.getString("team"),
 						
-						new TeamInfoVO(rs.getString("city"),
-		    			  rs.getString("team"),rs.getString("TEname"),
-		    			  rs.getString("location"),rs.getString("division"),
-		    			  rs.getString("partition"),rs.getString("homeGround"),
-		    			  rs.getString("formedTime"),rs.getString("coach_name"),
-		    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
+						new TeamInfoVO(rs.getString("team"),
+				    			  rs.getString("Cname"),rs.getString("TEname"),
+				    			  rs.getString("location"),rs.getString("division"),
+				    			  rs.getString("partition"),rs.getString("homeGround"),
+				    			  rs.getString("formedTime"),rs.getString("coach_name"),
+				    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
 		    			  
 						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
 						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
@@ -255,12 +255,12 @@ public class TeamController implements TeamBLService{
 				
 						list.add(new TeamSeasonDataVO(season,rs.getString("team"),
 								
-								new TeamInfoVO(rs.getString("city"),
-				    			  rs.getString("team"),rs.getString("TEname"),
-				    			  rs.getString("location"),rs.getString("division"),
-				    			  rs.getString("partition"),rs.getString("homeGround"),
-				    			  rs.getString("formedTime"),rs.getString("coach_name"),
-				    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
+								new TeamInfoVO(rs.getString("team"),
+						    			  rs.getString("Cname"),rs.getString("TEname"),
+						    			  rs.getString("location"),rs.getString("division"),
+						    			  rs.getString("partition"),rs.getString("homeGround"),
+						    			  rs.getString("formedTime"),rs.getString("coach_name"),
+						    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
 				    			  
 								rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
 								rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
@@ -323,10 +323,28 @@ public class TeamController implements TeamBLService{
 		return sort.hotTeam_Sort(list, item);
 	}
 
+	
+	
 	@Override
 	public ArrayList<TeamSeasonDataVO> find(String text) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<TeamSeasonDataVO> list=getTeam_seasonData(currentSeason,"常规赛");
+		list.addAll(getTeam_seasonData(currentSeason,"季后赛"));
+		list.addAll(getTeam_seasonData(currentSeason,"季前赛"));
+		
+		ArrayList<TeamSeasonDataVO> result=new ArrayList<>();
+		
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).getFullName().contains(text)
+				|list.get(i).getInfo().getLocation().contains(text)|
+				list.get(i).getInfo().getTeamAbb().contains(text)|
+				list.get(i).getInfo().getTeam().equals(text)|
+				list.get(i).getInfo().getTEname().contains(text)|
+				list.get(i).getInfo().getFormedTime().contains(text)){
+				result.add(list.get(i));
+			}
+		}
+		
+		return result;
 	}
 
 
@@ -367,7 +385,7 @@ public class TeamController implements TeamBLService{
 
 
 	@Override
-	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name) {
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name){
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -376,6 +394,9 @@ public class TeamController implements TeamBLService{
 	@Override
 	public ArrayList<TeamMatchVO> getASeasonMatchData(String name, String season) {
 		// TODO Auto-generated method stub
+		/**********************************
+		 * 获取某支球队某个赛季的所有参加了 的比赛数据
+		 ********************************/
 		return null;
 	}
 	

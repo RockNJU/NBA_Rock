@@ -1,4 +1,4 @@
-package bl_db.matchbl;
+package bl_db.common;
 
 import java.util.HashMap;
 import java.util.Map;

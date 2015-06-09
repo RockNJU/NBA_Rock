@@ -12,9 +12,9 @@ public class TeamInfoVO implements Serializable{
  
 	 * 
 	 * */
-	private String city;
 	private String TEname;			 
-	private String team;             
+	private String team;
+	private String Cname;
 	private String location;			 
 	private String  division;			 
 	private String partition;			 
@@ -24,12 +24,13 @@ public class TeamInfoVO implements Serializable{
 	private String caoch_Ename;
 	private String teamAbb;
 
-	public TeamInfoVO(String city,String team,String TEname,
+	public TeamInfoVO(String team,String Cname,String TEname,
 			String location,String division,String partition,
 			String home,String time,String caoch_name,
 			String caoch_Ename,String teamAbb){
+		
 		this.teamAbb=teamAbb;
-		this.city=city;
+		this.Cname=Cname;
 		this.team=team;
 		this.location=location;
 		this.division=division;
@@ -37,10 +38,13 @@ public class TeamInfoVO implements Serializable{
 		this.homeGround=home;
 		this.formedTime=time;
 		this.caoch_name=caoch_name;
-		this.caoch_Ename=caoch_Ename;
-		
+		this.caoch_Ename=caoch_Ename;	
 	}
-
+	
+	public String getCname(){
+		return Cname;
+	}
+	
 	public String getTeamAbb(){
 		return teamAbb;
 	}
@@ -64,10 +68,6 @@ public class TeamInfoVO implements Serializable{
 		return formedTime;
 	}
 
-
-	public String getCity() {
-		return city;
-	}
 
 
 	public String getTEname() {
