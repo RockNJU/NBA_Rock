@@ -13,7 +13,7 @@ import VO.SingleMatchPersonalDataVO;
 import VO.TeamInfoVO;
 import businessService.blservice.MatchBLService;
 
-public class MatchController implements MatchBLService{
+public class Match_Controller implements MatchBLService{
 
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
@@ -29,7 +29,7 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE date BETWEEN '"+date1+"' AND '"+date2+"'");
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date BETWEEN '"+date1+"' AND '"+date2+"'");
 	       /***************
 	        * String date,String time,String teamH,
 			String teamG,String type,ArrayList<String> cs
@@ -39,7 +39,7 @@ public class MatchController implements MatchBLService{
 	      while (rs.next())
 	      {    
 	    	  
-	    	  score=rs.getString("sc");
+	    	  score=rs.getString("scores");
 	    	 
 	    	  /*String date,String time,String teamH,
 			String teamG,String isOver,
@@ -70,7 +70,7 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE teamH='"+team+"' OR teamG='"+team+"'");
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE teamH='"+team+"' OR teamG='"+team+"'");
 	       /***************
 	        * String date,String time,String teamH,
 			String teamG,String type,ArrayList<String> cs
@@ -79,7 +79,7 @@ public class MatchController implements MatchBLService{
 	      while (rs.next())
 	      {    
 	    	  
-	    	  score=rs.getString("sc");
+	    	  score=rs.getString("scores");
 	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
@@ -153,7 +153,7 @@ public class MatchController implements MatchBLService{
 			Connection conn;
 			conn = DriverManager.getConnection(url,user, pwd);
 			stmt = conn.createStatement(); 
-			String str="select season from matchinfo";
+			String str="select distinct season from team_season_data";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
@@ -189,8 +189,9 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELECT * FROM(SELEFT * FROM matchinfo WHERE "
-	       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"') WHERE isOver='未赛'");
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM(SELECT * FROM matchinfo WHERE "
+	       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"') "
+	       		+ " as new_match WHERE isOver='未赛'");
 	       /***************
 	        * String date,String time,String teamH,
 			String teamG,String type,ArrayList<String> cs
@@ -226,7 +227,7 @@ public class MatchController implements MatchBLService{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 			    Connection conn = DriverManager.getConnection(url,user, pwd);
 			     Statement stmt = conn.createStatement();
-		       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE "
+		       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE "
 		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
 		       /***************
 		        * String date,String time,String teamH,
@@ -266,7 +267,7 @@ public class MatchController implements MatchBLService{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 			    Connection conn = DriverManager.getConnection(url,user, pwd);
 			     Statement stmt = conn.createStatement();
-		       ResultSet  rs=stmt.executeQuery("SELEFT date FROM matchinfo WHERE "
+		       ResultSet  rs=stmt.executeQuery("SELECT distinct date FROM matchinfo WHERE "
 		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
 		      while (rs.next())
 		      {        	  
@@ -298,7 +299,7 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELEFT * FROM matchinfo WHERE date='"+date+"'");
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date='"+date+"'");
 	        
 	       String score;
 	       
@@ -332,8 +333,8 @@ public class MatchController implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
-	       ResultSet  rs=stmt.executeQuery("SELECT* FROM (SELEFT * FROM "
-	       		+ "matchinfo WHERE teamH='"+teamabb+"' OR teamG='"+teamabb+"') WHERE "
+	       ResultSet  rs=stmt.executeQuery("SELECT* FROM (SELECT * FROM "
+	       		+ "matchinfo WHERE teamH='"+teamabb+"' OR teamG='"+teamabb+"') as new_match WHERE "
 	       		+ "date BETWEEN '"+day.get(0)+"' AND '"+day.get(1)+"'");
 	       /***************
 	        * String date,String time,String teamH,
@@ -344,9 +345,11 @@ public class MatchController implements MatchBLService{
 	      while (rs.next())
 	      {      
 	    	  score=rs.getString("scores");
-	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
-	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
-	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),
+	    			  rs.getString("time"), rs.getString("teamH"),
+	    			  rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), 
+	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.close();
@@ -420,8 +423,7 @@ public class MatchController implements MatchBLService{
 		
 		year="20"+year;
 		list.add(year+"-"+mon+"-"+"01");
-		list.add(year+"-"+mon+"-"+
-		getEndDay(month,Integer.parseInt(year)));
+		list.add(year+"-"+mon+"-"+getEndDay(month,Integer.parseInt(year)));
 		return list;
 	}
 	
@@ -429,19 +431,19 @@ public class MatchController implements MatchBLService{
 		String day=null;
 		if(month==2){
 			if((year%100!=0&&year%4==0)|(year%400==0)){
-				day=month+"-"+"28";
+				day="28";
 			}else{
-				day=month+"-"+"29";
+				day="29";
 			}
 			
 		}else{
 			if(month==4|month==6|month==9|month==11){
-				day=month+"-"+"30";
+				day="30";
 			}else{
-				day=month+"-"+"31";
+				day="31";
 			}
 		}
-		return null;
+		return day;
 	}
 
 	@Override
@@ -450,6 +452,24 @@ public class MatchController implements MatchBLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-		
+		public static void main(String args[]){
+			Match_Controller match=new Match_Controller();
+			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
+			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
+			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
+			
+			//ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
+			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
+			//ArrayList<String> list=match.getDatesOfPro_ByMonth("14-15", 1);
+			ArrayList<String> list=match.getData("14-15", 2);
+			
+			for(int i=0;i<list.size();i++){
+				/*System.out.println("date："+list.get(i).getDate()+"; "
+						+ " score:"+list.get(i).getScore()+"; "
+								+ " teamH:"+list.get(i).getTeam_H()+"; teamG: "+list.get(i).getTeam_G());
+			*/
+				System.out.println("----:"+list.get(i));
+			}
+		}
 	
 }

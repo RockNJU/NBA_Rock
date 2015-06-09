@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import VO.PlayerSeasonDataVO;
 import VO.TeamSeasonDataVO;
+import bl_db.matchbl.Match_Controller;
 import businessService.blservice.*;
 import businesslogic.bl.center.CenterController;
 
@@ -18,7 +19,7 @@ public class RMIObject {
 		contr=new CenterController(player_path,team_path,match_path);
 	}
 	public MatchBLService  getMatchObject(){
-		MatchBLService match=contr.getMatch();
+		MatchBLService match=new Match_Controller();
 		return match;
 	}
 	
