@@ -29,6 +29,8 @@ public class Match_Controller implements MatchBLService{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
+		     
+		     
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date BETWEEN '"+date1+"' AND '"+date2+"'");
 	       /***************
 	        * String date,String time,String teamH,
@@ -69,6 +71,8 @@ public class Match_Controller implements MatchBLService{
 	    {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
+		    Team_map map=new Team_map();
+		    team=map.getFullName(team);
 		     Statement stmt = conn.createStatement();
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE teamH='"+team+"' OR teamG='"+team+"'");
 	       /***************
