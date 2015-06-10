@@ -93,11 +93,14 @@ public class Team_map {
 		   map.put("马刺", "SAS");
 		    
 		   map.put("猛龙", "TOR");
-		   map.put("爵士", "UTA");
+		   map.put("爵士1", "UTA");
 		   map.put("奇才", "WAS");
 		   map.put("unknown", "??");
+		   
+		   /**************************************************************************************/
+		   
 	   }
-	   
+/**************************************************************************************/	   
 	   public  String getFullName(String item){
 		   if(map.get(item)==null){
 			   return "unknown";
@@ -107,6 +110,6 @@ public class Team_map {
 	   
 	   public static void main(String args[]){
 		   Team_map map=new Team_map();
-		   System.out.println(map.getFullName("UTA"));
+		   System.out.println(map.getFullName("爵士"));
 	   }
 }

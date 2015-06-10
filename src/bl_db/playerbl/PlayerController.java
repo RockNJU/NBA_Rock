@@ -972,5 +972,67 @@ public class PlayerController implements PlayerBLService{
 		}//
 		return null;
 	}
+	
+	private PlayerSeasonDataVO  addImproveData(PlayerSeasonDataVO vo,String season,String name){
+		
+		if(vo.getMatchNum()<=5){
+			return vo;
+		}
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="SELECT COUNT(*) as match_sum, "
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(pointNum)as point_sum FROM "
+					+ "(SELECT name,"
+					+ " assistNum,stealNum,"
+					+ " reboundNum ,blockNum ,pointNum ,"
+					+ "FROM player_season_data,playerinfo WHERE name='"+name+"' "
+					+ "and season='"+season+"')as "
+					+ "new_data";
+			ResultSet  rs=stmt.executeQuery(str);
+			 
+			
+			char chr=39;
+			int rebound_rate=0;
+			int point_rate=0;
+			int assist_rate=0;
+			int num=0;
+			
+			int rebound_sum=0;
+			int assist_sum=0;
+			int point_sum=0;
+			
+			while(rs.next()){
+				rebound_sum=rs.getInt("rebound_sum");
+				assist_sum=rs.getInt("assist_sum");
+				point_sum=rs.getInt("point_sum");
+				break; 
+			}
+			 
+			
+			
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return vo;
+	}
+	
 
 }

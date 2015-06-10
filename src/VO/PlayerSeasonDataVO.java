@@ -143,6 +143,25 @@ public class PlayerSeasonDataVO {
 				this.stealNum=stealNum;
 				this.foulNum=foulNum;
 				this.pointNum=points;
+				/***************************************/
+				 time_avg=time/matchNum;
+				 fieldGoal_avg=(double)fieldGoal/matchNum;				    
+				 shootNum_avg=(double)shootNum/matchNum;
+				  t_fieldGoal_avg=(double)t_fieldGoal/matchNum;
+				  t_shootNum_avg=(double)t_shootNum/matchNum;
+				  freeThrowGoalNum_avg=(double)freeThrowGoalNum/matchNum;
+				  freeThrowNum_avg=(double)freeThrowNum/matchNum;		 
+				  o_ReboundNum_avg=(double)o_ReboundNum/matchNum;	 
+				  d_ReboundNum_avg=(double)d_ReboundNum/matchNum;		 
+				  assistNum_avg=(double)assistNum/matchNum;		 
+				  stealNum_avg=(double)stealNum/matchNum;	 
+				  reboundNum_avg=(double)reboundNum/matchNum;	 
+				  blockNum_avg=(double)blockNum/matchNum;		 
+				  turnoverNum_avg=(double)turnoverNum/matchNum;		 
+				  foulNum_avg=(double)foulNum/matchNum;
+				  pointNum_avg=(double)pointNum/matchNum;
+				  /*****************************/
+				
 				this.assistEfficiency=assistEfficiency;
 				this.reboundEfficiency=reboundEfficiency;
 				this.offensiveReboundEff=offensiveReboundEff;
@@ -170,23 +189,7 @@ public class PlayerSeasonDataVO {
 					  shootEfficiency=0;
 				  }
 				//////////////////*
-				 time_avg=time;
-				 fieldGoal_avg= fieldGoal;				    
-				 shootNum_avg= shootNum;
-				  t_fieldGoal_avg= T_fieldGoal;
-				  t_shootNum_avg= T_shootNum;
-				  freeThrowGoalNum_avg= freeThrowGoalNum;
-				  freeThrowNum_avg= freeThrowNum;		 
-				  o_ReboundNum_avg= o_ReboundNum;	 
-				  d_ReboundNum_avg= d_ReboundNum;		 
-				  assistNum_avg= assistNum;		 
-				  stealNum_avg= stealNum;	 
-				  reboundNum_avg= reboundNum;	 
-				  blockNum_avg= blockNum;		 
-				  turnoverNum_avg= turnoverNum;		 
-				  foulNum_avg= foulNum;
-				  pointNum_avg= pointNum;
-				  
+				 
 				  
 						 efficiency=  pointNum+reboundNum+assistNum+stealNum+blockNum-
 						   (shootNum-fieldGoal)  -(freeThrowNum-freeThrowGoalNum)-turnoverNum ;
