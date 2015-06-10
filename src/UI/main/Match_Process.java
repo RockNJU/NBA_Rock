@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable_M;
 import UI.common.DateChooser;
-import UI.common.TeamName_Map;
 import VO.MatchInfoVO;
 
 import javax.swing.DefaultComboBoxModel;
@@ -71,21 +70,47 @@ public class Match_Process extends JPanel {
 		add(dc);
 		dc.setVisible(false);
 		
-		sure=new JButton("sure");
+		sure=new JButton(new ImageIcon("newpic/add/提交.png"));
 		sure.setBounds(782, 65, 100, 30);
 		add(sure);
-		sure.addActionListener(new ActionListener(){
+		sure.addMouseListener(new MouseListener(){
+
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				try {
 					
 					dateshow.setText(dc.showDate.getText()+"至"+getSevenDaysLater(dc.showDate.getText(),6));
+				changetable_Week(dc.showDate.getText());
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				sure.setIcon(new ImageIcon("newpic/add/提交浮.png"));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				sure.setIcon(new ImageIcon("newpic/add/提交.png"));
 			}
 			
 		});
@@ -102,15 +127,20 @@ public class Match_Process extends JPanel {
 		dateshow.setBorder(BorderFactory.createLineBorder(init.sysdarkblue));
 		
 		dateshow.setVisible(false);
-		lastsevendays=new JButton();
+		
+		
+		
+		lastsevendays=new JButton(new ImageIcon("newpic/add/前七天.png"));
 		lastsevendays.setText("\u524D\u4E03\u5929");
 		lastsevendays.setLocation(38, 65);
-		lastsevendays.setSize(100, 30);
+		lastsevendays.setSize(105, 35);
 		add(lastsevendays);
-		lastsevendays.addActionListener(new ActionListener(){
+		lastsevendays.setContentAreaFilled(false);
+		lastsevendays.addMouseListener(new MouseListener(){
 
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				String temp[]=dateshow.getText().split("至");
 				try {
@@ -121,18 +151,46 @@ public class Match_Process extends JPanel {
 					e1.printStackTrace();
 				}
 			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				lastsevendays.setIcon(new ImageIcon("newpic/add/前七天浮.png"));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				lastsevendays.setIcon(new ImageIcon("newpic/add/前七天.png"));
+				
+			}
 			
 		});
 		lastsevendays.setVisible(false);
-		nextsevendays=new JButton();
+		nextsevendays=new JButton(new ImageIcon("newpic/add/后七天.png"));
 		nextsevendays.setLocation(428, 65);
 		nextsevendays.setText("\u540E\u4E03\u5929");
-		nextsevendays.setSize(100, 30);
+		nextsevendays.setSize(105, 35);
+		nextsevendays.setContentAreaFilled(false);
 		add(nextsevendays);
-		nextsevendays.addActionListener(new ActionListener(){
+		nextsevendays.addMouseListener(new MouseListener(){
+
+			
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				String temp[]=dateshow.getText().split("至");
 				try {
@@ -142,6 +200,31 @@ public class Match_Process extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				nextsevendays.setIcon(new ImageIcon("newpic/add/后七天浮.png"));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				nextsevendays.setIcon(new ImageIcon("newpic/add/后七天.png"));
+				
 			}
 			
 		});
@@ -242,14 +325,22 @@ public class Match_Process extends JPanel {
 				"MIA","MIL","MIN","NOP","NYK",
 				"OKC","ORL","PHI","PHX","POR",
 				"SAC","SAS","TOR","UTA","WAS"};
-		
+		ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
-		TeamName_Map ma=new TeamName_Map();
-	    for(int i=0;i<teamsarray.length;i++){
-	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
-	    	image.setImage(image.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
-	    	content.put(ma.getFullName(teamsarray[i]), image);
-	    }
+	    for(int i=0;i<tmsa.size();i++){
+	    	//TODO 
+	    	//TODO
+	    	//TODO
+	    	//TODO 简写图片和球队中文名的对应
+	    	//TODO 
+	    	//TODO
+	    	//TODO
+	    	//TODO
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+tmsa.get(i)+".png");
+	    	image.setImage(image.getImage().getScaledInstance(48,48,Image.SCALE_DEFAULT));
+	    	content.put(tmsa.get(i), image);
+	    }  
+	   
 		teams= new JComboBox(content.keySet().toArray());	    
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
 		teams.setRenderer(renderer);
@@ -298,17 +389,21 @@ public class Match_Process extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String se=pro_season.getSelectedItem().toString();
+				String se=pro_season.getSelectedItem().toString().substring(0,5);
                 int m=Integer.parseInt(pro_month.getSelectedItem().toString().substring(0, pro_month.getSelectedItem().toString().length()-1));			
 				ArrayList<String> temp=new ArrayList<String>();
 				if(pro_day.getSelectedItem().toString().equals("所有日期")){
 					temp=init.mbl.getDatesOfPro_ByMonth(se,m);
+					System.out.println("本月有比赛的日期"+temp.size()+temp.get(0)+temp.get(1));
 				}else{
+					System.out.println("选择了赛季中的一天、获得比赛日期"+getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
 					temp.add(getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
 				}	
 				try {
-					mivo=init.mbl.getPro_ByMonth(se, m);			    
-					mivo=changeProdata_ChooseAllTeam_ByDate(mivo,temp);		
+					mivo=init.mbl.getPro_ByMonth(se, m);	
+					System.out.println("mivo改变前"+mivo.size());
+					mivo=changeProdata_ChooseAllTeam_ByDate(temp);	
+					System.out.println("mivo改变后"+mivo.size());
 					pro_data=getProdata_HavingDays(mivo);
 					ctm.updateTable(pro_title, pro_data);
 			    } catch (ParseException e1) {
@@ -358,15 +453,18 @@ public class Match_Process extends JPanel {
 			}
 
 		});
-		ChooseByMonth=new JButton();
-		ChooseByMonth.setLocation(880, 21);
+		ChooseByMonth=new JButton(new ImageIcon("newpic/add/按月查看后.png"));
+		ChooseByMonth.setLocation(844, 15);
+		ChooseByMonth.setContentAreaFilled(false);
 		ChooseByMonth.setText("按月查看");
-		ChooseByMonth.setSize(80, 30);
+		ChooseByMonth.setSize(100, 35);
 		add(ChooseByMonth);
 		ChooseByMonth.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ChooseByMonth.setIcon(new ImageIcon("newpic/add/按月查看后.png"));
+				ChooseByWeek.setIcon(new ImageIcon("newpic/add/按周查看.png"));
 				Mon_Week="Month";
 				pro_season.setVisible(true);
 				pro_season1.setVisible(true);
@@ -384,16 +482,19 @@ public class Match_Process extends JPanel {
 			
 		});
 		
-		ChooseByWeek=new JButton();
-		ChooseByWeek.setLocation(959, 21);
+		ChooseByWeek=new JButton(new ImageIcon("newpic/add/按周查看.png"));
+		ChooseByWeek.setLocation(944, 15);
 		ChooseByWeek.setText("按周查看");
-		ChooseByWeek.setSize(80, 30);
+		ChooseByWeek.setContentAreaFilled(false);
+		ChooseByWeek.setSize(100, 35);
 		add(ChooseByWeek);
 		ChooseByWeek.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Mon_Week="Week";
+				ChooseByMonth.setIcon(new ImageIcon("newpic/add/按月查看.png"));
+				ChooseByWeek.setIcon(new ImageIcon("newpic/add/按周查看后.png"));
 				pro_season.setVisible(false);
 				pro_season1.setVisible(false);
 				pro_month.setVisible(false);				
@@ -431,32 +532,32 @@ public class Match_Process extends JPanel {
 			re[0][1] = "";
 			re[0][2] = "";
 			re[0][3] = "";
-			re[0][4] = "";
-			re[0][5]="视频/直播";
-			re[0][6]="文字直播";
-			re[0][7]="技术统计";	
+			re[0][4] = "没有比赛";
+			re[0][5]="";
+			re[0][6]="";
+			re[0][7]="";	
 			return re;
 		}
 		else{
 			Object[][] re=new Object[da.size()][8];
-			TeamName_Map mm=new TeamName_Map();
+			
 			//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
 			for(int i=0;i<da.size();i++){
 				if(da.get(i).getIsOver().equals("")){
 					re[i][0] =da.get(i).getDate();
 					re[i][1] = "";
 					re[i][2] = "";
-					re[i][3] = "";
-					re[i][4] = "";
+					re[i][3] =da.get(i).getTeam_G() ;
+					re[i][4] ="";
 					re[i][5]="";
 					re[i][6]="";
 					re[i][7]="";	
 				}else{
-					re[i][0]=da.get(i).getTime()+da.get(i).getIsOver();
+					re[i][0]=da.get(i).getTime();
 					re[i][1]=da.get(i).getMatchType();
-					re[i][2]=mm.getFullName(da.get(i).getTeam_H());
+					re[i][2]=(da.get(i).getTeam_H());
 					re[i][3]=da.get(i).getScore();
-					re[i][4]=mm.getFullName(da.get(i).getTeam_G());
+					re[i][4]=(da.get(i).getTeam_G());
 					re[i][5]="视频/直播";
 					re[i][6]="文字直播";
 					re[i][7]="技术统计";		
@@ -469,19 +570,27 @@ public class Match_Process extends JPanel {
 	}
 	
 	//将每个日期作为一个matchInfoVO加入
-	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<MatchInfoVO> da,ArrayList<String> dates) throws ParseException{
+	public ArrayList<MatchInfoVO> changeProdata_ChooseAllTeam_ByDate(ArrayList<String> dates) throws ParseException{
 		ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
-		MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
+		
 		ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
 		for(int i=0;i<dates.size();i++){
+			System.out.println(dates.get(i));
+			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null, "");
 			daymivo.setDate(dates.get(i)+" "+getWeekOfDate(dates.get(i)));
 			String[] ddd=dates.get(i).split("-");
-			re.add(daymivo);
-			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString(), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
-		    for(int m=0;m<temp.size();m++){
-		    	re.add(temp.get(m));
-		    }		
+			
+			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString().substring(0, 5), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
+			if(temp==null||temp.size()==0){
+				
+				
+			}else{re.add(daymivo);
+				for(int m=0;m<temp.size();m++){
+					re.add(temp.get(m));
+				}	
+			}
 		}
+		System.out.println(re.size());
 		return re;		
 	}
 	
@@ -493,32 +602,32 @@ public class Match_Process extends JPanel {
 				re[0][1] = "";
 				re[0][2] = "";
 				re[0][3] = "";
-				re[0][4] = "";
-				re[0][5]="视频/直播";
-				re[0][6]="文字直播";
-				re[0][7]="技术统计";	
+				re[0][4] = "没有比赛";
+				re[0][5]="";
+				re[0][6]="";
+				re[0][7]="";	
 				return re;
 			}
 			else{
 				Object[][] re=new Object[da.size()][8];
-				TeamName_Map mm=new TeamName_Map();
+
 				//"日期","类型","主队","比分","客队","视频/直播","文字直播","技术统计"
 				for(int i=0;i<da.size();i++){
 					if(da.get(i).getIsOver().equals("")){
 						re[i][0] =da.get(i).getDate();
 						re[i][1] = "";
 						re[i][2] = "";
-						re[i][3] = "";
+						re[i][3] = da.get(i).getTeam_G();
 						re[i][4] = "";
 						re[i][5]="";
 						re[i][6]="";
 						re[i][7]="";	
 					}else{
-						re[i][0]=da.get(i).getDate().substring(da.get(i).getDate().length()-2, da.get(i).getDate().length())+"日"+da.get(i).getTime()+da.get(i).getIsOver();
+						re[i][0]=da.get(i).getDate().substring(da.get(i).getDate().length()-2, da.get(i).getDate().length())+"日"+da.get(i).getTime();
 						re[i][1]=da.get(i).getMatchType();
-						re[i][2]=mm.getFullName(da.get(i).getTeam_H());
+						re[i][2]=(da.get(i).getTeam_H());
 						re[i][3]=da.get(i).getScore();
-						re[i][4]=mm.getFullName(da.get(i).getTeam_G());
+						re[i][4]=(da.get(i).getTeam_G());
 						re[i][5]="视频/直播";
 						re[i][6]="文字直播";
 						re[i][7]="技术统计";		
@@ -532,15 +641,22 @@ public class Match_Process extends JPanel {
 		//将每个月作为一个matchInfoVO加入
 		public ArrayList<MatchInfoVO> changeProdata_ForATeam(int[] havingMatchMonths,String teamabb){
 			ArrayList<MatchInfoVO> re = new ArrayList<MatchInfoVO>();
-			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
 			ArrayList<MatchInfoVO> temp = new ArrayList<MatchInfoVO>();
+			
 			for(int i=0;i<havingMatchMonths.length;i++){
+				MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null, "");
+			
 				daymivo.setDate(String.valueOf(havingMatchMonths[i])+"月的比赛");
-				re.add(daymivo);
-				temp=init.mbl.getPro_ForTeam(pro_season1.getSelectedItem().toString(), havingMatchMonths[i], teamabb);
-			    for(int m=0;m<temp.size();m++){
+				
+				temp=init.mbl.getPro_ForTeam(pro_season1.getSelectedItem().toString().substring(0, 5), havingMatchMonths[i], teamabb);
+			    if(temp==null||temp.size()==0){
+			    	
+			    }else{
+			    	re.add(daymivo);
+			    	for(int m=0;m<temp.size();m++){
+					
 			    	re.add(temp.get(m));
-			    }		
+			    }	}	
 			}
 			return re;		
 		}
@@ -569,18 +685,23 @@ public class Match_Process extends JPanel {
 		public void changetable_Week(String date1) throws ParseException{
 			ArrayList<MatchInfoVO> re=new ArrayList<MatchInfoVO>();
 			ArrayList<MatchInfoVO> temp=new ArrayList<MatchInfoVO>();	
-			MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null);
+			
 			for(int i=0;i<7;i++){	
-				
+				MatchInfoVO daymivo=new MatchInfoVO("", "", "", "", "", "", "", null, "");
 				String date=getSevenDaysLater(date1, i);
 				daymivo.setDate(date+" "+getWeekOfDate(date));
 				String s_s_s[]=date.split("-");
+				
 				int year=Integer.parseInt(s_s_s[0]);
 				int mon=Integer.parseInt(s_s_s[1]);
 				int day=Integer.parseInt(s_s_s[2]);
 				temp=init.mbl.getPro_ByDay(getSeason(year,mon), mon, day);
-				for(int m=0;m<temp.size();m++){
-					re.add(temp.get(m));
+				if(temp.size()==0||temp==null){				
+				}else{
+					re.add(daymivo);
+					for(int m=0;m<temp.size();m++){				
+						re.add(temp.get(m));
+					}			
 				}
 			}
 			mivo=re;

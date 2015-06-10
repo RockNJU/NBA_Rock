@@ -928,13 +928,13 @@ public class Player_Data extends JPanel{
 	
 	public static Object[][] getAveragedata(ArrayList<PlayerSeasonDataVO> da) {
 		//System.out.println(da == null);
-		if (da == null) {
+		if (da == null||da.size()==0) {
 			Object[][] re = new Object[1][35];
 			re[0][0] = "";
 			re[0][1] = "";
 			re[0][2] = "";
 			re[0][3] = "";
-			re[0][4] = "";
+			re[0][4] = "没有信息";
 			re[0][5] = "";
 			re[0][6] = "";
 			re[0][7] = "";
@@ -1033,7 +1033,7 @@ public class Player_Data extends JPanel{
 			re[0][0] = "";
 			re[0][1] = "";
 			re[0][2] = "";
-			re[0][3] = "";
+			re[0][3] = "没有信息";
 			re[0][4] = "";
 			re[0][5] = "";
 			re[0][6] = "";

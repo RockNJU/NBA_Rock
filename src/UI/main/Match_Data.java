@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +26,6 @@ import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_M;
 import UI.common.DateChooser;
-import UI.common.TeamName_Map;
 import VO.MatchVO;
 
 public class Match_Data extends JPanel {
@@ -46,14 +46,21 @@ public class Match_Data extends JPanel {
 	
 	/**
 	 * Create the panel.
+	 * @throws ParseException 
 	 */
-	public Match_Data() {
+	public Match_Data() throws ParseException {
 		setLayout(null);
 		setSize(1060, 600);
 		setOpaque(false);
 		
-		Date da=new Date();		
-		dc=new DateChooser(180,35,da);
+		//String da=init.mbl.getLastHavingMatchDate();
+		String da="2015-06-10";
+		String pattern = "yyyy-MM-dd";
+		//System.out.println(da);
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		Date date = sdf.parse(da);
+		
+		dc=new DateChooser(180,35,date);
 		dc.setSize(120, 34);
 		dc.setLocation(26, 18);
 		add(dc);
@@ -124,11 +131,18 @@ public class Match_Data extends JPanel {
 				"SAC","SAS","TOR","UTA","WAS"};
 		ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
-		TeamName_Map ma=new TeamName_Map();
-	    for(int i=0;i<teamsarray.length;i++){
-	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
+	    for(int i=0;i<tmsa.size();i++){
+	    	//TODO 
+	    	//TODO
+	    	//TODO
+	    	//TODO 简写图片和球队中文名的对应
+	    	//TODO 
+	    	//TODO
+	    	//TODO
+	    	//TODO
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+tmsa.get(i)+".png");
 	    	image.setImage(image.getImage().getScaledInstance(48,48,Image.SCALE_DEFAULT));
-	    	content.put(ma.getFullName(teamsarray[i]), image);
+	    	content.put(tmsa.get(i), image);
 	    }  
 	   
 		teams= new JComboBox(content.keySet().toArray());	    
@@ -296,7 +310,6 @@ public class Match_Data extends JPanel {
 		}
 		else{
 			Object[][] re=new Object[mdata.size()][11];
-			TeamName_Map mm=new TeamName_Map();
 			//String[] matchtitle={"日期","赛季","主队","比分","客队",
 			//	"第一节比分","第二节比分","第三节比分","第四节比分","加时赛比分"};
 			for(int i=0;i<mdata.size();i++){		
@@ -304,9 +317,9 @@ public class Match_Data extends JPanel {
 				re[i][0]=i+1;
 				re[i][1]=mdata.get(i).getDate();
 				re[i][2]=mdata.get(i).getSeason()+"赛季";
-				re[i][3]=mm.getFullName(mdata.get(i).getHostTeam().getTeamName());
+				re[i][3]=(mdata.get(i).getHostTeam().getTeamName());
 				re[i][4]=mdata.get(i).getMatchScore();
-				re[i][5]=mm.getFullName(mdata.get(i).getGuestTeam().getTeamName());
+				re[i][5]=(mdata.get(i).getGuestTeam().getTeamName());
 				re[i][6]=mdata.get(i).getScores().get(0);
 				re[i][7]=mdata.get(i).getScores().get(1);
 				re[i][8]=mdata.get(i).getScores().get(2);

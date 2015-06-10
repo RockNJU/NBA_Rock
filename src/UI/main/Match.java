@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 
 import UI.common.ComboBoxRenderer;
 import UI.common.DateChooser;
-import UI.common.TeamName_Map;
 
 public class Match extends JPanel{
 	static Match_Data p1;
@@ -25,7 +24,7 @@ public class Match extends JPanel{
 	//static int changetime;
 	JButton change;
 	
-	public Match(){
+	public Match() throws ParseException{
 		setLayout(null);
 		setSize(1060, 639);
 		setOpaque(false);
@@ -70,8 +69,14 @@ public class Match extends JPanel{
 				}else{
 					change.setToolTipText("切换到赛程");
 					change.setIcon(new ImageIcon("newpic/赛程前.png"));
-					Match_Data p=new Match_Data();
-					change(p);
+					try {Match_Data p;
+					
+						p = new Match_Data();
+					
+					change(p);} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 

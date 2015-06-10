@@ -23,14 +23,12 @@ import UI.common.OftenUseMethod;
 import UI.common.PartitionMap;
 import UI.common.PlayerPosition_Map;
 import UI.common.SortItem_Map;
-import UI.common.TeamName_Map;
 import VO.SingleMatchPersonalDataVO;
 import VO.TeamSeasonDataVO;
 
 
 public class HotTeams extends JPanel {
 	SortItem_Map map1 = new SortItem_Map();
-	TeamName_Map map3 = new TeamName_Map();	
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
 	PartitionMap map5 = new PartitionMap();	
 	Object [][] data;
@@ -147,7 +145,7 @@ public class HotTeams extends JPanel {
 			ImageIcon ddd = new ImageIcon("newpic/TEAMPNG/"+da.get(i).getTeamName()+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
-		    re[i-1][2]=map3.getFullName(da.get(i).getTeamName());
+		    re[i-1][2]=(da.get(i).getTeamName());
 		    re[i-1][3]=da.get(i).getPartition();
 		    re[i-1][4]=da.get(i).getInfo().getFormedTime();
 		    re[i-1][5]=da.get(i).getTeamName();

@@ -33,7 +33,6 @@ public class PartitionMap {
 		  // map.put("得分/篮板/助攻", "");
 	   }
 	   public String getItem(String item){
-		   System.out.println("传进来的item："+item);
 		   return map.get(item).toString();
 	   }
 }

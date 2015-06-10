@@ -12,7 +12,6 @@ import UI.common.CreateTable;
 import UI.common.OftenUseMethod;
 import UI.common.PartitionMap;
 import UI.common.PlayerPosition_Map;
-import UI.common.TeamName_Map;
 import UI.main.init;
 import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
@@ -37,10 +36,11 @@ public class PlayerA extends JPanel {
 	Color newc=new Color(219,241,241);
 	PlayerPosition_Map m=new PlayerPosition_Map();
 	PartitionMap mm=new PartitionMap();
-	ArrayList<SingleMatchPersonalDataVO> smdvo;
+
 	JLabel jb1,pname,lblLocation,pnum,label,label_1,label_2,label_3,label_4,lblxxxx,lblNewLabel;
 	ImageIcon pteam;
 	ArrayList<PlayerSeasonDataVO> psvo;
+	ArrayList<SingleMatchPersonalDataVO> smdvo;
 	PlayerInfoVO pivo;
 	PlayerSeasonDataVO Apsvo;
 	CreateTable PlayerA_list;
@@ -307,10 +307,9 @@ public class PlayerA extends JPanel {
 			return re;
 		} else {
 			Object[][] re = new Object[da.size()][17];	
-			TeamName_Map mm=new TeamName_Map();
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] = da.get(i).getDate();
-				re[i][1] = mm.getFullName(da.get(i).getTeamName());
+				re[i][1] = (da.get(i).getTeamName());
 				re[i][2] = OftenUseMethod.changedouble(da.get(i).getTime());
 				re[i][3] = da.get(i).getPointNum();
 				re[i][4]=da.get(i).getReboundNum();
@@ -354,10 +353,9 @@ public class PlayerA extends JPanel {
 			return re;
 		} else {			
 			Object[][] re = new Object[da.size()][16];	
-			TeamName_Map mm=new TeamName_Map();
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0]= da.get(i).getSeason();
-				re[i][1] = mm.getFullName(da.get(i).getTeamName());
+				re[i][1] = (da.get(i).getTeamName());
 				re[i][2] = da.get(i).getMatchNum();
 				re[i][3] = da.get(i).getStartingNum();
 				re[i][4] = OftenUseMethod.changedouble(da.get(i).getTime_avg());
@@ -400,10 +398,10 @@ public class PlayerA extends JPanel {
 			return re;
 		} else {			
 			Object[][] re = new Object[da.size()][16];	
-			TeamName_Map mm=new TeamName_Map();
+
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] =da.get(i).getSeason();
-				re[i][1] = mm.getFullName(da.get(i).getTeamName());
+				re[i][1] = (da.get(i).getTeamName());
 				re[i][2] = da.get(i).getMatchNum();
 				re[i][3] = da.get(i).getStartingNum();
 				re[i][4] = OftenUseMethod.changedouble(da.get(i).getTime());

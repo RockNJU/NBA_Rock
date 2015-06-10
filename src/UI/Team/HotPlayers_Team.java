@@ -19,7 +19,7 @@ import UI.common.CreateTableforhot;
 import UI.common.OftenUseMethod;
 import UI.common.PlayerPosition_Map;
 import UI.common.SortItem_Map;
-import UI.common.TeamName_Map;
+
 import UI.main.init;
 import VO.PlayerSeasonDataVO;
 import VO.SingleMatchPersonalDataVO;
@@ -41,7 +41,7 @@ public class HotPlayers_Team extends JPanel {
 	Object [][] data;
 	CreateTable_pic ctfh;
 	SortItem_Map map1 = new SortItem_Map();
-	TeamName_Map map3 = new TeamName_Map();	
+
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
 
 	/**
@@ -57,7 +57,7 @@ public class HotPlayers_Team extends JPanel {
 			psdv = tbs.getKingPlayerForATeam(init.defaultseason,map1.getItem(tmptype));
 			data=getdata1(psdv);
 			no1[0]=psdv.get(0).getName();
-			no1[1]=map3.getFullName(psdv.get(0).getTeamName());
+			no1[1]=(psdv.get(0).getTeamName());
 			no1[2]=psdv.get(0).getPosition();
 			if(type.equals("得分")){
 				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getPointNum_avg()));
@@ -156,7 +156,7 @@ public class HotPlayers_Team extends JPanel {
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getPlayerName();
 		    re[i-1][3]=da.get(i).getPlayerPosition();
-		    re[i-1][4]=map3.getFullName(da.get(i).getTeamName());
+		    re[i-1][4]=(da.get(i).getTeamName());
 		    if(type.equals("得分总")){
 				re[i-1][5]= Integer.toString(da.get(i).getPointNum());
 			}
@@ -193,7 +193,7 @@ public class HotPlayers_Team extends JPanel {
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getName();
 		    re[i-1][3]=da.get(i).getPosition();
-		    re[i-1][4]=map3.getFullName(da.get(i).getTeamName());
+		    re[i-1][4]=(da.get(i).getTeamName());
 			//对应项得分
 			if(type.equals("得分")){
 				re[i-1][5]= Double.toString(OftenUseMethod.changedouble(da.get(i).getPointNum_avg()));

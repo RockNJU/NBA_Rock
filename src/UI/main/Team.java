@@ -64,7 +64,7 @@ public class Team extends JPanel{
 	public static AllTeams atd;
 
 	public static CreateTable teamdatalist;
-	public static String[] teamTotaltitle={"序号","球队","得分","篮板","助攻","三分命中数",
+	/*public static String[] teamTotaltitle={"序号","球队","得分","篮板","助攻","三分命中数",
 			"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
 			"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
 			"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};	
@@ -72,7 +72,12 @@ public class Team extends JPanel{
 			"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
 			"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
 			"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};
-	
+			*/
+	public static String[] teamtitle={"序号","球队","得分","篮板","助攻","三分命中数",
+		"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
+		"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
+		"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};
+
 	
 	public Team(){
 		setLayout(null);
@@ -165,7 +170,8 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				tdvo=init.tbl.find(textField.getText());
-				
+				teamdata=getAveragedata(tdvo);
+				teamdatalist.updateTable(teamtitle, teamdata);
 			}
 
 			@Override
@@ -258,12 +264,12 @@ public class Team extends JPanel{
 				// TODO Auto-generated method stub
 				if(avg_tol.isSelected()){					
 					teamdata=getAveragedata(tdvo);
-					teamdatalist.updateTable(teamAveragetitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 					teamdatalist.setcolor(getcl(butisclick));
 				}else{
 					teamdata=getTotaldata(tdvo);
-					teamdatalist.updateTable(teamTotaltitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 					teamdatalist.setcolor(getcl(butisclick));
 				}
@@ -525,12 +531,7 @@ public class Team extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
             	//保存历史记录
-				  Calendar ca = Calendar.getInstance();
-					 String time = ca.getTime().toString();
-					History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-						sh.add_team_History(his);
-			
-						termsort();
+				termsort();
 			}
 
 		});
@@ -653,21 +654,17 @@ public class Team extends JPanel{
 				// TODO
 				
 					String According = "得分";
-					String Season =Teamseason.getSelectedItem().toString().substring(0, 5);
-				
+					String Season =Teamseason.getSelectedItem().toString().substring(0, 5);			
 					SortItem_Map map3 = new SortItem_Map();
-					According = map3.getItem(According);
-					
-					//tdvo = init.tbl.sort(Season,seasontype, According);
+					According = map3.getItem(According);			
 					tdvo = init.tbl.sort(Season, seasontype,According);
-					//System.out.println(Season + Position + Partition + According);
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
 					init.currentunordown=null; 
 					init.currentisaverage=false;
 					init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
 					System.out.println(init.currentpanel);*/
-					teamdatalist.updateTable(teamAveragetitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.setcolor(getcl("得分"));
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 			}
@@ -730,7 +727,7 @@ public class Team extends JPanel{
 					init.currentisaverage=false;
 					init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
 					System.out.println(init.currentpanel);*/
-					teamdatalist.updateTable(teamAveragetitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.setcolor(getcl("篮板"));
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 			}
@@ -793,7 +790,7 @@ public class Team extends JPanel{
 					init.currentisaverage=false;
 					init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
 					System.out.println(init.currentpanel);*/
-					teamdatalist.updateTable(teamAveragetitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.setcolor(getcl("助攻"));
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 			}
@@ -856,7 +853,7 @@ public class Team extends JPanel{
 					init.currentisaverage=false;
 					init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
 					System.out.println(init.currentpanel);*/
-					teamdatalist.updateTable(teamAveragetitle, teamdata);
+					teamdatalist.updateTable(teamtitle, teamdata);
 					teamdatalist.setcolor(getcl(according.getSelectedItem().toString()));
 					teamdatalist.FitTableColumns(teamdatalist.getTable());
 			}
@@ -920,7 +917,7 @@ public class Team extends JPanel{
 				init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
 				System.out.println(init.currentpanel);*/
 				avg_tol.setSelected(true);
-				teamdatalist.updateTable(teamAveragetitle, teamdata);		
+				teamdatalist.updateTable(teamtitle, teamdata);		
 				int x=getcl(according.getSelectedItem().toString());
 				teamdatalist.setcolor(x);
 				teamdatalist.FitTableColumns(teamdatalist.getTable());
@@ -931,7 +928,7 @@ public class Team extends JPanel{
 
 		tdvo=init.tbl.getAllTeamSeasonData(init.defaultseason,init.defaulttype);
 		teamdata=getAveragedata(tdvo);
-		teamdatalist = new CreateTable(teamAveragetitle, teamdata, 10, 100,1040, 480, 25,
+		teamdatalist = new CreateTable(teamtitle, teamdata, 10, 100,1040, 480, 25,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		teamdatalist.setSize(1040, 480);
 		teamdatalist.setLocation(10, 131);
@@ -1215,7 +1212,7 @@ public class Team extends JPanel{
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
 			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);
 			teamdata = getAveragedata(tdvo);
-			teamdatalist.updateTable(teamAveragetitle, teamdata);
+			teamdatalist.updateTable(teamtitle, teamdata);
 			teamdatalist.FitTableColumns(teamdatalist.getTable());
 		}
 		else{
@@ -1223,7 +1220,7 @@ public class Team extends JPanel{
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
 			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);
 			teamdata = getTotaldata(tdvo);
-			teamdatalist.updateTable(teamTotaltitle, teamdata);
+			teamdatalist.updateTable(teamtitle, teamdata);
 			teamdatalist.FitTableColumns(teamdatalist.getTable());
 		}
 		ArrayList<Integer> c=new ArrayList<Integer>();

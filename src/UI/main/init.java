@@ -3,6 +3,7 @@ package UI.main;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -193,7 +194,7 @@ public class init extends JFrame {
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
             	if(!playerbutton.getToolTipText().equals("球员信息 "))
-            	playerbutton.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
+            		playerbutton.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
             	else
             		playerbutton.setIcon(new ImageIcon("newpic/球员信息-选中.png"));
             }           
@@ -302,8 +303,14 @@ public class init extends JFrame {
             	Match p;		
             	currentpanel="match";
             	//System.out.println(currentpanel);
-				p = new Match();
+				try {
+					p = new Match();
+				
 				change(p);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
 

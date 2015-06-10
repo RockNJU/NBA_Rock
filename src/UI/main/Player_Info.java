@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -60,15 +62,49 @@ public class Player_Info extends JPanel {
 				"S","T","U","V","W","X","Y","Z"};
 		
 		for(int i=0;i<butname.length;i++){
-			//ImageIcon image = new ImageIcon("pic/TEAMPNG/"+butname[i]+".png");
-			//image.setImage(image.getImage().getScaledInstance(90,90,Image.SCALE_DEFAULT)); 		
-			final String tempa = butname[i];
-			final JButton charbut = new JButton(tempa);
-			//btnNewButton.setContentAreaFilled(false);
-			charbut.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			final ImageIcon image0 = new ImageIcon("newpic/add/az/"+butname[i]+".jpg");
+			image0.setImage(image0.getImage().getScaledInstance(35,35,Image.SCALE_DEFAULT)); 		
+			final ImageIcon imageA = new ImageIcon("newpic/add/az/"+butname[i]+"A"+".jpg");
+			imageA.setImage(imageA.getImage().getScaledInstance(35,35,Image.SCALE_DEFAULT)); 		
+			final ImageIcon imageB = new ImageIcon("newpic/add/az/"+butname[i]+"B"+".jpg");
+			imageB.setImage(imageB.getImage().getScaledInstance(35,35,Image.SCALE_DEFAULT)); 		
+			
+			//final String tempa = butname[i];
+			final JButton charbut = new JButton(image0);
+			charbut.setToolTipText(butname[i]);
+			charbut.setContentAreaFilled(false);
+			charbut.addMouseListener(new MouseListener() {			
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					charbut.setIcon(imageB);
 					Player.textField.setText("");
 					playerinfolist.updateTable(playerinfotitle, getinfodata(init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText())));
+				
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					charbut.setIcon(imageA);
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					charbut.setIcon(imageA);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					charbut.setIcon(image0);
 				}
 			});
 			add(charbut);

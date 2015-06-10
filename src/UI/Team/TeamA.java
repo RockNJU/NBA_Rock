@@ -17,9 +17,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_M;
 import UI.common.OftenUseMethod;
-import UI.common.TeamName_Map;
+import UI.common.PartitionMap;
 import UI.main.init;
 import VO.SingleMatchPersonalDataVO;
+import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 
@@ -29,11 +30,15 @@ public class TeamA extends JPanel {
 	Color newc=new Color(219,241,241);
 	CreateTable_M analysis;
 	CreateTable TeamA_list;
+	ImageIcon tpic;
+	JLabel jb1,pname,label,lblabalabala,pnumwin,pnumlose,time,label_1,label_2,ground,coach;
+	
 	String[]anatitle={"","场均得分","场均助攻","场均篮板"};
 	Object[][]anadata;
 	String[] TeamA_matchtitle={"日期","对手","得分","篮板","助攻","投篮","投篮%","三分","三分%","罚球","罚球%","抢断","失误","盖帽","犯规","攻/防"};
 	String []TeamA_yeartitle={"赛季","场数","得分","篮板","助攻","投篮%","三分%","罚球%","抢断","失误","盖帽","犯规","攻/守"};
 	Object[][]TeamA_data;
+	String[] newti;
 	ArrayList<TeamMatchVO> smdvo=null;
 	ArrayList<TeamSeasonDataVO> tsdvo=null;
 	JButton lastmatches,lastyears,process,normal,after;
@@ -42,6 +47,8 @@ public class TeamA extends JPanel {
 	String tabletype;
 	String isAvgorTotal;
 	String na;
+	TeamInfoVO tivo;
+	TeamSeasonDataVO tsd;
 	
 	public TeamA(String name) {
 		setSize(1042,580);
@@ -49,12 +56,13 @@ public class TeamA extends JPanel {
 		setOpaque(false);
 		this.na=name;
 		
-		ImageIcon tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
+		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
 		tpic.setImage(tpic.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
-		JLabel jb1=new JLabel(tpic);
+		jb1=new JLabel(tpic);
 		jb1.setBounds(10, 10, 200, 200);
 		jb1.setOpaque(false);
 		add(jb1);
+		
 		bg.setImage(bg.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
 		JLabel jb2=new JLabel(bg);
 		jb2.setBounds(10, 10,  200, 200);
@@ -62,48 +70,60 @@ public class TeamA extends JPanel {
 		add(jb2);
 		
 		
-		JLabel pname = new JLabel("nameBLABLAB");
+		pname = new JLabel("nameBLABLAB");
 		pname.setFont(new Font("华文细黑", Font.BOLD, 25));
 		pname.setBounds(232, 22, 206, 47);
 		pname.setForeground(UI.main.init.syspurple);
 		add(pname);
 		
-		JLabel label = new JLabel("\u8054\u76DF\uFF1A\u4E1C\u90E8\u5206\u533A\uFF1B\u6392\u540D#14");
+		label = new JLabel("\u8054\u76DF\uFF1A\u4E1C\u90E8\u5206\u533A\uFF1B\u6392\u540D#14");
 		label.setForeground(UI.main.init.syspurpleblue);
 		label.setFont(new Font("华文细黑", Font.BOLD, 12));
 		label.setBounds(232, 67, 185, 20);
 		add(label);
 		
-		JLabel time = new JLabel("\u5EFA\u961F\u65F6\u95F4\uFF1A1920-02-20");
+		time = new JLabel("\u5EFA\u961F\u65F6\u95F4\uFF1A1920-02-20");
 		time.setForeground(new Color(102, 90, 197));
 		time.setFont(new Font("华文细黑", Font.BOLD, 12));
 		time.setBounds(232, 92, 185, 20);
 		add(time);
 		
-		JLabel lblabalabala = new JLabel("\u4F4D\u7F6E\uFF1AAbalabala");
+		ground = new JLabel("zhuguan");
+		ground.setForeground(new Color(102, 90, 197));
+		ground.setFont(new Font("华文细黑", Font.BOLD, 12));
+		ground.setBounds(408, 67, 185, 20);
+		add(ground);
+		
+		coach = new JLabel("coach");
+		coach.setForeground(new Color(102, 90, 197));
+		coach.setFont(new Font("华文细黑", Font.BOLD, 12));
+		coach.setBounds(408, 92, 185, 20);
+		add(coach);
+		
+		lblabalabala = new JLabel("\u4F4D\u7F6E\uFF1AAbalabala");
 		lblabalabala.setForeground(new Color(102, 90, 197));
 		lblabalabala.setFont(new Font("华文细黑", Font.BOLD, 12));
 		lblabalabala.setBounds(232, 115, 185, 20);
 		add(lblabalabala);
 		
-		JLabel pnumwin = new JLabel("00");
+		pnumwin = new JLabel("00");
 		pnumwin.setFont(new Font("微软雅黑", Font.BOLD, 40));
 		pnumwin.setBounds(390, 112, 84, 80);
 		pnumwin.setForeground(UI.main.init.syspurpleblue);
 		add(pnumwin);
 		
-		JLabel pnumlose = new JLabel("-00");
+		pnumlose = new JLabel("-00");
 		pnumlose.setFont(new Font("微软雅黑", Font.BOLD, 40));
 		pnumlose.setBounds(478, 112, 84, 80);
 		pnumlose.setForeground(UI.main.init.syspurpleblue);
 		add(pnumlose);
 		
-		JLabel label_1 = new JLabel("\u80DC");
+		label_1 = new JLabel("\u80DC");
 		label_1.setForeground(new Color(102, 90, 197));
 		label_1.setFont(new Font("华文细黑", Font.BOLD, 16));
 		label_1.setBounds(448, 151, 22, 20);
 		add(label_1);
-		JLabel label_2 = new JLabel("\u8D1F");
+		label_2 = new JLabel("\u8D1F");
 		label_2.setForeground(new Color(102, 90, 197));
 		label_2.setFont(new Font("华文细黑", Font.BOLD, 16));
 		label_2.setBounds(551, 151, 22, 20);
@@ -119,76 +139,7 @@ public class TeamA extends JPanel {
 		analysis.setNthWidth(3, 90);
 		analysis.setAllWhite();
 		add(analysis);
-        /**
-		JLabel label_3 = new JLabel("\u6218\u7EE9\u603B\u7ED3\uFF1A");
-		label_3.setForeground(new Color(155, 106, 141));
-		label_3.setFont(new Font("华文细黑", Font.BOLD, 16));
-		label_3.setBounds(663, 115, 115, 31);
-		add(label_3);
-		
-		JLabel label_4 = new JLabel("\u4E3B\u573A\u6218\u7EE9\uFF1A00\u80DC - 00\u8D1F");
-		label_4.setForeground(new Color(102, 90, 197));
-		label_4.setFont(new Font("华文细黑", Font.BOLD, 15));
-		label_4.setBounds(753, 121, 185, 20);
-		add(label_4);
-		
-		JLabel label_5 = new JLabel("\u5BA2\u573A\u6218\u7EE9\uFF1A00\u80DC - 00\u8D1F");
-		label_5.setForeground(new Color(102, 90, 197));
-		label_5.setFont(new Font("华文细黑", Font.BOLD, 15));
-		label_5.setBounds(753, 151, 185, 20);
-		add(label_5);
-		
-		JLabel label_6 = new JLabel("\u6700\u8FD110\u573A\uFF1A00\u80DC - 00\u8D1F");
-		label_6.setForeground(new Color(102, 90, 197));
-		label_6.setFont(new Font("华文细黑", Font.BOLD, 15));
-		label_6.setBounds(753, 181, 185, 20);
-		add(label_6);
-		
-		*/
-		/*
-		JLabel label_3 = new JLabel("\u573A\u5747\u5F97\u5206");
-		label_3.setForeground(new Color(102, 90, 197));
-		label_3.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_3.setBounds(580, 122, 52, 20);
-		add(label_3);
-		
-		JLabel label_4 = new JLabel("\u573A\u5747\u7BEE\u677F");
-		label_4.setForeground(new Color(102, 90, 197));
-		label_4.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_4.setBounds(653, 122, 52, 20);
-		add(label_4);
-		
-		JLabel label_5 = new JLabel("\u573A\u5747\u52A9\u653B");
-		label_5.setForeground(new Color(102, 90, 197));
-		label_5.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_5.setBounds(725, 122, 52, 20);
-		add(label_5);
-		
-		JLabel label_6 = new JLabel("\u5F53\u524D\u8D5B\u5B63\u6392\u540D");
-		label_6.setForeground(new Color(155, 106, 141));
-		label_6.setFont(new Font("华文细黑", Font.PLAIN, 15));
-		label_6.setBounds(474, 143, 96, 38);
-		add(label_6);
-		
-		JLabel lblth = new JLabel("15th");
-		lblth.setForeground(new Color(155, 106, 141));
-		lblth.setFont(new Font("华文细黑", Font.BOLD, 17));
-		lblth.setBounds(587, 143, 44, 38);
-		add(lblth);
-		
-		JLabel label_7 = new JLabel("15th");
-		label_7.setForeground(new Color(155, 106, 141));
-		label_7.setFont(new Font("华文细黑", Font.BOLD, 17));
-		label_7.setBounds(661, 143, 44, 38);
-		add(label_7);
-		
-		JLabel label_8 = new JLabel("15th");
-		label_8.setForeground(new Color(155, 106, 141));
-		label_8.setFont(new Font("华文细黑", Font.BOLD, 17));
-		label_8.setBounds(733, 143, 44, 38);
-		add(label_8);
-		*/
-		//smdvo=UI.main.init.pbl.getLastFiveMatchData(name, seasontype);
+      
 		TeamA_data=getLastFiveMatch(smdvo);
 		TeamA_list = new CreateTable(TeamA_matchtitle, TeamA_data, 10, 250,1025, 330, 25,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
@@ -217,12 +168,14 @@ public class TeamA extends JPanel {
 				tabletype="近五场";
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
+				/*
 				smdvo=UI.main.init.tbl.getLastFiveMatchData(na);
 				TeamA_data=getLastFiveMatch(smdvo);
 				TeamA_list.setOpaque(false);
 				//PlayerA_list.setOpa();
 				TeamA_list.FitTableColumns(TeamA_list.getTable());
-				TeamA_list.getRoll().getViewport().setOpaque(false);
+				TeamA_list.getRoll().getViewport().setOpaque(false);*/
+				updateTeamA(na);
 			}			
 		});
 		
@@ -242,7 +195,7 @@ public class TeamA extends JPanel {
 				after.setEnabled(true);
 				isAvg.setSelected(true);
 				isAvg.setEnabled(true);
-				
+				/*
 				tsdvo=UI.main.init.tbl.getATeamSeasonData(na, seasontype);				
 				TeamA_data=getyearavg(tsdvo);
 				TeamA_list = new CreateTable(TeamA_matchtitle, TeamA_data, 10, 260,1025, 320, 25,
@@ -251,7 +204,8 @@ public class TeamA extends JPanel {
 				TeamA_list.setOpaque(false);
 				//PlayerA_list.setOpa();
 				TeamA_list.FitTableColumns(TeamA_list.getTable());
-				TeamA_list.getRoll().getViewport().setOpaque(false);
+				TeamA_list.getRoll().getViewport().setOpaque(false);*/
+				updateTeamA(na);
 			}			
 		});
 		process=new JButton(new ImageIcon("newpic/按钮赛程.png"));
@@ -272,14 +226,15 @@ public class TeamA extends JPanel {
 				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
-				
+				/*
 				
 				smdvo=UI.main.init.tbl. getASeasonMatchData(na, init.defaultseason);
 				TeamA_data=getLastFiveMatch(smdvo);
 				TeamA_list.setOpaque(false);
 				//PlayerA_list.setOpa();
 				TeamA_list.FitTableColumns(TeamA_list.getTable());
-				TeamA_list.getRoll().getViewport().setOpaque(false);
+				TeamA_list.getRoll().getViewport().setOpaque(false);*/
+				updateTeamA(na);
 			}			
 		});
 		
@@ -295,6 +250,7 @@ public class TeamA extends JPanel {
 				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
 				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				seasontype="常规赛";
+				updateTeamA(na);
 			}			
 		});
 		after=new JButton(new ImageIcon("newpic/季后赛.png"));
@@ -309,6 +265,7 @@ public class TeamA extends JPanel {
 				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
 				after.setIcon(new ImageIcon("newpic/季后赛浮.png"));
 				seasontype="季后赛";
+				updateTeamA(na);
 			}			
 		});
 		
@@ -322,7 +279,9 @@ public class TeamA extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				updateTeamA(na);
 				// TODO Auto-generated method stub
+				/*
 				if(isAvg.isSelected()){
 					isAvgorTotal="avg";	
 					//tsdvo=UI.main.init.pbl.getAPlayerSaeasonData(na, seasontype);				
@@ -345,7 +304,7 @@ public class TeamA extends JPanel {
 					//PlayerA_list.setOpa();
 					TeamA_list.FitTableColumns(TeamA_list.getTable());
 					TeamA_list.getRoll().getViewport().setOpaque(false);
-				}
+				}*/
 			}
 			
 		});
@@ -456,7 +415,7 @@ public class TeamA extends JPanel {
 			return re;
 		} else {			
 			Object[][] re = new Object[da.size()][13];	
-			TeamName_Map mm=new TeamName_Map();
+
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0]= da.get(i).getSeason();
 				re[i][1] = da.get(i).getMatchNum();
@@ -496,7 +455,7 @@ public class TeamA extends JPanel {
 			return re;
 		} else {			
 			Object[][] re = new Object[da.size()][13];	
-			TeamName_Map mm=new TeamName_Map();
+
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] =da.get(i).getSeason();
 				re[i][1] = da.get(i).getMatchNum();
@@ -516,5 +475,46 @@ public class TeamA extends JPanel {
 		}
 
 	}
-	
+	public void updateTeamA(String name){
+		//String seasontype;
+		//String tabletype;
+		//String isAvgorTotal;
+		//String na;
+		
+		tivo=init.tbl.getATeamInfo(init.defaultseason, name);
+		tsd=init.tbl.getATeamData(init.defaultseason, name);
+		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
+		jb1.setIcon(tpic);
+		pname.setText(tivo.getTeam());
+		PartitionMap a=new PartitionMap();
+		label.setText("联盟"+a.getItem(tivo.getPartition())+";#排名:"+String.valueOf(init.tbl.getRank(name)));
+		lblabalabala.setText("位置："+tivo.getLocation());
+		pnumwin.setText(String.valueOf(tsd.getWinNum()));
+		coach.setText("教练："+tivo.getCaoch_name());
+		ground.setText("主馆"+tivo.getHomeGround());
+		pnumlose.setText(String.valueOf(tsd.getMatchNum()-tsd.getWinNum()));
+		time.setText("建队时间："+tivo.getFormedTime());
+		
+		if(tabletype.equals("近五场")){
+			smdvo=UI.main.init.tbl.getLastFiveMatchData(na);
+			TeamA_data=getLastFiveMatch(smdvo);
+			newti=TeamA_matchtitle;
+		}else if(tabletype.equals("近几年")){
+			newti=TeamA_yeartitle;
+			tsdvo=UI.main.init.tbl.getATeamSeasonData(na, seasontype);
+			if(isAvg.equals("avg")){
+				TeamA_data=getyearavg(tsdvo);
+			}else{
+				TeamA_data=getyeartol(tsdvo);
+			}		
+		}else{
+			newti=TeamA_matchtitle;
+			smdvo=init.tbl. getASeasonMatchData(na, init.defaultseason);
+			TeamA_data=getLastFiveMatch(smdvo);
+		}
+		TeamA_list.setOpaque(false);
+		TeamA_list.updateTable(newti, TeamA_data);
+		TeamA_list.FitTableColumns(TeamA_list.getTable());
+		TeamA_list.getRoll().getViewport().setOpaque(false);
+	}
 }

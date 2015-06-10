@@ -41,7 +41,7 @@ public class NoMatches extends JDialog {
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("下一场比赛在  "+"2014-01-02 !",JLabel.CENTER);
+		JLabel lblNewLabel_1 = new JLabel("下一场比赛在  "+init.mbl.getNextHavingMatchDate(Match_Data.dc.showDate.getText())+" !",JLabel.CENTER);
 		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		lblNewLabel_1.setBounds(0, 80, 260, 40);
 		getContentPane().add(lblNewLabel_1);
