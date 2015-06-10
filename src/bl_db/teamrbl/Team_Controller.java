@@ -598,7 +598,7 @@ public class Team_Controller implements TeamBLService{
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
-				System.out.println("+++"+rs.getString("team"));
+				//System.out.println("+++"+rs.getString("team"));
 				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
 						rs.getString("date"),rs.getString("name"),
 						rs.getString("team"),rs.getString("division"),
