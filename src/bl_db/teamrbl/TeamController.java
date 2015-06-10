@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import VO.PlayerSeasonDataVO;
+import VO.SingleMatchPersonalDataVO;
 import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
@@ -106,7 +107,7 @@ public class TeamController implements TeamBLService{
 	private ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type){
 		
 		
-		System.out.println("ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type)*******");
+		//System.out.println("ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type)*******");
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 	
       
@@ -377,29 +378,246 @@ public class TeamController implements TeamBLService{
 
 
 	@Override
-	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String na,
-			String seasontype) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String team,
+			String season) {
+		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
+		
+	      
+        Statement stmt;
+		try {
+			Connection conn;
+			 Class.forName("org.sqlite.JDBC");  
+	         conn = DriverManager.getConnection(url,user, pwd);
+	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
+	        conn.setAutoCommit(false);  
+	        stmt = conn.createStatement(); 
+					
+			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
+					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
+					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
+					+ "AVG(defenseEfficiency) as defenseEff "
+					+ "FROM team_season_data WHERE season='"+season+"'"
+					+ " AND team='"+team+"'"
+					+ " GROUP BY season,type,team) as "
+					+ "data right join teaminfo as info on data.team =info.team";
+			ResultSet  rs=stmt.executeQuery(str);
+
+			char chr=39;
+			while(rs.next()){
+				
+				 
+				
+				list.add(new TeamSeasonDataVO(season,rs.getString("team"),
+						
+						new TeamInfoVO(rs.getString("team"),
+				    			  rs.getString("Cname"),rs.getString("TEname"),
+				    			  rs.getString("location"),rs.getString("division"),
+				    			  rs.getString("partition"),rs.getString("homeGround"),
+				    			  rs.getString("formedTime"),rs.getString("coach_name"),
+				    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
+		    			  
+						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),rs.getDouble("o_round_sum"),
+						rs.getDouble("offenseEff"),rs.getDouble("defenseEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("assistEff"),
+						null));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return list;
 	}
 
 
 	@Override
-	public ArrayList<TeamMatchVO> getLastFiveMatchData(String name){
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<TeamMatchVO> getLastFiveMatchData(String team){
+		ArrayList<TeamMatchVO> list=new ArrayList<>();
+		
+	      
+        Statement stmt;
+		try {
+			Connection conn;
+			 Class.forName("org.sqlite.JDBC");  
+	         conn = DriverManager.getConnection(url,user, pwd);
+	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
+	        conn.setAutoCommit(false);  
+	        stmt = conn.createStatement(); 
+	        
+	        String ss="(SELECT * FROM team_season_data where team='"+team+"' AND　season='"+currentSeason+"')";
+					
+			String str="SELECT TOP 5 FROM (SELECT * FROM team_season_data "
+					+ "where team='"+team+"' "
+					+ "AND　season='"+currentSeason+"') as temp ORDER BY date";
+			ResultSet  rs=stmt.executeQuery(str);
+			 
+		 
+			while(rs.next()){
+				
+				
+				System.out.println("球队----|||："+rs.getString("team")+";"+
+				rs.getString("division")+";"+rs.getInt("point_sum"));
+				list.add(new TeamMatchVO(currentSeason,rs.getString("team"),rs.getInt("winNum"),
+						rs.getString("date"),rs.getString("team_opp"),
+						rs.getInt("pointNum"),rs.getInt("lost_points"),rs.getInt("reboundNum"),
+						rs.getInt("o_ReboundNum"),rs.getInt("d_ReboundNum"),
+						rs.getInt("assistNum"),rs.getInt("turnoverNum"),
+						rs.getInt("stealNum"),rs.getInt("foulNum"),
+						rs.getInt("fieldGoal"),rs.getInt("shootNum"),
+						 rs.getInt("t_fieldGoal"),rs.getInt("t_shootNum"),
+						 rs.getInt("freeThrowGoal"),rs.getInt("freeThrowNum"),
+						 rs.getInt("blockNum"),rs.getInt("offenseRound"),
+						 rs.getInt("defenseRound"),rs.getDouble("o_reboundEfficiency"),
+						 rs.getDouble("d_reboundEfficiency"), null));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		list=addindividualData(list,team);
+		return list;
 	}
 
 
 	@Override
-	public ArrayList<TeamMatchVO> getASeasonMatchData(String name, String season) {
+	public ArrayList<TeamMatchVO> getASeasonMatchData(String team, String season) {
 		// TODO Auto-generated method stub
 		/**********************************
 		 * 获取某支球队某个赛季的所有参加了 的比赛数据
 		 ********************************/
-		return null;
+		ArrayList<TeamMatchVO> list=new ArrayList<>();
+		
+	      
+        Statement stmt;
+		try {
+			Connection conn;
+			 Class.forName("org.sqlite.JDBC");  
+	         conn = DriverManager.getConnection(url,user, pwd);
+	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
+	        conn.setAutoCommit(false);  
+	        stmt = conn.createStatement(); 
+					
+			String str="SELECT * FROM team_season_data WHERE season='"+season+"' and teamAbb='"+team+"'";
+			ResultSet  rs=stmt.executeQuery(str);
+			 
+			char chr=39;
+			while(rs.next()){
+				
+				
+				
+				
+				/*String season,String teamName, int winNum,
+			String date,String opp_team,int pointNum,int lost_point,
+			int reboundNum, int O_ReboundNum, int D_ReboundNum,
+			int assistNum, int turnoverNum, int stealNum, int foulNum,
+			int fieldGoal, int shootNum, int T_fieldGoal, int T_shootNum,
+			int freeThrowGoalNum, int freeThrowNum, int blockNum,
+			double offenseRound, double defenseRound,
+			double O_ReboundEfficiency,double D_ReboundEfficiency,
+			ArrayList<SingleMatchPersonalDataVO> individualData*/
+				
+				
+				list.add(new TeamMatchVO(season,rs.getString("team"),rs.getInt("winNum"),
+						rs.getString("date"),rs.getString("team_opp"),
+						rs.getInt("pointNum"),rs.getInt("lost_points"),rs.getInt("reboundNum"),
+						rs.getInt("o_ReboundNum"),rs.getInt("d_ReboundNum"),
+						rs.getInt("assistNum"),rs.getInt("turnoverNum"),
+						rs.getInt("stealNum"),rs.getInt("foulNum"),
+						rs.getInt("fieldGoal"),rs.getInt("shootNum"),
+						 rs.getInt("t_fieldGoal"),rs.getInt("t_shootNum"),
+						 rs.getInt("freeThrowGoal"),rs.getInt("freeThrowNum"),
+						 rs.getInt("blockNum"),rs.getInt("offenseRound"),
+						 rs.getInt("defenseRound"),rs.getDouble("o_reboundEfficiency"),
+						 rs.getDouble("d_reboundEfficiency"), null));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		list=addindividualData(list,team);
+		return list;
 	}
 	
+	private ArrayList<TeamMatchVO> addindividualData(
+			ArrayList<TeamMatchVO> list,String team){
+		for(int i=0;i<list.size();i++){
+			list.get(i).setIndividualData(getIndividualData(team,list.get(i).getDate()));
+		}
+		return list;
+	}
+	
+	private ArrayList<SingleMatchPersonalDataVO> getIndividualData(String team,String date){
+		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+         Statement stmt;
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(url,user, pwd);
+			stmt = conn.createStatement(); 
+			String str="SELECT * FROM (SELECT * FROM "
+					+ "palyer_season_data where date='"+date+"' AND team='"+team+"') as "
+					+ "data right join teaminfo as info on data.team =info.team";
+			ResultSet  rs=stmt.executeQuery(str);
+			char chr=39;
+			while(rs.next()){
+				
+				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
+						rs.getString("date"),rs.getString("name"),
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"), rs.getString("position"),
+						rs.getDouble("time"),rs.getInt("fieldGoal"),
+						rs.getInt("shootNum"), rs.getInt("t_fieldGoal"),
+						rs.getInt("t_shootNum"),rs.getInt("freeTrowGoal"),
+						rs.getInt("freeTrowNum"),rs.getInt("o_ReboundNum"),
+						rs.getInt("d_ReboundNum"),rs.getInt("reboundNum"),
+						rs.getInt("assistNum"),rs.getInt("stealNum"),
+						rs.getInt("blockNum"),rs.getInt("tunoverNum"), 
+						rs.getInt("foulNum"),rs.getInt("pointNum"), 
+						rs.getDouble("assistEffiency"),rs.getInt("reboundEfficiency"),
+						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
+						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
+						rs.getDouble("blockEfficiency")));
+			}
+			  stmt.close();
+		      conn.close();//使用完后就关闭数据库
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return list;
+	}
 	
 	/***************************************************************
 	 * 

@@ -337,4 +337,10 @@ public class TeamMatchVO implements Serializable{
 		return winNum;
 	}
 
+
+	public void setIndividualData(
+			ArrayList<SingleMatchPersonalDataVO> individualData) {
+		this.individualData = individualData;
+	}
+
 }

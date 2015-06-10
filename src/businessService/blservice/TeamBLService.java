@@ -15,7 +15,7 @@ public interface TeamBLService {
 	//TODO
 	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename, String item);
 	//获得球队 按赛季来的   整个赛季的数据
-	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String na,String seasontype);
+	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String team,String season);
 		
 	public ArrayList<TeamSeasonDataVO> sort_super(String season,String type,String item,String sign,int num);
 
