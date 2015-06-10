@@ -27,33 +27,34 @@ public class PlayerController implements PlayerBLService{
 	
 	ArrayList<PlayerInfoVO> infoList;
 	
+	   Connection conn ;
+	     Statement stmt ;
+	
+	
 	public PlayerController(){
+		try{
+			  Class.forName("com.mysql.jdbc.Driver").newInstance();
+			  conn = DriverManager.getConnection(url,user, pwd);
+		       stmt = conn.createStatement();
+		       conn.setAutoCommit(false);
+			}catch(Exception e){
+				System.out.println("数据库连接出错："+e.toString());
+			}
 		readBasicInfo();
 		currentSeason=getCurrentSeason();
 	}
 	
 	private String getCurrentSeason(){
+	
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="select MAX(season) as max from matchinfo";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
 				return rs.getString("max");
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			 conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,19 +69,9 @@ public class PlayerController implements PlayerBLService{
 		 * 
 		 * */
 			ArrayList<PlayerInfoVO> infoList=new ArrayList<>();
-			 try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			} catch (InstantiationException | IllegalAccessException
-					| ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	      
-	         Statement stmt;
+			  
 			try {
-				Connection conn;
-				conn = DriverManager.getConnection(url,user, pwd);
-				stmt = conn.createStatement(); 
+				 
 				String str="select * from playerinfo";
 				ResultSet  rs=stmt.executeQuery(str);
 				char chr=39;
@@ -95,8 +86,7 @@ public class PlayerController implements PlayerBLService{
 		    			  rs.getInt("age"),rs.getInt("exp"),
 		    			  rs.getString("school").replace('’', chr),rs.getString("Ename")));
 				}
-				  stmt.close();
-			      conn.close();//使用完后就关闭数据库
+				 conn.commit();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -132,20 +122,8 @@ public class PlayerController implements PlayerBLService{
 	public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,
 			String teamAbb) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
-		
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+  
 			String str="SELECT name,number,position,"
 					+ "height,weight,birth,age,exp,school"
 					+ " FROM playerinfo,player_season_data "
@@ -161,8 +139,7 @@ public class PlayerController implements PlayerBLService{
 	    			  rs.getInt("age"),rs.getInt("exp"),
 	    			  rs.getString("school").replace('’', chr),rs.getString("Ename")));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -179,28 +156,18 @@ public class PlayerController implements PlayerBLService{
  * @return   获取某个赛季的  某个球员的某乡数据的总和
  */
 	private int sumItem(String name,String item,String season){
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
+	 
 			ResultSet  rs;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			
 			String sqlStr="SELECT SUM("+item+") AS sum FROM player_season_data"
 					+ " where name='"+name+"' AND season='"+currentSeason+"'";
 			rs=stmt.executeQuery(sqlStr);
 			int sum=rs.getInt("sum");
 		
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			conn.commit();
 		      return sum;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -212,35 +179,21 @@ public class PlayerController implements PlayerBLService{
 	
 	private int get_Last_Five(String name,String season,String item){
 		int sum=0;
+	 
+    
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-		/*Select DISTINCT TOP 10 *
-		FROM 成绩表
-		orDER BY 成绩表.分数 DESC; */
-		
-		
-         Statement stmt;
-		try {
-			Connection conn;
+			 
 			ResultSet  rs;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			
 			String sqlStr="SELECT * FROM (SELECT "+item+" FROM player_season_data"
-					+ " where name='"+name+"' AND season='"+currentSeason+"') ORDER BY　data desc";
+					+ " where name='"+name+"' AND season='"+currentSeason+"') ORDER BY　date desc";
 			rs=stmt.executeQuery(sqlStr);
 			while(rs.next()){
-				sum=sum+rs.getInt("item");
+				sum=sum+rs.getInt(""+item+"");
 			}
 			
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		      return sum;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -288,19 +241,9 @@ public class PlayerController implements PlayerBLService{
 	
 	private ArrayList<PlayerSeasonDataVO> getAllPlayerSeasonData(String season, String type){
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * FROM (SELECT player.name,division,partition,position,"
 					+ "teamAbb,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
@@ -366,8 +309,7 @@ public class PlayerController implements PlayerBLService{
 						null);
 				list.add(vo);
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -385,19 +327,10 @@ public class PlayerController implements PlayerBLService{
 	public ArrayList<PlayerSeasonDataVO> sort_super(String season, String type,
 			String position, String partition, String item, String sign, int num) {
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
+		 
+    ;
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * FROM (SELECT name,division,partition,"
 					+ "position,teamAbb,COUNT(*) as match_num, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
@@ -447,8 +380,7 @@ public class PlayerController implements PlayerBLService{
 						rs.getInt("three_sum"),
 						null));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -483,19 +415,9 @@ public class PlayerController implements PlayerBLService{
 	public PlayerSeasonDataVO getAPlayerSeasonMatch(String season, String type,
 			String name) {
 		 
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			  
 			String str="SELECT name,division,partition,position,"
 					+ "teamAbb,SUM(matchNum) as match_num, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
@@ -539,8 +461,7 @@ public class PlayerController implements PlayerBLService{
 						rs.getDouble("blockEff"),rs.getInt("double_sum"),rs.getInt("three_sum"),
 						null);
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -622,19 +543,9 @@ public class PlayerController implements PlayerBLService{
 	private ArrayList<SingleMatchPersonalDataVO> get_A_season_records(String season,
 			String name) {
 		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * FROM (SELECT * FROM "
 					+ "palyer_season_data where season='"+currentSeason+"' AND name='"+name+"') as "
 					+ "data right join teaminfo as info on data.team =info.team";
@@ -659,8 +570,7 @@ public class PlayerController implements PlayerBLService{
 						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
 						rs.getDouble("blockEfficiency")));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -698,21 +608,9 @@ public class PlayerController implements PlayerBLService{
 	public double[] getPlayerOneData(String name, int num, String item) {
 		
 		double list[]=null;
+		ResultSet rs=null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			ResultSet  rs;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
-			
+			 
 			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data"
 					+ " where name='"+name+"' AND season='"+currentSeason+"'";
 			rs=stmt.executeQuery(sqlStr);
@@ -740,8 +638,7 @@ public class PlayerController implements PlayerBLService{
 					break;
 				}
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			 conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -783,19 +680,9 @@ public class PlayerController implements PlayerBLService{
 		 * 获取球员所有赛季的数据
 		 * ****************************************/
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+		 
 			String str="SELECT * FROM (SELECT player.name,division,partition,position,"
 					+ "teamAbb,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
@@ -861,8 +748,7 @@ public class PlayerController implements PlayerBLService{
 						null);
 				list.add(vo);
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -885,19 +771,9 @@ public class PlayerController implements PlayerBLService{
 	public PlayerSeasonDataVO getAPlayerSeasonData(String season, String type,
 			String name) {
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * FROM (SELECT player.name,division,partition,position,"
 					+ "teamAbb,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
@@ -964,8 +840,7 @@ public class PlayerController implements PlayerBLService{
 				return vo;
 				 
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			 conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -979,19 +854,9 @@ public class PlayerController implements PlayerBLService{
 			return vo;
 		}
 		
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			  
 			String str="SELECT COUNT(*) as match_sum, "
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
 					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
@@ -1022,10 +887,7 @@ public class PlayerController implements PlayerBLService{
 				break; 
 			}
 			 
-			
-			
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
