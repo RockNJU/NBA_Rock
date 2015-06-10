@@ -24,8 +24,22 @@ public class Team_Controller implements TeamBLService{
     
     String currentSeason;
     ArrayList<TeamInfoVO> infoList;
+    
+    
+    Connection conn ;
+     Statement stmt ;
 	
 	public Team_Controller(){
+		
+		try{
+		  Class.forName("com.mysql.jdbc.Driver").newInstance();
+		  conn = DriverManager.getConnection(url,user, pwd);
+	       stmt = conn.createStatement();
+	       conn.setAutoCommit(false);
+		}catch(Exception e){
+			System.out.println("数据库连接出错："+e.toString());
+		}
+		
 		infoList=new ArrayList<>();
 		currentSeason=getCurrentSeason();
 		readTeamBasicInfo();
@@ -38,9 +52,7 @@ public class Team_Controller implements TeamBLService{
 		
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
-		     Statement stmt = conn.createStatement();
+			 
 	       ResultSet  rs=stmt.executeQuery("select * from teaminfo");
 	       
 	      while (rs.next())
@@ -59,8 +71,7 @@ public class Team_Controller implements TeamBLService{
 	    	//System.out.println("？--？   "+rs.getString("teamAbb"));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
@@ -71,27 +82,17 @@ public class Team_Controller implements TeamBLService{
 	
 	private String getCurrentSeason(){
 		
+		 
+         
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			  
 			String str="select MAX(season) as max from team_season_data";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
 				return rs.getString("max");
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			conn.commit();
 		} catch (SQLException e) {
 			 System.out.println("数据库读取最新的一个赛季出现问题。");
 		}//
@@ -111,13 +112,9 @@ public class Team_Controller implements TeamBLService{
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 	
       
-         Statement stmt;
+          
 		try {
-			Connection conn;
-			 Class.forName("org.sqlite.JDBC");  
-	         conn = DriverManager.getConnection(url,user, pwd);
-	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
-	        conn.setAutoCommit(false);  
+			  
 	        stmt = conn.createStatement(); 
 					
 			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
@@ -179,9 +176,8 @@ public class Team_Controller implements TeamBLService{
 						rs.getDouble("stealEff"),rs.getDouble("assistEff"),
 						null));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException | ClassNotFoundException e) {
+			 conn.commit();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -216,20 +212,10 @@ public class Team_Controller implements TeamBLService{
 			String item, String sign, int num) {
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 		sign=Sign.getSign(sign);
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
+	
           
 		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * from(SELECT team_season_data.team,team_season_data.teamAbb,"
 					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
@@ -277,8 +263,7 @@ public class Team_Controller implements TeamBLService{
 								null));
 				 
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			 conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -390,13 +375,9 @@ public class Team_Controller implements TeamBLService{
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 		
 	      
-        Statement stmt;
+        
 		try {
-			Connection conn;
-			 Class.forName("org.sqlite.JDBC");  
-	         conn = DriverManager.getConnection(url,user, pwd);
-	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
-	        conn.setAutoCommit(false);  
+			 
 	        stmt = conn.createStatement(); 
 					
 			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
@@ -447,9 +428,8 @@ public class Team_Controller implements TeamBLService{
 						rs.getDouble("stealEff"),rs.getDouble("assistEff"),
 						null));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException | ClassNotFoundException e) {
+			 conn.commit();
+		} catch (SQLException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -462,15 +442,10 @@ public class Team_Controller implements TeamBLService{
 	public ArrayList<TeamMatchVO> getLastFiveMatchData(String team){
 		ArrayList<TeamMatchVO> list=new ArrayList<>();
 		
-	      System.out.println(" 传进来的队名："+team+"   当前赛季："+currentSeason);
-        Statement stmt;
+	       
+      ;
 		try {
-			Connection conn;
-			 Class.forName("org.sqlite.JDBC");  
-	         conn = DriverManager.getConnection(url,user, pwd);
-	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
-	        conn.setAutoCommit(false);  
-	        stmt = conn.createStatement(); 
+			 
 	        
 	        String ss="(SELECT * FROM team_season_data where team='"+team+"' AND　season='"+currentSeason+"')";
 	       // "SELECT TOP 5 FROM (SELECT* FROM team_season_data WHERE team='"+team+"' AND season='"+currentSeason+"') as temp ORDER BY date"	
@@ -497,9 +472,8 @@ public class Team_Controller implements TeamBLService{
 						 rs.getDouble("d_reboundEfficiency"), null));
 				i++;
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException | ClassNotFoundException e) {
+			  conn.commit();
+		} catch (SQLException   e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -517,15 +491,9 @@ public class Team_Controller implements TeamBLService{
 		ArrayList<TeamMatchVO> list=new ArrayList<>();
 		
 	      
-        Statement stmt;
-		try {
-			Connection conn;
-			 Class.forName("org.sqlite.JDBC");  
-	         conn = DriverManager.getConnection(url,user, pwd);
-	       // conn = DriverManager.getConnection( "jdbc:sqlite:Data/test.db");  
-	        conn.setAutoCommit(false);  
-	        stmt = conn.createStatement(); 
-					
+       
+		try {  
+	         
 			String str="SELECT * FROM team_season_data WHERE season='"+season+"' and teamAbb='"+team+"'";
 			ResultSet  rs=stmt.executeQuery(str);
 			 
@@ -533,19 +501,7 @@ public class Team_Controller implements TeamBLService{
 			while(rs.next()){
 				
 				
-				
-				
-				/*String season,String teamName, int winNum,
-			String date,String opp_team,int pointNum,int lost_point,
-			int reboundNum, int O_ReboundNum, int D_ReboundNum,
-			int assistNum, int turnoverNum, int stealNum, int foulNum,
-			int fieldGoal, int shootNum, int T_fieldGoal, int T_shootNum,
-			int freeThrowGoalNum, int freeThrowNum, int blockNum,
-			double offenseRound, double defenseRound,
-			double O_ReboundEfficiency,double D_ReboundEfficiency,
-			ArrayList<SingleMatchPersonalDataVO> individualData*/
-				
-				
+ 
 				list.add(new TeamMatchVO(season,rs.getString("team"),rs.getInt("winNum"),
 						rs.getString("date"),rs.getString("team_opp"),
 						rs.getInt("pointNum"),rs.getInt("lost_points"),rs.getInt("reboundNum"),
@@ -559,9 +515,8 @@ public class Team_Controller implements TeamBLService{
 						 rs.getInt("defenseRound"),rs.getDouble("o_reboundEfficiency"),
 						 rs.getDouble("d_reboundEfficiency"), null));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
-		} catch (SQLException | ClassNotFoundException e) {
+			  conn.commit();
+		} catch (SQLException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -579,19 +534,9 @@ public class Team_Controller implements TeamBLService{
 	
 	private ArrayList<SingleMatchPersonalDataVO> getIndividualData(String team,String date){
 		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="SELECT * FROM (SELECT * FROM "
 					+ "player_season_data where date='"+date+"' AND team='"+team+"') as "
 					+ "data left join teaminfo as info on data.team =info.teamAbb";
@@ -616,8 +561,7 @@ public class Team_Controller implements TeamBLService{
 						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
 						rs.getDouble("blockEfficiency")));
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

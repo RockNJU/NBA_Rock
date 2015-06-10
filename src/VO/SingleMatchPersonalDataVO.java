@@ -46,10 +46,14 @@ public class SingleMatchPersonalDataVO implements Serializable{
 		
 		private String teamName;                  //本场比赛所效力的球队
 	 
-	 public SingleMatchPersonalDataVO(String season,String date,String name,String team,
-			 String division,String partition,String p,double time,int fieldGoal,
-			 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoalNum,int freeThrowNum,
-			 int O_R_N,int D_R_N,int reboundNum,int assistNum,int steal,int blockNum,int turnoverNum,
+	 public SingleMatchPersonalDataVO(String season,
+			 String date,String name,String team,
+			 String division,String partition,
+			 String p,double time,int fieldGoal,
+			 int shootNum,int T_fieldGoal,int T_shootNum,
+			 int freeThrowGoalNum,int freeThrowNum,
+			 int O_R_N,int D_R_N,int reboundNum,int assistNum,
+			 int steal,int blockNum,int turnoverNum,
 			 int foulNum,int points, double assistEfficiency,
 			 double reboundEfficiency,double offensiveReboundEff,
 			 double defenseReboundEff,double stealEfficiency,

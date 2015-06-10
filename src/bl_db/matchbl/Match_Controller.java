@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import VO.MatchInfoVO;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
-import VO.TeamInfoVO;
+ 
 import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 
@@ -21,15 +21,28 @@ public class Match_Controller implements MatchBLService{
     String pwd="ghl13";		
     String currentSeason;
 	
+    Connection conn ;
+    Statement stmt ;
+    
+    public Match_Controller(){
+    	
+    	try{
+  		  Class.forName("com.mysql.jdbc.Driver").newInstance();
+  		  conn = DriverManager.getConnection(url,user, pwd);
+  	       stmt = conn.createStatement();
+  	       conn.setAutoCommit(false);
+  		}catch(Exception e){
+  			System.out.println("数据库连接出错："+e.toString());
+  		}
+    	//currentSeason=getCurrentSeason();
+    }
+    
 	private ArrayList<MatchInfoVO> getMatchInfo(String date1,String date2){
 		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 		
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
-		     Statement stmt = conn.createStatement();
-		     
+			 
 		     
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date BETWEEN '"+date1+"' AND '"+date2+"'");
 	       /***************
@@ -53,8 +66,7 @@ public class Match_Controller implements MatchBLService{
 	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
@@ -69,11 +81,10 @@ public class Match_Controller implements MatchBLService{
 		
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
+			 
 		    Team_map map=new Team_map();
 		    team=map.getFullName(team);
-		     Statement stmt = conn.createStatement();
+		    
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE teamH='"+team+"' OR teamG='"+team+"'");
 	       /***************
 	        * String date,String time,String teamH,
@@ -90,8 +101,7 @@ public class Match_Controller implements MatchBLService{
 	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
@@ -102,27 +112,18 @@ public class Match_Controller implements MatchBLService{
 	
 	@Override
 	public String getLastHavingMatchDate() {
+		  
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+			 
 			String str="select MAX(date) as max from matchinfo";
 			ResultSet  rs=stmt.executeQuery(str);
-		 
+		 String result=null;
 			while(rs.next()){
-				return rs.getString("max");
+				result= rs.getString("max");
+				break;
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			  conn.commit();
+			  return result;
 		} catch (SQLException e) {
 			 System.out.println("数据库读取最新的一个赛季出现问题。");
 		}//
@@ -144,27 +145,16 @@ public class Match_Controller implements MatchBLService{
 	@Override
 	public ArrayList<String> getAllSeason() {
 		ArrayList<String> list=new ArrayList<>();
+ ;
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-      
-         Statement stmt;
-		try {
-			Connection conn;
-			conn = DriverManager.getConnection(url,user, pwd);
-			stmt = conn.createStatement(); 
+		 
 			String str="select distinct season from team_season_data";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
 				list.add(rs.getString("season")+"赛季");
 			}
-			  stmt.close();
-		      conn.close();//使用完后就关闭数据库
+			 conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -190,9 +180,7 @@ public class Match_Controller implements MatchBLService{
 	ArrayList<String> daylist=getData(season,month);
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
-		     Statement stmt = conn.createStatement();
+			 
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM(SELECT * FROM matchinfo WHERE "
 	       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"') "
 	       		+ " as new_match WHERE isOver='未赛'");
@@ -210,8 +198,7 @@ public class Match_Controller implements MatchBLService{
 	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
@@ -228,9 +215,7 @@ public class Match_Controller implements MatchBLService{
 		ArrayList<String> daylist=getData(season,month);
 			try
 		    {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			    Connection conn = DriverManager.getConnection(url,user, pwd);
-			     Statement stmt = conn.createStatement();
+				
 		       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE "
 		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
 		       /***************
@@ -247,8 +232,7 @@ public class Match_Controller implements MatchBLService{
 		    			  getScores(score),rs.getString("link")));
 		        //return vo;
 		      }
-		      conn.close();
-		      stmt.close();
+		    conn.commit();
 		}catch (Exception ex)
 		    {
 		      System.out.println("Error : " + ex.toString());
@@ -268,17 +252,14 @@ public class Match_Controller implements MatchBLService{
 		ArrayList<String> daylist=getData(season,month);
 			try
 		    {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			    Connection conn = DriverManager.getConnection(url,user, pwd);
-			     Statement stmt = conn.createStatement();
+				 
 		       ResultSet  rs=stmt.executeQuery("SELECT distinct date FROM matchinfo WHERE "
 		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
 		      while (rs.next())
 		      {        	  
 		    	  list.add(rs.getString("date"));
 		      }
-		      conn.close();
-		      stmt.close();
+		     conn.commit();
 		}catch (Exception ex)
 		    {
 		      System.out.println("Error : " + ex.toString());
@@ -300,9 +281,7 @@ public class Match_Controller implements MatchBLService{
 		
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
-		     Statement stmt = conn.createStatement();
+			 
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date='"+date+"'");
 	        
 	       String score;
@@ -316,8 +295,7 @@ public class Match_Controller implements MatchBLService{
 	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
@@ -335,9 +313,7 @@ public class Match_Controller implements MatchBLService{
 		
 		try
 	    {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    Connection conn = DriverManager.getConnection(url,user, pwd);
-		     Statement stmt = conn.createStatement();
+			 
 	       ResultSet  rs=stmt.executeQuery("SELECT* FROM (SELECT * FROM "
 	       		+ "matchinfo WHERE teamH='"+teamabb+"' OR teamG='"+map.getFullName(teamabb)+"') as new_match WHERE "
 	       		+ "date BETWEEN '"+day.get(0)+"' AND '"+day.get(1)+"'");
@@ -357,8 +333,7 @@ public class Match_Controller implements MatchBLService{
 	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
-	      conn.close();
-	      stmt.close();
+	      conn.commit();
 	}catch (Exception ex)
 	    {
 	      System.out.println("Error : " + ex.toString());
