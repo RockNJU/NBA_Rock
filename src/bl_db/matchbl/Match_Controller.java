@@ -331,6 +331,7 @@ public class Match_Controller implements MatchBLService{
 		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 		
 		ArrayList<String> day=getData(season,month);
+		Team_map map=new Team_map();
 		
 		try
 	    {
@@ -338,7 +339,7 @@ public class Match_Controller implements MatchBLService{
 		    Connection conn = DriverManager.getConnection(url,user, pwd);
 		     Statement stmt = conn.createStatement();
 	       ResultSet  rs=stmt.executeQuery("SELECT* FROM (SELECT * FROM "
-	       		+ "matchinfo WHERE teamH='"+teamabb+"' OR teamG='"+teamabb+"') as new_match WHERE "
+	       		+ "matchinfo WHERE teamH='"+teamabb+"' OR teamG='"+map.getFullName(teamabb)+"') as new_match WHERE "
 	       		+ "date BETWEEN '"+day.get(0)+"' AND '"+day.get(1)+"'");
 	       /***************
 	        * String date,String time,String teamH,
