@@ -16,7 +16,7 @@ import bl_db.common.Sign;
 import businessService.blservice.TeamBLService;
 import businesslogic.bl.center.HotSort;
 
-public class TeamController implements TeamBLService{
+public class Team_Controller implements TeamBLService{
 
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
@@ -25,7 +25,7 @@ public class TeamController implements TeamBLService{
     String currentSeason;
     ArrayList<TeamInfoVO> infoList;
 	
-	public TeamController(){
+	public Team_Controller(){
 		infoList=new ArrayList<>();
 		currentSeason=getCurrentSeason();
 		readTeamBasicInfo();
@@ -361,7 +361,7 @@ public class TeamController implements TeamBLService{
 	}
 	
 	public static void main(String args[]){
-		TeamController team=new TeamController();
+		Team_Controller team=new Team_Controller();
 		
 		
 		ArrayList<TeamSeasonDataVO> list=team.getAllTeamSeasonData("13-14", "³£¹æÈü");

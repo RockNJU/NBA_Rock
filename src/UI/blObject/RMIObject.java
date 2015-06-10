@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import VO.PlayerSeasonDataVO;
 import VO.TeamSeasonDataVO;
 import bl_db.matchbl.Match_Controller;
+import bl_db.teamrbl.Team_Controller;
 import businessService.blservice.*;
 import businesslogic.bl.center.CenterController;
 
@@ -29,7 +30,7 @@ public class RMIObject {
 	}
 	
 	public TeamBLService getTeamObject(){
-		TeamBLService team=contr.getTeam();
+		TeamBLService team=new Team_Controller();
 		return team;
 	}
 	
