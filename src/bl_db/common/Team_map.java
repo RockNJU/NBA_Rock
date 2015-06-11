@@ -98,7 +98,47 @@ public class Team_map {
 		   map.put("unknown", "??");
 		   
 		   /**************************************************************************************/
+		   map.put("亚特兰大老鹰", "ATL");
+		   map.put("布鲁克林篮网", "BKN");
+		   map.put("波士顿凯尔特人", "BOS");
+		   map.put("夏洛特黄蜂", "CHA");
+		   map.put("芝加哥公牛", "CHI");
+		   map.put("克里夫兰骑士", "CLE");
+		   map.put("达拉斯小牛", "DAL");
+		   map.put("丹佛掘金", "DEN");
+		   map.put("底特律活塞", "DET");
+		   map.put("金州勇士", "GSW");
 		   
+		   
+		   //---------------------
+		   map.put("休斯顿火箭", "HOU");
+		   map.put("印第安纳步行者", "IND");
+		   map.put("洛杉矶快船", "LAC");
+		   map.put("洛杉矶湖人", "LAL");	   
+		   
+		   map.put("孟菲斯灰熊", "MEM");
+
+		   map.put("迈阿密热火", "MIA");
+		   map.put("密尔沃基雄鹿", "MIL");
+		   map.put("明尼苏达森林狼", "MIN");
+		    
+		   map.put("新奥尔良鹈鹕", "NOP");
+		   map.put("纽约尼克斯", "NYK");
+		   map.put("俄克拉荷马雷霆", "OKC");
+		   map.put("奥兰多魔术", "ORL");
+		   //map.put("", "");   
+		   
+		   map.put("费城76人", "PHI");	   
+		   
+		   map.put("菲尼克斯太阳", "PHX");
+		   //
+		   map.put("波特兰开拓者", "POR");
+		   map.put("萨克拉门托国王", "SAC");
+		   map.put("圣安东尼奥马刺", "SAS");
+		    
+		   map.put("多伦多猛龙", "TOR");
+		   map.put("犹他爵士", "UTA");
+		   map.put("华盛顿奇才", "WAS");
 	   }
 /**************************************************************************************/	   
 	   public  String getFullName(String item){
