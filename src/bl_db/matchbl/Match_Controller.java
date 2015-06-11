@@ -528,16 +528,17 @@ public class Match_Controller implements MatchBLService{
 			Match_Controller match=new Match_Controller();
 			
 			
-			String date=match.getNextHavingMatchDate("2015-03-02");
-			System.out.println("下一次有比赛的日期："+date);
+			String date=match.getLastHavingMatchDate();
+			System.out.println("最后一天有比赛的日期："+date);
 			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
-			/*ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
+			 ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-03-05");
 			
 			for(int i=0;i<amlist.size();i++){
-				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores());
-			}*/
+				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores()+";;"
+						+amlist.get(i).getHostTeam().getReboundNum());
+			} 
 			
 		/*	ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
