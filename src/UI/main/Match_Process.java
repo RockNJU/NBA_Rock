@@ -71,6 +71,7 @@ public class Match_Process extends JPanel {
 		dc.setVisible(false);
 		
 		sure=new JButton(new ImageIcon("newpic/add/提交.png"));
+		sure.setContentAreaFilled(false);
 		sure.setBounds(782, 65, 100, 30);
 		add(sure);
 		sure.addMouseListener(new MouseListener(){
@@ -131,7 +132,6 @@ public class Match_Process extends JPanel {
 		
 		
 		lastsevendays=new JButton(new ImageIcon("newpic/add/前七天.png"));
-		lastsevendays.setText("\u524D\u4E03\u5929");
 		lastsevendays.setLocation(38, 65);
 		lastsevendays.setSize(105, 35);
 		add(lastsevendays);
@@ -181,7 +181,6 @@ public class Match_Process extends JPanel {
 		lastsevendays.setVisible(false);
 		nextsevendays=new JButton(new ImageIcon("newpic/add/后七天.png"));
 		nextsevendays.setLocation(428, 65);
-		nextsevendays.setText("\u540E\u4E03\u5929");
 		nextsevendays.setSize(105, 35);
 		nextsevendays.setContentAreaFilled(false);
 		add(nextsevendays);
@@ -278,8 +277,7 @@ public class Match_Process extends JPanel {
 				int day=c.get(Calendar.DAY_OF_MONTH);
 				pro_day.removeAllItems();
 				pro_day.addItem("所有日期");
-				for(int i=0;i<day;i++){
-					
+				for(int i=0;i<day;i++){					
 					pro_day.addItem(String.valueOf(i+1));
 				}			
 			}
@@ -351,7 +349,6 @@ public class Match_Process extends JPanel {
 
 		
 		sort1 = new JButton(image7);
-		sort1.setToolTipText("");
 		sort1.setBounds(474, 68, 75, 27);
 		add(sort1);
 		sort1.setContentAreaFilled(false);
@@ -407,7 +404,6 @@ public class Match_Process extends JPanel {
 
 		});
 		sort2 = new JButton(image7);
-		sort2.setToolTipText("");
 		sort2.setBounds(958, 71, 75, 27);
 		add(sort2);
 		sort2.setContentAreaFilled(false);
@@ -449,7 +445,6 @@ public class Match_Process extends JPanel {
 		ChooseByMonth=new JButton(new ImageIcon("newpic/add/按月查看后.png"));
 		ChooseByMonth.setLocation(844, 15);
 		ChooseByMonth.setContentAreaFilled(false);
-		ChooseByMonth.setText("按月查看");
 		ChooseByMonth.setSize(100, 35);
 		add(ChooseByMonth);
 		ChooseByMonth.addActionListener(new ActionListener(){
@@ -477,7 +472,6 @@ public class Match_Process extends JPanel {
 		
 		ChooseByWeek=new JButton(new ImageIcon("newpic/add/按周查看.png"));
 		ChooseByWeek.setLocation(944, 15);
-		ChooseByWeek.setText("按周查看");
 		ChooseByWeek.setContentAreaFilled(false);
 		ChooseByWeek.setSize(100, 35);
 		add(ChooseByWeek);

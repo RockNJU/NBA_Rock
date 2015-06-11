@@ -130,7 +130,7 @@ public class Player_Data extends JPanel{
 		if (seasons.size() == 0 || seasons == null) {
 			seasons.add("13-14Èü¼¾");
 		}
-		for (int o = 0; o < seasons.size(); o++) {
+		for (int o = 0; o < seasons.size()-1; o++) {
 			playerseason.addItem(seasons.get(o));
 		}
 		playerseason.setEditable(true);

@@ -113,12 +113,12 @@ public class AllTeams extends JDialog {
 
 		
 		
-		at=init.tbl.getTeamByPartition("Atlantic");
-		ce=init.tbl.getTeamByPartition("Central");
-		es=init.tbl.getTeamByPartition("Southeast");
-		wn=init.tbl.getTeamByPartition("Northwest");
-		pa=init.tbl.getTeamByPartition("Pacific");
-		ws=init.tbl.getTeamByPartition("Southwest");
+		at=init.tbl.getTeamByPartition("大西洋");
+		ce=init.tbl.getTeamByPartition("中部");
+		es=init.tbl.getTeamByPartition("东南");
+		wn=init.tbl.getTeamByPartition("西北");
+		pa=init.tbl.getTeamByPartition("太平洋");
+		ws=init.tbl.getTeamByPartition("西南");
 		
 		p1=new JLabel("东部分区：");
 		p1.setFont(new Font("华康雅宋体W9", Font.PLAIN, 15));

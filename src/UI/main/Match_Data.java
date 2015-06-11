@@ -53,10 +53,10 @@ public class Match_Data extends JPanel {
 		setSize(1060, 600);
 		setOpaque(false);
 		
-		String da="2015-6-11";
-		//String da=init.mbl.getLastHavingMatchDate();
+		//String da="2015-6-11";
+		String da=init.mbl.getLastHavingMatchDate();
 		String pattern = "yyyy-MM-dd";
-		//System.out.println(da);
+		System.out.println(da);
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = sdf.parse(da);
 		
@@ -285,7 +285,7 @@ public class Match_Data extends JPanel {
 		
 	}
 	public static  Object[][] getdata(ArrayList<MatchVO> mdata){
-		//System.out.println(mdata.size());
+		System.out.println(mdata.size());
 		if(mdata==null){
 			Object[][] re=new Object[1][11];
 			re[0][0] = "";
@@ -310,7 +310,7 @@ public class Match_Data extends JPanel {
 				re[i][0]=i+1;
 				re[i][1]=mdata.get(i).getDate();
 				re[i][2]=mdata.get(i).getSeason()+"Èü¼¾";
-				re[i][3]=(mdata.get(i).getHostTeam().getTeamName());
+				re[i][3]=mdata.get(i).getHostTeam().getTeamName();
 				re[i][4]=mdata.get(i).getMatchScore();
 				re[i][5]=(mdata.get(i).getGuestTeam().getTeamName());
 				re[i][6]=mdata.get(i).getScores().get(0);
