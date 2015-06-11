@@ -135,8 +135,30 @@ public class Match_Controller implements MatchBLService{
 
 	@Override
 	public String getNextHavingMatchDate(String date) {
-		// TODO Auto-generated method stub
-		return null;
+		String ndate=null;
+		try
+	    {
+			 
+		  String sqlStr="SELECT MIN(date) FROM(SELECT date FROM matchinfo where date>'"+date+"') as temp";	
+	       ResultSet  rs=stmt.executeQuery(sqlStr);
+	       /***************
+	        * String date,String time,String teamH,
+			String teamG,String type,ArrayList<String> cs
+	        ************/
+	       String score;
+	      while (rs.next())
+	      {        	  
+	    	 ndate=rs.getString("Min(date)");
+	    	 break;
+	      }
+	      conn.commit();
+	}catch (Exception ex)
+	    {
+		ex.printStackTrace();
+	      System.out.println("Error : " + ex.toString());
+	    }
+		
+		return ndate;
 	}
 	
 	
@@ -504,14 +526,18 @@ public class Match_Controller implements MatchBLService{
 	}
 		public static void main(String args[]){
 			Match_Controller match=new Match_Controller();
+			
+			
+			String date=match.getNextHavingMatchDate("2015-03-02");
+			System.out.println("下一次有比赛的日期："+date);
 			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
-			ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
+			/*ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
 			
 			for(int i=0;i<amlist.size();i++){
 				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores());
-			}
+			}*/
 			
 		/*	ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
