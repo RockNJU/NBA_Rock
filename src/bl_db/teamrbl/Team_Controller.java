@@ -12,11 +12,11 @@ import VO.SingleMatchPersonalDataVO;
 import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
+import bl_db.common.HotSort;
 import bl_db.common.Sign;
 import bl_db.common.Team_map;
 import bl_db.matchbl.TeamInfo;
 import businessService.blservice.TeamBLService;
-import businesslogic.bl.center.HotSort;
 
 public class Team_Controller implements TeamBLService ,TeamInfo{
 
@@ -430,19 +430,19 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();
 		//ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("LAL","2012-04-29");
-		for(int i=0;i<volist.size();i++){
+		/*for(int i=0;i<volist.size();i++){
 			System.out.println("  队名："+volist.get(i).getTeamName()+"  对手："+volist.get(i).getOpp_team()+"  得分："+volist.get(i).getPointNum()+" date: "+volist.get(i).getDate());
-		}
+		}*/
 		/*
 		  for(int i=0;i<inlist.size();i++){
 			System.out.println("球队数据：  队名"+inlist.get(i).getTeamName()+
 					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPlayerName());
 		}  */
 		
-		 /*
-		for(int i=0;i<infoList.size();i++){
+		 
+		for(int i=0;i<list.size();i++){
 			System.out.println("球队信息："+infoList.get(i).getTeam()+";"+infoList.get(i).getDivision());
-		}*/
+		} 
 	}
 
 

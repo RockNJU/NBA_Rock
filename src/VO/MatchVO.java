@@ -3,8 +3,7 @@ package VO;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import businesslogic.bl.center.HotSort;
-
+import bl_db.common.HotSort;
 public class MatchVO implements Serializable{
 	/**
 	 * 

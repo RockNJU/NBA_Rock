@@ -1,4 +1,4 @@
-package businesslogic.bl.center;
+package bl_db.common;
 
 import java.util.ArrayList;
 import java.util.Collections;

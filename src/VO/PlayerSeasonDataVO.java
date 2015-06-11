@@ -112,7 +112,7 @@ public class PlayerSeasonDataVO {
 				this.name=name;
 				
 				//this.age=info.getAge();
-					
+					if(name!=null){
 				String str[]=name.trim().split(" ");
 				if(str.length>1){
 					//System.out.println("-----");
@@ -120,7 +120,7 @@ public class PlayerSeasonDataVO {
 				}else{
 					this.reverseName=name;
 				}
-				
+					}
 				this.info=info;
 				this.teamName=teamName;
 			
