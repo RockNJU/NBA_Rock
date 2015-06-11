@@ -33,6 +33,8 @@ public class SinglePlayer extends JDialog {
 	public JButton B;
 	public JButton C;
 	public JButton D;
+	PlayerB b;
+	PlayerC c;
 	String na;
 	/**
 	 * Launch the application.
@@ -156,7 +158,7 @@ public class SinglePlayer extends JDialog {
             	B.setToolTipText("队伍信息 ");
             	C.setToolTipText("比赛信息");
             	
-            	PlayerB b=new PlayerB(na);
+            	b=new PlayerB(na);
             	change(b);
             	
             }
@@ -199,7 +201,7 @@ public class SinglePlayer extends JDialog {
             	D.setToolTipText("热门信息");
             	B.setToolTipText("队伍信息");
             	C.setToolTipText("比赛信息 ");
-            	PlayerC c=new PlayerC(na);
+            	c=new PlayerC(na);
 				change(c);
             }
         });
