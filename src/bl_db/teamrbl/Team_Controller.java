@@ -13,6 +13,7 @@ import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import bl_db.common.Sign;
+import bl_db.common.Team_map;
 import bl_db.matchbl.TeamInfo;
 import businessService.blservice.TeamBLService;
 import businesslogic.bl.center.HotSort;
@@ -101,9 +102,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		return "14-15";/*默认情况下*/
 	}
 	
-	void test(){
-		
-	}
+	
 	
 	
 	private ArrayList<TeamSeasonDataVO> getTeam_seasonData(String season,String type){
@@ -336,10 +335,87 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 
 
 	@Override
-	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String tamename,
+	public ArrayList<PlayerSeasonDataVO> getKingPlayerForATeam(String teamname,
 			String item) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
+		Team_map map=new Team_map(); 
+		
+		try {
+			 
+			String str="SELECT * FROM (SELECT name,position,"
+					+ "team,COUNT(*) as match_sum, "
+					+ "SUM(startingNum) as start_sum,SUM(time) as time_sum,"
+					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,"
+					+ "SUM(d_reboundNum)as d_rebound_sum,"
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,"
+					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(reboundEfficiency) as reboundEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
+					
+					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
+					+ "FROM player_season_data WHERE season='"+currentSeason+"' AND team='"+map.getFullName(teamname)+"'"
+					+ "GROUP BY season,name)as "
+					+ "data left join teaminfo on data.name =teaminfo.teamAbb";
+			ResultSet  rs=stmt.executeQuery(str);
+			/********************************
+			 * String season,String name,PlayerInfoVO info,String teamName,
+			String division,String partition,String position,
+	   int matchNum,  int startingNum,double time,int fieldGoal,
+		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoal,
+		 int freeThrowNum,int O_R_N,int D_R_N,int reboundNum,
+		 int assistNum,int stealNum,int blockNum,int turnoverNum,
+		 int foulNum,int points,
+		                           double assistEfficiency,
+		 double reboundEfficiency,double offensiveReboundEff,
+		 double defenseReboundEff,double stealEfficiency,
+		 double usingPercentage,double blockEfficiency,int doubleNum,
+		 int threeNum,SingleMatchPersonalDataVO firstMatch
+			 *******************************/
+			char chr=39;
+			int rebound_rate=0;
+			int point_rate=0;
+			int assist_rate=0;
+			
+			while(rs.next()){
+				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(currentSeason,rs.getString("name"),null,
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"),rs.getString("position"),
+						rs.getInt("match_sum"),rs.getInt("start_sum"),
+						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),
+						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
+						rs.getDouble("blockEff"),rs.getInt("double_sum"),
+						rs.getInt("three_sum"),
+						null);
+				list.add(vo);
+			}
+			  conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		HotSort sort=new HotSort();
+		return sort.hotPlayer_Sort(list,item);/*默认以得分排序，返回一个赛季的球员的数据*/
+		 
 	}
 	
 	public ArrayList<TeamInfoVO> getTeamInfoList(){
@@ -605,6 +681,87 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			}
 			  conn.commit();
 		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return vo;
+	}
+
+
+	@Override
+	public int getRank(String abb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public TeamInfoVO getATeamInfo(String season, String name) {
+		for(int i=0;i<infoList.size();i++){
+			if(infoList.get(i).getTeamAbb().equals(name)){
+				return infoList.get(i);
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public TeamSeasonDataVO getATeamData(String season, String name) {
+		Team_map map=new Team_map();
+		TeamSeasonDataVO vo=null;
+		try {
+			  
+	        stmt = conn.createStatement(); 
+					
+			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
+					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
+					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
+					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,SUM(freeThrowNum) as freeThrow_sum,"
+					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
+					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
+					+ "SUM(reboundNum)as rebound_sum,SUM(blockNum)as block_sum,"
+					+ "SUM(turnoverNum) as turnover_sum,SUM(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,AVG(offenseRound) as o_round_sum,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
+					+ "AVG(defenseEfficiency) as defenseEff "
+					+ "FROM team_season_data WHERE season='"+season+"'"
+					+ " AND team='"+map.getFullName(name)+"'"
+					+ " GROUP BY season,type,team) as "
+					+ "data right join teaminfo as info on data.teamAbb =info.teamAbb";
+			ResultSet  rs=stmt.executeQuery(str);
+			char chr=39;
+			
+			while(rs.next()){
+				vo=new TeamSeasonDataVO(season,rs.getString("team"),
+						
+						new TeamInfoVO(rs.getString("team"),
+				    			  rs.getString("Cname"),rs.getString("TEname"),
+				    			  rs.getString("location"),rs.getString("division"),
+				    			  rs.getString("partition"),rs.getString("homeGround"),
+				    			  rs.getString("formedTime"),rs.getString("coach_name"),
+				    			  rs.getString("coach_Ename"),rs.getString("teamAbb")),
+		    			  
+						rs.getInt("match_sum"),rs.getInt("win_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),rs.getDouble("o_round_sum"),
+						rs.getDouble("offenseEff"),rs.getDouble("defenseEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("assistEff"),
+						null);
+				break;
+			}
+			 conn.commit();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//

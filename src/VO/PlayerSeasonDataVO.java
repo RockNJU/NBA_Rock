@@ -111,7 +111,7 @@ public class PlayerSeasonDataVO {
 				this.season=season;
 				this.name=name;
 				
-				this.age=info.getAge();
+				//this.age=info.getAge();
 					
 				String str[]=name.trim().split(" ");
 				if(str.length>1){

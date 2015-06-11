@@ -24,6 +24,7 @@ public class PlayerController implements PlayerBLService{
     String pwd="ghl13";		
     
     String currentSeason;
+    String lastDate;
 	
 	ArrayList<PlayerInfoVO> infoList;
 	
@@ -42,17 +43,19 @@ public class PlayerController implements PlayerBLService{
 			}
 		readBasicInfo();
 		currentSeason=getCurrentSeason();
+		lastDate=getLastDate();
 	}
 	
-	private String getCurrentSeason(){
 	
+	private String getLastDate(){
+		String result="2015-06-12";
 		try {
 			 
-			String str="select MAX(season) as max from matchinfo";
+			String str="select MAX(date) as max from team_season_data";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			while(rs.next()){
-				return rs.getString("max");
+				result= rs.getString("max");
 			}
 			 conn.commit();
 		} catch (SQLException e) {
@@ -60,7 +63,26 @@ public class PlayerController implements PlayerBLService{
 			e.printStackTrace();
 		}//
 		
-		return "14-15";/*默认情况下*/
+		return result;/*默认情况下*/
+	}
+	
+	private String getCurrentSeason(){
+		String result="14-15";
+		try {
+			 
+			String str="select MAX(season) as max from team_season_data";
+			ResultSet  rs=stmt.executeQuery(str);
+		 
+			while(rs.next()){
+				result= rs.getString("max");
+			}
+			 conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return result;/*默认情况下*/
 	}
 	
 	private void readBasicInfo(){
@@ -93,6 +115,16 @@ public class PlayerController implements PlayerBLService{
 			}//
 	}
 	
+	private PlayerInfoVO getInfo(String name){
+		for(int i=0;i<infoList.size();i++){
+			if(infoList.get(i).getName().equals(name)){
+				return infoList.get(i);
+			}
+		}
+		
+		return new PlayerInfoVO(name, "??", "??", "??", "??", "??", 0, 0, "??", "??");
+	}
+	
 	
 	@Override
 	public ArrayList<PlayerInfoVO> getAllPlayerInfo() {
@@ -123,13 +155,16 @@ public class PlayerController implements PlayerBLService{
 			String teamAbb) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
 		try {
-  
-			String str="SELECT name,number,position,"
-					+ "height,weight,birth,age,exp,school"
+				String sqlStr=" SELECT name";
+			
+			String str="SELECT  playerinfo.name, number, playerinfo.position,"
+					+ " height,distinct  weight,"
+					+ " birth,age,"
+					+ " exp,  school, Ename)"
 					+ " FROM playerinfo,player_season_data "
-					+ "WHERE player_season_data.teamAbb= '"+teamAbb+"' "
+					+ "WHERE player_season_data.team= '"+teamAbb+"' "
 				    + "AND player_season_data.season='"+season+"' "
-				    + "playerinfo.name=player_season_data.name";
+				    + "and playerinfo.name=player_season_data.name";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
@@ -244,12 +279,12 @@ public class PlayerController implements PlayerBLService{
 		 
 		try {
 			 
-			String str="SELECT * FROM (SELECT player.name,division,partition,position,"
-					+ "teamAbb,COUNT(*) as match_sum, "
-					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
+			String str="SELECT * FROM (SELECT name,position,"
+					+ "team,COUNT(*) as match_sum, "
+					+ "SUM(startingNum) as start_sum,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
 					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,"
 					+ "SUM(d_reboundNum)as d_rebound_sum,"
@@ -265,15 +300,15 @@ public class PlayerController implements PlayerBLService{
 					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
 					
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
-					+ "FROM player_season_data,playerinfo WHERE season='"+season+"' AND type='"+type+"'"
+					+ "FROM player_season_data WHERE season='"+season+"' AND type='"+type+"'"
 					+ "GROUP BY season,type,name)as "
-					+ "data right join playerinfo as info on data.name =info.name";
+					+ "data left join teaminfo on data.name =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String name,PlayerInfoVO info,String teamName,
 			String division,String partition,String position,
 	   int matchNum,  int startingNum,double time,int fieldGoal,
-		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoalNum,
+		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoal,
 		 int freeThrowNum,int O_R_N,int D_R_N,int reboundNum,
 		 int assistNum,int stealNum,int blockNum,int turnoverNum,
 		 int foulNum,int points,
@@ -292,7 +327,7 @@ public class PlayerController implements PlayerBLService{
 				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(season,rs.getString("name"),null,
 						rs.getString("team"),rs.getString("division"),
 						rs.getString("partition"),rs.getString("position"),
-						rs.getInt("match_sum"),rs.getInt("starting_sum"),
+						rs.getInt("match_sum"),rs.getInt("start_sum"),
 						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
 						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
 						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
@@ -336,7 +371,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
 					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,"
 					+ "SUM(d_reboundNum)as d_rebound_sum,"
@@ -423,7 +458,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
 					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,SUM(d_reboundNum)as d_rebound_sum,"
 					+ "SUM(assistNum)as assist_sum,SUM(stealNum) as steal_sum,"
@@ -601,6 +636,17 @@ public class PlayerController implements PlayerBLService{
 	
 	public static void main(String args[]){
 		PlayerController pl=new PlayerController();
+		//ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15", "LAL");
+		/*
+		for(int i=0;i<infoList.size();i++){
+			System.out.println("name:"+infoList.get(i).getName());
+		}*/
+		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15", "常规赛");
+		
+		for(int i=0;i<list.size();i++){
+			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() +"  points:"+list.get(i).getPointNum());
+		}
+		
 	}
 
 	
@@ -688,7 +734,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
 					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,"
 					+ "SUM(d_reboundNum)as d_rebound_sum,"
@@ -712,7 +758,7 @@ public class PlayerController implements PlayerBLService{
 			 * String season,String name,PlayerInfoVO info,String teamName,
 			String division,String partition,String position,
 	   int matchNum,  int startingNum,double time,int fieldGoal,
-		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoalNum,
+		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoal,
 		 int freeThrowNum,int O_R_N,int D_R_N,int reboundNum,
 		 int assistNum,int stealNum,int blockNum,int turnoverNum,
 		 int foulNum,int points,
@@ -779,7 +825,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(startingNum) as start_num,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
-					+ "SUM(freeThrowGoalNum) as freeThrowGoal_sum,"
+					+ "SUM(freeThrowGoal) as freeThrowGoal_sum,"
 					+ "SUM(freeThrowNum) as freeThrow_sum,"
 					+ "SUM(o_ReboundNum) as o_rebound_sum,"
 					+ "SUM(d_reboundNum)as d_rebound_sum,"
@@ -803,7 +849,7 @@ public class PlayerController implements PlayerBLService{
 			 * String season,String name,PlayerInfoVO info,String teamName,
 			String division,String partition,String position,
 	   int matchNum,  int startingNum,double time,int fieldGoal,
-		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoalNum,
+		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoal,
 		 int freeThrowNum,int O_R_N,int D_R_N,int reboundNum,
 		 int assistNum,int stealNum,int blockNum,int turnoverNum,
 		 int foulNum,int points,
