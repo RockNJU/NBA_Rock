@@ -135,4 +135,12 @@ public class MatchVO implements Serializable{
 		
 		return list.get(0);
 	}
+
+	public void setHostTeam(TeamMatchVO hostTeam) {
+		this.hostTeam = hostTeam;
+	}
+
+	public void setGuestTeam(TeamMatchVO guestTeam) {
+		this.guestTeam = guestTeam;
+	}
 }

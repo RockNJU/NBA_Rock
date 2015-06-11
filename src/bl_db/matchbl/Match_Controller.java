@@ -11,7 +11,10 @@ import VO.MatchInfoVO;
 import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
  
+import VO.TeamMatchVO;
+import bl_db.common.SeasonInfo;
 import bl_db.common.Team_map;
+import bl_db.teamrbl.Team_Controller;
 import businessService.blservice.MatchBLService;
 
 public class Match_Controller implements MatchBLService{
@@ -135,11 +138,59 @@ public class Match_Controller implements MatchBLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	private ArrayList<MatchVO> getMatch(String sqlStr){
+		ArrayList<MatchInfoVO> infoList=new ArrayList<>();
+		ArrayList<MatchVO> list=new ArrayList<>();
+		try
+	    {
+			 
+	       ResultSet  rs=stmt.executeQuery(sqlStr);
+	       /***************
+	        * String date,String time,String teamH,
+			String teamG,String type,ArrayList<String> cs
+	        ************/
+	       String score;
+	      while (rs.next())
+	      {        	  
+	    	  score=rs.getString("scores");
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), 
+	    			  getScores(score),rs.getString("link")));
+	        //return vo;
+	      }
+	      conn.commit();
+	}catch (Exception ex)
+	    {
+	      System.out.println("Error : " + ex.toString());
+	    }
+		
+		/*String season,String date,String matchScore,
+			ArrayList<String>scores,TeamMatchVO ht,TeamMatchVO gt*/
+		 TeamInfo  team=new Team_Controller();
+		 Team_map map=new Team_map();
+		  String date;
+		for(int i=0;i<infoList.size();i++){
+			date=infoList.get(i).getDate();
+			MatchVO vo=new MatchVO(SeasonInfo.getSeason(date),
+					date,infoList.get(i).getScore(),
+					infoList.get(i).getScores(),null,null);
+			vo.setHostTeam(team.getTeamMatch(date, map.getFullName(infoList.get(i).getTeam_H())));
+			vo.setGuestTeam(team.getTeamMatch(date,map.getFullName(infoList.get(i).getTeam_G())));
+			list.add(vo);
+		}
+		return list;
+		
+	}
+	
 
 	@Override
 	public ArrayList<MatchVO> getMatchByTeamTime(String date) {
-		// TODO Auto-generated method stub
-		return null;
+		String sqlStr="SELECT * FROM matchinfo where date='"+date+"'";
+	    ArrayList<MatchVO> list= getMatch( sqlStr);
+		return list;
 	}
 
 	@Override
@@ -163,8 +214,16 @@ public class Match_Controller implements MatchBLService{
 	}
 
 	public ArrayList<MatchVO> getMatchBySeason(String season, String teamA) {
-		// TODO Auto-generated method stub
-		return null;
+		/***********************
+		 * 感觉这个方法可能会出问题、、、、、、、、、o(╯□╰)o，先待定吧
+		 */
+		Team_map map=new Team_map();
+		String team=map.getFullName(teamA);
+		String sqlStr="SELECT * FROM matchinfo where (date BETWEEN '"+SeasonInfo.getStartDate(season)+"' "
+				+ "AND '"+SeasonInfo.getEndDate(season)+"') "
+				+ "AND(teamH='"+team+"' OR teamG='"+team+"')";
+	    ArrayList<MatchVO> list= getMatch( sqlStr);
+		return list;
 	}
 
 	@Override
@@ -429,16 +488,32 @@ public class Match_Controller implements MatchBLService{
 	@Override
 	public ArrayList<MatchVO> getMatchBySeason(String season, String type,
 			String teamA) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		/***********************
+		 * 感觉这个方法可能会出问题、、、、、、、、、o(╯□╰)o，先待定吧
+		 */
+		Team_map map=new Team_map();
+		String team=map.getFullName(teamA);
+		String sqlStr="SELECT * FROM matchinfo where (date BETWEEN "
+				+ " '"+SeasonInfo.getStartDate(season)+"' AND '"+SeasonInfo.getEndDate(season)+"') "
+				+ "AND type='"+type+"' "
+				+ "AND(teamH='"+team+"' OR teamG='"+team+"')";
+	    ArrayList<MatchVO> list= getMatch( sqlStr);
+		return list;
 	}
 		public static void main(String args[]){
 			Match_Controller match=new Match_Controller();
 			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
+			ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
 			
-			ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
+			for(int i=0;i<amlist.size();i++){
+				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores());
+			}
+			
+		/*	ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
 			//ArrayList<String> list=match.getDatesOfPro_ByMonth("14-15", 1);
 			//ArrayList<String> list=match.getData("14-15", 2);
@@ -450,7 +525,7 @@ public class Match_Controller implements MatchBLService{
 						list.get(i).getTeam_G()+list.get(i).getScores());
 			 
 				System.out.println("----:"+list.get(i));
-			}
+			}*/
 		}
 	
 }

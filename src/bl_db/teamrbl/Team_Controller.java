@@ -13,10 +13,11 @@ import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import bl_db.common.Sign;
+import bl_db.matchbl.TeamInfo;
 import businessService.blservice.TeamBLService;
 import businesslogic.bl.center.HotSort;
 
-public class Team_Controller implements TeamBLService{
+public class Team_Controller implements TeamBLService ,TeamInfo{
 
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
@@ -567,6 +568,47 @@ public class Team_Controller implements TeamBLService{
 			e.printStackTrace();
 		}//
 		return list;
+	}
+
+
+	@Override
+	public TeamMatchVO getTeamMatch(String date, String teamAbb) {
+		/**********************************
+		 * 获取某支球队某个某一天参加的比赛
+		 ********************************/
+		 TeamMatchVO vo=null;
+		
+	      
+       
+		try {  
+	         
+			String str="SELECT * FROM team_season_data WHERE date='"+date+"' and teamAbb='"+teamAbb+"'";
+			ResultSet  rs=stmt.executeQuery(str);
+			 
+			char chr=39;
+			while(rs.next()){
+				
+				
+ 
+				vo =new TeamMatchVO(rs.getString("season"),rs.getString("team"),rs.getInt("winNum"),
+						rs.getString("date"),rs.getString("team_opp"),
+						rs.getInt("pointNum"),rs.getInt("lost_points"),rs.getInt("reboundNum"),
+						rs.getInt("o_ReboundNum"),rs.getInt("d_ReboundNum"),
+						rs.getInt("assistNum"),rs.getInt("turnoverNum"),
+						rs.getInt("stealNum"),rs.getInt("foulNum"),
+						rs.getInt("fieldGoal"),rs.getInt("shootNum"),
+						 rs.getInt("t_fieldGoal"),rs.getInt("t_shootNum"),
+						 rs.getInt("freeThrowGoal"),rs.getInt("freeThrowNum"),
+						 rs.getInt("blockNum"),rs.getInt("offenseRound"),
+						 rs.getInt("defenseRound"),rs.getDouble("o_reboundEfficiency"),
+						 rs.getDouble("d_reboundEfficiency"), null);
+			}
+			  conn.commit();
+		} catch (SQLException  e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return vo;
 	}
 	
 	/***************************************************************
