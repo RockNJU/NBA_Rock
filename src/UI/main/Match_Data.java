@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import UI.Match.SingleMatch;
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_M;
@@ -43,7 +45,7 @@ public class Match_Data extends JPanel {
 		"客队","第一节比分","第二节比分","第三节比分","第四节比分","加时赛比分"};
 	static NoMatches nm;
 	
-	
+	SingleMatch spi;
 	/**
 	 * Create the panel.
 	 * @throws ParseException 
@@ -275,7 +277,25 @@ public class Match_Data extends JPanel {
 		//matchdatalist.FitTableColumns(matchdatalist.getTable());
 		setclwidth();
 		add(matchdatalist);
-		
+		matchdatalist.FitTableColumns(matchdatalist.getTable());
+		// 双击进入球员界面
+				matchdatalist.getTable().addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// System.out.println(playerlist.getSelectedRow()!=-1);
+						// System.out.println(e.getClickCount() == 2);
+						// TODO Auto-generated method stub
+						if (e.getClickCount() == 2 && matchdatalist.getSelectedRow() != -1) {
+							String date = matchdatalist.getValueAt(matchdatalist.getSelectedRow(), 1);						
+							
+							String name = matchdatalist.getValueAt(matchdatalist.getSelectedRow(), 3);						
+							spi = new SingleMatch(name,date);
+							spi.setVisible(true);
+							spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+						}
+						
+					}
+				});
 		JLabel menubg = new JLabel();
 		menubg.setBackground(init.syslightblue);;
 		menubg.setBounds(10, 10, 1040, 53);

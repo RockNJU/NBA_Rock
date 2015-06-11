@@ -489,7 +489,7 @@ public class TeamA extends JPanel {
 		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
 		tpic.setImage(tpic.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
 		jb1.setIcon(tpic);
-		pname.setText(tivo.getTeam());
+		pname.setText(tivo.getTEname());
 		PartitionMap a=new PartitionMap();
 		label.setText("¡™√À"+a.getItem(tivo.getPartition())+";#≈≈√˚:"+String.valueOf(init.tbl.getRank(name)));
 		lblabalabala.setText("Œª÷√£∫"+tivo.getLocation());

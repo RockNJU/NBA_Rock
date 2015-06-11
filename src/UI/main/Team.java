@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import UI.Team.SingleTeam;
 import UI.common.CreateTable;
 import UI.common.History;
 import UI.common.OftenUseMethod;
@@ -63,6 +65,7 @@ public class Team extends JPanel{
 	public static int times;
 	public static AllTeams atd;
 
+	public SingleTeam spi;
 	public static CreateTable teamdatalist;
 	/*public static String[] teamTotaltitle={"序号","球队","得分","篮板","助攻","三分命中数",
 			"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
@@ -934,7 +937,23 @@ public class Team extends JPanel{
 		teamdatalist.setLocation(10, 131);
 		add(teamdatalist);
 		teamdatalist.FitTableColumns(teamdatalist.getTable());
-		
+		// 双击进入球员界面
+				teamdatalist.getTable().addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// System.out.println(playerlist.getSelectedRow()!=-1);
+						// System.out.println(e.getClickCount() == 2);
+						// TODO Auto-generated method stub
+						if (e.getClickCount() == 2 && teamdatalist.getSelectedRow() != -1) {
+							
+							String name = teamdatalist.getValueAt(teamdatalist.getSelectedRow(), 1);						
+							spi = new SingleTeam(name);
+							spi.setVisible(true);
+							spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+						}
+						
+					}
+				});
 		JLabel menubg = new JLabel();
 		menubg.setBackground(init.syslightblue);;
 		menubg.setBounds(10, 41, 1040, 82);
@@ -981,7 +1000,8 @@ public class Team extends JPanel{
 			Object[][] re=new Object[da.size()][30];
 			for(int i=0;i<da.size();i++){	
 				re[i][0]=Player_Info.changenumber(i+1);
-				re[i][1]=da.get(i).getTeamName();				
+				//System.out.println(da.get(i).getTeamName()+da.get(i).getTeamAbb());
+				re[i][1]=da.get(i).getFullName();				
 				re[i][2]=da.get(i).getPointNum();		
 				re[i][3]=da.get(i).getReboundNum();	
 				re[i][4]=da.get(i).getAssistNum();
@@ -1059,7 +1079,9 @@ public class Team extends JPanel{
 				
 				
 				re[i][0]=Player_Info.changenumber(i+1);
-				re[i][1]=da.get(i).getTeamName();				
+				System.out.println(da.get(i).getFullName()+da.get(i).getTeamAbb());
+				
+				re[i][1]=da.get(i).getFullName();				
 				re[i][2]=OftenUseMethod.changedouble(da.get(i).getPointNum_avg());		
 				re[i][3]=OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());	
 				re[i][4]=OftenUseMethod.changedouble(da.get(i).getAssistNum_avg());

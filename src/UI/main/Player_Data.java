@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import businesslogic.bl.playerbl.PlayerSeasonData;
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable;
 import UI.common.History;
 import UI.common.OftenUseMethod;
@@ -82,7 +84,7 @@ public class Player_Data extends JPanel{
 	public static Object[][] playerdata;
 	public static ArrayList<PlayerSeasonDataVO> pdvo;
 	
-
+	SinglePlayer spi;
 	
 	public Player_Data(){
 
@@ -916,7 +918,25 @@ public class Player_Data extends JPanel{
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(playerdatalist);
 		playerdatalist.FitTableColumns(playerdatalist.getTable());
-		
+		// 双击进入球员界面
+				playerdatalist.getTable().addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// System.out.println(playerlist.getSelectedRow()!=-1);
+						// System.out.println(e.getClickCount() == 2);
+						// TODO Auto-generated method stub
+						if (e.getClickCount() == 2 && playerdatalist.getSelectedRow() != -1) {
+							
+							String name = playerdatalist.getValueAt(playerdatalist.getSelectedRow(), 2);
+							// System.out.println(name);
+							
+							spi = new SinglePlayer(name);
+							spi.setVisible(true);
+							spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+						}
+						
+					}
+				});
 		JLabel menubg = new JLabel();
 		menubg.setBackground(init.syslightblue);;
 		menubg.setBounds(10, 10, 1040, 82);

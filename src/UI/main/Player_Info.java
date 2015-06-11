@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_pic;
 import VO.PlayerInfoVO;
@@ -26,7 +28,7 @@ import VO.PlayerInfoVO;
 public class Player_Info extends JPanel {
 
 	public static CreateTable_pic playerinfolist;
-	
+	public SinglePlayer spi;
 	Font f=new Font("华康雅宋体W9", Font.PLAIN, 12);
 	public static String[] playerinfotitle = { "序号","肖像", "姓名", "球号 ", "位置", "身高",
 			"体重", "出生日期", "年龄", "球龄", "毕业院校" };
@@ -57,7 +59,26 @@ public class Player_Info extends JPanel {
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(playerinfolist);
 		playerinfolist.FitTableColumns(playerinfolist.getTable());
-		
+		// 双击进入球员界面
+		playerinfolist.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// System.out.println(playerlist.getSelectedRow()!=-1);
+				// System.out.println(e.getClickCount() == 2);
+				// TODO Auto-generated method stub
+				if (e.getClickCount() == 2 && playerinfolist.getSelectedRow() != -1) {
+					
+					String name = playerinfolist.getValueAt(playerinfolist.getSelectedRow(), 2);
+					// System.out.println(name);
+					
+					spi = new SinglePlayer(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			}
+		});
+
 		String []butname={"A","B","C","D","E","F","G","H","I","G","K","L","M","N","O","P","Q","R",
 				"S","T","U","V","W","X","Y","Z"};
 		

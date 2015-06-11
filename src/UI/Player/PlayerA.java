@@ -281,7 +281,7 @@ public class PlayerA extends JPanel {
 		add(jb);
 		
  
-		updatePlayerA(na);
+		//updatePlayerA(na);
 	}
 	
 	public Object[][] getmatch(ArrayList<SingleMatchPersonalDataVO> da) {
