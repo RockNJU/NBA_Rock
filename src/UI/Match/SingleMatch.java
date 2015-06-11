@@ -60,7 +60,7 @@ public class SingleMatch extends JDialog {
             e.printStackTrace();
         }
 		try {
-			SingleMatch dialog = new SingleMatch("Aaron Brooks");
+			SingleMatch dialog = new SingleMatch("Aaron Brooks","11-11");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class SingleMatch extends JDialog {
 
 
 	@SuppressWarnings("null")
-	public SingleMatch(String name) {
+	public SingleMatch(String name,String date) {
 		getContentPane().setLayout(null);
 		setSize(1060,620);
 		setUndecorated(true);// 取消窗体修饰效果************		
