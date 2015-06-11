@@ -325,26 +325,19 @@ public class Match_Process extends JPanel {
 				"MIA","MIL","MIN","NOP","NYK",
 				"OKC","ORL","PHI","PHX","POR",
 				"SAC","SAS","TOR","UTA","WAS"};
-		ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
+		//ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
-	    for(int i=0;i<tmsa.size();i++){
-	    	//TODO 
-	    	//TODO
-	    	//TODO
+	    for(int i=0;i<teamsarray.length;i++){
 	    	//TODO 简写图片和球队中文名的对应
 	    	//TODO 
-	    	//TODO
-	    	//TODO
-	    	//TODO
-	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+tmsa.get(i)+".png");
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
 	    	image.setImage(image.getImage().getScaledInstance(48,48,Image.SCALE_DEFAULT));
-	    	content.put(tmsa.get(i), image);
+	    	content.put(teamsarray[i], image);
 	    }  
 	   
 		teams= new JComboBox(content.keySet().toArray());	    
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
-		teams.setRenderer(renderer);
-	     
+		teams.setRenderer(renderer);	     
 		teams.setBounds(738, 52, 120, 52);		
 		add(teams);
 		teams.setVisible(true);

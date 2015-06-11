@@ -53,8 +53,8 @@ public class Match_Data extends JPanel {
 		setSize(1060, 600);
 		setOpaque(false);
 		
+		String da="2015-6-11";
 		//String da=init.mbl.getLastHavingMatchDate();
-		String da="2015-06-10";
 		String pattern = "yyyy-MM-dd";
 		//System.out.println(da);
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -129,22 +129,15 @@ public class Match_Data extends JPanel {
 				"MIA","MIL","MIN","NOP","NYK",
 				"OKC","ORL","PHI","PHX","POR",
 				"SAC","SAS","TOR","UTA","WAS"};
-		ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
+		//ArrayList<String> tmsa=init.tbl.getTeamByPartition("  ");
 		Map<String, ImageIcon> content = new LinkedHashMap<String, ImageIcon>(); 
-	    for(int i=0;i<tmsa.size();i++){
-	    	//TODO 
-	    	//TODO
-	    	//TODO
+	    for(int i=0;i<teamsarray.length;i++){
 	    	//TODO 简写图片和球队中文名的对应
 	    	//TODO 
-	    	//TODO
-	    	//TODO
-	    	//TODO
-	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+tmsa.get(i)+".png");
+	    	ImageIcon image=new ImageIcon("newpic/circleteam/"+teamsarray[i]+".png");
 	    	image.setImage(image.getImage().getScaledInstance(48,48,Image.SCALE_DEFAULT));
-	    	content.put(tmsa.get(i), image);
-	    }  
-	   
+	    	content.put(teamsarray[i], image);
+	    }    
 		teams= new JComboBox(content.keySet().toArray());	    
 		ComboBoxRenderer renderer = new ComboBoxRenderer(content);	    
 		teams.setRenderer(renderer);

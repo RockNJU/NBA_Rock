@@ -79,7 +79,11 @@ public class Player_Info extends JPanel {
 					// TODO Auto-generated method stub
 					charbut.setIcon(imageB);
 					Player.textField.setText("");
-					playerinfolist.updateTable(playerinfotitle, getinfodata(init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText())));
+					System.out.println(charbut.getToolTipText());
+					pivo=init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText());
+					playerinfodata=getinfodata(pivo);
+					System.out.println(pivo==null);
+					playerinfolist.updateTable(playerinfotitle, playerinfodata);
 				
 				}
 

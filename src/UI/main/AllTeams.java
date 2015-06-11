@@ -119,7 +119,7 @@ public class AllTeams extends JDialog {
 		wn=init.tbl.getTeamByPartition("Northwest");
 		pa=init.tbl.getTeamByPartition("Pacific");
 		ws=init.tbl.getTeamByPartition("Southwest");
-	
+		
 		p1=new JLabel("东部分区：");
 		p1.setFont(new Font("华康雅宋体W9", Font.PLAIN, 15));
 		p1.setBounds(10,0,80,30);
@@ -198,6 +198,7 @@ public class AllTeams extends JDialog {
 		F.setLayout(null);
 		
 		for(int i=0;i<at.size();i++){
+			System.out.println(at.get(i));
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+at.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
 			JButton jbt=new JButton(pic);
