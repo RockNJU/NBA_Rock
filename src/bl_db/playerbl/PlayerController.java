@@ -716,7 +716,7 @@ public class PlayerController implements PlayerBLService{
 		try {
 			 
 			String str="SELECT * FROM "
-					+ "palyer_season_data where date='"+lastDate+"' ORDER BY '"+item+"'";
+					+ "player_season_data where date='"+lastDate+"' ORDER BY '"+item+"'";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){

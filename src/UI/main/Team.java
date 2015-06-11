@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import bl_db.common.Team_map;
 import UI.Team.SingleTeam;
 import UI.common.CreateTable;
 import UI.common.History;
@@ -65,6 +66,7 @@ public class Team extends JPanel{
 	public static int times;
 	public static AllTeams atd;
 
+	Team_map my=new Team_map();
 	public SingleTeam spi;
 	public static CreateTable teamdatalist;
 	/*public static String[] teamTotaltitle={"序号","球队","得分","篮板","助攻","三分命中数",
@@ -946,7 +948,9 @@ public class Team extends JPanel{
 						// TODO Auto-generated method stub
 						if (e.getClickCount() == 2 && teamdatalist.getSelectedRow() != -1) {
 							
-							String name = teamdatalist.getValueAt(teamdatalist.getSelectedRow(), 1);						
+							String name = teamdatalist.getValueAt(teamdatalist.getSelectedRow(), 1);
+							System.out.println(name);
+							name=my.getFullName(name);System.out.println(name);
 							spi = new SingleTeam(name);
 							spi.setVisible(true);
 							spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
@@ -1000,8 +1004,7 @@ public class Team extends JPanel{
 			Object[][] re=new Object[da.size()][30];
 			for(int i=0;i<da.size();i++){	
 				re[i][0]=Player_Info.changenumber(i+1);
-				//System.out.println(da.get(i).getTeamName()+da.get(i).getTeamAbb());
-				re[i][1]=da.get(i).getFullName();				
+				re[i][1]=da.get(i).getTeamName();				
 				re[i][2]=da.get(i).getPointNum();		
 				re[i][3]=da.get(i).getReboundNum();	
 				re[i][4]=da.get(i).getAssistNum();
@@ -1079,9 +1082,8 @@ public class Team extends JPanel{
 				
 				
 				re[i][0]=Player_Info.changenumber(i+1);
-				System.out.println(da.get(i).getFullName()+da.get(i).getTeamAbb());
 				
-				re[i][1]=da.get(i).getFullName();				
+				re[i][1]=da.get(i).getTeamName();				
 				re[i][2]=OftenUseMethod.changedouble(da.get(i).getPointNum_avg());		
 				re[i][3]=OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());	
 				re[i][4]=OftenUseMethod.changedouble(da.get(i).getAssistNum_avg());

@@ -55,10 +55,9 @@ public class Match_Data extends JPanel {
 		setSize(1060, 600);
 		setOpaque(false);
 		
-		//String da="2015-6-11";
+		//String da="2015-05-21";
 		String da=init.mbl.getLastHavingMatchDate();
 		String pattern = "yyyy-MM-dd";
-		System.out.println("sada"+da);
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = sdf.parse(da);
 		
@@ -223,15 +222,9 @@ public class Match_Data extends JPanel {
 				// TODO Auto-generated method stub
 				
 				String Season = matchseason.getSelectedItem().toString().substring(0, 5);
-            	String Team=teams.getSelectedItem().toString();
-            	//System.out.println(Team);
+            	String Team=teams.getSelectedItem().toString();         	
             	matchdatalist.setVisible(true);
             	mdvo=init.mbl.getMatchBySeason(Season,matchtype, Team);
-            	if(mdvo==null||mdvo.size()==0){
-            		nm=new NoMatches();
-					nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);
-					nm.setVisible(true);
-	             }
             	matchdata=getdata(mdvo);
 				matchdatalist.updateTable(matchtitle, matchdata);
 				matchdatalist.FitTableColumns(matchdatalist.getTable());
@@ -329,7 +322,7 @@ public class Match_Data extends JPanel {
 				int k=mdata.get(i).getScores().size();
 				re[i][0]=i+1;
 				re[i][1]=mdata.get(i).getDate();
-				re[i][2]=mdata.get(i).getSeason()+"Èü¼¾";
+				re[i][2]=mdata.get(i).getSeason()+"Èü¼¾";		
 				re[i][3]=mdata.get(i).getHostTeam().getTeamName();
 				re[i][4]=mdata.get(i).getMatchScore();
 				re[i][5]=(mdata.get(i).getGuestTeam().getTeamName());

@@ -33,6 +33,9 @@ public class PartitionMap {
 		  // map.put("µÃ·Ö/Àº°å/Öú¹¥", "");
 	   }
 	   public String getItem(String item){
+		   if(map.get(item)==null){
+			   return "pointNum_avg";
+		   }else
 		   return map.get(item).toString();
 	   }
 }

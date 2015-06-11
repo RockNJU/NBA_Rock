@@ -479,23 +479,19 @@ public class TeamA extends JPanel {
 
 	}
 	public void updateTeamA(String name){
-		//String seasontype;
-		//String tabletype;
-		//String isAvgorTotal;
-		//String na;
 		
 		tivo=init.tbl.getATeamInfo(init.defaultseason, name);
 		tsd=init.tbl.getATeamData(init.defaultseason, name);
 		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
 		tpic.setImage(tpic.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
 		jb1.setIcon(tpic);
-		pname.setText(tivo.getTEname());
+		pname.setText(tivo.getTeam());
 		PartitionMap a=new PartitionMap();
-		label.setText("联盟"+a.getItem(tivo.getPartition())+";#排名:"+String.valueOf(init.tbl.getRank(name)));
+		label.setText("联盟:"+a.getItem(tivo.getPartition())+";  #排名:"+String.valueOf(init.tbl.getRank(name)));
 		lblabalabala.setText("位置："+tivo.getLocation());
 		pnumwin.setText(String.valueOf(tsd.getWinNum()));
 		coach.setText("教练："+tivo.getCaoch_name());
-		ground.setText("主馆"+tivo.getHomeGround());
+		ground.setText("主馆:"+tivo.getHomeGround());
 		pnumlose.setText(String.valueOf(tsd.getMatchNum()-tsd.getWinNum()));
 		time.setText("建队时间："+tivo.getFormedTime());
 		
