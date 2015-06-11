@@ -23,7 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import businesslogic.bl.playerbl.PlayerSeasonData;
+
 import UI.Player.SinglePlayer;
 import UI.common.CreateTable;
 import UI.common.History;
