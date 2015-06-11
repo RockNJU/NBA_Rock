@@ -21,8 +21,12 @@ import javax.swing.SwingConstants;
 
 import UI.Player.ContrastPlayer;
 import UI.main.init;
+import VO.TeamMatchVO;
 
 public class MatchA extends JPanel {
+	
+	TeamMatchVO teama;
+	TeamMatchVO teamb;
 	
 	String[] paintcontent = {"球队胜率","得分","助攻","篮板","三分","罚球","投篮"};
 	int paintcontentnum = 7;
@@ -276,9 +280,11 @@ public class MatchA extends JPanel {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ContrastMatch cp = new ContrastMatch();
+				ContrastMatch cp = new ContrastMatch(teama,teamb);
+				cp.setModal(true);
 				cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
 				cp.setVisible(true);
+				paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
