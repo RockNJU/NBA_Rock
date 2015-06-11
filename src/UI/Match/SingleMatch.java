@@ -365,4 +365,7 @@ public class SingleMatch extends JDialog {
 		setLocationRelativeTo(null);
 		
 	}
+
+
+	
 }
