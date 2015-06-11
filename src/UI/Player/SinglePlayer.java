@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import UI.common.LimpidButton;
 import UI.main.Hot;
 import UI.main.Match;
 import UI.main.Player;
@@ -27,7 +29,7 @@ import UI.main.Team;
 public class SinglePlayer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	LimpidButton  back;
 	public static JPanel rightpanel;
 	public JButton A;
 	public JButton B;
@@ -74,7 +76,7 @@ public class SinglePlayer extends JDialog {
 		rightpanel.setBounds(9,30,1042,580);
 		rightpanel.setOpaque(false);
 		rightpanel.setLayout(null);
-		add(rightpanel);
+		getContentPane().add(rightpanel);
 			
 		A = new JButton(new ImageIcon("newpic/球员信息-平常.png"));
     	A.setToolTipText("\u57FA\u672C\u4FE1\u606F");
@@ -266,7 +268,66 @@ public class SinglePlayer extends JDialog {
 		
 		
 		
+
+		back = new LimpidButton("","newpic/关闭.png");
+		back.setBounds(1030, 6,16, 17);
+		getContentPane().add(back);
+		back.setVisible(false);
+		back.addMouseListener(new MouseListener() {
+         
 		
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }           
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }          
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+            	
+            }           
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            	
+                // TODO Auto-generated method stub
+            	
+            	
+            }            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	dispose();// 销毁窗体
+            }
+        });
+		addMouseMotionListener(new MouseMotionListener() {
+
+			/**
+			* 处理鼠标拖动事件
+			* */
+			public void mouseDragged(MouseEvent arg0) {
+			
+			}
+
+			/**
+			* 处理鼠标移动事件
+			* */
+			public void mouseMoved(MouseEvent arg0) {
+				
+				if(arg0.getX()>back.getX() && arg0.getX() <back.getX()+back.getWidth()
+						&&
+						arg0.getY()>back.getY() && arg0.getY()<back.getY()+back.getHeight()){
+					back.setVisible(true);
+				}
+				else{	
+					back.setVisible(false);
+					
+				}
+			
+			}
+
+			});
 		/**
 		 * 背景图片
 		 */
@@ -275,7 +336,7 @@ public class SinglePlayer extends JDialog {
 		JLabel photo = new JLabel(image);		
 		photo.setBounds(0, 0, 1060, 620);		
 		photo.setOpaque(false);
-		add(photo);
+		getContentPane().add(photo);
 
 		setLocationRelativeTo(null);
 		

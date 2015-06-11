@@ -56,7 +56,7 @@ public class Match_Data extends JPanel {
 		//String da="2015-6-11";
 		String da=init.mbl.getLastHavingMatchDate();
 		String pattern = "yyyy-MM-dd";
-		System.out.println(da);
+		System.out.println("sada"+da);
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = sdf.parse(da);
 		
@@ -165,17 +165,17 @@ public class Match_Data extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				Match_Data.mdvo=init.mbl.getMatchByTeamTime(dc.showDate.getText());
-				if(Match_Data.mdvo==null||Match_Data.mdvo.size()==0){
-					Match_Data.nm=new NoMatches();
-					Match_Data.nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);
-					Match_Data.nm.setVisible(true);
+				mdvo=init.mbl.getMatchByTeamTime(dc.showDate.getText());
+				if(mdvo==null||mdvo.size()==0){
+					nm=new NoMatches();
+					nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);
+					nm.setVisible(true);
 				}
-				Match_Data.matchdata=Match_Data.getdata(Match_Data.mdvo);
-				Match_Data.matchdatalist.updateTable(Match_Data.matchtitle, Match_Data.matchdata);
-				Match_Data.matchdatalist.FitTableColumns(Match_Data.matchdatalist.getTable());
-				Match_Data.setclwidth();
-				//Match_Data.matchdatalist.setNthWidth(10, 230);
+				matchdata=getdata(mdvo);
+				matchdatalist.updateTable(matchtitle, matchdata);
+				matchdatalist.FitTableColumns(matchdatalist.getTable());
+				setclwidth();
+				//matchdatalist.setNthWidth(10, 230);
 			}
 
 			@Override
@@ -226,14 +226,14 @@ public class Match_Data extends JPanel {
             	matchdatalist.setVisible(true);
             	mdvo=init.mbl.getMatchBySeason(Season,matchtype, Team);
             	if(mdvo==null||mdvo.size()==0){
-            		Match_Data.nm=new NoMatches();
-					Match_Data.nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);
-					Match_Data.nm.setVisible(true);
+            		nm=new NoMatches();
+					nm.setLocation(init.SysStart_X+360, init.SysStart_Y+200);
+					nm.setVisible(true);
 	             }
-            	Match_Data.matchdata=Match_Data.getdata(Match_Data.mdvo);
-				Match_Data.matchdatalist.updateTable(Match_Data.matchtitle, Match_Data.matchdata);
-				Match_Data.matchdatalist.FitTableColumns(Match_Data.matchdatalist.getTable());
-				Match_Data.setclwidth();
+            	matchdata=getdata(mdvo);
+				matchdatalist.updateTable(matchtitle, matchdata);
+				matchdatalist.FitTableColumns(matchdatalist.getTable());
+				setclwidth();
 			}
 
 			@Override

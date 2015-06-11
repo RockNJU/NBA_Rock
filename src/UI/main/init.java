@@ -426,25 +426,25 @@ public class init extends JFrame {
 		            
 		            @Override
 		            public void mouseReleased(MouseEvent e) {
-		            	exit.setIcon(new ImageIcon("newpic/cnormal.png"));
+		            	
 		                // TODO Auto-generated method stub                
 		            }           
 		            @Override
 		            public void mousePressed(MouseEvent e) {
 		                // TODO Auto-generated method stub    
-		            	exit.setIcon(new ImageIcon("newpic/cactive.png"));
+		            	
 		            }          
 		            @Override
 		            public void mouseExited(MouseEvent e) {
 		                // TODO Auto-generated method stub
-		            	exit.setIcon(new ImageIcon("newpic/cover.png"));
+		            	
 		            }           
 		            @Override
 		            public void mouseEntered(MouseEvent e) {
 		            	
 		                // TODO Auto-generated method stub
 		            	
-		            	exit.setIcon(new ImageIcon("newpic/cactive.png"));
+		            	
 		            	
 		            }            
 		            @Override

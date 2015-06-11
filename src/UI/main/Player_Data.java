@@ -1209,9 +1209,7 @@ public class Player_Data extends JPanel{
 	}
 
 	public static void termsort() {
-		// TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stub	
 		String[] textforsort = {null,null,null};
 		boolean[] upordown = {true,true,true};
 		boolean isaverage = avg_tol.isSelected();

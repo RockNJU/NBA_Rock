@@ -43,9 +43,9 @@ public class TeamA extends JPanel {
 	ArrayList<TeamSeasonDataVO> tsdvo=null;
 	JButton lastmatches,lastyears,process,normal,after;
 	JRadioButton isAvg;
-	String seasontype;
-	String tabletype;
-	String isAvgorTotal;
+	String seasontype="常规赛";
+	String tabletype="近五场";
+	//String isAvgorTotal="";
 	String na;
 	TeamInfoVO tivo;
 	TeamSeasonDataVO tsd;
@@ -315,12 +315,15 @@ public class TeamA extends JPanel {
 		add(menubg);
 		menubg.setOpaque(true);
 		
+		
 		ImageIcon bg1=bg;
 		bg1.setImage(bg1.getImage().getScaledInstance(  409, 200,Image.SCALE_DEFAULT));
 		JLabel menubg_1 = new JLabel(bg1);
 		menubg_1.setBounds(623, 10, 409, 200);
 		add(menubg_1);
 		menubg.setOpaque(true);
+		
+		updateTeamA(na);
 	
 	}
 	
@@ -484,6 +487,7 @@ public class TeamA extends JPanel {
 		tivo=init.tbl.getATeamInfo(init.defaultseason, name);
 		tsd=init.tbl.getATeamData(init.defaultseason, name);
 		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
+		tpic.setImage(tpic.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
 		jb1.setIcon(tpic);
 		pname.setText(tivo.getTeam());
 		PartitionMap a=new PartitionMap();

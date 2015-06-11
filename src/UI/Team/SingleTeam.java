@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import UI.common.LimpidButton;
 import UI.main.Player;
 import UI.main.Team;
 
@@ -25,6 +27,7 @@ public class SingleTeam extends JDialog {
 	public JButton C;
 	public JButton D;
 	String na;
+	JButton back;
 	/**
 	 * Launch the application.
 	 */
@@ -254,7 +257,66 @@ public class SingleTeam extends JDialog {
 		C.setContentAreaFilled(false);
 		
 		
+		back = new LimpidButton("","newpic/关闭.png");
+		back.setBounds(1030, 6,16, 17);
+		getContentPane().add(back);
+		back.setVisible(false);
+		back.addMouseListener(new MouseListener() {
+         
 		
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }           
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }          
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+            	
+            }           
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            	
+                // TODO Auto-generated method stub
+            	
+            	
+            }            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	UI.main.init.currentdio="";
+            	dispose();// 销毁窗体
+            }
+        });
+		addMouseMotionListener(new MouseMotionListener() {
+
+			/**
+			* 处理鼠标拖动事件
+			* */
+			public void mouseDragged(MouseEvent arg0) {
+			
+			}
+
+			/**
+			* 处理鼠标移动事件
+			* */
+			public void mouseMoved(MouseEvent arg0) {
+				
+				if(arg0.getX()>back.getX() && arg0.getX() <back.getX()+back.getWidth()
+						&&
+						arg0.getY()>back.getY() && arg0.getY()<back.getY()+back.getHeight()){
+					back.setVisible(true);
+				}
+				else{	
+					back.setVisible(false);
+					
+				}
+			
+			}
+
+			});
 		
 		/**
 		 * 背景图片
@@ -266,7 +328,10 @@ public class SingleTeam extends JDialog {
 		photo.setOpaque(false);
 		add(photo);
 
+		
+		
 		setLocationRelativeTo(null);
+		
 		
 	}
 	static void change(TeamA ppanel){

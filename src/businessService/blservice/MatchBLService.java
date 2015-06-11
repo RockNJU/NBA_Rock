@@ -20,10 +20,10 @@ public interface MatchBLService {
 	   public ArrayList<MatchInfoVO> getPro_ForTeam(String season,int month,String teamabb);
 
 	   //TODO 获得最后有比赛的日期
-		String getLastHavingMatchDate();
+		public String getLastHavingMatchDate();
 		
 		//TODO 获得传入日期后最近一场比赛的日期 这里的date 2014-01-02 形式有问题可以改
-		String getNextHavingMatchDate(String date);
+		public String getNextHavingMatchDate(String date);
 		
 		// 获得赛季以供选择，形式最好是"13-14赛季",这个是公用的、
 		public ArrayList<String> getAllSeason();

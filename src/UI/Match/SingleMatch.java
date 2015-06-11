@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,6 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import UI.Player.PlayerA;
+import UI.common.LimpidButton;
 import UI.main.Hot;
 import UI.main.Match;
 import UI.main.Player;
@@ -46,7 +48,7 @@ public class SingleMatch extends JDialog {
 	public JButton B;
 	public JButton C;
 	public JButton D;
-
+	LimpidButton back;
 	 final CardLayout cardLayout = new CardLayout();
 	JPanel jp = new JPanel();
 
@@ -290,7 +292,66 @@ public class SingleMatch extends JDialog {
 		
 		
 		
+
+		back = new LimpidButton("","newpic/关闭.png");
+		back.setBounds(1030, 6,16, 17);
+		getContentPane().add(back);
+		back.setVisible(false);
+		back.addMouseListener(new MouseListener() {
+         
 		
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }           
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub                
+            }          
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+            	
+            }           
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            	
+                // TODO Auto-generated method stub
+            	
+            	
+            }            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	dispose();// 销毁窗体
+            }
+        });
+		addMouseMotionListener(new MouseMotionListener() {
+
+			/**
+			* 处理鼠标拖动事件
+			* */
+			public void mouseDragged(MouseEvent arg0) {
+			
+			}
+
+			/**
+			* 处理鼠标移动事件
+			* */
+			public void mouseMoved(MouseEvent arg0) {
+				
+				if(arg0.getX()>back.getX() && arg0.getX() <back.getX()+back.getWidth()
+						&&
+						arg0.getY()>back.getY() && arg0.getY()<back.getY()+back.getHeight()){
+					back.setVisible(true);
+				}
+				else{	
+					back.setVisible(false);
+					
+				}
+			
+			}
+
+			});
 		/**
 		 * 背景图片
 		 */

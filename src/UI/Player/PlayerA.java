@@ -29,9 +29,9 @@ import javax.swing.Icon;
 public class PlayerA extends JPanel {
 	JButton lastmatches,lastyears,process,normal,after;
 	JRadioButton isAvg;
-	String seasontype;
-	String tabletype;
-	String isAvgorTotal;
+	String seasontype="常规赛";
+	String tabletype="近五场";
+	//String isAvgorTotal;
 	ImageIcon bg=new ImageIcon("newpic/labelcolor.png");
 	Color newc=new Color(219,241,241);
 	PlayerPosition_Map m=new PlayerPosition_Map();
@@ -281,6 +281,7 @@ public class PlayerA extends JPanel {
 		add(jb);
 		
  
+		updatePlayerA(na);
 	}
 	
 	public Object[][] getmatch(ArrayList<SingleMatchPersonalDataVO> da) {

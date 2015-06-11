@@ -32,7 +32,7 @@ public class Player_Info extends JPanel {
 			"体重", "出生日期", "年龄", "球龄", "毕业院校" };
 	public static Object[][] playerinfodata;
 	public static ArrayList<PlayerInfoVO> pivo;
-	
+	String chartext;
 	
 	public Player_Info(){
 
@@ -79,10 +79,10 @@ public class Player_Info extends JPanel {
 					// TODO Auto-generated method stub
 					charbut.setIcon(imageB);
 					Player.textField.setText("");
+					chartext=charbut.getToolTipText();
 					System.out.println(charbut.getToolTipText());
 					pivo=init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText());
 					playerinfodata=getinfodata(pivo);
-					System.out.println(pivo==null);
 					playerinfolist.updateTable(playerinfotitle, playerinfodata);
 				
 				}
@@ -172,5 +172,12 @@ public class Player_Info extends JPanel {
 		String temp=String.valueOf(df.format(number));
 		return temp;
 		
+	}
+	
+	
+	public void updatePlayerInfo(){
+		pivo=init.pbl.getPlayerInfoByFirstChar(chartext);
+		playerinfodata=getinfodata(pivo);
+		playerinfolist.updateTable(playerinfotitle, playerinfodata);
 	}
 }

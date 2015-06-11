@@ -22,6 +22,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.apache.batik.apps.rasterizer.SVGConverterException;
 
+import bl_db.common.Team_map;
+
 import java.awt.Font;
 import java.awt.Color;
 
@@ -29,7 +31,7 @@ import java.awt.Color;
 
 public class AllTeams extends JDialog {
 
-	
+	Team_map tm=new Team_map();
 	private JPanel contentPane;
 	JPanel A;
 	JPanel B;
@@ -210,7 +212,7 @@ public class AllTeams extends JDialog {
 			A.add(jbt);
 		}
 		for(int i=0;i<at.size();i++){			
-			JLabel jbl=new JLabel((at.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(at.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setFont(new Font("Dialog", 0, 10));
 			jbl.setLocation(50*i+5*i, 50);
@@ -229,7 +231,7 @@ public class AllTeams extends JDialog {
 			B.add(jbt);
 		}
 		for(int i=0;i<ce.size();i++){			
-			JLabel jbl=new JLabel((ce.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(ce.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setLocation(50*i+5*i, 50);
 			jbl.setFont(new Font("Dialog", 0, 10));
@@ -248,7 +250,7 @@ public class AllTeams extends JDialog {
 			C.add(jbt);
 		}
 		for(int i=0;i<es.size();i++){			
-			JLabel jbl=new JLabel((es.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(es.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setLocation(50*i+5*i, 50);
 			jbl.setFont(new Font("Dialog", 0, 10));
@@ -268,7 +270,7 @@ public class AllTeams extends JDialog {
 			D.add(jbt);
 		}
 		for(int i=0;i<wn.size();i++){			
-			JLabel jbl=new JLabel((wn.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(wn.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setLocation(50*i+5*i, 50);
 			jbl.setFont(new Font("Dialog", 0, 10));
@@ -288,7 +290,7 @@ public class AllTeams extends JDialog {
 			E.add(jbt);
 		}
 		for(int i=0;i<pa.size();i++){			
-			JLabel jbl=new JLabel((pa.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(pa.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setLocation(50*i+5*i, 50);
 			jbl.setFont(new Font("Dialog", 0, 10));
@@ -309,7 +311,7 @@ public class AllTeams extends JDialog {
 			F.add(jbt);
 		}
 		for(int i=0;i<ws.size();i++){			
-			JLabel jbl=new JLabel((ws.get(i)),JLabel.CENTER);
+			JLabel jbl=new JLabel(tm.getFullName(ws.get(i)),JLabel.CENTER);
 			jbl.setSize(50, 25);
 			jbl.setLocation(50*i+5*i, 50);
 			jbl.setFont(new Font("Dialog", 0, 10));
