@@ -606,12 +606,12 @@ public class PlayerController implements PlayerBLService{
 		try {
 			 
 			String str="SELECT * FROM (SELECT * FROM "
-					+ "player_season_data where season='"+currentSeason+"' AND name='"+name+"') as "
-					+ "data right join teaminfo as info on data.team =info.team";
+					+ "player_season_data where season='"+season+"' AND name='"+name+"') as "
+					+ "data left join teaminfo as info on data.team =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
-				
+				//System.out.println("name:::"+rs.getString("name"));
 				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
 						rs.getString("date"),rs.getString("name"),
 						rs.getString("team"),rs.getString("division"),
@@ -666,13 +666,14 @@ public class PlayerController implements PlayerBLService{
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
 		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("13-14", "常规赛");
-		
+		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
+		ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		
 		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
-		for(int i=0;i<list.size();i++){
-			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() +"  points:"+list.get(i).getPointNum());
+		for(int i=0;i<volist.size();i++){
+			System.out.println("id:"+(1+i)+"   name:"+volist.get(i).getPlayerName() +"  points:"+volist.get(i).getPointNum());
 		}
 		
 	}
@@ -747,8 +748,9 @@ public class PlayerController implements PlayerBLService{
 		 
 		try {
 			 
-			String str="SELECT * FROM "
-					+ "player_season_data where date='"+lastDate+"' ORDER BY '"+item+"'";
+			String str="SELECT* FROM(SELECT * FROM "
+					+ "player_season_data where date='"+lastDate+"' ORDER BY '"+item+"')as "
+					+ "data left join teaminfo on data.name =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
@@ -765,7 +767,7 @@ public class PlayerController implements PlayerBLService{
 						rs.getInt("assistNum"),rs.getInt("stealNum"),
 						rs.getInt("blockNum"),rs.getInt("turnoverNum"), 
 						rs.getInt("foulNum"),rs.getInt("pointNum"), 
-						rs.getDouble("assistEffiency"),rs.getInt("reboundEfficiency"),
+						rs.getDouble("assistEfficiency"),rs.getInt("reboundEfficiency"),
 						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
 						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
 						rs.getDouble("blockEfficiency")));
