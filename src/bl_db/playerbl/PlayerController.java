@@ -172,12 +172,15 @@ public class PlayerController implements PlayerBLService{
 
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getPlayerSeasonData(String season) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<PlayerSeasonDataVO> list= getAllPlayerSeasonData(season, "季前赛");
+		list.addAll(getAllPlayerSeasonData(season, "季后赛"));
+		list.addAll(getAllPlayerSeasonData(season, "常规赛"));
+		return list;
 	}
 
 	@Override
 	public ArrayList<PlayerSeasonDataVO> keyfind(String text) {
+		
 		return null;
 		
 	}
@@ -668,12 +671,12 @@ public class PlayerController implements PlayerBLService{
 		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("13-14", "常规赛");
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
-		ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
+		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		
 		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
-		for(int i=0;i<volist.size();i++){
-			System.out.println("id:"+(1+i)+"   name:"+volist.get(i).getPlayerName() +"  points:"+volist.get(i).getPointNum());
+		for(int i=0;i<list.size();i++){
+			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() +"  points:"+list.get(i).getPointNum());
 		}
 		
 	}
