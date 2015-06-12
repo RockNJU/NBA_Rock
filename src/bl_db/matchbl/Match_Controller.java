@@ -12,6 +12,7 @@ import VO.MatchVO;
 import VO.SingleMatchPersonalDataVO;
  
 import VO.TeamMatchVO;
+import bl_db.common.EndDayInfo;
 import bl_db.common.SeasonInfo;
 import bl_db.common.Team_map;
 import bl_db.teamrbl.Team_Controller;
@@ -23,12 +24,12 @@ public class Match_Controller implements MatchBLService{
     String user="ghl";
     String pwd="ghl13";		
     String currentSeason;
-	
+	String lastDate;
     Connection conn ;
     Statement stmt ;
     
     public Match_Controller(){
-    	
+    	EndDayInfo info=new EndDayInfo();
     	try{
   		  Class.forName("com.mysql.jdbc.Driver").newInstance();
   		  conn = DriverManager.getConnection(url,user, pwd);
@@ -37,7 +38,8 @@ public class Match_Controller implements MatchBLService{
   		}catch(Exception e){
   			System.out.println("数据库连接出错："+e.toString());
   		}
-    	//currentSeason=getCurrentSeason();
+    	currentSeason=info.getCurrentSeason();
+    	lastDate=info.getLastDay();
     }
     
 	private ArrayList<MatchInfoVO> getMatchInfo(String date1,String date2){
@@ -112,6 +114,9 @@ public class Match_Controller implements MatchBLService{
 	
 		return infoList;
 	}
+	
+	
+	
 	
 	@Override
 	public String getLastHavingMatchDate() {
@@ -437,8 +442,46 @@ public class Match_Controller implements MatchBLService{
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,
 			int n) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
+		 
+		try {
+			 
+			String str="SELECT * FROM (SELECT * FROM "
+					+ "player_season_data where date='"+lastDate+"'  ORDER BY '"+item+"' desc) as "
+					+ "data left join teaminfo as info on data.team =info.team";
+			ResultSet  rs=stmt.executeQuery(str);
+			char chr=39;
+			int count=0;
+			while(rs.next()){
+				if(count>=n){
+					break;
+				}
+				
+				System.out.println("得分："+rs.getInt("pointNum"));
+				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
+						rs.getString("date"),rs.getString("name"),
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"), rs.getString("position"),
+						rs.getDouble("time"),rs.getInt("fieldGoal"),
+						rs.getInt("shootNum"), rs.getInt("t_fieldGoal"),
+						rs.getInt("t_shootNum"),rs.getInt("freeThrowGoal"),
+						rs.getInt("freeThrowNum"),rs.getInt("o_ReboundNum"),
+						rs.getInt("d_ReboundNum"),rs.getInt("reboundNum"),
+						rs.getInt("assistNum"),rs.getInt("stealNum"),
+						rs.getInt("blockNum"),rs.getInt("turnoverNum"), 
+						rs.getInt("foulNum"),rs.getInt("pointNum"), 
+						rs.getDouble("assistEfficiency"),rs.getInt("reboundEfficiency"),
+						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
+						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
+						rs.getDouble("blockEfficiency")));
+				count++;
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return list;
 	}
 
 	
@@ -533,12 +576,20 @@ public class Match_Controller implements MatchBLService{
 			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
-			 ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-03-05");
+			/* ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-03-05");
 			
 			for(int i=0;i<amlist.size();i++){
 				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores()+";;"
 						+amlist.get(i).getHostTeam().getReboundNum());
-			} 
+			} */
+			
+			
+			
+			ArrayList<SingleMatchPersonalDataVO> list=match.getTodayHotPlayer("pointNum",6);
+			
+			for(int i=0;i<list.size();i++){
+				System.out.println("name："+list.get(i).getPlayerName());
+			}
 			
 		/*	ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
