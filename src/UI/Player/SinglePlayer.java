@@ -34,7 +34,6 @@ public class SinglePlayer extends JDialog {
 	public JButton A;
 	public JButton B;
 	public JButton C;
-	public JButton D;
 	PlayerB b;
 	PlayerC c;
 	String na;
@@ -78,8 +77,8 @@ public class SinglePlayer extends JDialog {
 		rightpanel.setLayout(null);
 		getContentPane().add(rightpanel);
 			
-		A = new JButton(new ImageIcon("newpic/球员信息-平常.png"));
-    	A.setToolTipText("\u57FA\u672C\u4FE1\u606F");
+		A = new JButton(new ImageIcon("newpic/add/基本信息浮.png"));
+    	A.setToolTipText("基本信息");
 		A.setBounds(228, 0, 112, 30);
 		A.setContentAreaFilled(false);
 		getContentPane().add(A);
@@ -96,35 +95,33 @@ public class SinglePlayer extends JDialog {
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-            	if(!A.getToolTipText().equals("球员信息 "))
-            	A.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
+            	if(!A.getToolTipText().equals("基本信息"))
+            	A.setIcon(new ImageIcon("newpic/add/基本信息.png"));
             	else
-            		A.setIcon(new ImageIcon("newpic/球员信息-选中.png"));
+            		A.setIcon(new ImageIcon("newpic/add/基本信息浮.png"));
             }           
             @Override
             public void mouseEntered(MouseEvent e) {
-            	A.setIcon(new ImageIcon("newpic/球员信息-上浮.png"));
+            	A.setIcon(new ImageIcon("newpic/add/基本信息浮.png"));
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
             	
-            	A.setIcon(new ImageIcon("newpic/球员信息-选中.png"));
-            	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
-            	D.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
-            	C.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
-            	A.setToolTipText("球员信息 ");
-            	D.setToolTipText("热门信息");
-            	B.setToolTipText("队伍信息");
-            	C.setToolTipText("比赛信息");	
+            	A.setIcon(new ImageIcon("newpic/add/基本信息浮.png"));
+            	B.setIcon(new ImageIcon("newpic/add/趋势对比.png"));
+            	C.setIcon(new ImageIcon("newpic/add/球员对比.png"));
+            	A.setToolTipText("基本信息");
+            	B.setToolTipText("趋势对比");
+            	C.setToolTipText("球员对比");	
             	PlayerA a=new PlayerA(na);
             	change(a);
             	
             }
         });
 		
-		B = new JButton(new ImageIcon("newpic/队伍信息-平常.png"));
-    	B.setToolTipText("\u6BD4\u8D5B\u4FE1\u606F");
-		B.setBounds(379, 0, 112, 30);
+		B = new JButton(new ImageIcon("newpic/add/趋势对比.png"));
+    	B.setToolTipText("趋势对比");
+		B.setBounds(450, 0, 112, 30);
 		getContentPane().add(B);
 		B.addMouseListener(new MouseListener() {
             
@@ -139,26 +136,24 @@ public class SinglePlayer extends JDialog {
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-            	if(!B.getToolTipText().equals("队伍信息 "))
-            		B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
+            	if(!B.getToolTipText().equals("趋势对比"))
+            		B.setIcon(new ImageIcon("newpic/add/趋势对比.png"));
             	else
-            		B.setIcon(new ImageIcon("newpic/队伍信息-选中.png"));
+            		B.setIcon(new ImageIcon("newpic/add/趋势对比浮.png"));
             }           
             @Override
             public void mouseEntered(MouseEvent e) {
-            	B.setIcon(new ImageIcon("newpic/队伍信息-上浮.png"));
+            	B.setIcon(new ImageIcon("newpic/add/趋势对比浮.png"));
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
-            	B.setIcon(new ImageIcon("newpic/队伍信息-选中.png"));
-            	D.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
-            	A.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
-            	C.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
+            	B.setIcon(new ImageIcon("newpic/add/趋势对比浮.png"));
+            	A.setIcon(new ImageIcon("newpic/add/基本信息.png"));
+            	C.setIcon(new ImageIcon("newpic/add/球员对比.png"));
             	
-            	A.setToolTipText("球员信息");
-            	D.setToolTipText("热门信息");
-            	B.setToolTipText("队伍信息 ");
-            	C.setToolTipText("比赛信息");
+            	A.setToolTipText("基本信息");
+            	B.setToolTipText("趋势对比");
+            	C.setToolTipText("球员对比");
             	
             	b=new PlayerB(na);
             	change(b);
@@ -166,9 +161,9 @@ public class SinglePlayer extends JDialog {
             }
         });
 
-		C = new JButton(new ImageIcon("newpic/比赛信息-平常.png"));
-    	C.setToolTipText("比赛信息");
-		C.setBounds(514, 0, 112, 30);
+		C = new JButton(new ImageIcon("newpic/add/球员对比.png"));
+    	C.setToolTipText("球员对比");
+		C.setBounds(665, 0, 112, 30);
 		getContentPane().add(C);
 		C.addMouseListener(new MouseListener() {
             
@@ -182,87 +177,37 @@ public class SinglePlayer extends JDialog {
             }          
             @Override
             public void mouseExited(MouseEvent e) {
-            	if(!C.getToolTipText().equals("比赛信息 "))
-            		C.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
+            	if(!C.getToolTipText().equals("球员对比"))
+            		C.setIcon(new ImageIcon("newpic/add/球员对比.png"));
             	else
-            		C.setIcon(new ImageIcon("newpic/比赛信息-选中.png"));
+            		C.setIcon(new ImageIcon("newpic/add/球员对比浮.png"));
               
             }           
             @Override
             public void mouseEntered(MouseEvent e) {
-            	C.setIcon(new ImageIcon("newpic/比赛信息-上浮.png"));               
+            	C.setIcon(new ImageIcon("newpic/add/球员对比浮.png"));               
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
-            	C.setIcon(new ImageIcon("newpic/比赛信息-选中.png"));
-            	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
-            	D.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
-            	A.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
+            	C.setIcon(new ImageIcon("newpic/add/球员对比浮.png"));
+            	B.setIcon(new ImageIcon("newpic/add/趋势对比.png"));
+            	A.setIcon(new ImageIcon("newpic/add/基本信息.png"));
             	
-            	A.setToolTipText("球员信息");
-            	D.setToolTipText("热门信息");
-            	B.setToolTipText("队伍信息");
-            	C.setToolTipText("比赛信息 ");
+            	A.setToolTipText("基本信息");
+            	B.setToolTipText("趋势对比");
+            	C.setToolTipText("球员对比");
             	c=new PlayerC(na);
 				change(c);
             }
         });
 
-		D = new JButton(new ImageIcon("newpic/热门信息-平常.png"));
-    	D.setToolTipText("热门信息");
-		D.setBounds(669, 0, 112, 30);
-		getContentPane().add(D);
-		D.addMouseListener(new MouseListener() {
-            
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                // TODO Auto-generated method stub                
-            }           
-            @Override
-            public void mousePressed(MouseEvent e) {
-                // TODO Auto-generated method stub                
-            }          
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-            	if(!D.getToolTipText().equals("热门信息 "))
-            		D.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
-            	else
-            		D.setIcon(new ImageIcon("newpic/热门信息-选中.png"));
-            	//hotbutton.setIcon(new ImageIcon("newpic/热门信息-平常.png"));
-            }           
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            	D.setIcon(new ImageIcon("newpic/热门信息-上浮.png"));
-                // TODO Auto-generated method stub
-            	//hotbutton.setIcon(new ImageIcon("newpic/热门信息-ao.png"));
-            	//teambutton.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
-            	//playerbutton.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
-            	//matchbutton.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
-            	
-            }            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            	D.setIcon(new ImageIcon("newpic/热门信息-选中.png"));
-            	B.setIcon(new ImageIcon("newpic/队伍信息-平常.png"));
-            	A.setIcon(new ImageIcon("newpic/球员信息-平常.png"));
-            	C.setIcon(new ImageIcon("newpic/比赛信息-平常.png"));
-            	
-            	A.setToolTipText("球员信息");
-            	D.setToolTipText("热门信息 ");
-            	B.setToolTipText("队伍信息");
-            	C.setToolTipText("比赛信息");		
-            	
-            }
-        });
+	
 	
 		B.setFocusPainted(false);
-		D.setFocusPainted(false);
 		A.setFocusPainted(false);
 		C.setFocusPainted(false);
 		//btnNewButton.setContentAreaFilled(false);
 		B.setContentAreaFilled(false);
-		D.setContentAreaFilled(false);
 		A.setContentAreaFilled(false);
 		C.setContentAreaFilled(false);
 		

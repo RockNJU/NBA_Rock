@@ -135,7 +135,7 @@ public class init extends JFrame {
 	public init() {
 		setTitle("NBA\u6570\u636E\u67E5\u8BE2\u5206\u6790\u7CFB\u7EDF");
 		setUndecorated(true);// 取消窗体修饰效果************
-		setDragable();//移动功能
+		//setDragable();//移动功能
 		
 		setSize(1060, 690);
 		
