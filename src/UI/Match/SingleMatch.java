@@ -28,6 +28,7 @@ import UI.main.Hot;
 import UI.main.Match;
 import UI.main.Player;
 import UI.main.Team;
+import VO.MatchVO;
 
 import java.awt.Font;
 
@@ -51,6 +52,7 @@ public class SingleMatch extends JDialog {
 	LimpidButton back;
 	 final CardLayout cardLayout = new CardLayout();
 	JPanel jp = new JPanel();
+	MatchVO mvo;
 
 	public static void main(String[] args) {
 		try {
@@ -70,6 +72,7 @@ public class SingleMatch extends JDialog {
 
 
 	@SuppressWarnings("null")
+	
 	public SingleMatch(String name,String date) {
 		getContentPane().setLayout(null);
 		setSize(1060,620);
@@ -80,7 +83,7 @@ public class SingleMatch extends JDialog {
 		jp.setLayout(cardLayout);
 		getContentPane().add(jp);
 
-		basicmatch=new MatchA();
+		basicmatch=new MatchA(mvo);
 		basicmatch.setBounds(9,30,1042,582);
 		basicmatch.setOpaque(false);
 		basicmatch.setLayout(null);

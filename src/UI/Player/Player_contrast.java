@@ -182,9 +182,9 @@ public class Player_contrast extends JFrame {
 			JButton btnNewButton = new JButton("");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ContrastPlayer cp = new ContrastPlayer();
-					cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
-					cp.setVisible(true);
+					//ContrastPlayer cp = new ContrastPlayer();
+					//cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
+					//cp.setVisible(true);
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));

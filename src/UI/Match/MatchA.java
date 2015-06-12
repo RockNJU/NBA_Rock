@@ -19,33 +19,47 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import bl_db.common.Team_map;
 import UI.Player.ContrastPlayer;
 import UI.main.init;
+import VO.MatchVO;
 import VO.TeamMatchVO;
 
 public class MatchA extends JPanel {
 	
 	TeamMatchVO teama;
 	TeamMatchVO teamb;
+	MatchVO match;
 	
 	String[] paintcontent = {"球队胜率","得分","助攻","篮板","三分","罚球","投篮"};
 	int paintcontentnum = 7;
 	double[] paintdataA = {24,0,24,52,26,57.56,100};
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
-	double[] paintdataC = {0,0,0,0,0.0,0.0,0.0};
+	int dataA[];
+	int dataB[];
+	Team_map tm = new Team_map();
 	
-	public MatchA() {
-
+	public MatchA(MatchVO mvo) {
+		match = mvo;
 		JLabel photoleft;
+		teama = mvo.getHostTeam();
+		teamb = mvo.getGuestTeam();
 		
-		//获取比赛数据
-		String portraitA = "newpic/TEAMPNG/ATL.png";
-		int dataA[] = {17,13,27,25,8,13};
-		String nameA = "洛杉矶烤鸭队";
-		String portraitB = "newpic/TEAMPNG/BKN.png";
-		int dataB[] = {12,24,34,25,21,23};
-		String nameB = "新奥尔良鸡排队";
+		String nameA = teama.getTeamName();
+		String portraitA = "newpic/TEAMPNG/"+tm.getFullName(nameA)+".png";
+		String nameB = teamb.getTeamName();
+		String portraitB = "newpic/TEAMPNG/"+tm.getFullName(nameB)+".png";
 		int color[] = new int[dataA.length];
+		//获取比赛数据
+		int size = match.getScores().size();
+		dataA = new int[size];
+		dataB = new int[size];
+		int tempnum = 0;
+		for(String text:match.getScores()){
+			dataA[tempnum] = Integer.valueOf(text.split("-")[0]);
+			dataB[tempnum] = Integer.valueOf(text.split("-")[1]);
+			tempnum++;
+		}
 		
 		//处理输出的文字颜色
 		for(int i = 0;i<dataA.length;i++){
