@@ -177,6 +177,7 @@ public class PlayerController implements PlayerBLService{
 
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getPlayerSeasonData(String season) {
+		
 		ArrayList<PlayerSeasonDataVO> list= getAllPlayerSeasonData(season, "季前赛");
 		list.addAll(getAllPlayerSeasonData(season, "季后赛"));
 		list.addAll(getAllPlayerSeasonData(season, "常规赛"));
@@ -351,6 +352,10 @@ public class PlayerController implements PlayerBLService{
 						rs.getDouble("blockEff"),rs.getInt("double_sum"),
 						rs.getInt("three_sum"),
 						null);
+				
+				if(rs.getString("division")==null){
+					System.out.println("name==null： "+rs.getString("name"));
+				}
 				list.add(vo);
 			}
 			  conn.commit();
@@ -375,7 +380,7 @@ public class PlayerController implements PlayerBLService{
 		 
 		 
 			 
-			String str="SELECT * FROM (SELECT name,season,position,"
+			String str="SELECT * FROM ((SELECT name,season,position,"
 					+ "team,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_sum,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
@@ -398,7 +403,7 @@ public class PlayerController implements PlayerBLService{
 					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
 					+ "FROM player_season_data WHERE season='"+season+"' AND type='"+type+"'"
 					+ "GROUP BY season,type,name)as "
-					+ "data left join teaminfo on data.name =teaminfo.teamAbb";
+					+ "data left join teaminfo on data.team =teaminfo.teamAbb)";
 			list=getData(str);
 		HotSort sort=new HotSort();
 		return sort.hotPlayer_Sort(list,"pointNum");/*默认以得分排序，返回一个赛季的球员的数据*/
@@ -701,26 +706,27 @@ public class PlayerController implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("13-14", "常规赛");
+		 ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15", "常规赛");
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
-		/*
+		 
 		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
 		for(int i=0;i<list.size();i++){
-			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() +"  points:"+list.get(i).getPointNum());
-		}*/
+			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
+					+"  points:"+list.get(i).getPointNum()+"  partition:"+list.get(i).getPartition());
+		} 
 		
 		
-		ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
+		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
 		System.out.println("size："+list.size());
 		for(int i=0;i<list.size();i++){
 			System.out.println("name: "+list.get(i).getName()+
 					" position:"+list.get(i).getPosition());
 			}
 		double[] aa=pl.getPlayerOneData("科比-布莱恩特",20, "pointNum");
-		System.out.println("科比的得分："+aa[0]);
+		System.out.println("科比的得分："+aa[0]);*/
 	}
 
 	
@@ -986,7 +992,7 @@ public class PlayerController implements PlayerBLService{
 	}
 	
 	private PlayerSeasonDataVO  addImproveData(PlayerSeasonDataVO vo,String name){
-		System.out.println("传进来的name：" +name);
+		//System.out.println("传进来的name：" +name);
 		if(vo.getMatchNum()<=5){
 			return vo;
 		}

@@ -23,7 +23,7 @@ public class EndDayInfo {
     		}catch(Exception e){
     			System.out.println("数据库连接出错："+e.toString());
     		}
-      	currentSeason=getCurrentSeason();
+      	currentSeason=getCurrent_Season();
       	lastDay=getLastDate();
     }
     private String getLastDate(){

@@ -125,7 +125,7 @@ public class PlayerSeasonDataVO {
 				this.teamName=teamName;
 			
 				this.league=division;
-				 this.partition=partition;
+				this.partition=partition;
 				this.position=position;
 				this.matchNum=matchNum;
 				this.startingNum=startingNum;
