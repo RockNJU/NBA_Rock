@@ -483,7 +483,7 @@ public class PlayerController implements PlayerBLService{
 	public ArrayList<PlayerInfoVO> getPlayerInfoByFirstChar(String firstchar) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
 		for(int i=0;i<infoList.size();i++){
-			if(list.get(i).getName().startsWith(firstchar)){
+			if(list.get(i).getEname().startsWith(firstchar)){
 				list.add(infoList.get(i));
 			}
 		}	
@@ -973,7 +973,7 @@ public class PlayerController implements PlayerBLService{
 	}
 	
 	private PlayerSeasonDataVO  addImproveData(PlayerSeasonDataVO vo,String name){
-		
+		System.out.println("传进来的name：" +name);
 		if(vo.getMatchNum()<=5){
 			return vo;
 		}
