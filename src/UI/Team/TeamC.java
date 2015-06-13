@@ -10,8 +10,10 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,29 +21,40 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import UI.main.ContrastTeam;
+import businessService.blservice.PlayerBLService;
+import UI.common.OftenUseMethod;
 import UI.main.init;
+import VO.PlayerSeasonDataVO;
+import VO.PlayerVO;
 import VO.TeamSeasonDataVO;
 
 public class TeamC extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	String na;
 	JPanel contentPane;
-	TeamSeasonDataVO Teama;
-	TeamSeasonDataVO Teamb;	
-	String[] paintcontent = {"球队胜率","得分","助攻","篮板","三分","罚球","投篮"};
+	TeamSeasonDataVO teama;
+	TeamSeasonDataVO teamb;	
+	String[] paintcontent = {"比赛场数","得分","助攻","篮板","三分","罚球","投篮"};
 	int paintcontentnum = 7;
 	double[] paintdataA = {24,0,24,52,26,57.56,100};
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
-	double[] paintdataC = {0,0,0,0,0.0,0.0,0.0};
 	private JTextField textField;
+	String season = "13-14";
 	/**
 	 * Create the panel.
 	 */
 	public TeamC(String name) {
+		System.out.println(name);
+		teama = init.tbl.getATeamData(season,name);
+		paintdataA[0] = OftenUseMethod.changedouble(teama.getMatchNum());
+		paintdataA[1] = OftenUseMethod.changedouble(teama.getPointNum_avg());
+		paintdataA[2] = OftenUseMethod.changedouble(teama.getAssistNum_avg());
+		paintdataA[3] = OftenUseMethod.changedouble(teama.getReboundNum_avg());
+		paintdataA[4] = OftenUseMethod.changedouble(teama.getT_shootNum_avg());
+		paintdataA[5] = OftenUseMethod.changedouble(teama.getFreeThrowNum_avg());
+		paintdataA[6] = OftenUseMethod.changedouble(teama.getShootNum_avg());
+		
+
 		this.na=name;
 		setSize(1042,580);
 		setLayout(null);
@@ -51,25 +64,28 @@ public class TeamC extends JPanel {
 		add(contentPane);
 		
 		//test暂用
-		//Teama = pbs.keyfind("Brooks").get(0);
+		//playera = pbs.keyfind("Brooks").get(0);
+		//playera = 联盟水平
 		
 		//获取信息
-		String portraitA = "newpic/fortest/Aaron Brooks.png";
-		String teamA = "Avaliers";
-		String infoA = "11\u53F7/\u4E2D\u536B";
-		String nameA = "Aaron Brooks";
-		String portraitB = "newpic/fortest/Aaron Brooks.png";
-		String teamB = "Avaliers";
-		String infoB = "11\u53F7/\u4E2D\u536B";
-		String nameB = "Aaron Brooks";
+		String nameA = name;
+		String portraitA = "newpic/circleteam/"+teama.getTeamAbb()+".png";
+		String teamA = teama.getTeamName();
+		String infoA = teama.getLeague()+"|"+teama.getPartition();
+		
+		 String nameB = "联盟平均水平";
+		 String portraitB = "newpic/circleteam/ATL.png";
+		 String teamB = "";
+		 String infoB = "";
+
 		//头像
-		 ImageIcon Teamfirst = new ImageIcon(portraitA);
-		 Teamfirst.setImage(Teamfirst.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+		 ImageIcon playerfirst = new ImageIcon(portraitA);
+		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
 			contentPane.setLayout(null);
-			JLabel photoTeam1 = new JLabel(Teamfirst);
-			photoTeam1.setBounds(255, 10, 230, 185);
-			photoTeam1.setOpaque(false);
-			contentPane.add(photoTeam1);
+			JLabel photoplayer1 = new JLabel(playerfirst);
+			photoplayer1.setBounds(255, 10, 230, 185);
+			photoplayer1.setOpaque(false);
+			contentPane.add(photoplayer1);
 			
 			JLabel teamfirst = new JLabel(teamA);
 			teamfirst.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -92,39 +108,28 @@ public class TeamC extends JPanel {
 			namefirst.setBounds(25, 9, 211, 36);
 			contentPane.add(namefirst);
 			
-			JTextField findTeamfist = new JTextField();
-			findTeamfist.setBackground(new Color(219, 241, 241));
-			findTeamfist.setBounds(42, 162, 184, 24);
-			contentPane.add(findTeamfist);
+			 ImageIcon playersecond = new ImageIcon(portraitB);
+			 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+			final JLabel photoplayer2 = new JLabel((Icon) playersecond);
+			photoplayer2.setOpaque(false);
+			photoplayer2.setBounds(552, 10, 230, 185);
+			contentPane.add(photoplayer2);
 			
-			JButton firstfind = new JButton("");
-			firstfind.setToolTipText("\u67E5\u627E\u5BF9\u5E94\u7684\u7403\u5458");
-			firstfind.setBounds(228, 162, 25, 25);
-			firstfind.setContentAreaFilled(false); 
-			contentPane.add(firstfind);
-			
-			 ImageIcon Teamsecond = new ImageIcon(portraitB);
-			 Teamsecond.setImage(Teamsecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
-			JLabel photoTeam2 = new JLabel( Teamsecond);
-			photoTeam2.setOpaque(false);
-			photoTeam2.setBounds(552, 10, 230, 185);
-			contentPane.add(photoTeam2);
-			
-			JLabel teamsecond = new JLabel(teamB);
+			final JLabel teamsecond = new JLabel(teamB);
 			teamsecond.setHorizontalAlignment(SwingConstants.LEFT);
 			teamsecond.setForeground(new Color(155, 106, 141));
 			teamsecond.setFont(new Font("黑体", Font.BOLD, 18));
 			teamsecond.setBounds(804, 65, 106, 24);
 			contentPane.add(teamsecond);
 			
-			JLabel infosecond = new JLabel(infoB);
+			final JLabel infosecond = new JLabel(infoB);
 			infosecond.setHorizontalAlignment(SwingConstants.LEFT);
 			infosecond.setForeground(new Color(155, 106, 141));
 			infosecond.setFont(new Font("黑体", Font.BOLD, 18));
 			infosecond.setBounds(804, 44, 106, 24);
 			contentPane.add(infosecond);
 			
-			JLabel namesecond = new JLabel(nameB);
+			final JLabel namesecond = new JLabel(nameB);
 			namesecond.setHorizontalAlignment(SwingConstants.LEFT);
 			namesecond.setForeground(new Color(155, 106, 141));
 			namesecond.setFont(new Font("Verdana", Font.PLAIN, 30));
@@ -138,6 +143,28 @@ public class TeamC extends JPanel {
 			
 		
 			JButton findsecond = new JButton("");
+			findsecond.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String secondname = textField.getText();
+					TeamSeasonDataVO tempplayer =  init.tbl.getATeamData(season,secondname);
+					if(tempplayer==null){
+						textField.setText("未查到对应球员");
+					}
+					else{
+						teamb = tempplayer;
+						String nameB = teamb.getTeamName();
+						String portraitB = "newpic/circleteam/"+teamb.getTeamAbb()+".png";
+						String teamB = teamb.getTeamName();
+						String infoB = teamb.getLeague()+"|"+teamb.getPartition();
+						 ImageIcon playersecond = new ImageIcon(portraitB);
+						 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+						 photoplayer2.setIcon(playersecond);
+						 teamsecond.setText(teamB);
+						 infosecond.setText(infoB);
+						 namesecond.setText(nameB);
+					}
+				}
+			});
 			findsecond.setToolTipText("\u67E5\u627E\u5BF9\u5E94\u7684\u7403\u5458");
 			findsecond.setContentAreaFilled(false);
 			findsecond.setBounds(985, 162, 25, 25);
@@ -150,9 +177,11 @@ public class TeamC extends JPanel {
 			JButton btnNewButton = new JButton("");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ContrastTeam cp = new ContrastTeam();
+					ContrastTeam cp = new ContrastTeam(teama,teamb);//默认是联盟平均水平
 					cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
 					cp.setVisible(true);
+					cp.setModal(true);
+					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
@@ -170,14 +199,7 @@ public class TeamC extends JPanel {
 			
 
 	}
-	//选择对比数据后，得到对比数据
-	public double[] getdata(String[] list){
-		double[] result = new double[9];
-			for(String temp:list){
-				//获得数据
-			}
-		return result;
-	}
+
 	
 	//重绘下方对比区域
 	public void paintunder(int num,String[] contrat,double[] dataforB,double[] dataforA){
