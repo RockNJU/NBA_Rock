@@ -89,7 +89,7 @@ public class SingleMatch extends JDialog {
 		basicmatch.setLayout(null);
 		jp.add(basicmatch,"»ù´¡");
 
-		datastastic = new datastatistics();
+		datastastic = new datastatistics(mvo);
 		datastastic.setBounds(9,30,1042,582);
 		datastastic.setOpaque(false);
 		datastastic.setLayout(null);

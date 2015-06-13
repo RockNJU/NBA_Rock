@@ -80,7 +80,7 @@ public class TeamC extends JPanel {
 
 		//Í·Ïñ
 		 ImageIcon playerfirst = new ImageIcon(portraitA);
-		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(215, 215,Image.SCALE_DEFAULT));
 			contentPane.setLayout(null);
 			JLabel photoplayer1 = new JLabel(playerfirst);
 			photoplayer1.setBounds(255, 10, 230, 185);
@@ -109,7 +109,7 @@ public class TeamC extends JPanel {
 			contentPane.add(namefirst);
 			
 			 ImageIcon playersecond = new ImageIcon(portraitB);
-			 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+			 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 215,Image.SCALE_DEFAULT));
 			final JLabel photoplayer2 = new JLabel((Icon) playersecond);
 			photoplayer2.setOpaque(false);
 			photoplayer2.setBounds(552, 10, 230, 185);
