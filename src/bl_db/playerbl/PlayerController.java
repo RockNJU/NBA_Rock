@@ -47,6 +47,8 @@ public class PlayerController implements PlayerBLService{
 		infoList=new ArrayList<>();
 		readBasicInfo();
 		currentSeason=info.getCurrentSeason();
+		
+		System.out.println("µ±Ç°Èü¼¾£º");
 		lastDate=info.getLastDay();
 	}
 	
@@ -980,9 +982,9 @@ public class PlayerController implements PlayerBLService{
 		try {
 			  
 			String str="SELECT assistNum,"
-					+ " reboundNum,pointNum ,"
+					+ "reboundNum,pointNum "
 					+ "FROM player_season_data WHERE name='"+name+"' "
-					+ "and season='"+currentSeason+"'";
+					+ "AND season='"+vo.getSeason()+"'";
 			ResultSet  rs=stmt.executeQuery(str);
 		 
 			double rebound_rate=0;
