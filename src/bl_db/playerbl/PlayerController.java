@@ -44,6 +44,7 @@ public class PlayerController implements PlayerBLService{
 			}catch(Exception e){
 				System.out.println("数据库连接出错："+e.toString());
 			}
+		infoList=new ArrayList<>();
 		readBasicInfo();
 		currentSeason=info.getCurrentSeason();
 		lastDate=info.getLastDay();
@@ -55,9 +56,7 @@ public class PlayerController implements PlayerBLService{
 		/*
 		 * 用于获取当前时间下球员最新的基本信息
 		 * 
-		 * */
-			ArrayList<PlayerInfoVO> infoList=new ArrayList<>();
-			  
+		 * */			  
 			try {
 				 
 				String str="select * from playerinfo";
@@ -700,16 +699,24 @@ public class PlayerController implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("13-14", "常规赛");
+		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("13-14", "常规赛");
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
-		
+		/*
 		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
 		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() +"  points:"+list.get(i).getPointNum());
-		}
+		}*/
+		
+		
+		ArrayList<PlayerInfoVO> list=pl.getAllPlayerInfo();
+		System.out.println("size："+list.size());
+		for(int i=0;i<list.size();i++){
+			System.out.println("name: "+list.get(i).getName()+
+					" position:"+list.get(i).getPosition());
+			}
 		
 	}
 
