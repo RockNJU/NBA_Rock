@@ -1,11 +1,10 @@
 package UI.Team;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -23,16 +22,24 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import bl_db.common.Team_map;
+import UI.Player.temp_linechart.LineChart;
 import UI.common.ChartUtils;
 import UI.common.Serie;
-import VO.TeamSeasonDataVO;
+import UI.common.SortItem_Map;
+import UI.main.init;
+import VO.PlayerInfoVO;
+import VO.PlayerSeasonDataVO;
 
 public class TeamD extends JPanel {
 
-	TeamSeasonDataVO Teama;
-	TeamSeasonDataVO Teamb;
+	/**
+	 * Create the panel.
+	 */
+	PlayerSeasonDataVO playera;
+	PlayerSeasonDataVO playerb;
 	//RMIObject rmi = new RMIObject();
-	//TeamBLService pbs = rmi.getTeamObject();
+	//PlayerBLService pbs = rmi.getPlayerObject();
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -40,8 +47,11 @@ public class TeamD extends JPanel {
 	JButton 三十场 = new JButton("");
 	JButton 二十场 = new JButton("");
 	JButton 十场 = new JButton("");
-	JComboBox 球队选择3 = new JComboBox();
 	JComboBox 队伍选择3 = new JComboBox();
+	Team_map tm = new Team_map();
+	SortItem_Map sm = new SortItem_Map();
+	String season = "13-14";
+	JComboBox 对比项目选择 = new JComboBox();
 	
 	String chossenShowData = "得分";
 	String[] categories =  { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -54,16 +64,16 @@ public class TeamD extends JPanel {
 	Double[] firstData =  { 83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3 };
 	Double[] secondData = { 48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2 };
 	Double[] thirdData =  { 12.2, 14.2, 18.5, 50.2,26.2, 37.4, 39.5,23.1, 47.6, 39.1, 46.8, 51.1 };
-	Double[] fourtaData =  { 42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 28.5, 58.1, 30.6,68.2 };
+	Double[] fourthData =  { 42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 28.5, 58.1, 30.6,68.2 };
 	Serie basicline = new Serie(basicName, basicData);
 	Serie firsts = new Serie(firstName, firstData);
 	Serie seconds = new Serie(secondName, secondData);
 	Serie thirds = new Serie(thirdName, thirdData);
-	Serie fourths = 	new Serie(fourthName, fourtaData);
+	Serie fourths = 	new Serie(fourthName, fourthData);
 	boolean[] lineisshowed = {false,false,false,false};
 	Serie[] tempsave = {firsts,seconds,thirds,fourths};
 	
-	String lineChartState = "10场对比";//选择的可以是10，20,30，赛季
+	int lineChartState = 10;//选择的可以是10，20,30，赛季
 	
 	LineChart lc = new LineChart();
 	ChartPanel chartPanel = lc.createChart();//下方图表
@@ -79,6 +89,9 @@ public class TeamD extends JPanel {
 		add(contentPane);
 		contentPane.setLayout(null);
 		
+		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+		basicData = Changedouble(temp);
+		
 		//下方线表
 		contentPane.add(chartPanel);
 		
@@ -92,7 +105,9 @@ public class TeamD extends JPanel {
 		加入对比3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lineisshowed[2] = true;
-				//将名字修改成对应的
+				thirdName = 队伍选择3.getSelectedItem().toString();
+				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				thirdData = Changedouble(temp);
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 			}
@@ -114,19 +129,17 @@ public class TeamD extends JPanel {
 		contentPane.add(取消对比3);
 		
 
-		球队选择3.setBounds(723, 10, 125, 23);
-		contentPane.add(球队选择3);
-		球队选择3.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
-		
-
-		队伍选择3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//可以改变球队选择中可选择的内容
-				球队选择3.setModel(new DefaultComboBoxModel(new String[] {队伍选择3.getSelectedItem().toString()}));
-			}
-		});
-		队伍选择3.setModel(new DefaultComboBoxModel(new String[] {"temp","test"}));
-		队伍选择3.setBounds(644, 10, 75, 23);
+		/*队伍选择3.setModel(new DefaultComboBoxModel(new String[] {"亚特兰大老鹰","布鲁克林篮网","波士顿凯尔特人","夏洛特黄蜂"
+				,"芝加哥公牛","克里夫兰骑士","达拉斯小牛","丹佛掘金","底特律活塞","金州勇士","休斯顿火箭","印第安纳步行者","洛杉矶快船"
+				,"洛杉矶湖人","孟菲斯灰熊","迈阿密热火","密尔沃基雄鹿","明尼苏达森林狼","新奥尔良鹈鹕","纽约尼克斯","俄克拉荷马雷霆",
+				"奥兰多魔术","费城76人", "菲尼克斯太阳","波特兰开拓者","萨克拉门托国王","圣安东尼奥马刺","多伦多猛龙","犹他爵士", "华盛顿奇才"}));
+		*/
+		队伍选择3.setModel(new DefaultComboBoxModel(new String[] {"老鹰","篮网","凯尔特人","黄蜂"
+				,"公牛","骑士","小牛","掘金","活塞","勇士","火箭","步行者","快船"
+				,"湖人","灰熊","热火","雄鹿","森林狼","鹈鹕","尼克斯","雷霆",
+				"魔术","76人", "太阳","开拓者","国王","马刺","猛龙","爵士", "奇才"}));
+	
+		队伍选择3.setBounds(767, 10, 75, 23);
 		contentPane.add(队伍选择3);
 
 
@@ -137,8 +150,27 @@ public class TeamD extends JPanel {
 				for(int i = 1; i<=10;i++){
 					categories[i-1] = String.valueOf(i);
 				}
-				lineChartState = "10场比赛对比";			//修改数据
+				lineChartState = 10;			//修改数据
 				
+				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				basicData = Changedouble(tempb);
+				if(!firstName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				firstData = Changedouble(temp);
+				}
+				if(!secondName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				secondData = Changedouble(temp);
+				}
+				if(!thirdName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				thirdData = Changedouble(temp);
+				}
+				if(!fourthName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				fourthData = Changedouble(temp);
+				}
+
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 				十场.setIcon(new ImageIcon("newpic//10场后.png"));
@@ -162,7 +194,7 @@ public class TeamD extends JPanel {
 				for(int i = 1; i<=20;i++){
 					categories[i-1] = String.valueOf(i);
 				}
-				lineChartState = "20场比赛对比";
+				lineChartState = 20;
 				//修改数据
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
@@ -183,7 +215,7 @@ public class TeamD extends JPanel {
 				for(int i = 1; i<=30;i++){
 					categories[i-1] = String.valueOf(i);
 				}
-				lineChartState = "30场比赛对比";
+				lineChartState = 30;
 				//修改数据
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
@@ -199,14 +231,10 @@ public class TeamD extends JPanel {
 		赛季.setIcon(new ImageIcon("newpic//赛季.png"));
 		赛季.setBounds(183, 10, 51, 23);
 		contentPane.add(赛季);
-		
-		JComboBox 对比项目选择 = new JComboBox();
-		对比项目选择.setBounds(10, 40, 224, 23);
-		contentPane.add(对比项目选择);
 		赛季.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//线得到数据，然后修改
-				lineChartState = "赛季对比";
+				lineChartState = -1;
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 				十场.setIcon(new ImageIcon("newpic//10场.png"));
@@ -216,27 +244,11 @@ public class TeamD extends JPanel {
 			}
 		});
 		
-		JButton button = new JButton((Icon) null);
-		button.setOpaque(true);
-		button.setForeground(Color.BLUE);
-		button.setContentAreaFilled(false);
-		button.setBounds(452, 10, 88, 23);
-		contentPane.add(button);
 		
-		JButton button_1 = new JButton((Icon) null);
-		button_1.setOpaque(true);
-		button_1.setForeground(Color.BLUE);
-		button_1.setContentAreaFilled(false);
-		button_1.setBounds(546, 10, 88, 23);
-		contentPane.add(button_1);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(323, 10, 125, 23);
-		contentPane.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(244, 10, 75, 23);
-		contentPane.add(comboBox_1);
+		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"得分总","篮板数","助攻数","盖帽数","抢断数","犯规数"
+																,"失误数"}));
+		对比项目选择.setBounds(10, 40, 224, 23);
+		contentPane.add(对比项目选择);
 		
 	
 		
@@ -260,6 +272,7 @@ public class TeamD extends JPanel {
 			return dataset;
 		}
 
+		
 		public ChartPanel createChart() {
 			// 2：创建Chart[创建不同图形]
 			JFreeChart chart = ChartFactory.createLineChart(chossenShowData+"的"+lineChartState, "场数", "", createDataset());
@@ -281,6 +294,17 @@ public class TeamD extends JPanel {
 
 
 
+	}
+	
+	public Double[] Changedouble(double[] temp){
+		int num = temp.length;
+		Double[] Data = new Double[num];
+		int i  = 0;
+		for(double tempnum:temp){
+			Data[i] = new Double(tempnum);
+			i++;
+		}
+		return Data;
 	}
 
 }
