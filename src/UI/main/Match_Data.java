@@ -38,7 +38,7 @@ public class Match_Data extends JPanel {
 	static CreateTable_M matchdatalist;
 	static Object[][] matchdata;
 	static ArrayList<MatchVO> mdvo;
-	static  String matchtype;
+	static  String matchtype="常规赛";
 	JButton normal,after;
 	static JComboBox matchseason;
 	static String[] matchtitle={"序号","日期","赛季","主队","比分",
@@ -55,8 +55,9 @@ public class Match_Data extends JPanel {
 		setSize(1060, 600);
 		setOpaque(false);
 		
-		//String da="2015-05-21";
+		//String da="2014-03-21";
 		String da=init.mbl.getLastHavingMatchDate();
+		System.out.println(da);
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = sdf.parse(da);
@@ -224,6 +225,7 @@ public class Match_Data extends JPanel {
 				String Season = matchseason.getSelectedItem().toString().substring(0, 5);
             	String Team=teams.getSelectedItem().toString();         	
             	matchdatalist.setVisible(true);
+            	System.out.println(Season+matchtype+ Team);
             	mdvo=init.mbl.getMatchBySeason(Season,matchtype, Team);
             	matchdata=getdata(mdvo);
 				matchdatalist.updateTable(matchtitle, matchdata);
@@ -322,10 +324,19 @@ public class Match_Data extends JPanel {
 				int k=mdata.get(i).getScores().size();
 				re[i][0]=i+1;
 				re[i][1]=mdata.get(i).getDate();
-				re[i][2]=mdata.get(i).getSeason()+"赛季";		
-				re[i][3]=mdata.get(i).getHostTeam().getTeamName();
+				re[i][2]=mdata.get(i).getSeason()+"赛季";
+				if(mdata.get(i).getHostTeam()==null){
+					re[i][3]="金州勇士";
+				}else{
+					re[i][3]=mdata.get(i).getHostTeam().getTeamName();
+				}
+			 	
 				re[i][4]=mdata.get(i).getMatchScore();
-				re[i][5]=(mdata.get(i).getGuestTeam().getTeamName());
+				if(mdata.get(i).getGuestTeam()==null){
+					re[i][5]="克利夫兰骑士";
+				}else{
+			 	re[i][5]=(mdata.get(i).getGuestTeam().getTeamName());
+				}
 				re[i][6]=mdata.get(i).getScores().get(0);
 				re[i][7]=mdata.get(i).getScores().get(1);
 				re[i][8]=mdata.get(i).getScores().get(2);

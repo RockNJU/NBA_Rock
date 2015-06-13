@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 import businessService.blservice.PlayerBLService;
 import UI.common.CreateTable_pic;
@@ -33,17 +34,21 @@ public class HotPlayers extends JPanel {
 	//RMIObject rmi = new RMIObject();
 	MatchBLService mbs = init.rmi.getMatchObject();
 	PlayerBLService pbs = init.rmi.getPlayerObject();
-	Object[] no1=new Object[4];
+	
 	Object [][] data;
 	static CreateTable_pic ctfh;
 	SortItem_Map map1 = new SortItem_Map();
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
 
+	Team_map tm=new Team_map();
 	/**
 	 * Create the panel.
 	 */
 	public HotPlayers(String tmpsaccording,String tmptype) {
-		
+		setSize(1040, 256);
+		setLayout(null);
+		setOpaque(false);
+		Object[] no1=new Object[5];
 		this.according=tmpsaccording;
 		this.type=tmptype;
 		String[] title = {"序号","肖像","姓名","位置","球队",this.type};
@@ -51,9 +56,9 @@ public class HotPlayers extends JPanel {
 			smpd = pbs.getTodayHotPlayer(map1.getItem(tmptype));
 			System.out.println(map1.getItem(tmptype));
 			no1[0]=smpd.get(0).getPlayerName();
-			no1[1]=(smpd.get(0).getTeamName());
+			no1[1]=tm.getFullName(smpd.get(0).getTeamName());
 			no1[2]=smpd.get(0).getPlayerPosition();
-			if(type.equals("得分总")){
+			if(type.equals("总分")){
 				no1[3]=smpd.get(0).getPointNum();
 			}
 			else if(type.equals("篮板数")){
@@ -68,14 +73,15 @@ public class HotPlayers extends JPanel {
 			else if(type.equals("盖帽数")){
 				no1[3]=smpd.get(0).getBlockNum();
 			}
-			
+			no1[4]=smpd.get(0).getPlayerName();
 			data=getdata(smpd);
 		}
 		else if(tmpsaccording.equals("赛季")){
 			psdv = pbs.getSeasonHotPlayer(init.defaultseason,map1.getItem(tmptype));
 			data=getdata1(psdv);
 			no1[0]=psdv.get(0).getName();
-			no1[1]=(psdv.get(0).getTeamName());
+			no1[4]=psdv.get(0).getName();
+			no1[1]=tm.getFullName(psdv.get(0).getTeamName());
 			no1[2]=psdv.get(0).getPosition();
 			if(type.equals("得分")){
 				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getPointNum_avg()));
@@ -104,12 +110,13 @@ public class HotPlayers extends JPanel {
 			else{
 				no1[3] = -1;
 			}				
+			
 		}
 		else{
 			psdv = pbs.getMost_Progress_Player(map1.getItem(tmptype));
 			data=getdata1(psdv);		
 			no1[0]=psdv.get(0).getName();
-			no1[1]=(psdv.get(0).getTeamName());
+			no1[1]=tm.getFullName(psdv.get(0).getTeamName());
 			no1[2]=psdv.get(0).getPosition();
 			if(type.equals("得分")){
 				no1[3]= Double.toString(OftenUseMethod.changedouble(psdv.get(0).getPointNum_avg()));
@@ -138,13 +145,12 @@ public class HotPlayers extends JPanel {
 			else{
 				no1[3] = -1;
 			}		
+			no1[4]=psdv.get(0).getName();
 		}					
 
-		setLayout(null);
-		setOpaque(false);
-		setSize(1040,220);
+	
 		
-		ImageIcon No1_Player = new ImageIcon("newpic/portrait/"+no1[0]+".png");
+		ImageIcon No1_Player = new ImageIcon("newpic/portrait/"+no1[4]+".png");
 		No1_Player.setImage(No1_Player.getImage().getScaledInstance(160, 130,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Player);		
 		No1_p.setBounds(35, 39, 160, 130);		
@@ -177,14 +183,14 @@ public class HotPlayers extends JPanel {
 		add(No1_num_positon);
 		
 		JLabel No1_info = new JLabel(String.valueOf(no1[3]));
-		No1_info.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 28));
+		No1_info.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 18));
 		No1_info.setBounds(248, 124, 85, 50);
 		add(No1_info);
 		
 
 		ctfh = new CreateTable_pic(title,data,
-				381, 0,655, 205,43,
-				new Font("黑体", 0, 15), new Font("Dialog", 0, 14));
+				381, 45,655, 205,43,
+				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		setclwidth();
 		add(ctfh);
 		
@@ -209,13 +215,14 @@ public class HotPlayers extends JPanel {
 		Object[][] re=new Object[4][6];
 		for(int i=1;i<5;i++){
 			re[i-1][0]=i+1;
-			ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getPlayerName()+".png");
+			//ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getPlayerName()+".png");
+			ImageIcon ddd = new ImageIcon("newpic/portrait/"+"Aaron Brooks"+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getPlayerName();
 		    re[i-1][3]=da.get(i).getPlayerPosition();
-		    re[i-1][4]=(da.get(i).getTeamName());
-		    if(type.equals("得分总")){
+		    re[i-1][4]=tm.getFullName(da.get(i).getTeamName());
+		    if(type.equals("总分")){
 				re[i-1][5]= Integer.toString(da.get(i).getPointNum());
 			}
 			else if(type.equals("篮板数")){
@@ -247,7 +254,7 @@ public class HotPlayers extends JPanel {
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getName();
 		    re[i-1][3]=da.get(i).getPosition();
-		    re[i-1][4]=(da.get(i).getTeamName());
+		    re[i-1][4]=tm.getFullName(da.get(i).getTeamName());
 			//对应项得分
 			if(type.equals("得分")){
 				re[i-1][5]= Double.toString(OftenUseMethod.changedouble(da.get(i).getPointNum_avg()));

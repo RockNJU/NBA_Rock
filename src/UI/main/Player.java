@@ -58,7 +58,7 @@ public class Player extends JPanel{
 				// TODO Auto-generated method stub
 				//Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
 				//Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
-				if(Player_Data.avg_tol.isSelected()){
+				if(Player_Data.a_t.equals("avg")){
 					Object info2[][]=Player_Data.getAveragedata(init.pbl.keyfind(textField.getText()));
 					Player_Data.playerdatalist.updateTable(Player_Data.playerAvgdatatitle, info2);
 					Player_Data.playerdatalist.FitTableColumns(Player_Data.playerdatalist.getTable());

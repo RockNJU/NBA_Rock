@@ -152,7 +152,6 @@ public class CreateTable_pic extends JPanel{
 					return false;
 				}
 			});
-			
 			  TableColumn column = table.getColumnModel().getColumn(1);// 获取表格第4列对象
 		        table.setRowHeight(rowHeight);
 		        
@@ -177,6 +176,7 @@ public class CreateTable_pic extends JPanel{
 		                        
 		                    }
 		                });
+		        
 		        table.repaint();
 				this.repaint();
 		}
@@ -242,9 +242,30 @@ public class CreateTable_pic extends JPanel{
 			           
 			         }
 			         header.setResizingColumn(column); // 此行很重要
-			         column.setWidth(22+width+myTable.getIntercellSpacing().width);
-			        
+			         column.setWidth(22+width+myTable.getIntercellSpacing().width);	        
 			     }
+			     TableColumn column_1 = table.getColumnModel().getColumn(1);// 获取表格第4列对象
+			        
+			        column_1.setCellRenderer(new TableCellRenderer() {// 设置第4列的渲染器
+			                    @Override
+			                    public Component getTableCellRendererComponent(
+			                            JTable table, Object value, boolean isSelected,
+			                            boolean hasFocus, int row, int column) {
+			                        ImageIcon icon = (ImageIcon) value;
+			                        JLabel label = new JLabel(icon);// 创建进度条	
+			                        if (row % 2 == 0) {
+			                            label.setForeground(Color.black);
+			                            label.setBackground(Color.WHITE);
+			                        } else {
+			                            label.setForeground(Color.black);
+			                            label.setBackground(init.syslightblue);
+			                        }
+			                        label.setOpaque(true);
+			                        return label;// 把进度条作为渲染控件
+			                    }
+			                });
+				
+			     
 		}
 		public void setRowSorter(TableRowSorter<TableModel> sorter){
 		    table.setRowSorter(sorter);

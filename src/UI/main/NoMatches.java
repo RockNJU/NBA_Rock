@@ -51,9 +51,9 @@ public class NoMatches extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				Match_Data.mdvo=init.mbl.getMatchByTeamTime("2014-01-02");
+				Match_Data.mdvo=init.mbl.getMatchByTeamTime(init.mbl.getNextHavingMatchDate(Match_Data.dc.showDate.getText()));
 				dispose();
-				Match_Data.dc.showDate.setText("2014-01-02");
+				Match_Data.dc.showDate.setText(init.mbl.getNextHavingMatchDate(Match_Data.dc.showDate.getText()));
 				Match_Data.matchdata=Match_Data.getdata(Match_Data.mdvo);
 				Match_Data.matchdatalist.updateTable(Match_Data.matchtitle, Match_Data.matchdata);
 				Match_Data.matchdatalist.FitTableColumns(Match_Data.matchdatalist.getTable());

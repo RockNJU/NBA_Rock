@@ -31,7 +31,7 @@ public class Player_Info extends JPanel {
 	public SinglePlayer spi;
 	Font f=new Font("华康雅宋体W9", Font.PLAIN, 12);
 	public static String[] playerinfotitle = { "序号","肖像", "姓名", "球号 ", "位置", "身高",
-			"体重", "出生日期", "年龄", "球龄", "毕业院校" };
+			"体重", "出生日期", "年龄", "毕业院校" };
 	public static Object[][] playerinfodata;
 	public static ArrayList<PlayerInfoVO> pivo;
 	String chartext;
@@ -55,6 +55,7 @@ public class Player_Info extends JPanel {
 		
 		pivo = init.pbl.getAllPlayerInfo();
 		playerinfodata=getinfodata(pivo);
+		//System.out.println(pivo==null);
 		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 10, 60,1040, 515, 35,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(playerinfolist);
@@ -101,11 +102,11 @@ public class Player_Info extends JPanel {
 					charbut.setIcon(imageB);
 					Player.textField.setText("");
 					chartext=charbut.getToolTipText();
-					System.out.println(charbut.getToolTipText());
+					//System.out.println(charbut.getToolTipText());
 					pivo=init.pbl.getPlayerInfoByFirstChar(charbut.getToolTipText());
 					playerinfodata=getinfodata(pivo);
 					playerinfolist.updateTable(playerinfotitle, playerinfodata);
-				
+					playerinfolist.FitTableColumns(playerinfolist.getTable());
 				}
 
 				@Override
@@ -149,7 +150,7 @@ public class Player_Info extends JPanel {
 	
 	public static Object[][] getinfodata(ArrayList<PlayerInfoVO> da) {
 		if (da == null) {
-			Object[][] re = new Object[1][11];
+			Object[][] re = new Object[1][10];
 			re[0][0] = "";
 			re[0][1] = "";
 			re[0][2] = "";
@@ -160,15 +161,13 @@ public class Player_Info extends JPanel {
 			re[0][7] = "";
 			re[0][8] = "";
 			re[0][9] = "";
-			re[0][10] = "";
 			return re;
 		} else {
-			Object[][] re = new Object[da.size()][11];
+			Object[][] re = new Object[da.size()][10];
 			/* "序号","姓名","球号","位置","身高","体重","出生日期","年龄","球龄","毕业院校" */
-			
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] =changenumber( i + 1);
-				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getName()+".png");
+				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getEname()+".png");
 				image.setImage(image.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT));
 				re[i][1] = image;
 				re[i][2] = da.get(i).getName();
@@ -178,8 +177,7 @@ public class Player_Info extends JPanel {
 				re[i][6] = da.get(i).getWeight();
 				re[i][7] = da.get(i).getBirth();
 				re[i][8] = da.get(i).getAge();
-				re[i][9] = da.get(i).getExp();
-				re[i][10] = da.get(i).getSchool();
+				re[i][9] = da.get(i).getSchool();
 
 			}
 			return re;
@@ -187,7 +185,6 @@ public class Player_Info extends JPanel {
 		}
 	}
 	public static String changenumber(int number){
-		//System.out.println(rate);
 				
 		DecimalFormat df = new DecimalFormat("000");    
 		String temp=String.valueOf(df.format(number));
@@ -200,5 +197,6 @@ public class Player_Info extends JPanel {
 		pivo=init.pbl.getPlayerInfoByFirstChar(chartext);
 		playerinfodata=getinfodata(pivo);
 		playerinfolist.updateTable(playerinfotitle, playerinfodata);
+		playerinfolist.FitTableColumns(playerinfolist.getTable());
 	}
 }

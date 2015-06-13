@@ -68,6 +68,7 @@ public class Player_Data extends JPanel{
 	static JButton normal;
 	static JButton after;
 	public static JRadioButton avg_tol;
+	public static String a_t="avg";
 	public static String butisclick="according"; 
 	public static String[] playerAvgdatatitle = { "序号", "姓名", "球队", "场数",
 		"先发", "篮板", "助攻", "得分", "投篮(%)", "三分(%)",
@@ -488,6 +489,7 @@ public class Player_Data extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(avg_tol.isSelected()){
+					a_t="avg";
 					if(butisclick.equals("according")){
 						playerdata=getAveragedata(pdvo);
 						playerdatalist.updateTable(playerAvgdatatitle, playerdata);
@@ -500,6 +502,7 @@ public class Player_Data extends JPanel{
 						playerdatalist.setcolor(getcl(butisclick));
 					}			
 				}else{
+					a_t="total";
 					if(butisclick.equals("according")){
 						playerdata=getTotaldata(pdvo);
 						playerdatalist.updateTable(playerTotaldatatitle, playerdata);
@@ -815,11 +818,7 @@ public class Player_Data extends JPanel{
 				String According = according.getSelectedItem().toString();
 				String Season = playerseason.getSelectedItem().toString()
 						.substring(0, 5);
-				PlayerPosition_Map map1 = new PlayerPosition_Map();
-				PartitionMap map2 = new PartitionMap();
 				SortItem_Map map3 = new SortItem_Map();
-				Position = map1.getItem(Position);
-				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);

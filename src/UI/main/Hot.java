@@ -263,10 +263,11 @@ public class Hot extends JPanel {
 		toolBar1.setBorderPainted(false);
 
 		
-		HotPlayers hp = new HotPlayers("每日","得分总");
+		HotPlayers hp = new HotPlayers("每日","总分");
+		hp.setBounds(0, 0, 1040, 256);
 		p1=new JPanel();
 		p1.setLayout(null);
-		p1.setBounds(10, 58, 1040,266);
+		p1.setBounds(10, 58, 1040,256);
 		p1.setOpaque(false);
 		p1.add(hp);
 		add(p1);
@@ -275,6 +276,7 @@ public class Hot extends JPanel {
 		
 		p2=new JPanel();
 		HotTeams ht = new HotTeams("球队赛季","得分");
+		ht.setBounds(0, 0, 1040, 257);
 		p2.setLayout(null);
 		p2.setOpaque(false);
 		p2.setBounds(10, 372, 1040,257);
@@ -287,7 +289,7 @@ public class Hot extends JPanel {
 		defen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				HotPlayers hp = new HotPlayers("每日","得分总");
+				HotPlayers hp = new HotPlayers("每日","总分");
 				changep1(hp);
 			}
 		});

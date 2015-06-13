@@ -384,16 +384,16 @@ public class Match_Process extends JPanel {
 				ArrayList<String> temp=new ArrayList<String>();
 				if(pro_day.getSelectedItem().toString().equals("所有日期")){
 					temp=init.mbl.getDatesOfPro_ByMonth(se,m);
-					System.out.println("本月有比赛的日期"+temp.size()+temp.get(0)+temp.get(1));
+					//System.out.println("本月有比赛的日期"+temp.size()+temp.get(0)+temp.get(1));
 				}else{
-					System.out.println("选择了赛季中的一天、获得比赛日期"+getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
+					//System.out.println("选择了赛季中的一天、获得比赛日期"+getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
 					temp.add(getYear(se, m)+"-"+change(m)+"-"+change(Integer.parseInt(pro_day.getSelectedItem().toString())));
 				}	
 				try {
 					mivo=init.mbl.getPro_ByMonth(se, m);	
-					System.out.println("mivo改变前"+mivo.size());
+					//System.out.println("mivo改变前"+mivo.size());
 					mivo=changeProdata_ChooseAllTeam_ByDate(temp);	
-					System.out.println("mivo改变后"+mivo.size());
+					//System.out.println("mivo改变后"+mivo.size());
 					pro_data=getProdata_HavingDays(mivo);
 					ctm.updateTable(pro_title, pro_data);
 			    } catch (ParseException e1) {
@@ -569,9 +569,9 @@ public class Match_Process extends JPanel {
 			
 			temp=init.mbl.getPro_ByDay(pro_season.getSelectedItem().toString().substring(0, 5), Integer.parseInt(ddd[1]), Integer.parseInt(ddd[2]));
 			if(temp==null||temp.size()==0){
-				
-				
+								
 			}else{re.add(daymivo);
+			//System.out.println("daodishishuod"+temp.size());
 				for(int m=0;m<temp.size();m++){
 					re.add(temp.get(m));
 				}	
@@ -639,6 +639,7 @@ public class Match_Process extends JPanel {
 			    if(temp==null||temp.size()==0){
 			    	
 			    }else{
+			    	//System.out.println("daSSShuod"+temp.size());
 			    	re.add(daymivo);
 			    	for(int m=0;m<temp.size();m++){
 					

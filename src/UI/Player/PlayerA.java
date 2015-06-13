@@ -57,9 +57,9 @@ public class PlayerA extends JPanel {
 		setSize(1042,580);
 		setLayout(null);
 		setOpaque(false);
+		pivo=init.pbl.getAPlayerInfo(name);
 		
-		
-		jb1=new JLabel(new ImageIcon("newpic/portrait/"+name+".png"));
+		jb1=new JLabel(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		jb1.setBounds(10, 10, 230, 185);
 		jb1.setOpaque(false);
 		add(jb1);
@@ -71,7 +71,7 @@ public class PlayerA extends JPanel {
 		add(jb2);
 		
 		
-		pname = new JLabel("nameBLABLAB");
+		pname = new JLabel(pivo.getName());
 		pname.setFont(new Font("华文细黑", Font.BOLD, 25));
 		pname.setBounds(272, 10, 206, 47);
 		pname.setForeground(UI.main.init.syspurple);
@@ -425,9 +425,9 @@ public class PlayerA extends JPanel {
 	public void updatePlayerA(String name){
 		pivo=init.pbl.getAPlayerInfo(name);
 		Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason, init.defaulttype, name);
-		jb1.setIcon(new ImageIcon("newpic/portrait/"+name+".png"));
+		jb1.setIcon(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		pname.setText(name);
-		lblLocation.setText(m.getItem(pivo.getPosition())+Apsvo.getPartition());
+		lblLocation.setText(m.getItem(pivo.getPosition())+"   "+Apsvo.getPartition());
 		pnum.setText(pivo.getNumber());
 		label.setText("\u8EAB\u9AD8\uFF1A"+pivo.getHeight());
 		label_1.setText("体重："+pivo.getWeight());

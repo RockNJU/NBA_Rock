@@ -22,15 +22,16 @@ import UI.common.CreateTableforhot;
 import UI.common.OftenUseMethod;
 import UI.common.PartitionMap;
 import UI.common.PlayerPosition_Map;
+import UI.common.SortItem_ForHotTeam;
 import UI.common.SortItem_Map;
 import VO.SingleMatchPersonalDataVO;
 import VO.TeamSeasonDataVO;
 
 
 public class HotTeams extends JPanel {
-	SortItem_Map map1 = new SortItem_Map();
+	//SortItem_Map map1 = new SortItem_Map();
+	SortItem_ForHotTeam map1 = new SortItem_ForHotTeam();
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
-	PartitionMap map5 = new PartitionMap();	
 	Object [][] data;
 	String type;
 	String according;
@@ -46,17 +47,17 @@ public class HotTeams extends JPanel {
 		this.type=tmptype;
 		setLayout(null);
 		setOpaque(false);
-		setSize(1040,220);
+		setSize(1040, 257);
 		
-		
+		System.out.println("type"+map1.getItem(tmptype));
 		tsdv = tbs.getHotTeam(saiji,map1.getItem(tmptype));
-		
+		System.out.println(tsdv.size());
 		data=getdata(tsdv);
 		
 		String[] title = {"序号","LOGO","球队","分区","建立时间","缩写",tmptype};
 		ctfh = new CreateTable_pic(title,data,
-				381, 0,655, 205,43,
-				new Font("黑体", 0, 15), new Font("Dialog", 0, 14));
+				381,35,655, 205,43,
+				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(ctfh);
 		
 		ctfh.getTable().addMouseListener(new MouseAdapter() {
@@ -68,8 +69,8 @@ public class HotTeams extends JPanel {
 				}
 			}
 		});
-		
-		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getTeamName()+".png");
+		System.out.println("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
+		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
 		No1_Team.setImage(No1_Team.getImage().getScaledInstance(158, 158,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Team);		
 		No1_p.setBounds(35, 37, 180, 130);		
@@ -85,49 +86,49 @@ public class HotTeams extends JPanel {
 				}
 			}
 		});
-		JLabel No1_name = new JLabel((String)tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getFullName());
+		JLabel No1_name = new JLabel((String)tsdv.get(0).getTeamName());
 		No1_name.setForeground(new Color(51, 0, 51));
 		No1_name.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 20));
 		No1_name.setBounds(220, 32, 153, 36);
 		add(No1_name);
 		
-		JLabel No1_part = new JLabel((String)tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getPartition());
+		JLabel No1_part = new JLabel((String)tsdv.get(0).getPartition());
 		No1_part.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 14));
 		No1_part.setBounds(220, 73, 85, 15);
 		add(No1_part);
 		
-		JLabel No1_time = new JLabel((String)tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getInfo().getFormedTime());
+		JLabel No1_time = new JLabel((String)tsdv.get(0).getInfo().getFormedTime());
 		No1_time.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 14));
 		No1_time.setBounds(220, 97, 85, 15);
 		add(No1_time);
 		
 		String a="";
 		if(type.equals("得分")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getPointNum_avg()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getPointNum_avg()));
 		}
 		else if(type.equals("篮板")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getReboundNum_avg()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getReboundNum_avg()));
 		}
 		else if(type.equals("助攻")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getAssistNum_avg()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getAssistNum_avg()));
 		}
 		else if(type.equals("抢断")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getStealNum_avg()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getStealNum_avg()));
 		}
 		else if(type.equals("盖帽")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getBlockNum_avg()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getBlockNum_avg()));
 		}
 		else if(type.equals("三分命中率")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getT_shootPercentage()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getT_shootPercentage()));
 		}
 		else if(type.equals("投篮命中率")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getShootPercentage()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getShootPercentage()));
 		}
 		else if(type.equals("罚球命中率")){
-			a= Double.toString(OftenUseMethod.changedouble(tbs.getHotTeam(saiji,map1.getItem(tmptype)).get(0).getFreeThrowPercentage()));
+			a= Double.toString(OftenUseMethod.changedouble(tsdv.get(0).getFreeThrowPercentage()));
 		}
 		JLabel No1_info = new JLabel(a);
-		No1_info.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 28));
+		No1_info.setFont(new Font("华康雅宋体W9(P)", Font.PLAIN, 18));
 		No1_info.setBounds(248, 122, 85, 50);
 		add(No1_info);
 		
@@ -142,13 +143,13 @@ public class HotTeams extends JPanel {
 		Object[][] re=new Object[4][7];
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
-			ImageIcon ddd = new ImageIcon("newpic/TEAMPNG/"+da.get(i).getTeamName()+".png");
+			ImageIcon ddd = new ImageIcon("newpic/TEAMPNG/"+da.get(i).getFullName()+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=(da.get(i).getTeamName());
 		    re[i-1][3]=da.get(i).getPartition();
 		    re[i-1][4]=da.get(i).getInfo().getFormedTime();
-		    re[i-1][5]=da.get(i).getTeamName();
+		    re[i-1][5]=da.get(i).getFullName();
 			//对应项得分
 		    
 			if(type.equals("得分")){

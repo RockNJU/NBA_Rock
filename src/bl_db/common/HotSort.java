@@ -88,7 +88,7 @@ public class HotSort {
 			ArrayList<TeamSeasonDataVO> teamSeasondata, String condition) {
 
 		// 先按名称排序
-		Collections.sort(teamSeasondata, new Comparator() {
+		/*	Collections.sort(teamSeasondata, new Comparator() {
 			@Override
 			public int compare(Object o1, Object o2) {
 				// TODO Auto-generated method stub
@@ -98,7 +98,7 @@ public class HotSort {
 				String name2 = p2.getTeamName();
 				return name1.compareTo(name2);
 			}
-		});
+		});*/
 
 		// 创建针对某个属性的升序比较
 		@SuppressWarnings("rawtypes")
@@ -149,7 +149,7 @@ public class HotSort {
 			String condition) {
 
 		// 先按名称排序
-		Collections.sort(playerSeasondata, new Comparator() {
+	/*	Collections.sort(playerSeasondata, new Comparator() {
 			@Override
 			public int compare(Object o1, Object o2) {
 				// TODO Auto-generated method stub
@@ -159,7 +159,7 @@ public class HotSort {
 				String name2 = p2.getPlayerReverseName();
 				return name1.compareTo(name2);
 			}
-		});
+		});*/
 
 		// 创建针对某个属性的升序比较
 		Comparator player_compare = new BeanComparator(condition);
@@ -177,7 +177,7 @@ public class HotSort {
 	public ArrayList<SingleMatchPersonalDataVO> hotSinglePlayer_Sort(
 			ArrayList<SingleMatchPersonalDataVO> playerSeasondata, String[] condition,boolean[] reverse) {
     // 先按名称排序
-		Collections.sort(playerSeasondata, new Comparator() {
+	/*	Collections.sort(playerSeasondata, new Comparator() {
 			@Override
 			public int compare(Object o1, Object o2) {
 				// TODO Auto-generated method stub
@@ -187,7 +187,7 @@ public class HotSort {
 				String name2 = p2.getPlayerReverseName();
 				return name1.compareTo(name2);
 			}
-		});
+		});*/
 
 	       //创建多属性排序链
         ComparatorChain cc = new ComparatorChain();

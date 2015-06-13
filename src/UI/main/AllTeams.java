@@ -22,6 +22,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.apache.batik.apps.rasterizer.SVGConverterException;
 
+import UI.Team.SingleTeam;
 import bl_db.common.Team_map;
 
 import java.awt.Font;
@@ -30,7 +31,7 @@ import java.awt.Color;
 
 
 public class AllTeams extends JDialog {
-
+	SingleTeam spi;
 	Team_map tm=new Team_map();
 	private JPanel contentPane;
 	JPanel A;
@@ -200,14 +201,29 @@ public class AllTeams extends JDialog {
 		F.setLayout(null);
 		
 		for(int i=0;i<at.size();i++){
-			System.out.println(at.get(i));
+			//System.out.println(at.get(i));
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+at.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
 			jbt.setSize(50,50);
+			jbt.setToolTipText(at.get(i));
 			jbt.setLocation(50*i+5*i, 5);
+			jbt.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			});
 			atlantic.add(jbt);
 			A.add(jbt);
 		}
@@ -222,11 +238,24 @@ public class AllTeams extends JDialog {
 		for(int i=0;i<ce.size();i++){
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+ce.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
+			jbt.setToolTipText(ce.get(i));
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
 			jbt.setSize(50,50);
 			jbt.setLocation(50*i+5*i, 5);
+			jbt.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			});
 			central.add(jbt);
 			B.add(jbt);
 		}
@@ -241,11 +270,22 @@ public class AllTeams extends JDialog {
 		for(int i=0;i<es.size();i++){
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+es.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
 			jbt.setSize(50,50);
+			jbt.setToolTipText(es.get(i));
 			jbt.setLocation(50*i+5*i, 5);
+			jbt.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}				
+			});
 			east_south.add(jbt);
 			C.add(jbt);
 		}
@@ -261,11 +301,24 @@ public class AllTeams extends JDialog {
 		for(int i=0;i<wn.size();i++){
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+wn.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
+			jbt.setToolTipText(wn.get(i));
 			jbt.setSize(50,50);
 			jbt.setLocation(50*i+5*i, 5);
+			jbt.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			});
 			west_north.add(jbt);
 			D.add(jbt);
 		}
@@ -281,11 +334,24 @@ public class AllTeams extends JDialog {
 		for(int i=0;i<pa.size();i++){
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+pa.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
 			jbt.setSize(50,50);
+			jbt.setToolTipText(pa.get(i));
 			jbt.setLocation(50*i+5*i, 5);
+			jbt.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			});
 			pacific.add(jbt);
 			E.add(jbt);
 		}
@@ -301,11 +367,23 @@ public class AllTeams extends JDialog {
 		for(int i=0;i<ws.size();i++){
 			final ImageIcon pic = new ImageIcon("newpic/TEAMPNG/"+ws.get(i)+".png");
 			pic.setImage(pic.getImage().getScaledInstance(50, 50,Image.SCALE_DEFAULT));
-			JButton jbt=new JButton(pic);
+			final JButton jbt=new JButton(pic);
 			jbt.setContentAreaFilled(false);
 			jbt.setBorderPainted(false);
 			jbt.setSize(50,50);
-			
+			jbt.setToolTipText(ws.get(i));
+			jbt.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String name=jbt.getToolTipText();
+					spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}
+				
+			});
 			jbt.setLocation(50*i+5*i, 5);
 			west_south.add(jbt);
 			F.add(jbt);
