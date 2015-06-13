@@ -483,7 +483,7 @@ public class PlayerController implements PlayerBLService{
 	public ArrayList<PlayerInfoVO> getPlayerInfoByFirstChar(String firstchar) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
 		for(int i=0;i<infoList.size();i++){
-			if(list.get(i).getEname().startsWith(firstchar)){
+			if(infoList.get(i).getEname().startsWith(firstchar)){
 				list.add(infoList.get(i));
 			}
 		}	
@@ -711,7 +711,7 @@ public class PlayerController implements PlayerBLService{
 		}*/
 		
 		
-		ArrayList<PlayerInfoVO> list=pl.getAllPlayerInfo();
+		ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
 		System.out.println("size£º"+list.size());
 		for(int i=0;i<list.size();i++){
 			System.out.println("name: "+list.get(i).getName()+
