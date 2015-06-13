@@ -48,7 +48,7 @@ public class PlayerController implements PlayerBLService{
 		readBasicInfo();
 		currentSeason=info.getCurrentSeason();
 		
-		System.out.println("当前赛季：");
+		System.out.println("构造方法中，当前赛季："+ currentSeason);
 		lastDate=info.getLastDay();
 	}
 	
@@ -719,7 +719,8 @@ public class PlayerController implements PlayerBLService{
 			System.out.println("name: "+list.get(i).getName()+
 					" position:"+list.get(i).getPosition());
 			}
-		
+		double[] aa=pl.getPlayerOneData("科比-布莱恩特",20, "pointNum");
+		System.out.println("科比的得分："+aa[0]);
 	}
 
 	
@@ -728,13 +729,21 @@ public class PlayerController implements PlayerBLService{
 		
 		double list[]=null;
 		ResultSet rs=null;
+		
+		System.out.println("当前赛季："+currentSeason);
 		try {
 			 
-			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data"
-					+ " where name='"+name+"' AND season='"+currentSeason+"'";
+			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data "
+					+ "where name='"+name+"' AND season='"+currentSeason+"'";
 			rs=stmt.executeQuery(sqlStr);
-			int n=rs.getInt("num");
+			int n=0;
+			while(rs.next()){
+				n=rs.getInt("num");
+				System.out.println("while中----"+n);
+				break;
+			}
 			
+			System.out.println("----"+n);
 			
 			if(num>n){
 				num=n;
@@ -759,6 +768,7 @@ public class PlayerController implements PlayerBLService{
 			}
 			 conn.commit();
 		} catch (SQLException e) {
+			System.out.println("错误原因： "+e.toString());
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -902,7 +912,8 @@ public class PlayerController implements PlayerBLService{
 	@Override
 	public PlayerInfoVO getAPlayerInfo(String name) {
 			for(int i=0;i<infoList.size();i++){
-			if(infoList.get(i).getEname().equals(name)||infoList.get(i).getName().equals(name)){
+			if(infoList.get(i).getEname().equals(name)||
+					infoList.get(i).getName().equals(name)){
 				return infoList.get(i);
 					}
 			}
