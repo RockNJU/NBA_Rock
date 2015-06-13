@@ -72,7 +72,7 @@ public class PlayerB extends JPanel {
 		String infoA = playera.getInfo().getNumber()+"|"+playera.getInfo().getPosition();
 		
 		 String nameB = "联盟平均水平";
-		 String portraitB = "newpic/fortest/Aaron Brooks.png";
+		 String portraitB = "newpic/NBA.png";
 		 String teamB = "";
 		 String infoB = "";
 

@@ -74,7 +74,7 @@ public class TeamC extends JPanel {
 		String infoA = teama.getLeague()+"|"+teama.getPartition();
 		
 		 String nameB = "联盟平均水平";
-		 String portraitB = "newpic/circleteam/ATL.png";
+		 String portraitB = "newpic/NBA.png";
 		 String teamB = "";
 		 String infoB = "";
 

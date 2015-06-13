@@ -90,6 +90,9 @@ public class PlayerC extends JPanel {
 		add(contentPane);
 		contentPane.setLayout(null);
 		
+		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+		basicData = Changedouble(temp);
+		
 		//下方线表
 		contentPane.add(chartPanel);
 		
@@ -169,6 +172,8 @@ public class PlayerC extends JPanel {
 				}
 				lineChartState = 10;			//修改数据
 				
+				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				basicData = Changedouble(tempb);
 				if(!firstName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				firstData = Changedouble(temp);
@@ -246,12 +251,6 @@ public class PlayerC extends JPanel {
 		赛季.setIcon(new ImageIcon("newpic//赛季.png"));
 		赛季.setBounds(183, 10, 51, 23);
 		contentPane.add(赛季);
-		
-		
-		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"得分总","篮板数","助攻数","盖帽数","抢断数","犯规数"
-																,"失误数"}));
-		对比项目选择.setBounds(10, 40, 224, 23);
-		contentPane.add(对比项目选择);
 		赛季.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//线得到数据，然后修改
@@ -265,6 +264,12 @@ public class PlayerC extends JPanel {
 			}
 		});
 		
+		
+		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"得分总","篮板数","助攻数","盖帽数","抢断数","犯规数"
+																,"失误数"}));
+		对比项目选择.setBounds(10, 40, 224, 23);
+		contentPane.add(对比项目选择);
+
 		JButton button = new JButton((Icon) null);
 		button.setOpaque(true);
 		button.setForeground(Color.BLUE);
