@@ -902,7 +902,7 @@ public class PlayerController implements PlayerBLService{
 	@Override
 	public PlayerInfoVO getAPlayerInfo(String name) {
 			for(int i=0;i<infoList.size();i++){
-			if(infoList.get(i).getEname().equals(name)){
+			if(infoList.get(i).getEname().equals(name)||infoList.get(i).getName().equals(name)){
 				return infoList.get(i);
 					}
 			}
