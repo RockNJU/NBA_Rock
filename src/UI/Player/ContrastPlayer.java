@@ -358,7 +358,7 @@ public class ContrastPlayer extends JDialog {
 				for(int i=0;i<jbs.size();i++){
 					final JRadioButton tempjb = jbs.get(i);
 					if(tempjb.isSelected()){
-						outputcontent[now] = tempjb.getName();
+						outputcontent[now] = tempjb.getText();
 						dataoutput[0][now] = data[0][i];
 						dataoutput[1][now] = data[1][i];
 						now++;

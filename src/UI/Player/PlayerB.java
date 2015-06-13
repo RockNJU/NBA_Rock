@@ -1,5 +1,6 @@
 package UI.Player;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -37,6 +38,8 @@ public class PlayerB extends JPanel {
 	int paintcontentnum = 7;
 	double[] paintdataA = {24,0,24,52,26,57.56,100};
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
+	 final CardLayout cardLayout = new CardLayout();
+	 JPanel jp = new JPanel();
 	private JTextField textField;
 	/**
 	 * Create the panel.
@@ -52,6 +55,10 @@ public class PlayerB extends JPanel {
 		paintdataA[5] = OftenUseMethod.changedouble(playera.getFreeThrowNum_avg());
 		paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());
 		
+		 jp.setBounds(0, 0, 1042, 580);
+		 jp.setOpaque(false);
+		 jp.setLayout(cardLayout);
+		 this.add(jp);
 
 		this.na=name;
 		setSize(1042,580);
@@ -184,6 +191,7 @@ public class PlayerB extends JPanel {
 					cp.setVisible(true);
 					cp.setModal(true);
 					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+					cardLayout.next(jp);
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
@@ -209,7 +217,11 @@ public class PlayerB extends JPanel {
 		
 		int heightadjust = 0;
 		//paintunder(paintcontentnum,paintcontent,paintdataA,paintdataC);
-		
+		 JPanel contentPane = new JPanel();
+		 contentPane.setOpaque(false);
+		 contentPane.setLayout(null);	 
+		 jp.add(contentPane,Double.toString( Math.random()));
+
 		
 
 		for(int i = 0;i<num;i++){
@@ -217,7 +229,7 @@ public class PlayerB extends JPanel {
 		JLabel label = new JLabel(contrat[i]);
 		label.setForeground(new Color(155, 106, 141));
 		label.setFont(new Font("黑体", Font.BOLD, 20));
-		label.setBounds(476, 212+i*45+heightadjust, 91, 30);
+		label.setBounds(460, 212+i*45+heightadjust, 120, 30);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(label);
 		
@@ -240,12 +252,14 @@ public class PlayerB extends JPanel {
 		}
 		
 		if(locationforR>=100){
+			locationforR = 100;
 			rstring = "newpic/对比/"+fora+"099.png";
 		}
 		else if(locationforR>=10){
 		 rstring = "newpic/对比/"+fora+"0"+locationforR+".png";
 		}
 		else if(locationforR<=0){
+			locationforR = 0;
 		rstring = "newpic/对比/"+fora+"000.png";
 		}
 		else if(locationforR<10){
@@ -253,12 +267,14 @@ public class PlayerB extends JPanel {
 		}
 		
 		if(locationforL>=100){
+			locationforL = 100;
 			lstring = "newpic/对比/"+forb+"099.png";
 		}
 		else if(locationforL>=10){
 			lstring = "newpic/对比/"+forb+"0"+locationforL+".png";
 		}
 		else if(locationforL<=0){
+			locationforL = 0;
 			lstring = "newpic/对比/"+forb+"000.png";
 		}
 		else if(locationforL<10){

@@ -1,5 +1,6 @@
 package UI.Match;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -31,10 +32,12 @@ public class MatchA extends JPanel {
 	TeamMatchVO teamb;
 	MatchVO match;
 	
-	String[] paintcontent = {"球队胜率","得分","助攻","篮板","三分","罚球","投篮"};
+	String[] paintcontent = {"得分","助攻","篮板","三分","罚球","犯规","投篮"};
 	int paintcontentnum = 7;
 	double[] paintdataA = {24,0,24,52,26,57.56,100};
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
+	 final CardLayout cardLayout = new CardLayout();
+	 JPanel jp = new JPanel();
 	int dataA[];
 	int dataB[];
 	Team_map tm = new Team_map();
@@ -44,6 +47,27 @@ public class MatchA extends JPanel {
 		JLabel photoleft;
 		teama = mvo.getHostTeam();
 		teamb = mvo.getGuestTeam();
+		
+		//初始数据
+		paintdataA[0] = teama.getPointNum();
+		paintdataA[1] = teama.getAssistNum();
+		paintdataA[2] = teama.getReboundNum();
+		paintdataA[3] = teama.getT_shootNum();
+		paintdataA[4] = teama.getFreeThrowNum();
+		paintdataA[5] = teama.getFoulNum();
+		paintdataA[6] = teama.getShootNum();
+		paintdataB[0] = teamb.getPointNum();
+		paintdataB[1] = teamb.getAssistNum();
+		paintdataB[2] = teamb.getReboundNum();
+		paintdataB[3] = teamb.getT_shootNum();
+		paintdataB[4] = teamb.getFreeThrowNum();
+		paintdataB[5] = teamb.getFoulNum();
+		paintdataB[6] = teamb.getShootNum();
+		
+		 jp.setBounds(0, 0, 1042, 580);
+		 jp.setOpaque(false);
+		 jp.setLayout(cardLayout);
+		 this.add(jp);
 		
 		String nameA = teama.getTeamName();
 		String portraitA = "newpic/TEAMPNG/"+tm.getFullName(nameA)+".png";
@@ -299,6 +323,7 @@ public class MatchA extends JPanel {
 				cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
 				cp.setVisible(true);
 				paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+				cardLayout.next(jp);
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
@@ -317,9 +342,13 @@ public class MatchA extends JPanel {
 	public void paintunder(int num,String[] contrat,double[] dataforB,double[] dataforA){
 		//数据保留两位有效小数，无对应数据则为0，数据尽量不要超过100
 		
-		int heightadjust = 45;
+		int heightadjust = 0;
 		//paintunder(paintcontentnum,paintcontent,paintdataA,paintdataC);
-		
+		 JPanel contentPane = new JPanel();
+		 contentPane.setOpaque(false);
+		 contentPane.setLayout(null);	 
+		 jp.add(contentPane,Double.toString( Math.random()));
+
 		
 
 		for(int i = 0;i<num;i++){
@@ -327,9 +356,9 @@ public class MatchA extends JPanel {
 		JLabel label = new JLabel(contrat[i]);
 		label.setForeground(new Color(155, 106, 141));
 		label.setFont(new Font("黑体", Font.BOLD, 20));
-		label.setBounds(476, 212+i*45+heightadjust, 91, 30);
+		label.setBounds(460, 212+i*45+heightadjust, 120, 30);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		this.add(label);
+		contentPane.add(label);
 		
 		int locationforR =  (int) Math.rint(dataforB[i]);
 		String rstring = "newpic/对比/低000.png";
@@ -350,12 +379,14 @@ public class MatchA extends JPanel {
 		}
 		
 		if(locationforR>=100){
+			locationforR = 100;
 			rstring = "newpic/对比/"+fora+"099.png";
 		}
 		else if(locationforR>=10){
 		 rstring = "newpic/对比/"+fora+"0"+locationforR+".png";
 		}
 		else if(locationforR<=0){
+			locationforR = 0;
 		rstring = "newpic/对比/"+fora+"000.png";
 		}
 		else if(locationforR<10){
@@ -363,12 +394,14 @@ public class MatchA extends JPanel {
 		}
 		
 		if(locationforL>=100){
+			locationforL = 100;
 			lstring = "newpic/对比/"+forb+"099.png";
 		}
 		else if(locationforL>=10){
 			lstring = "newpic/对比/"+forb+"0"+locationforL+".png";
 		}
 		else if(locationforL<=0){
+			locationforL = 0;
 			lstring = "newpic/对比/"+forb+"000.png";
 		}
 		else if(locationforL<10){
@@ -382,14 +415,14 @@ public class MatchA extends JPanel {
 		righttext1.setFont(new Font("宋体", Font.BOLD, 20));
 		righttext1.setForeground(new Color(155, 106, 141));
 		righttext1.setBounds(580+7+3*locationforR, 214+i*45+heightadjust, 68, 24);
-		this.add(righttext1);
+		contentPane.add(righttext1);
 		
 		ImageIcon rightfirstim = new ImageIcon(rstring);
 		//leftfirstim.setImage(leftfirstim.getImage().getScaledInstance(1042, 610,Image.SCALE_DEFAULT));
 		JLabel rightlable1 = new JLabel(rightfirstim);
 		rightlable1.setBounds(580, 210+i*45+heightadjust,rightfirstim.getIconWidth() , rightfirstim.getIconHeight());
 		rightlable1.setOpaque(false);
-		this.add(rightlable1);
+		contentPane.add(rightlable1);
 		
 
 	
@@ -398,7 +431,7 @@ public class MatchA extends JPanel {
 		lefttext1.setFont(new Font("宋体", Font.BOLD, 20));
 		lefttext1.setForeground(new Color(155, 106, 141));
 		lefttext1.setBounds(400-3*locationforL, 214+i*45+heightadjust, 68, 24);
-		this.add(lefttext1);
+		contentPane.add(lefttext1);
 		
 		//翻转图像
 		BufferedImage sourceImage = null;
@@ -416,8 +449,7 @@ public class MatchA extends JPanel {
 		JLabel leftlable1 = new JLabel( new ImageIcon(dstImage));
 		leftlable1.setOpaque(false);
 		leftlable1.setBounds(162, 210+i*45+heightadjust, sourceImage.getWidth(),  sourceImage.getHeight());
-		this.add(leftlable1);
+		contentPane.add(leftlable1);
 	}
 	}
-
 }

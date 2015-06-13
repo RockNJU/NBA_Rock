@@ -36,6 +36,7 @@ public class ContrastTeam extends JDialog {
 	private JPanel contentPane;
 	TeamSeasonDataVO teama;
 	TeamSeasonDataVO teamb;
+	 TeamC tc;
 	
 	double[][] data = new double[2][30];
 	double[][] dataoutput = new double[2][10];
@@ -242,7 +243,7 @@ public class ContrastTeam extends JDialog {
 				for(int i=0;i<jbs.size();i++){
 					final JRadioButton tempjb = jbs.get(i);
 					if(tempjb.isSelected()){
-						outputcontent[now] = tempjb.getName();
+						outputcontent[now] = tempjb.getText();
 						dataoutput[0][now] = data[0][i];
 						dataoutput[1][now] = data[1][i];
 						now++;

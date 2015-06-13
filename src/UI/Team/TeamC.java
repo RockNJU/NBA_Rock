@@ -28,6 +28,8 @@ import VO.PlayerSeasonDataVO;
 import VO.PlayerVO;
 import VO.TeamSeasonDataVO;
 
+import java.awt.CardLayout;
+
 public class TeamC extends JPanel {
 
 	String na;
@@ -40,11 +42,18 @@ public class TeamC extends JPanel {
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
 	private JTextField textField;
 	String season = "13-14";
+	 final CardLayout cardLayout = new CardLayout();
+	 JPanel jp = new JPanel();
+	
+	JPanel teampc = this;
 	/**
 	 * Create the panel.
 	 */
 	public TeamC(String name) {
-		System.out.println(name);
+		//作为测试用
+		teamb = init.tbl.getATeamData(season,name);
+		
+
 		teama = init.tbl.getATeamData(season,name);
 		paintdataA[0] = OftenUseMethod.changedouble(teama.getMatchNum());
 		paintdataA[1] = OftenUseMethod.changedouble(teama.getPointNum_avg());
@@ -53,7 +62,7 @@ public class TeamC extends JPanel {
 		paintdataA[4] = OftenUseMethod.changedouble(teama.getT_shootNum_avg());
 		paintdataA[5] = OftenUseMethod.changedouble(teama.getFreeThrowNum_avg());
 		paintdataA[6] = OftenUseMethod.changedouble(teama.getShootNum_avg());
-		
+
 
 		this.na=name;
 		setSize(1042,580);
@@ -69,7 +78,7 @@ public class TeamC extends JPanel {
 		
 		//获取信息
 		String nameA = name;
-		String portraitA = "newpic/circleteam/"+teama.getTeamAbb()+".png";
+		String portraitA = "newpic/TEAMPNG/"+nameA+".png";
 		String teamA = teama.getTeamName();
 		String infoA = teama.getLeague()+"|"+teama.getPartition();
 		
@@ -78,6 +87,14 @@ public class TeamC extends JPanel {
 		 String teamB = "";
 		 String infoB = "";
 
+		 jp.setBounds(0, 0, 1042, 580);
+		 jp.setOpaque(false);
+		 jp.setLayout(cardLayout);
+		 contentPane.add(jp);
+			//绘制下方
+		//	paintunder(paintcontentnum,paintcontent,paintdataA,paintdataB);
+			paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+			
 		//头像
 		 ImageIcon playerfirst = new ImageIcon(portraitA);
 		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(215, 215,Image.SCALE_DEFAULT));
@@ -129,7 +146,7 @@ public class TeamC extends JPanel {
 			infosecond.setBounds(804, 44, 106, 24);
 			contentPane.add(infosecond);
 			
-			final JLabel namesecond = new JLabel(nameB);
+			final JLabel namesecond = new JLabel("Average");
 			namesecond.setHorizontalAlignment(SwingConstants.LEFT);
 			namesecond.setForeground(new Color(155, 106, 141));
 			namesecond.setFont(new Font("Verdana", Font.PLAIN, 30));
@@ -140,7 +157,7 @@ public class TeamC extends JPanel {
 			textField.setBackground(new Color(219, 241, 241));
 			textField.setBounds(797, 162, 184, 24);
 			contentPane.add(textField);
-			
+
 		
 			JButton findsecond = new JButton("");
 			findsecond.addActionListener(new ActionListener() {
@@ -151,10 +168,11 @@ public class TeamC extends JPanel {
 						textField.setText("未查到对应球员");
 					}
 					else{
+
 						teamb = tempplayer;
-						String nameB = teamb.getTeamName();
-						String portraitB = "newpic/circleteam/"+teamb.getTeamAbb()+".png";
-						String teamB = teamb.getTeamName();
+						String nameB = teamb.getTeamAbb();
+						String portraitB = "newpic/TEAMPNG/"+nameB+".png";
+						String teamB = teamb.getFullName();
 						String infoB = teamb.getLeague()+"|"+teamb.getPartition();
 						 ImageIcon playersecond = new ImageIcon(portraitB);
 						 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
@@ -170,18 +188,19 @@ public class TeamC extends JPanel {
 			findsecond.setBounds(985, 162, 25, 25);
 			contentPane.add(findsecond);
 			
-			//绘制下方
-			paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+
+
 			
 			//绘制下方选择按钮
 			JButton btnNewButton = new JButton("");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ContrastTeam cp = new ContrastTeam(teama,teamb);//默认是联盟平均水平
-					cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
-					cp.setVisible(true);
 					cp.setModal(true);
-					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+					cp.setLocation(init.SysStart_X+420, init.SysStart_Y+294);
+					cp.setVisible(true);
+				paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+				cardLayout.next(jp);
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
@@ -207,7 +226,11 @@ public class TeamC extends JPanel {
 		
 		int heightadjust = 0;
 		//paintunder(paintcontentnum,paintcontent,paintdataA,paintdataC);
-		
+		 JPanel contentPane = new JPanel();
+		 contentPane.setOpaque(false);
+		 contentPane.setLayout(null);	 
+		 jp.add(contentPane,Double.toString( Math.random()));
+
 		
 
 		for(int i = 0;i<num;i++){
@@ -215,7 +238,7 @@ public class TeamC extends JPanel {
 		JLabel label = new JLabel(contrat[i]);
 		label.setForeground(new Color(155, 106, 141));
 		label.setFont(new Font("黑体", Font.BOLD, 20));
-		label.setBounds(476, 212+i*45+heightadjust, 91, 30);
+		label.setBounds(460, 212+i*45+heightadjust, 120, 30);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(label);
 		
@@ -238,12 +261,14 @@ public class TeamC extends JPanel {
 		}
 		
 		if(locationforR>=100){
+			locationforR = 100;
 			rstring = "newpic/对比/"+fora+"099.png";
 		}
 		else if(locationforR>=10){
 		 rstring = "newpic/对比/"+fora+"0"+locationforR+".png";
 		}
 		else if(locationforR<=0){
+			locationforR = 0;
 		rstring = "newpic/对比/"+fora+"000.png";
 		}
 		else if(locationforR<10){
@@ -251,12 +276,14 @@ public class TeamC extends JPanel {
 		}
 		
 		if(locationforL>=100){
+			locationforL = 100;
 			lstring = "newpic/对比/"+forb+"099.png";
 		}
 		else if(locationforL>=10){
 			lstring = "newpic/对比/"+forb+"0"+locationforL+".png";
 		}
 		else if(locationforL<=0){
+			locationforL = 0;
 			lstring = "newpic/对比/"+forb+"000.png";
 		}
 		else if(locationforL<10){
