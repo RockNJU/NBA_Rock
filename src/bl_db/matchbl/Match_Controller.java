@@ -103,7 +103,8 @@ public class Match_Controller implements MatchBLService{
 	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
-	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
+	    			  rs.getString("score"),rs.getString("type"),
+	    			  getScores(score),rs.getString("link")));
 	        //return vo;
 	      }
 	      conn.commit();
@@ -204,6 +205,9 @@ public class Match_Controller implements MatchBLService{
 			MatchVO vo=new MatchVO(SeasonInfo.getSeason(date),
 					date,infoList.get(i).getScore(),
 					infoList.get(i).getScores(),null,null);
+			System.out.println("team.getTeamMatch(date, map.getFullName(infoList.get(i).getTeam_H()))="+
+					team.getTeamMatch(date, map.getFullName(infoList.get(i).getTeam_H()))==null);
+			
 			vo.setHostTeam(team.getTeamMatch(date, map.getFullName(infoList.get(i).getTeam_H())));
 			vo.setGuestTeam(team.getTeamMatch(date,map.getFullName(infoList.get(i).getTeam_G())));
 			list.add(vo);
@@ -573,29 +577,31 @@ public class Match_Controller implements MatchBLService{
 			
 			String date=match.getLastHavingMatchDate();
 			System.out.println("最后一天有比赛的日期："+date);
-			//ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
+			ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
-			/* ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-03-05");
+			  //ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-06-01");
 			
-			for(int i=0;i<amlist.size();i++){
+		/*	for(int i=0;i<amlist.size();i++){
 				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores()+";;"
 						+amlist.get(i).getHostTeam().getReboundNum());
-			} */
-			
-			
-			
+				System.out.println("主队是否为空： "+amlist.get(i).getGuestTeam()==null);
+				TeamMatchVO vo=amlist.get(i).getHostTeam();
+				System.out.println("队名 ："+vo.getTeamName());
+			}  */
+					
+			/*
 			ArrayList<SingleMatchPersonalDataVO> list=match.getTodayHotPlayer("pointNum",6);
 			
 			for(int i=0;i<list.size();i++){
 				System.out.println("name："+list.get(i).getPlayerName());
 			}
 			
-		/*	ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
+			ArrayList<MatchInfoVO> list=match.getPro_ForTeam("14-15", 1, "湖人");
 			//ArrayList<MatchInfoVO> list=match.getPro_NotOver("14-15", 6);
 			//ArrayList<String> list=match.getDatesOfPro_ByMonth("14-15", 1);
 			//ArrayList<String> list=match.getData("14-15", 2);
-			
+			*/
 			for(int i=0;i<list.size();i++){
 				 System.out.println("date："+list.get(i).getDate()+"; "
 						+ " score:"+list.get(i).getScore()+"; "
@@ -603,7 +609,7 @@ public class Match_Controller implements MatchBLService{
 						list.get(i).getTeam_G()+list.get(i).getScores());
 			 
 				System.out.println("----:"+list.get(i));
-			}*/
+			}
 		}
 	
 }

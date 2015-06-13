@@ -18,7 +18,7 @@ public class HotSort {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArrayList<PlayerSeasonDataVO> hotPlayer_Sort(
 			ArrayList<PlayerSeasonDataVO> playerSeasondata, String condition) {
-
+/*
 		// 先按名称排序
 		Collections.sort(playerSeasondata, new Comparator() {
 			@Override
@@ -31,7 +31,7 @@ public class HotSort {
 				return name1.compareTo(name2);
 			}
 		});
-
+*/
 		// 创建针对某个属性的升序比较
 		Comparator player_compare = new BeanComparator(condition);
 		// 默认的是升序，这里用一个降序
