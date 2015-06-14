@@ -139,6 +139,8 @@ public class Team_map {
 		   map.put("多伦多猛龙", "TOR");
 		   map.put("犹他爵士", "UTA");
 		   map.put("华盛顿奇才", "WAS");
+		   
+		   map.put("NULL", "NULL");
 	   }
 /**************************************************************************************/	   
 	   public  String getFullName(String item){

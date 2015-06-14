@@ -36,9 +36,13 @@ public class datastatistics extends JPanel {
 		mvo = mo;
 		teamnameA = mvo.getHostTeam().getTeamName();
 		teamnameB = mvo.getGuestTeam().getTeamName();
+		pivo=mvo.getHostTeam().getIndividualData();
+		System.out.print(pivo.size());
+		playerinfodata=getinfodata(pivo);
 		
-		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 10, 60,1040, 515, 35,
+		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 14, 60,1018, 510, 35,
 				new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 12));
+		add(playerinfolist);
 		
 		JButton teamAButton = new JButton(teamnameA);
 		teamAButton.addActionListener(new ActionListener() {
@@ -89,9 +93,12 @@ public class datastatistics extends JPanel {
 	}
 	public static Object[][] getinfodata(ArrayList<SingleMatchPersonalDataVO> da) {
 		if (da == null) {
+			System.out.println("da is null");
 			Object[][] re = new Object[1][15];
 			re[0][0] = "";
-			re[0][1] = "";
+			ImageIcon image = new ImageIcon("newpic/down.png");
+			image.setImage(image.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT));
+			re[0][1] = image;
 			re[0][2] = "";
 			re[0][3] = "";
 			re[0][4] = "";
@@ -107,7 +114,7 @@ public class datastatistics extends JPanel {
 			re[0][14] = "";
 			return re;
 		} else {
-			Object[][] re = new Object[da.size()][11];
+			Object[][] re = new Object[da.size()][15];
 			 /*{ "ÐòºÅ","Ð¤Ïñ", "ÐÕÃû", "Î»ÖÃ", "·ÖÖÓ", "½øÇò",
 					"Èý·Ö", "·£Çò", "Àº°å", "Öú¹¥", "·¸¹æ","ÇÀ¶Ï","Ê§Îó","¸ÇÃ±","·ÖÊý" };*/
 			for (int i = 0; i < da.size(); i++) {

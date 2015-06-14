@@ -48,6 +48,7 @@ public class TeamD extends JPanel {
 	JButton 二十场 = new JButton("");
 	JButton 十场 = new JButton("");
 	JComboBox 队伍选择3 = new JComboBox();
+	JComboBox 队伍选择4 = new JComboBox();
 	Team_map tm = new Team_map();
 	SortItem_Map sm = new SortItem_Map();
 	String season = "13-14";
@@ -123,7 +124,7 @@ public class TeamD extends JPanel {
 		//对比项目选择
 		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"总分","篮板数","助攻数","盖帽数","抢断数","犯规数"
 				,"失误数"}));
-		对比项目选择.setBounds(10, 40, 109, 23);
+		对比项目选择.setBounds(10, 40, 224, 23);
 		对比项目选择.setSelectedIndex(0);
 		contentPane.add(对比项目选择);
 		对比项目选择.addActionListener(new ActionListener() {
@@ -189,14 +190,12 @@ public class TeamD extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				lineisshowed[2] = true;
 				thirdName = 队伍选择3.getSelectedItem().toString();
-				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				System.out.println(thirdName);
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
-				tempsave[2] = thirds;
-				
-				double[] tempb = init.tbl.getTeamOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
-				basicData = Changedouble(tempb);
-				basicline = new Serie(basicName, basicData);			
+				tempsave[2] = thirds;	
 
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
@@ -243,7 +242,7 @@ public class TeamD extends JPanel {
 				if(basicData.length<10){
 					lineChartState = basicData.length;
 				}
-				
+
 				//获取当前选中球员的所有信息对应
 				categories = new String[lineChartState];
 				sectionupData = new Double[lineChartState];
@@ -260,25 +259,25 @@ public class TeamD extends JPanel {
 				tempsave[5] = sectiondown;
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(firstName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(secondName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;
@@ -307,7 +306,7 @@ public class TeamD extends JPanel {
 				lineChartState = 20;
 					double[] tempb = init.tbl.getTeamOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				basicData = Changedouble(tempb);
-				basicline = new Serie(basicName, basicData);
+				basicline = new Serie(tm.getFullName(basicName), basicData);
 				if(basicData.length<20){
 					lineChartState = basicData.length;
 				}
@@ -328,25 +327,25 @@ public class TeamD extends JPanel {
 				tempsave[5] = sectiondown;
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(firstName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(secondName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;
@@ -393,25 +392,25 @@ public class TeamD extends JPanel {
 				tempsave[5] = sectiondown;
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(firstName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(secondName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;
@@ -439,10 +438,10 @@ public class TeamD extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//线得到数据，然后修改
 				lineChartState = 0;
-				double[] tempb = init.tbl.getTeamOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] tempb = init.tbl.getTeamOneData(tm.getFullName(basicName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				basicData = Changedouble(tempb);
 				basicline = new Serie(basicName, basicData);
-				
+				System.out.print(basicData.length+"^");
 				lineChartState = basicData.length;
 				
 				categories = new String[lineChartState];
@@ -460,28 +459,28 @@ public class TeamD extends JPanel {
 				tempsave[5] = sectiondown;
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(firstName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				temp = Addzero(temp,lineChartState,temp.length);
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(secondName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				temp = Addzero(temp,lineChartState,temp.length);
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
-				double[] temp = init.tbl.getTeamOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				temp = Addzero(temp,lineChartState,temp.length);
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
@@ -498,24 +497,50 @@ public class TeamD extends JPanel {
 			}
 		});
 		
-		JButton 球队区间 = new JButton("\u4E0B\u573A\u9884\u8BA1\u533A\u95F4");
-		球队区间.addActionListener(new ActionListener() {
+
+		队伍选择4.setBounds(767, 40, 75, 23);
+		contentPane.add(队伍选择4);
+		队伍选择4.setModel(new DefaultComboBoxModel(new String[] {"老鹰","篮网","凯尔特人","黄蜂"
+				,"公牛","骑士","小牛","掘金","活塞","勇士","火箭","步行者","快船"
+				,"湖人","灰熊","热火","雄鹿","森林狼","鹈鹕","尼克斯","雷霆",
+				"魔术","76人", "太阳","开拓者","国王","马刺","猛龙","爵士", "奇才"}));
+		
+		JButton 加入对比4 = new JButton(new ImageIcon("newpic\\加入对比.png"));
+		加入对比4.setOpaque(true);
+		加入对比4.setForeground(Color.BLUE);
+		加入对比4.setContentAreaFilled(false);
+		加入对比4.setBounds(852, 40, 88, 23);
+		contentPane.add(加入对比4);
+		加入对比4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showsectionline = !showsectionline;
-				if(showsectionline==true){
-					lineisshowed[4] = true;
-					lineisshowed[5] = true;
-				}
-				else{
-					lineisshowed[4] = false;
-					lineisshowed[5] = false;
-				}
+				lineisshowed[3] = true;
+				fourthName = 队伍选择4.getSelectedItem().toString();
+				System.out.println(fourthName);
+				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
+				fourthData = Changedouble(temp);
+				fourths = new Serie(fourthName, fourthData);
+				tempsave[3] = fourths;	
+
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 			}
 		});
-		球队区间.setBounds(124, 40, 110, 23);
-		contentPane.add(球队区间);
+		
+		JButton 取消对比4 = new JButton(new ImageIcon("newpic\\取消对比.png"));
+		取消对比4.setOpaque(true);
+		取消对比4.setForeground(Color.BLUE);
+		取消对比4.setContentAreaFilled(false);
+		取消对比4.setBounds(946, 40, 88, 23);
+		contentPane.add(取消对比4);
+		取消对比4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lineisshowed[3] = false;
+				fourthName = "NULL";
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
 		
 	
 		
