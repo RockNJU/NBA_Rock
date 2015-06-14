@@ -695,10 +695,12 @@ public class Player implements PlayerBLService{
 			int count=0;
 			
 			while(rs.next()){
+				//System.out.println("要得到的项目  ："+);
 				list[count]=rs.getDouble(item);
 				if(count==num){
 					break;
 				}
+				count++;
 			}
 			 conn.commit();
 		} catch (SQLException e) {
