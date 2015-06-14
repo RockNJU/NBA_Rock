@@ -4,6 +4,7 @@ package UI.blObject;
 
  
 import bl_db.matchbl.Match_Controller;
+import bl_db.playerbl.Player;
 import bl_db.playerbl.PlayerController;
 import bl_db.teamrbl.Team_Controller;
 import businessService.blservice.*;
@@ -18,7 +19,7 @@ public class RMIObject {
 	}
 	
 	public PlayerBLService getPlayerObject(){
-		PlayerBLService player=new PlayerController();
+		PlayerBLService player=new Player();
 		return player;
 	}
 	

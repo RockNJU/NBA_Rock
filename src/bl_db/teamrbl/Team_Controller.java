@@ -387,7 +387,8 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			int assist_rate=0;
 			
 			while(rs.next()){
-				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(currentSeason,rs.getString("name"),null,
+				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(currentSeason,rs.getString("type"),
+						rs.getString("name"),null,
 						rs.getString("team"),rs.getString("division"),
 						rs.getString("partition"),rs.getString("position"),
 						rs.getInt("match_sum"),rs.getInt("start_sum"),

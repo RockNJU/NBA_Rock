@@ -8,6 +8,7 @@ public class PlayerSeasonDataVO {
 	 */
 	
 	String season;					 //赛季
+	String type;
 	private String name;					 //球员姓名
 	private String reverseName;            //球员姓名反置
 	
@@ -95,7 +96,8 @@ public class PlayerSeasonDataVO {
 	private double l_f_assist_rate=0; 		//最近五场助攻的提升率
 	private double l_f_rebound_rate=0;		//最近五场篮板的提升率
 	
-	public PlayerSeasonDataVO(String season,String name,PlayerInfoVO info,String teamName,
+	public PlayerSeasonDataVO(String season,String type,String name,
+			PlayerInfoVO info,String teamName,
 			String division,String partition,String position,
 	   int matchNum,  int startingNum,double time,int fieldGoal,
 		 int shootNum,int T_fieldGoal,int T_shootNum,int freeThrowGoalNum,
@@ -110,7 +112,7 @@ public class PlayerSeasonDataVO {
 				
 				this.season=season;
 				this.name=name;
-				
+				this.type=type;
 				//this.age=info.getAge();
 					if(name!=null){
 				String str[]=name.trim().split(" ");
@@ -143,6 +145,11 @@ public class PlayerSeasonDataVO {
 				this.stealNum=stealNum;
 				this.foulNum=foulNum;
 				this.pointNum=points;
+				
+				this.shootNum=shootNum;
+				this.t_shootNum=T_shootNum;
+				this.fieldGoal=fieldGoal;
+				this.t_fieldGoal=T_fieldGoal;
 				/***************************************/
 				 time_avg=time/matchNum;
 				 fieldGoal_avg=(double)fieldGoal/matchNum;				    
@@ -235,7 +242,9 @@ public class PlayerSeasonDataVO {
 		return teamName;
 	}
 	
-	
+	public String getType(){
+		return type;
+	}
 	public String getPosition(){
 		return position;
 	}

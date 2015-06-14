@@ -1,13 +1,10 @@
 package VO;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-
-
 public class TeamMatchVO implements Serializable{
-	/**
+	/************************
 	 * 
-	 */
+	 ************************/
 	private static final long serialVersionUID = 1L;
 	/*
 	 */
@@ -323,7 +320,7 @@ public class TeamMatchVO implements Serializable{
 	}
 
 
-	public String getDate() {
+	public String getDate(){
 		return date;
 	}
 
