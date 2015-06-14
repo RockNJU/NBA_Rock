@@ -533,11 +533,18 @@ public class Player implements PlayerBLService{
 
 
 	@Override
-	public ArrayList<PlayerInfoVO> getPlayerInfo(String name) {
+	public ArrayList<PlayerInfoVO> getPlayerInfo(String text) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
 		for(int i=0;i<infoList.size();i++){
-			if(infoList.get(i).getName().equals(name)){
+			if(infoList.get(i).getName().contains(text)|
+					infoList.get(i).getEname().contains(text)|
+					infoList.get(i).getHeight().contains(text)|
+					infoList.get(i).getNumber().contains(text)|
+					infoList.get(i).getPosition().contains(text)|
+					infoList.get(i).getSchool().contains(text)|
+					infoList.get(i).getBirth().contains(text)){
 				list.add(infoList.get(i));
+				;
 			}
 		}
 		return list;
@@ -611,7 +618,7 @@ public class Player implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		 ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋", "西南","pointNum",">", 25);
+		 ArrayList<PlayerSeasonDataVO> list=pl.keyfind("A");
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
