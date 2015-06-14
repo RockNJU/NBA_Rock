@@ -90,6 +90,7 @@ public class PlayerC extends JPanel {
 	LineChart lc = new LineChart();
 	ChartPanel chartPanel = lc.createChart();//下方图表
 	String na;
+	private JTextField textField_1;
 	
 	public PlayerC(String name) {
 		//用于测试
@@ -124,7 +125,7 @@ public class PlayerC extends JPanel {
 		//对比项目选择
 		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"总分","篮板数","助攻数","盖帽数","抢断数","犯规数"
 				,"失误数"}));
-		对比项目选择.setBounds(10, 40, 109, 23);
+		对比项目选择.setBounds(10, 40, 75, 23);
 		对比项目选择.setSelectedIndex(0);
 		contentPane.add(对比项目选择);
 		对比项目选择.addActionListener(new ActionListener() {
@@ -224,7 +225,6 @@ public class PlayerC extends JPanel {
 		contentPane.add(队员选择3);
 		队员选择3.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
 		
-
 		队伍选择3.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
@@ -235,6 +235,7 @@ public class PlayerC extends JPanel {
 				int i  = 0;
 				for(PlayerInfoVO pinfo:playerdata){
 					playerlist[i] = pinfo.getName();
+					i++;
 				}
 				队员选择3.setModel(new DefaultComboBoxModel(playerlist));
 			}
@@ -537,7 +538,7 @@ public class PlayerC extends JPanel {
 		comboBox_1.setBounds(244, 10, 75, 23);
 		contentPane.add(comboBox_1);
 		
-		JButton 球员区间 = new JButton("\u4E0B\u573A\u9884\u8BA1\u533A\u95F4");
+		JButton 球员区间 = new JButton("\u9884\u8BA1\u533A\u95F4");
 		球员区间.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showsectionline = !showsectionline;
@@ -553,8 +554,15 @@ public class PlayerC extends JPanel {
 				chartPanel.getChart().fireChartChanged();
 			}
 		});
-		球员区间.setBounds(124, 40, 110, 23);
+		球员区间.setBounds(88, 40, 87, 23);
 		contentPane.add(球员区间);
+		
+		textField_1 = new JTextField();
+		textField_1.setEditable(false);
+		textField_1.setText("\u4E0B\u573A\u9884\u8BA1");
+		textField_1.setBounds(179, 38, 66, 28);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
 		
 	
 		

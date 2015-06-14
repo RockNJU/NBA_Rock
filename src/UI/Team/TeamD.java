@@ -54,7 +54,7 @@ public class TeamD extends JPanel {
 	JComboBox 对比项目选择 = new JComboBox();
 	
 	String chossenShowData = "总分";
-	String[] categories =  { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", };
+	String[] categories =  { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 	String basicName = "NULL";
 	String firstName = "NULL";
 	String secondName = "NULL";

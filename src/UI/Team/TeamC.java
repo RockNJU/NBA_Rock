@@ -55,6 +55,7 @@ public class TeamC extends JPanel {
 		
 
 		teama = init.tbl.getATeamData(season,name);
+		System.out.print(teama.getFullName());
 		paintdataA[0] = OftenUseMethod.changedouble(teama.getMatchNum());
 		paintdataA[1] = OftenUseMethod.changedouble(teama.getPointNum_avg());
 		paintdataA[2] = OftenUseMethod.changedouble(teama.getAssistNum_avg());
