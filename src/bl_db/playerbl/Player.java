@@ -13,9 +13,10 @@ import VO.SingleMatchPersonalDataVO;
 import bl_db.common.EndDayInfo;
 import bl_db.common.HotSort;
 import bl_db.common.Sign;
+import bl_db.teamrbl.Player_info;
 import businessService.blservice.PlayerBLService;
 
-public class Player implements PlayerBLService{
+public class Player implements PlayerBLService,Player_info{
 	String url="jdbc:mysql://localhost/mysql";
     String user="ghl";
     String pwd="ghl13";		
@@ -221,7 +222,7 @@ public class Player implements PlayerBLService{
 	}
 
 	
-	private ArrayList<PlayerSeasonDataVO> get_Data(String sqlStr){
+	public ArrayList<PlayerSeasonDataVO> get_Data(String sqlStr){
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();	 
 		try {
 			ResultSet  rs=stmt.executeQuery(sqlStr);

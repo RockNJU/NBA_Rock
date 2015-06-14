@@ -611,10 +611,14 @@ public class Match_Controller implements MatchBLService{
 			
 			String date=match.getLastHavingMatchDate();
 			System.out.println("最后一天有比赛的日期："+date);
-			ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
+			ArrayList<MatchInfoVO> llist=match.getPro_ByDay("14-15", 3, 2);
 			
-			MatchVO vo=match.getMatchByTeam("2012-05-04", "ATL");
+			MatchVO vo=match.getMatchByTeam("2011-12-25", "GSW");
 			System.out.println("voooo: "+vo.getDate()+"  :"+vo.getHostTeam().getTeamName());
+			 ArrayList<SingleMatchPersonalDataVO> list=vo.getGuestTeam().getIndividualData();
+			 for(int i=0;i<list.size();i++){
+					System.out.println("球队信息："+list.get(i).getTeamName()+";"+list.get(i).getDivision());
+				} 
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
 			  //ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-06-01");
@@ -698,7 +702,8 @@ public class Match_Controller implements MatchBLService{
 				
 				System.out.println(infovo.getTeam_H()+"--249849846-"+map.getFullName(infovo.getTeam_H())+
 						"; ");
-				System.out.println(te.getTeamMatch(date, map.getFullName(infovo.getTeam_H()))==null);
+				System.out.println(infovo.getTeam_G()+";;****;"+map.getFullName(infovo.getTeam_G()));
+			
 				vo.setHostTeam(te.getTeamMatch(date, map.getFullName(infovo.getTeam_H())));
 				vo.setGuestTeam(te.getTeamMatch(date,map.getFullName(infovo.getTeam_G())));
 				list.add(vo);
