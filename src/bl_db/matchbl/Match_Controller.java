@@ -578,6 +578,9 @@ public class Match_Controller implements MatchBLService{
 			String date=match.getLastHavingMatchDate();
 			System.out.println("最后一天有比赛的日期："+date);
 			ArrayList<MatchInfoVO> list=match.getPro_ByDay("14-15", 3, 2);
+			
+			MatchVO vo=match.getMatchByTeam("2012-05-04", "ATL");
+			System.out.println("voooo: "+vo.getDate()+"  :"+vo.getHostTeam().getTeamName());
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
 			  //ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-06-01");
@@ -602,6 +605,7 @@ public class Match_Controller implements MatchBLService{
 			//ArrayList<String> list=match.getDatesOfPro_ByMonth("14-15", 1);
 			//ArrayList<String> list=match.getData("14-15", 2);
 			*/
+			/*
 			for(int i=0;i<list.size();i++){
 				 System.out.println("date："+list.get(i).getDate()+"; "
 						+ " score:"+list.get(i).getScore()+"; "
@@ -609,14 +613,15 @@ public class Match_Controller implements MatchBLService{
 						list.get(i).getTeam_G()+list.get(i).getScores());
 			 
 				System.out.println("----:"+list.get(i));
-			}
+			}*/
 		}
 
 		@Override
 		public MatchVO getMatchByTeam(String date, String teamA) {
 			Team_map map=new Team_map();
 			String team=map.getFullName(teamA);
-			String sqlStr="SELECT * FROM matchinfo where date='"+date+"' AND (teamH='"+teamA+"' OR teamG='"+teamA+"')";
+			String sqlStr="SELECT * FROM matchinfo where date='"+date+"' AND "
+					+ "(teamH='"+map.getFullName(teamA)+"' OR teamG='"+map.getFullName(teamA)+"')";
 		    ArrayList<MatchVO> list= getMatch( sqlStr);
 		    MatchInfoVO infovo=new MatchInfoVO(date, "??", "??", "??", "??", "??",";??;??;??;??", null, "??");
 			 /********************
@@ -633,6 +638,8 @@ public class Match_Controller implements MatchBLService{
 		       String score;
 		      while (rs.next())
 		      {        	  
+		    	  
+		    	  System.out.println("---*-*-*-/*"+rs.getString("teamH"));
 		    	   score=rs.getString("scores");
 		    	  infovo=new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 		    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
@@ -644,6 +651,7 @@ public class Match_Controller implements MatchBLService{
 		      conn.commit();
 		}catch (Exception ex)
 		    {
+		    	ex.printStackTrace();
 		      System.out.println("Error : " + ex.toString());
 		    }
 			
@@ -654,7 +662,9 @@ public class Match_Controller implements MatchBLService{
 				MatchVO vo=new MatchVO(SeasonInfo.getSeason(date),
 						date,infovo.getScore(),infovo.getScores(),null, null);
 				
-				
+				System.out.println(infovo.getTeam_H()+"--249849846-"+map.getFullName(infovo.getTeam_H())+
+						"; ");
+				System.out.println(te.getTeamMatch(date, map.getFullName(infovo.getTeam_H()))==null);
 				vo.setHostTeam(te.getTeamMatch(date, map.getFullName(infovo.getTeam_H())));
 				vo.setGuestTeam(te.getTeamMatch(date,map.getFullName(infovo.getTeam_G())));
 				list.add(vo);
