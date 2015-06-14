@@ -192,8 +192,8 @@ public class SingleTeam extends JDialog {
             	B.setToolTipText("球员数据");
             	C.setToolTipText("趋势对比");
             
-            	TeamC a=new TeamC(na);
-            	change(a);
+            	TeamD d=new TeamD(na);
+            	change(d);
             }
         });
 
@@ -241,8 +241,8 @@ public class SingleTeam extends JDialog {
             	D.setToolTipText("数据对比");
             	B.setToolTipText("球员数据");
             	C.setToolTipText("趋势对比");
-            	TeamD a=new TeamD(na);
-            	change(a);
+            	TeamC c=new TeamC(na);
+            	change(c);
             }
         });
 	

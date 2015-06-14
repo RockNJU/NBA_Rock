@@ -155,8 +155,8 @@ public class SinglePlayer extends JDialog {
             	B.setToolTipText("趋势对比");
             	C.setToolTipText("球员对比");
             	
-            	b=new PlayerB(na);
-            	change(b);
+            	c=new PlayerC(na);
+            	change(c);
             	
             }
         });
@@ -196,8 +196,8 @@ public class SinglePlayer extends JDialog {
             	A.setToolTipText("基本信息");
             	B.setToolTipText("趋势对比");
             	C.setToolTipText("球员对比");
-            	c=new PlayerC(na);
-				change(c);
+            	b=new PlayerB(na);
+				change(b);
             }
         });
 

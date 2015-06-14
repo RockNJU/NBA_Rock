@@ -28,6 +28,7 @@ import UI.main.Hot;
 import UI.main.Match;
 import UI.main.Player;
 import UI.main.Team;
+import UI.main.init;
 import VO.MatchVO;
 
 import java.awt.Font;
@@ -53,6 +54,7 @@ public class SingleMatch extends JDialog {
 	 final CardLayout cardLayout = new CardLayout();
 	JPanel jp = new JPanel();
 	MatchVO mvo;
+	
 
 	public static void main(String[] args) {
 		try {
@@ -74,6 +76,8 @@ public class SingleMatch extends JDialog {
 	@SuppressWarnings("null")
 	
 	public SingleMatch(String name,String date) {
+		mvo = init.mbl.getMatchByTeam(date,name);
+		
 		getContentPane().setLayout(null);
 		setSize(1060,620);
 		setUndecorated(true);// 取消窗体修饰效果************		

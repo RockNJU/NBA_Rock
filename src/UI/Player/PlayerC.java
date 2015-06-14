@@ -54,47 +54,121 @@ public class PlayerC extends JPanel {
 	String season = "13-14";
 	JComboBox 对比项目选择 = new JComboBox();
 	
-	String chossenShowData = "得分";
+	String chossenShowData = "总分";
 	String[] categories =  { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-	String basicName = "Tokyo";
-	String firstName = "New York";
-	String secondName = "London";
-	String thirdName = "bitch";
-	String fourthName = "Berlin";
+	String basicName = "NULL";
+	String firstName = "NULL";
+	String secondName = "NULL";
+	String thirdName = "NULL";
+	String fourthName = "NULL";
+	String sectionupName = "估计上限";
+	String sectiondownName = "估计下限";
 	Double[] basicData = { 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4 };
 	Double[] firstData =  { 83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3 };
 	Double[] secondData = { 48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2 };
 	Double[] thirdData =  { 12.2, 14.2, 18.5, 50.2,26.2, 37.4, 39.5,23.1, 47.6, 39.1, 46.8, 51.1 };
 	Double[] fourthData =  { 42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 28.5, 58.1, 30.6,68.2 };
+	Double[] sectionupData =  {50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0};
+	Double[] sectiondownData =  { 40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0};
+
 	Serie basicline = new Serie(basicName, basicData);
 	Serie firsts = new Serie(firstName, firstData);
 	Serie seconds = new Serie(secondName, secondData);
 	Serie thirds = new Serie(thirdName, thirdData);
 	Serie fourths = 	new Serie(fourthName, fourthData);
-	boolean[] lineisshowed = {false,false,false,false};
-	Serie[] tempsave = {firsts,seconds,thirds,fourths};
+	Serie sectionup = new Serie(sectionupName, sectionupData);
+	Serie sectiondown = new Serie(sectiondownName, sectiondownData);
+	boolean[] lineisshowed = {false,false,false,false,false,false};
+	Serie[] tempsave = {firsts,seconds,thirds,fourths,sectionup,sectiondown};
 	
+	double sectionupnum = 0;
+	double sectiondownnum = 0;	
+	
+	boolean showsectionline = false;
 	int lineChartState = 10;//选择的可以是10，20,30，赛季
 	
 	LineChart lc = new LineChart();
 	ChartPanel chartPanel = lc.createChart();//下方图表
 	String na;
+	
 	public PlayerC(String name) {
+		//用于测试
+		name = "科比-布莱恩特";
+		basicName=name;
+		
 		setSize(1042,580);
 		setLayout(null);
 		setOpaque(false);
-		this.na=name;
 		contentPane = new JPanel();
 		contentPane.setBounds(0, 0, 1042, 580);
 		contentPane.setBackground(new Color(183,221,222));
 		add(contentPane);
 		contentPane.setLayout(null);
 		
-		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(chossenShowData));
 		basicData = Changedouble(temp);
+		basicline = new Serie(basicName, basicData);
+		System.out.print(basicData[0]+";"+basicData[9]);
+		
+		//初始化区间,需要得到预计的上限和下限
+		for(int i = 0;i<10;i++){
+			sectionupData[i] = sectionupnum;
+			sectiondownData[i] = sectiondownnum;	
+		}
 		
 		//下方线表
 		contentPane.add(chartPanel);
+
+		
+		//对比项目选择
+		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"总分","篮板数","助攻数","盖帽数","抢断数","犯规数"
+				,"失误数"}));
+		对比项目选择.setBounds(10, 40, 109, 23);
+		对比项目选择.setSelectedIndex(0);
+		contentPane.add(对比项目选择);
+		对比项目选择.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chossenShowData = 对比项目选择.getSelectedItem().toString();
+
+				sectionupData = new Double[lineChartState];
+				sectiondownData = new Double[lineChartState];
+				for(int i = 1; i<=lineChartState;i++){
+					sectionupData[i-1] = sectionupnum;
+					sectiondownData[i-1] = sectiondownnum;	
+				}
+				//修改数据			
+				sectionup = new Serie(sectionupName, sectionupData);
+				sectiondown = new Serie(sectiondownName, sectiondownData);
+				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(chossenShowData));
+				basicData = Changedouble(tempb);
+				basicline = new Serie(basicName, basicData);
+				if(!firstName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(chossenShowData));
+				firstData = Changedouble(temp);
+				 firsts = new Serie(firstName, firstData);
+				}
+				if(!secondName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(secondName,lineChartState,sm.getItem(chossenShowData));
+				secondData = Changedouble(temp);
+				seconds = new Serie(secondName, secondData);
+				}
+				if(!thirdName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(chossenShowData));
+				thirdData = Changedouble(temp);
+				thirds = new Serie(thirdName, thirdData);
+				}
+				if(!fourthName.equals("NULL")){
+				double[] temp = init.pbl.getPlayerOneData(fourthName,lineChartState,sm.getItem(chossenShowData));
+				fourthData = Changedouble(temp);
+				fourths = 	new Serie(fourthName, fourthData);
+				}
+
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+				chartPanel.getChart().setTitle(lineChartState+"场比赛的"+chossenShowData+"趋势");
+			}
+		});
+
 		
 		//上方操控
 		JButton 加入对比3 = new JButton(new ImageIcon("newpic\\加入对比.png"));
@@ -109,6 +183,12 @@ public class PlayerC extends JPanel {
 				thirdName = 队员选择3.getSelectedItem().toString();
 				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				thirdData = Changedouble(temp);
+				thirds = new Serie(thirdName, thirdData);
+				
+				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				basicData = Changedouble(tempb);
+				basicline = new Serie(basicName, basicData);			
+
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 			}
@@ -165,30 +245,43 @@ public class PlayerC extends JPanel {
 
 		十场.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lineChartState = 10;	
+				
 				//获取当前选中球员的所有信息对应
 				categories = new String[10];
+				sectionupData = new Double[10];
+				sectiondownData = new Double[10];
 				for(int i = 1; i<=10;i++){
 					categories[i-1] = String.valueOf(i);
+					sectionupData[i-1] = sectionupnum;
+					sectiondownData[i-1] = sectiondownnum;	
 				}
-				lineChartState = 10;			//修改数据
-				
+				//修改数据			
+				sectionup = new Serie(sectionupName, sectionupData);
+				sectiondown = new Serie(sectiondownName, sectiondownData);
+				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				basicData = Changedouble(tempb);
+				basicline = new Serie(basicName, basicData);
 				if(!firstName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				firstData = Changedouble(temp);
+				 firsts = new Serie(firstName, firstData);
 				}
 				if(!secondName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				secondData = Changedouble(temp);
+				seconds = new Serie(secondName, secondData);
 				}
 				if(!thirdName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				thirdData = Changedouble(temp);
+				thirds = new Serie(thirdName, thirdData);
 				}
 				if(!fourthName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				fourthData = Changedouble(temp);
+				fourths = 	new Serie(fourthName, fourthData);
 				}
 
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
@@ -211,8 +304,12 @@ public class PlayerC extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//获取当前选中球员的所有信息对应
 				categories = new String[20];
+				sectionupData = new Double[20];
+				sectiondownData = new Double[20];
 				for(int i = 1; i<=20;i++){
 					categories[i-1] = String.valueOf(i);
+					sectionupData[i-1] = sectionupnum;
+					sectiondownData[i-1] = sectiondownnum;	
 				}
 				lineChartState = 20;
 				//修改数据
@@ -232,7 +329,11 @@ public class PlayerC extends JPanel {
 		三十场.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				categories = new String[30];
+				sectionupData = new Double[30];
+				sectiondownData = new Double[30];
 				for(int i = 1; i<=30;i++){
+					sectionupData[i-1] = sectionupnum;
+					sectiondownData[i-1] = sectiondownnum;	
 					categories[i-1] = String.valueOf(i);
 				}
 				lineChartState = 30;
@@ -265,10 +366,6 @@ public class PlayerC extends JPanel {
 		});
 		
 		
-		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"得分总","篮板数","助攻数","盖帽数","抢断数","犯规数"
-																,"失误数"}));
-		对比项目选择.setBounds(10, 40, 224, 23);
-		contentPane.add(对比项目选择);
 
 		JButton button = new JButton((Icon) null);
 		button.setOpaque(true);
@@ -292,6 +389,25 @@ public class PlayerC extends JPanel {
 		comboBox_1.setBounds(244, 10, 75, 23);
 		contentPane.add(comboBox_1);
 		
+		JButton showsection = new JButton("\u7403\u5458\u9884\u8BA1\u533A\u95F4");
+		showsection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showsectionline = !showsectionline;
+				if(showsectionline==true){
+					lineisshowed[4] = true;
+					lineisshowed[5] = true;
+				}
+				else{
+					lineisshowed[4] = false;
+					lineisshowed[5] = false;
+				}
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
+		showsection.setBounds(124, 40, 110, 23);
+		contentPane.add(showsection);
+		
 	
 		
 		}
@@ -305,7 +421,7 @@ public class PlayerC extends JPanel {
 				Vector<Serie> series = new Vector<Serie>();
 			// 柱子名称：柱子所有的值集合
 			series.add(basicline);
-			for(int i = 0; i<4;i++){
+			for(int i = 0; i<6;i++){
 				if(lineisshowed[i]!=false){
 					series.add(tempsave[i]);
 				}
@@ -317,7 +433,7 @@ public class PlayerC extends JPanel {
 		
 		public ChartPanel createChart() {
 			// 2：创建Chart[创建不同图形]
-			JFreeChart chart = ChartFactory.createLineChart(chossenShowData+"的"+lineChartState, "场数", "", createDataset());
+			JFreeChart chart = ChartFactory.createLineChart(lineChartState+"场比赛的"+chossenShowData+"趋势", "场数", "", createDataset());
 			// 3:设置抗锯齿，防止字体显示不清楚
 			ChartUtils.setAntiAlias(chart);// 抗锯齿
 			// 4:对柱子进行渲染[[采用不同渲染]]
@@ -348,5 +464,4 @@ public class PlayerC extends JPanel {
 		}
 		return Data;
 	}
-
 }

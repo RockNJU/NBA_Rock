@@ -37,18 +37,12 @@ public interface MatchBLService {
 		
 		public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item,int n);//获取当天的热点球员，传入的是热点项目
 		
-
+		MatchVO getMatchByTeam(String data,String teamA);
 		
 		
 		
 		
 		/*
-	
-	
-	
-	               
-	                         
-	MatchVO getMatchByTeam(String data,String teamA);
 	        //根据球队的缩写和比赛日期获取某一场比赛的数据，返回一个MatchVO
 	
 

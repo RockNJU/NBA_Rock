@@ -724,9 +724,9 @@ public class PlayerController implements PlayerBLService{
 		for(int i=0;i<list.size();i++){
 			System.out.println("name: "+list.get(i).getName()+
 					" position:"+list.get(i).getPosition());
-			}
+			}*/
 		double[] aa=pl.getPlayerOneData("科比-布莱恩特",20, "pointNum");
-		System.out.println("科比的得分："+aa[0]);*/
+		System.out.println("科比的得分："+aa[0]);
 	}
 
 	
