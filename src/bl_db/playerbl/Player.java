@@ -659,7 +659,9 @@ public class Player implements PlayerBLService{
 			char chr=39;
 			
 			int count=0;
-			
+			if(num!=10&num!=20&num!=30){
+				num=n;
+			}
 			while(rs.next()){
 				if(count==num){
 					break;
