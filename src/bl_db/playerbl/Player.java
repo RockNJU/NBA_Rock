@@ -681,6 +681,8 @@ public class Player implements PlayerBLService{
 			
 			if(num>n){
 				num=n;
+			}else{
+				num=n;
 			}
 			
 			list=new double[num];
