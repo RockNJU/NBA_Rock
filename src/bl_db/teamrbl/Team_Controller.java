@@ -799,7 +799,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 				n=num;
 			}
 	        
-			String str="SELECT "+item+" FROM player_season_data where "
+			String str="SELECT "+item+" FROM team_season_data where "
 					+ " name='"+name+"' AND season='"+currentSeason+"'";
 			 rs=stmt.executeQuery(str);
 			char chr=39;
