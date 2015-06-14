@@ -753,7 +753,7 @@ public class PlayerController implements PlayerBLService{
 			
 			System.out.println("----"+n);
 			
-			if(num>n){
+			if(num<n){
 				num=n;
 			}
 			
@@ -770,7 +770,7 @@ public class PlayerController implements PlayerBLService{
 			
 			while(rs.next()){
 				list[count]=rs.getDouble(item);
-				if(count==num){
+				if(count==n){
 					break;
 				}
 			}

@@ -611,5 +611,15 @@ public class Match_Controller implements MatchBLService{
 				System.out.println("----:"+list.get(i));
 			}
 		}
+
+		@Override
+		public MatchVO getMatchByTeam(String data, String teamA) {
+			Team_map map=new Team_map();
+			String team=map.getFullName(teamA);
+			String sqlStr="SELECT * FROM matchinfo where date='"++"'";
+		    ArrayList<MatchVO> list= getMatch( sqlStr);
+			 
+			return null;
+		}
 	
 }

@@ -768,6 +768,68 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		}//
 		return vo;
 	}
+
+
+	@Override
+	public double[] getTeamOneData(String name, int num, String item) {
+		double list[]=null;
+		ResultSet rs=null;
+		
+		System.out.println("当前赛季："+currentSeason);
+		try {
+			 
+			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data "
+					+ "where name='"+name+"' AND season='"+currentSeason+"'";
+			rs=stmt.executeQuery(sqlStr);
+			int n=0;
+			while(rs.next()){
+				n=rs.getInt("num");
+				System.out.println("while中----"+n);
+				break;
+			}
+			
+			System.out.println("----"+n);
+			
+			if(num<n){
+				num=n;
+			}
+			
+			list=new double[num];
+			list=addValue(list,num);
+	        conn.commit();
+			
+			String str="SELECT "+item+" FROM player_season_data where "
+					+ " name='"+name+"' AND season='"+currentSeason+"'";
+			 rs=stmt.executeQuery(str);
+			char chr=39;
+			
+			int count=0;
+			
+			while(rs.next()){
+				list[count]=rs.getDouble(item);
+				if(count==n){
+					break;
+				}
+			}
+			 conn.commit();
+		} catch (SQLException e) {
+			System.out.println("错误原因： "+e.toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		
+		return list;
+	}
+	
+
+	private double[] addValue(double list[],int num){
+		for(int i=0;i<num;i++){
+			list[i]=0;
+		}
+		return list;
+	}
+	
+	
 	
 	/***************************************************************
 	 * 
