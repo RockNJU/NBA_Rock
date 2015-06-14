@@ -40,6 +40,8 @@ public interface TeamBLService {
 	public TeamInfoVO getATeamInfo(String season,String name);
 	//获得一个赛季目前的数据信息
 	public TeamSeasonDataVO getATeamData(String season,String name);
+	
+	public TeamSeasonDataVO getATeamSeasonData(String season,String type,String name);
 	/*
 	//TODO 2015/5/18 加
 	
