@@ -618,7 +618,7 @@ public class Player implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		 ArrayList<PlayerSeasonDataVO> list=pl.keyfind("A");
+		 ArrayList<PlayerSeasonDataVO> list=pl.getAPlayerSeasonData("林书豪","常规赛");
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
@@ -764,7 +764,7 @@ public class Player implements PlayerBLService{
 		  
 		 
 			String str="SELECT * FROM (SELECT *FROM player_data WHERE name='"+name+"' AND type='"+type+"')as "
-					+ "data left join teaminfo on data.team =teaminfo.teamAbb)";
+					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			list=get_Data(str);
 		return list;
 	}
