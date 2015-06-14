@@ -426,10 +426,13 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 	public static void main(String args[]){
 		Team_Controller team=new Team_Controller();
 		
+		TeamSeasonDataVO vo=team.getATeamData("13-14", "LAL");
 		
+		System.out.println("获取的dfsdadad:  "+vo.getTeamName());
+		/*
 		ArrayList<TeamSeasonDataVO> list=team.getAllTeamSeasonData("13-14", "常规赛");
 		 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
-		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();
+		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();*/
 		//ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("LAL","2012-04-29");
 		/*for(int i=0;i<volist.size();i++){
 			System.out.println("  队名："+volist.get(i).getTeamName()+"  对手："+volist.get(i).getOpp_team()+"  得分："+volist.get(i).getPointNum()+" date: "+volist.get(i).getDate());
@@ -439,11 +442,11 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			System.out.println("球队数据：  队名"+inlist.get(i).getTeamName()+
 					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPlayerName());
 		}  */
-		
+		/*
 		 
 		for(int i=0;i<list.size();i++){
 			System.out.println("球队信息："+infoList.get(i).getTeam()+";"+infoList.get(i).getDivision());
-		} 
+		} */
 	}
 
 
@@ -711,8 +714,8 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 	public TeamSeasonDataVO getATeamData(String season, String name) {
 		Team_map map=new Team_map();
 		TeamSeasonDataVO vo=null;
-		try {
-			  
+		System.out.println("teammmmmm:"+map.getFullName(name));
+		try {			  
 	        stmt = conn.createStatement(); 
 					
 			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
@@ -731,9 +734,9 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
 					+ "AVG(defenseEfficiency) as defenseEff "
 					+ "FROM team_season_data WHERE season='"+season+"'"
-					+ " AND team='"+map.getFullName(name)+"'"
+					+ " AND teamAbb='"+name+"'"
 					+ " GROUP BY season,type,team) as "
-					+ "data right join teaminfo as info on data.teamAbb =info.teamAbb";
+					+ "data left join teaminfo as info on data.teamAbb =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			
