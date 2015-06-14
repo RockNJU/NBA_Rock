@@ -96,76 +96,15 @@ public class Player implements PlayerBLService{
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String season,
 			String sortItem) {
-		/************************************************
-		 * 任然有问题o(╯□╰)o
-		 */
+		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
 		 
-			String str="SELECT * FROM (SELECT name,season,position,"
-					+ "l_f_assist_rate,l_f_rebound_rate,l_f_point_rate,"
-					+ "team,COUNT(*) as match_sum, "
-					+ "startingNum as start_sum,time as time_sum,"
-					+ "fieldGoal as fieldGoal_sum,shootNum as shoot_sum,"
-					+ "t_fieldGoal as t_fieldGoal_sum,t_shootNum as t_shoot_sum,"
-					+ "freeThrowGoal  as freeThrowGoal_sum,"
-					+ "freeThrowNum  as freeThrow_sum,"
-					+ "o_ReboundNum  as o_rebound_sum,"
-					+ "d_reboundNum as d_rebound_sum,"
-					+ "assistNum as assist_sum,stealNum as steal_sum,"
-					+ "reboundNum as rebound_sum,blockNum as block_sum,"
-					+ "turnoverNum as turnover_sum,foulNum as foul_sum,"
-					+ "pointNum as point_sum,"
-					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
-					+ "AVG(assistEfficiency)as assistEff,"
-					+ "AVG(reboundEfficiency) as reboundEff,"
-					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
-					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
-					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
-					
-					+ "seasonDoubleNum as double_sum,seasonThreeNum as three_sum "
-					+ "FROM player_data WHERE season='"+season+"')as"
-					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
-	
-		
-		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();	 
-		try {
-			ResultSet  rs=stmt.executeQuery(str);
-		
-			;
-			
-			while(rs.next()){
-				//System.out.println("得分："+rs.getInt("point_sum"));
-				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(rs.getString("season"),rs.getString("type"),
-						rs.getString("name"),getAPlayerInfo(rs.getString("name")),
-						rs.getString("p_team"),rs.getString("division"),
-						rs.getString("partition"),rs.getString("position"),
-						rs.getInt("match_sum"),rs.getInt("start_sum"),
-						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
-						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
-						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
-						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
-						rs.getInt("d_rebound_sum"),rs.getInt("rebound_sum"),
-						rs.getInt("assist_sum"),rs.getInt("steal_sum"),
-						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
-						rs.getInt("foul_sum"),rs.getInt("point_sum"),
-						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
-						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
-						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
-						rs.getDouble("blockEff"),rs.getInt("double_sum"),
-						rs.getInt("three_sum"),
-						null);
-				vo.setL_f_assist_rate(rs.getDouble("l_f_assist_rate"));
-				vo.setL_f_point_rate(rs.getDouble("l_f_point_rate"));
-				vo.setL_f_rebound_rate(rs.getDouble("l_f_rebound_rate"));
-				list.add(vo);
-			}
-			  conn.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//
+		String str="SELECT * FROM (SELECT *FROM player_data WHERE "
+				+ "season='"+season+"')as "
+				+ "data left join teaminfo on data.team =teaminfo.teamAbb";
+			list=get_Data(str);
 		HotSort sort=new HotSort();
-		list=sort.hotPlayer_Sort(list, sortItem);
-		return list;
+		return sort.hotPlayer_Sort(list,sortItem);/*默认以得分排序，返回一个赛季的球员的数据*/
+		
 	}
 	
 	@Override
@@ -596,7 +535,7 @@ public class Player implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
+		//ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
 		 //PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
 		 
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
@@ -604,18 +543,18 @@ public class Player implements PlayerBLService{
 				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);
 			}*/
 		 
-		  System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
+		 // System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
 		 
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		/* 
-		System.out.println("大小："+list.size());
-		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
+		System.out.println("大小："+list.size());*/
+		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
 		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
 					+"  points:"+list.get(i).getPointNum()+"  partition:"+list.get(i).getPartition());
-		} */
+		} 
 		
 		
 		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
