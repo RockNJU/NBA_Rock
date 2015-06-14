@@ -7,6 +7,7 @@ import VO.*;
 public interface PlayerBLService{
 	public ArrayList<SingleMatchPersonalDataVO> getTodayHotPlayer(String item);//获取当天的热点球员，传入的是热点项目
 
+	public String getEnglishName(String chinesename);
 	//TODO 大于等于什么的筛选---之前写的是根据表格的、并不能适用、
 		//传入的值为 赛季、赛季类型、查找依据、符号（这个符号有可能是中文字符也有可能是英文字符）、值
 		public ArrayList<PlayerSeasonDataVO> sort_super(String season,String type,String position,String partition,String item,String sign,int num);
