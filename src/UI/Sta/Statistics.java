@@ -56,7 +56,7 @@ public class Statistics extends JDialog {
 		setUndecorated(true);// 取消窗体修饰效果************		
 		setLocation(UI.main.init.SysStart_X,UI.main.init.SysStart_Y+70);
 
-		rightpanel=new JPanel();
+		rightpanel=new A();
 		rightpanel.setBounds(9,30,1042,580);
 		rightpanel.setOpaque(false);
 		rightpanel.setLayout(null);

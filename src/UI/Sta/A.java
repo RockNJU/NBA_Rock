@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import UI.main.init;
+import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
 
 public class A extends JPanel {
@@ -19,7 +21,7 @@ public class A extends JPanel {
 		setSize(1042,580);
 		setLayout(null);
 		setOpaque(false);
-		
+		//getSeasonAge("斯蒂芬-库里","12-13");
 		JComboBox X = new JComboBox();
 		X.setModel(new DefaultComboBoxModel(new String[] {"\u5E74\u9F84", "\u8EAB\u9AD8", "\u4F4D\u7F6E"}));
 		X.setBounds(45, 57, 119, 32);
@@ -32,15 +34,37 @@ public class A extends JPanel {
 		
 	}
 	
-	Object[][] paintTable(String according1,String acording2,int[] apart1,int[] apart2){
+	Object[][] paintTable(String according1,String according2,int[] apart1,int[] apart2){
 		Object[][] re=new Object[apart1.length+1][apart2.length+1];
 		
 		ArrayList<PlayerSeasonDataVO> sample=new ArrayList<PlayerSeasonDataVO>();
 		String[] season={"11-12","12-13","13-14","14-15"};
 		for(int i=0;i<season.length;i++){
-			
+			ArrayList<PlayerSeasonDataVO> temp=init.pbl.getPlayerSeasonData(season[i]);
+			for(int o=0;o<temp.size();o++){
+				if(according1.equals("年龄")&&according2.equals("得分")){
+					
+				}
+			}
 		}
 		return null;
 	}
-	
+	int getSeasonAge(String na,String season){
+		System.out.println(na);
+		PlayerInfoVO pvo=init.pbl.getAPlayerInfo(na);
+		String[] t=season.split("-");
+		String curyear="20"+t[1];
+		System.out.println(pvo.getBirth());
+		String  y_y_y=pvo.getBirth().substring(0, 4);
+		int re=Integer.parseInt(curyear)-Integer.parseInt(y_y_y);
+		//System.out.println(re);
+		return re;		
+	}
+	int Age_Apart(int x,int[] apart){
+		if(x<apart[0]){
+			return 0;
+		}
+		return x;
+		
+	}
 }
