@@ -218,10 +218,28 @@ public class Match_Controller implements MatchBLService{
 	
 
 	@Override
-	public ArrayList<MatchVO> getMatchByTeamTime(String date) {
-		String sqlStr="SELECT * FROM matchinfo where date='"+date+"'";
-	    ArrayList<MatchVO> list= getMatch( sqlStr);
-		return list;
+	public ArrayList<MatchInfoVO> getMatchByTeamTime(String date) {
+		 	
+		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
+		try
+	    { 
+	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date='"+date+"'");
+	       String score;
+	      while (rs.next())
+	      {      
+	    	  score=rs.getString("scores");
+	    	  
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
+	        //return vo;
+	      }
+	      conn.commit();
+	}catch (Exception ex)
+	    {
+	      System.out.println("Error : " + ex.toString());
+	    }
+		return infoList;
 	}
 
 	@Override
@@ -555,22 +573,38 @@ public class Match_Controller implements MatchBLService{
 	}
 
 	@Override
-	public ArrayList<MatchVO> getMatchBySeason(String season, String type,
+	public ArrayList<MatchInfoVO> getMatchBySeason(String season, String type,
 			String teamA) {
 		
-		
-		/***********************
-		 * 感觉这个方法可能会出问题、、、、、、、、、o(╯□╰)o，先待定吧
-		 */
 		Team_map map=new Team_map();
-		String team=map.getFullName(teamA);
-		String sqlStr="SELECT * FROM matchinfo where (date BETWEEN "
-				+ " '"+SeasonInfo.getStartDate(season)+"' AND '"+SeasonInfo.getEndDate(season)+"') "
-				+ "AND type='"+type+"' "
-				+ "AND(teamH='"+team+"' OR teamG='"+team+"')";
-	    ArrayList<MatchVO> list= getMatch( sqlStr);
-		return list;
+		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
+		try
+	    { 
+			
+			String sqlStr="SELECT * FROM matchinfo where (date BETWEEN '"+SeasonInfo.getStartDate(season)+"' "
+					+ "AND '"+SeasonInfo.getEndDate(season)+"') "
+					+ "AND(teamH='"+map.getFullName(teamA)+"' OR teamG='"+map.getFullName(teamA)+"')";
+			
+	       ResultSet  rs=stmt.executeQuery(sqlStr);
+	       String score;
+	      while (rs.next())
+	      {      
+	    	  score=rs.getString("scores");
+	    	  
+	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+	    			  rs.getString("score"),rs.getString("type"), getScores(score),rs.getString("link")));
+	        //return vo;
+	      }
+	      conn.commit();
+	}catch (Exception ex)
+	    {
+	      System.out.println("Error : " + ex.toString());
+	    }
+		return infoList;
 	}
+	
+	
 		public static void main(String args[]){
 			Match_Controller match=new Match_Controller();
 			
