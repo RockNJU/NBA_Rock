@@ -203,14 +203,12 @@ public class Player implements PlayerBLService{
 			String teamAbb) {
 		ArrayList<PlayerInfoVO> list=new ArrayList<>();
 		try {
-			String str="SELECT  playerinfo.name, number, playerinfo.position,"
-					+ " height,distinct  weight,"
-					+ " birth,age,"
-					+ " exp,  school, Ename)"
-					+ " FROM playerinfo,player_season_data "
-					+ "WHERE player_season_data.team= '"+teamAbb+"' "
-				    + "AND player_season_data.season='"+season+"' "
-				    + "and playerinfo.name=player_season_data.name";
+			
+			//String ss="SELECT DISTINCT name from player_season_data where season='"+season+"' AND team='"+teamAbb+"'";
+			
+			String str="SELECT * from playerinfo where name "
+					+ "in (SELECT DISTINCT name from player_season_data "
+					+ "where season='"+season+"' AND team='"+teamAbb+"') ";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
@@ -630,7 +628,12 @@ public class Player implements PlayerBLService{
 		// ArrayList<PlayerSeasonDataVO> list=pl.getAPlayerSeasonData("林书豪","常规赛");
 		 PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
 		 
-		 System.out.println("name："+vo.getName());
+		 ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
+		 for(int i=0;i<infoList.size();i++){
+				System.out.println("name:"+infoList.get(i).getName());
+			}
+		 
+		// System.out.println("name："+vo.getName());
 		 
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
