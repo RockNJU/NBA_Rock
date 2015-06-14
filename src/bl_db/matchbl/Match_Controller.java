@@ -638,6 +638,7 @@ public class Match_Controller implements MatchBLService{
 		    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
 		    			  rs.getString("score"),rs.getString("type"), 
 		    			  getScores(score),rs.getString("link"));
+		    	  break;
 		        //return vo;
 		      }
 		      conn.commit();

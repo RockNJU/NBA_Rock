@@ -1056,6 +1056,14 @@ public class PlayerController implements PlayerBLService{
 		
 		return vo;
 	}
+
+
+
+	@Override
+	public String getEnglishName(String chinesename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
