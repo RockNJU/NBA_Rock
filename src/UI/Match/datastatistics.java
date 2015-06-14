@@ -37,7 +37,7 @@ public class datastatistics extends JPanel {
 		teamnameA = mvo.getHostTeam().getTeamName();
 		teamnameB = mvo.getGuestTeam().getTeamName();
 		pivo=mvo.getHostTeam().getIndividualData();
-		System.out.print(pivo.size());
+		//System.out.print(pivo.size());
 		playerinfodata=getinfodata(pivo);
 		
 		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 14, 60,1018, 510, 35,
