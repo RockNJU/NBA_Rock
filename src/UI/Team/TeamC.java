@@ -109,7 +109,7 @@ public class TeamC extends JPanel {
 			teamfirst.setHorizontalAlignment(SwingConstants.RIGHT);
 			teamfirst.setForeground(new Color(155, 106, 141));
 			teamfirst.setFont(new Font("ºÚÌå", Font.BOLD, 18));
-			teamfirst.setBounds(130, 65, 106, 24);
+			teamfirst.setBounds(112, 65, 124, 24);
 			contentPane.add(teamfirst);
 			
 			JLabel infofirst = new JLabel(infoA);
@@ -137,7 +137,7 @@ public class TeamC extends JPanel {
 			teamsecond.setHorizontalAlignment(SwingConstants.LEFT);
 			teamsecond.setForeground(new Color(155, 106, 141));
 			teamsecond.setFont(new Font("ºÚÌå", Font.BOLD, 18));
-			teamsecond.setBounds(804, 65, 106, 24);
+			teamsecond.setBounds(804, 65, 131, 24);
 			contentPane.add(teamsecond);
 			
 			final JLabel infosecond = new JLabel(infoB);
