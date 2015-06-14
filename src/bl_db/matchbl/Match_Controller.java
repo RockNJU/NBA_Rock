@@ -613,13 +613,53 @@ public class Match_Controller implements MatchBLService{
 		}
 
 		@Override
-		public MatchVO getMatchByTeam(String data, String teamA) {
+		public MatchVO getMatchByTeam(String date, String teamA) {
 			Team_map map=new Team_map();
 			String team=map.getFullName(teamA);
-			String sqlStr="SELECT * FROM matchinfo where date='"++"'";
+			String sqlStr="SELECT * FROM matchinfo where date='"+date+"' AND (teamH='"+teamA+"' OR teamG='"+teamA+"')";
 		    ArrayList<MatchVO> list= getMatch( sqlStr);
+		    MatchInfoVO infovo=new MatchInfoVO(date, "??", "??", "??", "??", "??",";??;??;??;??", null, "??");
+			 /********************
+			  * 
+			  ********************/
+		    try
+		    {
+				 
+		       ResultSet  rs=stmt.executeQuery(sqlStr);
+		       /***************
+		        * String date,String time,String teamH,
+				String teamG,String type,ArrayList<String> cs
+		        ************/
+		       String score;
+		      while (rs.next())
+		      {        	  
+		    	   score=rs.getString("scores");
+		    	  infovo=new MatchInfoVO(rs.getString("date"),rs.getString("time"),
+		    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
+		    			  rs.getString("score"),rs.getString("type"), 
+		    			  getScores(score),rs.getString("link"));
+		        //return vo;
+		      }
+		      conn.commit();
+		}catch (Exception ex)
+		    {
+		      System.out.println("Error : " + ex.toString());
+		    }
+			
+			/*String season,String date,String matchScore,
+				ArrayList<String>scores,TeamMatchVO ht,TeamMatchVO gt*/
+			 TeamInfo  te =new Team_Controller();
 			 
-			return null;
+				MatchVO vo=new MatchVO(SeasonInfo.getSeason(date),
+						date,infovo.getScore(),infovo.getScores(),null, null);
+				
+				
+				vo.setHostTeam(te.getTeamMatch(date, map.getFullName(infovo.getTeam_H())));
+				vo.setGuestTeam(te.getTeamMatch(date,map.getFullName(infovo.getTeam_G())));
+				list.add(vo);
+			
+		    
+			return vo;
 		}
 	
 }
