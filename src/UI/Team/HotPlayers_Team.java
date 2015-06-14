@@ -56,7 +56,9 @@ public class HotPlayers_Team extends JPanel {
 		String[] title = {"ÐòºÅ","Ð¤Ïñ","ÐÕÃû","Î»ÖÃ","Çò¶Ó",this.type};
 
 	
+		System.out.println(map1.getItem(tmptype));
 			psdv = tbs.getKingPlayerForATeam(init.defaultseason,map1.getItem(tmptype));
+			System.out.println(psdv.size());
 			data=getdata1(psdv);
 			no1[0]=psdv.get(0).getName();
 			no1[1]=(psdv.get(0).getTeamName());
@@ -164,6 +166,7 @@ public class HotPlayers_Team extends JPanel {
 		Object[][] re=new Object[4][6];
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
+			System.out.println("Í¼Æ¬ÊÇÊ²Ã´"+da.get(i).getName());
 			ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getName()+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;

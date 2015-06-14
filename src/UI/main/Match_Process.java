@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DateFormat;
@@ -24,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import UI.Match.SingleMatch;
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable_M;
 import UI.common.DateChooser;
@@ -503,6 +505,21 @@ public class Match_Process extends JPanel {
 		pro_data=getProdata_HavingDays(changeProdata_ChooseAllTeam_ByDate(tempdates));
 		ctm=new CreateTable_M(pro_title, pro_data,10, 123,1040, 480, 25,new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(ctm);
+		ctm.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// System.out.println(playerlist.getSelectedRow()!=-1);
+				// System.out.println(e.getClickCount() == 2);
+				// TODO Auto-generated method stub
+				if (e.getClickCount() == 2 && ctm.getValueAt(ctm.getSelectedRow(),7).equals("技术统计")) {
+					String date = ctm.getValueAt(ctm.getSelectedRow(), 6);									
+					String name = ctm.getValueAt(ctm.getSelectedRow(), 2);						
+					SingleMatch spi = new SingleMatch(name,date);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+				}				
+			}
+		});
 		
 		JLabel menubg = new JLabel();
 		menubg.setBackground(init.syslightblue);;
@@ -546,7 +563,7 @@ public class Match_Process extends JPanel {
 					re[i][3]=da.get(i).getScore();
 					re[i][4]=(da.get(i).getTeam_G());
 					re[i][5]="视频/直播";
-					re[i][6]="文字直播";
+					re[i][6]=da.get(i).getDate();
 					re[i][7]="技术统计";		
 				}
 			}		
@@ -616,7 +633,7 @@ public class Match_Process extends JPanel {
 						re[i][3]=da.get(i).getScore();
 						re[i][4]=(da.get(i).getTeam_G());
 						re[i][5]="视频/直播";
-						re[i][6]="文字直播";
+						re[i][6]=da.get(i).getDate();
 						re[i][7]="技术统计";		
 					}
 				}		

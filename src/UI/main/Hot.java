@@ -384,21 +384,21 @@ public class Hot extends JPanel {
 		changjundefena.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				HotPlayers hp = new HotPlayers("进步最快","得分");
+				HotPlayers hp = new HotPlayers("进步最快","l_f_point_rate");
 				changep1(hp);
 			}
 		});
 		changjunlanbana.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				HotPlayers hp = new HotPlayers("进步最快","篮板");
+				HotPlayers hp = new HotPlayers("进步最快","l_f_rebound_rate");
 				changep1(hp);
 			}
 		});
 		changjunzhugonga.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				HotPlayers hp = new HotPlayers("进步最快","助攻");
+				HotPlayers hp = new HotPlayers("进步最快","l_f_assist_rate");
 				changep1(hp);
 			}
 		});

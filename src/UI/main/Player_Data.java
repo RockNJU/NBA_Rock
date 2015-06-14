@@ -41,12 +41,12 @@ import javax.swing.JTextField;
 import bl_db.common.Team_map;
 
 public class Player_Data extends JPanel{
-	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
-	JButton defen=new JButton(new ImageIcon("newpic/hotbut/篮板.jpg"));
-	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/助攻.jpg"));
-	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/盖帽.jpg"));
+	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/总表.jpg"));
+	JButton defen=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
+	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/效率.jpg"));
+	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/高阶.jpg"));
 	JToolBar toolBar=new JToolBar();
-	public static String[] types={"常规赛","季后赛"};
+	public static String[] types={"常规赛","季后赛","季前赛"};
 	public static JComboBox position;
 	public static JComboBox partition;
 	public static JComboBox playerseason;
@@ -130,7 +130,7 @@ public class Player_Data extends JPanel{
 		partition = new JComboBox();
 		partition.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		partition.setToolTipText("\u6240\u5C5E\u7403\u961F\u5206\u533A");
-		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u90E8", "\u897F\u90E8", "\u5927\u897F\u6D0B", "\u4E2D\u592E", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317", "\u592A\u5E73\u6D0B"}));
+		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u90E8", "\u897F\u90E8", "\u5927\u897F\u6D0B", "\u4E2D\u90E8", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317", "\u592A\u5E73\u6D0B"}));
 		partition.setEditable(true);
 		partition.setBounds(126, 15, 89, 30);
 		add(partition);
@@ -613,13 +613,12 @@ public class Player_Data extends JPanel{
 				String Partition = partition.getSelectedItem().toString();
 				String According = "得分";
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
-				PlayerPosition_Map map1 = new PlayerPosition_Map();
-				PartitionMap map2 = new PartitionMap();
+				
 				SortItem_Map map3 = new SortItem_Map();
-				Position = map1.getItem(Position);
-				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
 				avg_tol.setSelected(true);
+				System.out.println("输入的条件是"+Season+seasontype+Position+Partition+ According);
+				
 				pdvo = init.pbl.sort(Season,seasontype,Position, Partition, According);
 				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
@@ -672,12 +671,14 @@ public class Player_Data extends JPanel{
 				String Partition = partition.getSelectedItem().toString();
 				String According = "篮板";
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
-				PlayerPosition_Map map1 = new PlayerPosition_Map();
-				PartitionMap map2 = new PartitionMap();
+
+		
 				SortItem_Map map3 = new SortItem_Map();
-				Position = map1.getItem(Position);
-				Partition = map2.getItem(Partition);
+		
+	
 				According = map3.getItem(According);
+				System.out.println("输入的条件是"+Season+seasontype+Position+Partition+ According);
+				
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 			    playerdata = getAveragedata(pdvo);
 			
@@ -727,12 +728,13 @@ public class Player_Data extends JPanel{
 				String Partition = partition.getSelectedItem().toString();
 				String According = "助攻";
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
-				PlayerPosition_Map map1 = new PlayerPosition_Map();
-				PartitionMap map2 = new PartitionMap();
+
 				SortItem_Map map3 = new SortItem_Map();
-				Position = map1.getItem(Position);
-				Partition = map2.getItem(Partition);
+
+
 				According = map3.getItem(According);
+				System.out.println("输入的条件是"+Season+seasontype+Position+Partition+ According);
+				
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				playerdata = getAveragedata(pdvo);
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);
@@ -778,10 +780,10 @@ public class Player_Data extends JPanel{
             	String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
 				String According = according.getSelectedItem().toString();
-				String Season = playerseason.getSelectedItem().toString()
-						.substring(0, 5);
+				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
 				SortItem_Map map3 = new SortItem_Map();
 				According = map3.getItem(According);
+				System.out.println("输入的条件是"+Season+seasontype+Position+Partition+ According);
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
 				playerdata = getAveragedata(pdvo);			
 				avg_tol.setSelected(true);
@@ -828,21 +830,20 @@ public class Player_Data extends JPanel{
 				butisclick= "according";
 					String Position = position.getSelectedItem().toString();
 					String Partition = partition.getSelectedItem().toString();				
-					PlayerPosition_Map map1 = new PlayerPosition_Map();
-					PartitionMap map2 = new PartitionMap();
+				
+				
 					SortItem_Map map3 = new SortItem_Map();
-					Position = map1.getItem(Position);
-					Partition = map2.getItem(Partition);			
+				
 				String According = according_super.getSelectedItem().toString();
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
 				
 				According = map3.getItem(According);
-				
+				System.out.println(">=----"+Season+ seasontype+Position+Partition+ According+ signs.getSelectedItem().toString()+Integer.parseInt(num.getText()));
 				pdvo = init.pbl.sort_super(Season, seasontype,Position,Partition, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
 				playerdata = getAveragedata(pdvo);
 				avg_tol.setSelected(true);
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);		
-				int x=getcl(according.getSelectedItem().toString());
+				int x=getcl(according_super.getSelectedItem().toString());
 				playerdatalist.setcolor(x);
 				playerdatalist.FitTableColumns(playerdatalist.getTable());
 			}
@@ -1391,11 +1392,12 @@ public class Player_Data extends JPanel{
 		String Partition = partition.getSelectedItem().toString();
 		String Season = playerseason.getSelectedItem().toString().substring(0, 5);
 		String Type=seasontype;
-		PlayerPosition_Map map1 = new PlayerPosition_Map();
-		PartitionMap map2 = new PartitionMap();
-		Position = map1.getItem(Position);
-		Partition = map2.getItem(Partition);
+	
+
 		if(isaverage == true){		
+			System.out.println("多级----"+Season+Type+ Position+ Partition+textforsort[0]+textforsort[1]+textforsort[2]+
+					upordown[0]+upordown[1]+upordown[2]);
+			
 			pdvo = init.pbl.sort(Season,Type, Position, Partition,textforsort,upordown);
 			playerdata = getAveragedata(pdvo);
 			playerdatalist.updateTable(playerAvgdatatitle, playerdata);

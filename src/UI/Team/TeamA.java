@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -14,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import bl_db.common.Team_map;
+import UI.Match.SingleMatch;
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_M;
 import UI.common.OftenUseMethod;
@@ -130,15 +135,15 @@ public class TeamA extends JPanel {
 		add(label_2);
 		
 		anadata=getanadata(name);
-		analysis=new CreateTable_M(anatitle, anadata, 640, 20, 380, 160,25,
-				new Font("黑体", 0, 15), new Font("微软雅黑", 0, 13));
-		analysis.getTable().setRowHeight(2, 10);
-		analysis.setNthWidth(0, 110);
-		analysis.setNthWidth(1, 90);
-		analysis.setNthWidth(2, 90);
-		analysis.setNthWidth(3, 90);
-		analysis.setAllWhite();
-		add(analysis);
+	//	analysis=new CreateTable_M(anatitle, anadata, 640, 20, 380, 160,25,
+	//			new Font("黑体", 0, 15), new Font("微软雅黑", 0, 13));
+	//	analysis.getTable().setRowHeight(2, 10);
+	//	analysis.setNthWidth(0, 110);
+	//	analysis.setNthWidth(1, 90);
+	//	analysis.setNthWidth(2, 90);
+	//	analysis.setNthWidth(3, 90);
+	//	analysis.setAllWhite();
+	//	add(analysis);
       
 		TeamA_data=getLastFiveMatch(smdvo);
 		TeamA_list = new CreateTable(TeamA_matchtitle, TeamA_data, 10, 250,1025, 330, 25,
@@ -147,6 +152,28 @@ public class TeamA extends JPanel {
 		TeamA_list.setOpaque(false);
 		//PlayerA_list.setOpa();
 		TeamA_list.FitTableColumns(TeamA_list.getTable());
+		TeamA_list.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getClickCount() == 2 && TeamA_list.getSelectedRow() != -1) {
+					if(tabletype.equals("近五场")){
+						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);					
+						SingleMatch spi = new SingleMatch(na,date);
+						spi.setVisible(true);
+						spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+					}else if(tabletype.equals("赛程")){
+						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);					
+						SingleMatch spi = new SingleMatch(na,date);
+						spi.setVisible(true);
+						spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+					}else{
+						
+					}
+				}
+				
+			}
+		});
 		TeamA_list.getRoll().getViewport().setOpaque(false);
 		
 		lastmatches=new JButton(new ImageIcon("newpic/近五场浮.png"));
@@ -424,7 +451,8 @@ public class TeamA extends JPanel {
 			Object[][] re = new Object[da.size()][13];	
 
 			for (int i = 0; i < da.size(); i++) {
-				re[i][0]= da.get(i).getSeason();
+				
+				re[i][0]= da.get(i).getSeason()+"赛季";
 				re[i][1] = da.get(i).getMatchNum();
 				re[i][2] = OftenUseMethod.changedouble(da.get(i).getPointNum_avg());				
 				re[i][3] = OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());
@@ -464,7 +492,7 @@ public class TeamA extends JPanel {
 			Object[][] re = new Object[da.size()][13];	
 
 			for (int i = 0; i < da.size(); i++) {
-				re[i][0] =da.get(i).getSeason();
+				re[i][0] = da.get(i).getSeason()+"赛季";
 				re[i][1] = da.get(i).getMatchNum();
 				re[i][2] = OftenUseMethod.changedouble(da.get(i).getPointNum());				
 				re[i][3] = OftenUseMethod.changedouble(da.get(i).getReboundNum());
@@ -494,6 +522,7 @@ public class TeamA extends JPanel {
 		label.setText("联盟:"+a.getItem(tivo.getPartition())+";  #排名:"+String.valueOf(init.tbl.getRank(name)));
 		lblabalabala.setText("位置："+tivo.getLocation());
 		pnumwin.setText(String.valueOf(tsd.getWinNum()));
+		//System.out.println(tsd.getMatchNum()+" "+tsd.getWinNum()+"  "+init.tbl.getRank(name));
 		coach.setText("教练："+tivo.getCaoch_name());
 		ground.setText("主馆:"+tivo.getHomeGround());
 		pnumlose.setText(String.valueOf(tsd.getMatchNum()-tsd.getWinNum()));
@@ -505,7 +534,8 @@ public class TeamA extends JPanel {
 			newti=TeamA_matchtitle;
 		}else if(tabletype.equals("近几年")){
 			newti=TeamA_yeartitle;
-			tsdvo=UI.main.init.tbl.getATeamSeasonData(na, seasontype);
+			Team_map tm=new Team_map();
+			tsdvo=UI.main.init.tbl.getAllTeamSeasonData(tm.getFullName(na), seasontype);
 			if(isAvg.equals("avg")){
 				TeamA_data=getyearavg(tsdvo);
 			}else{

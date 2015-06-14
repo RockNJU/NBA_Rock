@@ -52,7 +52,7 @@ public class PlayerA extends JPanel {
 	CreateTable PlayerA_list;
 	Object[][] PlayerA_data={{""}};
 	String truetitle[];
-	String []PlayerA_matchtitle={"日期","对手","分钟","得分","篮板","助攻","投篮","投篮%","三分","三分%","罚球","罚球%","抢断","失误","盖帽","犯规","攻/防"};
+	String []PlayerA_matchtitle={"日期","球队","分钟","得分","篮板","助攻","投篮","投篮%","三分","三分%","罚球","罚球%","抢断","失误","盖帽","犯规","攻/防"};
 	String []PlayerA_yeartitle={"赛季","球队","场数","先发","分钟","得分","篮板","助攻","投篮%","三分%","罚球%","抢断","失误","盖帽","犯规","攻/守"};
 	String na;
 	/**
@@ -63,8 +63,9 @@ public class PlayerA extends JPanel {
 		setSize(1042,580);
 		setLayout(null);
 		setOpaque(false);
+
 		pivo=init.pbl.getAPlayerInfo(name);
-		Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason, init.defaulttype, name);
+		Apsvo=init.pbl.keyfind(name).get(0);
 		
 		jb1=new JLabel(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		jb1.setBounds(10, 10, 230, 185);
@@ -99,37 +100,37 @@ public class PlayerA extends JPanel {
 		label = new JLabel("\u8EAB\u9AD8\uFF1A2.10");
 		label.setForeground(UI.main.init.syspurpleblue);
 		label.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label.setBounds(360, 90, 117, 20);
+		label.setBounds(360, 90, 165, 20);
 		add(label);
 		
 		label_1 = new JLabel("\u4F53\u91CD\uFF1A108");
 		label_1.setForeground(new Color(102, 90, 197));
 		label_1.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_1.setBounds(360, 110, 117, 20);
+		label_1.setBounds(360, 110, 165, 20);
 		add(label_1);
 		
 		label_2 = new JLabel("\u751F\u65E5\uFF1A1995.12.12");
 		label_2.setForeground(new Color(102, 90, 197));
 		label_2.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_2.setBounds(360, 130, 117, 20);
+		label_2.setBounds(360, 130, 145, 20);
 		add(label_2);
 		
 		label_3 = new JLabel("\u5E74\u9F84\uFF1A23");
 		label_3.setForeground(new Color(102, 90, 197));
 		label_3.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_3.setBounds(360, 150, 117, 20);
+		label_3.setBounds(360, 150, 145, 20);
 		add(label_3);
 		
 		label_4 = new JLabel("\u7403\u9F84\uFF1A2");
 		label_4.setForeground(new Color(102, 90, 197));
 		label_4.setFont(new Font("华文细黑", Font.BOLD, 12));
-		label_4.setBounds(515, 90, 117, 20);
+		label_4.setBounds(535, 91, 117, 20);
 		add(label_4);
 		
 		lblxxxx = new JLabel("\u6BD5\u4E1A\u9662\u6821\uFF1AXXXX");
 		lblxxxx.setForeground(new Color(102, 90, 197));
 		lblxxxx.setFont(new Font("华文细黑", Font.BOLD, 12));
-		lblxxxx.setBounds(515, 110, 145, 20);
+		lblxxxx.setBounds(535, 130, 206, 20);
 		add(lblxxxx);
 		
 		pteam = new ImageIcon("newpic/TEAMPNG"+Apsvo.getTeamName()+".png");
@@ -137,7 +138,7 @@ public class PlayerA extends JPanel {
 		pteam.setImage(pteam.getImage().getScaledInstance(120,120,Image.SCALE_DEFAULT));
 		lblNewLabel = new JLabel(pteam);
 		lblNewLabel.setOpaque(false);
-		lblNewLabel.setBounds(623, 10, 120,120);
+		lblNewLabel.setBounds(641, 10, 120,120);
 		add(lblNewLabel);
 		lblNewLabel.addMouseListener(new MouseListener(){
 
@@ -325,7 +326,7 @@ public class PlayerA extends JPanel {
 		add(jb);
 		
  
-		//updatePlayerA(na);
+		updatePlayerA(na);
 	}
 	
 	public Object[][] getmatch(ArrayList<SingleMatchPersonalDataVO> da) {
@@ -399,7 +400,7 @@ public class PlayerA extends JPanel {
 		} else {			
 			Object[][] re = new Object[da.size()][16];	
 			for (int i = 0; i < da.size(); i++) {
-				re[i][0]= da.get(i).getSeason();
+				re[i][0]= da.get(i).getSeason()+"赛季";
 				re[i][1] = tm.getFullName(da.get(i).getTeamName());
 				re[i][2] = da.get(i).getMatchNum();
 				re[i][3] = da.get(i).getStartingNum();
@@ -445,7 +446,7 @@ public class PlayerA extends JPanel {
 			Object[][] re = new Object[da.size()][16];	
 
 			for (int i = 0; i < da.size(); i++) {
-				re[i][0] =da.get(i).getSeason();
+				re[i][0] =da.get(i).getSeason()+"赛季";
 				re[i][1] =tm.getFullName (da.get(i).getTeamName());
 				re[i][2] = da.get(i).getMatchNum();
 				re[i][3] = da.get(i).getStartingNum();
@@ -467,24 +468,26 @@ public class PlayerA extends JPanel {
 
 	}
 	public void updatePlayerA(String name){
-		System.out.println(name);
+	//	System.out.println(tabletype);
 		pivo=init.pbl.getAPlayerInfo(name);
-		Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason, init.defaulttype, name);
+		Apsvo=init.pbl.keyfind(name).get(0);
 		jb1.setIcon(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		pname.setText(name);
-		lblLocation.setText(m.getItem(pivo.getPosition())+"   "+Apsvo.getPartition());
+		lblLocation.setText((pivo.getPosition())+"   "+Apsvo.getPartition());
 		pnum.setText(pivo.getNumber());
 		label.setText("\u8EAB\u9AD8\uFF1A"+pivo.getHeight());
 		label_1.setText("体重："+pivo.getWeight());
 		label_2.setText("生日："+pivo.getBirth());
 		label_3.setText("年龄："+pivo.getAge());
 		label_4.setText("球龄："+pivo.getExp());
-		lblxxxx.setText("毕业院校"+pivo.getSchool());
+		lblxxxx.setText("毕业院校："+pivo.getSchool());
 		pteam = new ImageIcon("newpic/TEAMPNG/"+Apsvo.getTeamName()+".png");
 		pteam.setImage(pteam.getImage().getScaledInstance(120,120,Image.SCALE_DEFAULT));		
 		lblNewLabel.setIcon(pteam);;
 		if(tabletype.equals("近五场")){
+		
 			smdvo=init.pbl.getLastFiveMatchData(name);
+			System.out.println("SJALD"+smdvo.size());
 			PlayerA_data=getmatch(smdvo);
 			truetitle=PlayerA_matchtitle;
 		}else if(tabletype.equals("近几年")){
@@ -498,6 +501,7 @@ public class PlayerA extends JPanel {
 		}else{
 			truetitle=PlayerA_matchtitle;
 			smdvo=init.pbl.getASeasonMatchData(na, init.defaultseason);
+			System.out.println("SJALD"+smdvo.size());
 			PlayerA_data=getmatch(smdvo);
 		}
 		PlayerA_list.updateTable(truetitle, PlayerA_data);
@@ -506,7 +510,6 @@ public class PlayerA extends JPanel {
 		}else{
 			PlayerA_list.new1FitTableColumns(PlayerA_list.getTable());
 		}
-		//PlayerA_list.FitTableColumns(PlayerA_list.getTable());
 		PlayerA_list.getRoll().getViewport().setOpaque(false);
 	}
 

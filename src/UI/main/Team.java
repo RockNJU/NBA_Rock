@@ -34,13 +34,13 @@ import VO.TeamSeasonDataVO;
 public class Team extends JPanel{
 	JButton allteams;
 	final JButton find;
-	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
-	JButton defen=new JButton(new ImageIcon("newpic/hotbut/篮板.jpg"));
-	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/助攻.jpg"));
-	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/盖帽.jpg"));
+	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/总表.jpg"));
+	JButton defen=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
+	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/投篮.jpg"));
+	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/效率.jpg"));
 	JToolBar toolBar=new JToolBar();
 	public static JComboBox Teamseason;
-	public static String seasontype;
+	public static String seasontype="常规赛";
 	JButton normal,after;
 	public JComboBox according;
 	public JComboBox according_super;
@@ -534,7 +534,6 @@ public class Team extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-            	//保存历史记录
 				termsort();
 			}
 
@@ -827,10 +826,10 @@ public class Team extends JPanel{
 				
 					SortItem_Map map3 = new SortItem_Map();
 					According = map3.getItem(According);
-					
+					System.out.println(""+Season + seasontype + According);
 					//tdvo = init.tbl.sort(Season,seasontype, According);
 					tdvo = init.tbl.sort(Season,seasontype, According);
-					//System.out.println(Season + Position + Partition + According);
+					
 					teamdata = getAveragedata(tdvo);
 					/*init.currenttext=null;
 					init.currentunordown=null; 
@@ -970,7 +969,7 @@ public class Team extends JPanel{
 						if (e.getClickCount() == 2 && teamdatalist.getSelectedRow() != -1) {
 							
 							String name = teamdatalist.getValueAt(teamdatalist.getSelectedRow(), 1);
-							System.out.println(name);
+							//System.out.println(name);
 							name=my.getFullName(name);System.out.println(name);
 							spi = new SingleTeam(name);
 							spi.setVisible(true);
@@ -1353,8 +1352,11 @@ public class Team extends JPanel{
 		}
 		
 		String Season = Teamseason.getSelectedItem().toString().substring(0, 5);
-		String Type=seasontype;	
+
 		if(isaverage == true){		
+			System.out.println("多级----"+Season+seasontype+textforsort[0]+textforsort[1]+textforsort[2]+
+					upordown[0]+upordown[1]+upordown[2]);
+			
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
 			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);
 			teamdata = getAveragedata(tdvo);
@@ -1362,6 +1364,8 @@ public class Team extends JPanel{
 			teamdatalist.FitTableColumns(teamdatalist.getTable());
 		}
 		else{
+			System.out.println("多级----"+Season+seasontype+textforsort[0]+textforsort[1]+textforsort[2]+
+					upordown[0]+upordown[1]+upordown[2]);
 			
 			//tdvo = init.tbl.sort(Season,Type,textforsort,upordown);
 			tdvo = init.tbl.sort(Season,seasontype,textforsort,upordown);

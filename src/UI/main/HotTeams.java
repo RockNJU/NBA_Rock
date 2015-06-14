@@ -16,6 +16,7 @@ import org.apache.batik.apps.rasterizer.SVGConverterException;
 
 import businessService.blservice.MatchBLService;
 import businessService.blservice.TeamBLService;
+import UI.Team.SingleTeam;
 import UI.blObject.RMIObject;
 import UI.common.CreateTable_pic;
 import UI.common.CreateTableforhot;
@@ -64,7 +65,12 @@ public class HotTeams extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && ctfh.getSelectedRow() != -1) {
+					String name = ctfh.getValueAt(ctfh.getSelectedRow(), 2);
+					//System.out.println(name);
 					
+					SingleTeam spi = new SingleTeam(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 
 				}
 			}
@@ -73,7 +79,7 @@ public class HotTeams extends JPanel {
 		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
 		No1_Team.setImage(No1_Team.getImage().getScaledInstance(158, 158,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Team);		
-		No1_p.setBounds(35, 37, 180, 130);		
+		No1_p.setBounds(35,45, 180, 158);		
 		No1_p.setOpaque(false);
 		add(No1_p);
 		

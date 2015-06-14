@@ -14,6 +14,7 @@ import javax.swing.table.TableColumn;
 import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 import businessService.blservice.PlayerBLService;
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable_pic;
 import UI.common.CreateTableforhot;
 import UI.common.OftenUseMethod;
@@ -27,33 +28,33 @@ import VO.SingleMatchPersonalDataVO;
 
 public class HotPlayers extends JPanel {
 	String saiji = init.defaultseason;
-	ArrayList<SingleMatchPersonalDataVO> smpd;
-	ArrayList<PlayerSeasonDataVO> psdv;
+
 	String according;
 	String type;
-	//RMIObject rmi = new RMIObject();
 	MatchBLService mbs = init.rmi.getMatchObject();
 	PlayerBLService pbs = init.rmi.getPlayerObject();
 	
 	Object [][] data;
 	static CreateTable_pic ctfh;
 	SortItem_Map map1 = new SortItem_Map();
-	PlayerPosition_Map map4 = new PlayerPosition_Map();	
-
 	Team_map tm=new Team_map();
 	/**
 	 * Create the panel.
 	 */
 	public HotPlayers(String tmpsaccording,String tmptype) {
+		ArrayList<SingleMatchPersonalDataVO> smpd = new ArrayList<SingleMatchPersonalDataVO>();
+		ArrayList<PlayerSeasonDataVO> psdv=new ArrayList<PlayerSeasonDataVO>();
 		setSize(1040, 256);
 		setLayout(null);
 		setOpaque(false);
-		Object[] no1=new Object[5];
+		final Object[] no1=new Object[5];
 		this.according=tmpsaccording;
 		this.type=tmptype;
 		String[] title = {"序号","肖像","姓名","位置","球队",this.type};
 		if(tmpsaccording.equals("每日")){
 			smpd = pbs.getTodayHotPlayer(map1.getItem(tmptype));
+			System.out.println("五个人是"+smpd.get(0).getPlayerName()+smpd.get(1).getPlayerName()
+					+smpd.get(2).getPlayerName()+smpd.get(3).getPlayerName()+smpd.get(4).getPlayerName());
 			System.out.println(map1.getItem(tmptype));
 			no1[0]=smpd.get(0).getPlayerName();
 			no1[1]=tm.getFullName(smpd.get(0).getTeamName());
@@ -73,14 +74,20 @@ public class HotPlayers extends JPanel {
 			else if(type.equals("盖帽数")){
 				no1[3]=smpd.get(0).getBlockNum();
 			}
-			no1[4]=smpd.get(0).getPlayerName();
+			//System.out.println("中文名"+smpd.get(0).getPlayerName());
+			no1[4]=init.pbl.getEnglishName(smpd.get(0).getPlayerName());
+			//System.out.println("英文名"+no1[4]);
 			data=getdata(smpd);
 		}
 		else if(tmpsaccording.equals("赛季")){
 			psdv = pbs.getSeasonHotPlayer(init.defaultseason,map1.getItem(tmptype));
+			System.out.println("五个人是"+psdv.get(0).getName()+psdv.get(1).getName()
+					+psdv.get(2).getName()+psdv.get(3).getName()+psdv.get(4).getName());
+			System.out.println("中文名"+psdv.get(0).getName());					
 			data=getdata1(psdv);
-			no1[0]=psdv.get(0).getName();
-			no1[4]=psdv.get(0).getName();
+			no1[0]=psdv.get(0).getName();			
+			no1[4]=init.pbl.getEnglishName(psdv.get(0).getName());
+			System.out.println("英文名"+no1[4]);
 			no1[1]=tm.getFullName(psdv.get(0).getTeamName());
 			no1[2]=psdv.get(0).getPosition();
 			if(type.equals("得分")){
@@ -113,7 +120,11 @@ public class HotPlayers extends JPanel {
 			
 		}
 		else{
-			psdv = pbs.getMost_Progress_Player(map1.getItem(tmptype));
+			System.out.println("进步最快"+(tmptype));
+			psdv = pbs.getMost_Progress_Player((tmptype));
+			System.out.println("五个人是"+smpd.get(0).getPlayerName()+smpd.get(1).getPlayerName()
+					+smpd.get(2).getPlayerName()+smpd.get(3).getPlayerName()+smpd.get(4).getPlayerName());
+			
 			data=getdata1(psdv);		
 			no1[0]=psdv.get(0).getName();
 			no1[1]=tm.getFullName(psdv.get(0).getTeamName());
@@ -145,11 +156,12 @@ public class HotPlayers extends JPanel {
 			else{
 				no1[3] = -1;
 			}		
-			no1[4]=psdv.get(0).getName();
+			//System.out.println("中文名"+psdv.get(0).getName());
+			no1[4]=init.pbl.getEnglishName(psdv.get(0).getName());
+			//System.out.println("英文名"+no1[4]);
 		}					
 
 	
-		
 		ImageIcon No1_Player = new ImageIcon("newpic/portrait/"+no1[4]+".png");
 		No1_Player.setImage(No1_Player.getImage().getScaledInstance(160, 130,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Player);		
@@ -161,7 +173,9 @@ public class HotPlayers extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					
+					SinglePlayer spi = new SinglePlayer(no1[0].toString());
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 				}
 			}
 		});
@@ -198,7 +212,12 @@ public class HotPlayers extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && ctfh.getSelectedRow() != -1) {
+					String name = ctfh.getValueAt(ctfh.getSelectedRow(), 2);
+					// System.out.println(name);
 					
+					SinglePlayer spi = new SinglePlayer(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 
 				}
 			}
@@ -215,8 +234,8 @@ public class HotPlayers extends JPanel {
 		Object[][] re=new Object[4][6];
 		for(int i=1;i<5;i++){
 			re[i-1][0]=i+1;
-			//ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getPlayerName()+".png");
-			ImageIcon ddd = new ImageIcon("newpic/portrait/"+"Aaron Brooks"+".png");
+			ImageIcon ddd = new ImageIcon("newpic/portrait/"+init.pbl.getEnglishName(da.get(i).getPlayerName())+".png");
+			//ImageIcon ddd = new ImageIcon("newpic/portrait/"+"Aaron Brooks"+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getPlayerName();
@@ -249,7 +268,7 @@ public class HotPlayers extends JPanel {
 		Object[][] re=new Object[4][6];
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
-			ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getName()+".png");
+			ImageIcon ddd = new ImageIcon("newpic/portrait/"+init.pbl.getEnglishName(da.get(i).getName())+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getName();

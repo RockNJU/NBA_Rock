@@ -20,7 +20,7 @@ public class Player extends JPanel{
 	static Player_Info p1;
 	static Player_Data p2;
 	static JPanel mainp;
-	
+	JButton statistics;
 	JButton change;
 	String nowp="info";
 	final JButton find;
@@ -41,7 +41,32 @@ public class Player extends JPanel{
 		add(textField);
 		textField.setColumns(10);
 		
-		
+		statistics=new JButton("统计分析");
+		statistics.setBounds(140,15, 94, 20);
+		add(statistics);
+		statistics.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseClicked(MouseEvent e) {				
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub			
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub			
+			}		
+		});
+	
 		
 		find = new JButton(new ImageIcon("newpic/查找.png"));
 		find.setBackground(init.syslightblue);
@@ -58,7 +83,9 @@ public class Player extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(nowp.equals("info")){
-					Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
+					Player_Info.pivo=init.pbl.getPlayerInfo(textField.getText());
+					System.out.println((Player_Info.pivo.size()));
+					Object info[][]=Player_Info.getinfodata(Player_Info.pivo);
 				Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
 				Player_Info.playerinfolist.FitTableColumns(Player_Info.playerinfolist.getTable());
 				

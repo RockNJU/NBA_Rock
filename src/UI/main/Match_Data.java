@@ -225,7 +225,7 @@ public class Match_Data extends JPanel {
 				String Season = matchseason.getSelectedItem().toString().substring(0, 5);
             	String Team=teams.getSelectedItem().toString();         	
             	matchdatalist.setVisible(true);
-            	System.out.println(Season+matchtype+ Team);
+            	//System.out.println(Season+matchtype+ Team);
             	mdvo=init.mbl.getMatchBySeason(Season,matchtype, Team);
             	matchdata=getdata(mdvo);
 				matchdatalist.updateTable(matchtitle, matchdata);
