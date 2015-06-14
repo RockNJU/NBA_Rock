@@ -219,7 +219,7 @@ public class TeamB extends JPanel {
 			
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] = da.get(i).getName();
-				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getName()+".png");
+				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getEname()+".png");
 				image.setImage(image.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT));
 				re[i][1] = image;			
 				re[i][2] = da.get(i).getNumber();

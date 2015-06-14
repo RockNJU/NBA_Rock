@@ -94,7 +94,7 @@ public class HotPlayers_Team extends JPanel {
 		setOpaque(false);
 		setSize(1040,220);
 		
-		ImageIcon No1_Player = new ImageIcon("newpic/portrait/"+no1[0]+".png");
+		ImageIcon No1_Player = new ImageIcon("newpic/portrait/"+init.pbl.getAPlayerInfo((String) no1[0]).getEname()+".png");
 		No1_Player.setImage(No1_Player.getImage().getScaledInstance(160, 130,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Player);		
 		No1_p.setBounds(35, 39, 160, 130);		
