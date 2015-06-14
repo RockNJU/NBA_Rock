@@ -153,6 +153,9 @@ public class Player implements PlayerBLService{
 						rs.getDouble("blockEff"),rs.getInt("double_sum"),
 						rs.getInt("three_sum"),
 						null);
+				vo.setL_f_assist_rate(rs.getDouble("l_f_assist_rate"));
+				vo.setL_f_point_rate(rs.getDouble("l_f_point_rate"));
+				vo.setL_f_rebound_rate(rs.getDouble("l_f_rebound_rate"));
 				list.add(vo);
 			}
 			  conn.commit();
@@ -162,7 +165,7 @@ public class Player implements PlayerBLService{
 		}//
 		return list;
 	}
-
+	
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getPlayerSeasonData(String season) {
 		
@@ -171,7 +174,7 @@ public class Player implements PlayerBLService{
 		list.addAll(getAllPlayerSeasonData(season, "常规赛"));
 		return list;
 	}
-
+	
 	@Override
 	public ArrayList<PlayerSeasonDataVO> keyfind(String text) {
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
@@ -298,9 +301,7 @@ public class Player implements PlayerBLService{
 						vo.setL_f_point_rate(rs.getDouble("l_f_point_rate"));
 						vo.setL_f_rebound_rate(rs.getDouble("l_f_rebound_rate"));
 				
-				if(rs.getString("division")==null){
-					System.out.println("name==null： "+rs.getString("name"));
-				}
+				
 				list.add(vo);
 			}
 			  conn.commit();
@@ -416,7 +417,7 @@ public class Player implements PlayerBLService{
 		return sort.hotPlayer_Sort(list,item);
 	}
 
-	
+	/*
 	public PlayerSeasonDataVO getAPlayerSeasonMatch(String season, String type,
 			String name) {
 		 
@@ -482,9 +483,9 @@ public class Player implements PlayerBLService{
 			e.printStackTrace();
 		}//
 		 
-		return vo;/* 当在数据库中没有查询到的情况下  ,返回一个表示未知的数据*/
+		return vo;
 	}
-
+*/
 	
 	/******************************************
 	 * 
@@ -626,17 +627,21 @@ public class Player implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		 ArrayList<PlayerSeasonDataVO> list=pl.getAPlayerSeasonData("林书豪","常规赛");
+		// ArrayList<PlayerSeasonDataVO> list=pl.getAPlayerSeasonData("林书豪","常规赛");
+		 PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
+		 
+		 System.out.println("name："+vo.getName());
+		 
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
-		 
+		/* 
 		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.sort_super("14-15", "常规赛","前锋","东部","pointNum", "≥",25);
 		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
 					+"  points:"+list.get(i).getPointNum()+"  partition:"+list.get(i).getPartition());
-		} 
+		} */
 		
 		
 		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
@@ -792,15 +797,54 @@ public class Player implements PlayerBLService{
 	@Override
 	public PlayerSeasonDataVO getAPlayerSeasonData(String season, String type,
 			String name) {
+			PlayerSeasonDataVO vo=null;
 		 
-		 
-			String str="SELECT * FROM (SELECT *FROM player_data WHERE season='"+season+"'AND name='"+name+"' "
+			String str="SELECT * FROM (SELECT *FROM player_data WHERE season='"+season+"' AND name='"+name+"' "
 				+ "AND type='"+type+"')as "
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
-
+/******************
+ * 
+ *************************/
+			ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();	 
+			try {
+				ResultSet  rs=stmt.executeQuery(str);
 			
-		ArrayList<PlayerSeasonDataVO> list=get_Data(str);
-		return list.get(0);
+				 
+				while(rs.next()){
+				System.out.println("name:  "+rs.getString("name"));
+					 vo=new PlayerSeasonDataVO(rs.getString("season"),rs.getString("type"),
+							rs.getString("name"),getAPlayerInfo(rs.getString("name")),
+							rs.getString("teamAbb"),rs.getString("division"),
+							rs.getString("partition"),rs.getString("position"),
+							rs.getInt("matchNum"),rs.getInt("startingNum"),
+							rs.getDouble("time"),rs.getInt("fieldGoal"),
+							rs.getInt("shootNum"),rs.getInt("t_fieldGoal"),
+							rs.getInt("t_shootNum"),rs.getInt("freeThrowGoal"),
+							rs.getInt("freeThrowNum"),rs.getInt("o_reboundNum"),
+							rs.getInt("d_reboundNum"),rs.getInt("reboundNum"),
+							rs.getInt("assistNum"),rs.getInt("stealNum"),
+							rs.getInt("blockNum"),rs.getInt("turnoverNum"),
+							rs.getInt("foulNum"),rs.getInt("pointNum"),
+							rs.getDouble("assistEfficiency"),rs.getDouble("reboundEfficiency"),
+							rs.getDouble("o_reboundEfficiency"),rs.getDouble("d_reboundEfficiency"),
+							rs.getDouble("stealEfficiency"),rs.getDouble("usingPercentage"),
+							rs.getDouble("blockEfficiency"),rs.getInt("seasonDoubleNum"),
+							rs.getInt("seasonThreeNum"),
+							null);;
+							vo.setL_f_assist_rate(rs.getDouble("l_f_assist_rate"));
+							vo.setL_f_point_rate(rs.getDouble("l_f_point_rate"));
+							vo.setL_f_rebound_rate(rs.getDouble("l_f_rebound_rate"));
+					
+					
+					 
+				}
+				  conn.commit();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//
+		
+		return vo;
 	}
 
 }
