@@ -779,25 +779,26 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		try {
 			 
 			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data "
-					+ "where name='"+name+"' AND season='"+currentSeason+"'";
+					+ "where name='"+name+"' AND season='"+currentSeason+"' order by date";
 			rs=stmt.executeQuery(sqlStr);
 			int n=0;
 			while(rs.next()){
 				n=rs.getInt("num");
-				System.out.println("while÷–----"+n);
+				//System.out.println("while÷–----"+n);
 				break;
 			}
 			
 			System.out.println("----"+n);
 			
-			if(num<n){
-				num=n;
-			}
-			
+		
 			list=new double[num];
 			list=addValue(list,num);
 	        conn.commit();
 			
+	        if(num>n){
+				n=num;
+			}
+	        
 			String str="SELECT "+item+" FROM player_season_data where "
 					+ " name='"+name+"' AND season='"+currentSeason+"'";
 			 rs=stmt.executeQuery(str);
@@ -806,8 +807,11 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			int count=0;
 			
 			while(rs.next()){
+				if(count==num){
+					break;
+				}
 				list[count]=rs.getDouble(item);
-				if(count==n){
+				if(count==num){
 					break;
 				}
 			}

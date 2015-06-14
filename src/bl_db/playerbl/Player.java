@@ -597,12 +597,12 @@ public class Player implements PlayerBLService{
 		ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
 		 //PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
 		 
-		 ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
+		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
 		 for(int i=0;i<list.size();i++){
 				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);
-			}
+			}*/
 		 
-		// System.out.println("name："+vo.getName());
+		  System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
 		 
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
 		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
@@ -647,12 +647,7 @@ public class Player implements PlayerBLService{
 			}
 			
 			System.out.println("----"+n);
-			
-			if(num>n){
-				num=n;
-			}else{
-				num=n;
-			}
+			 
 			
 			list=new double[num];
 			list=addValue(list,num);
@@ -666,6 +661,9 @@ public class Player implements PlayerBLService{
 			int count=0;
 			
 			while(rs.next()){
+				if(count==num){
+					break;
+				}
 				//System.out.println("要得到的项目  ："+);
 				list[count]=rs.getDouble(item);
 				if(count==num){
