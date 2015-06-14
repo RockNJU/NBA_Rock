@@ -63,7 +63,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 	    	  
 	    	  //System.out.println("？--？   "+rs.getString("teamAbb"));
 	    	  
-	    	infoList.add(new TeamInfoVO(rs.getString("team"),
+	    	infoList.add(new TeamInfoVO(rs.getString("team_m"),
 	    			  rs.getString("Cname"),rs.getString("TEname"),
 	    			  rs.getString("location"),rs.getString("division"),
 	    			  rs.getString("partition"),rs.getString("homeGround"),
@@ -76,6 +76,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 	      conn.commit();
 	}catch (Exception ex)
 	    {
+		ex.printStackTrace();
 	      System.out.println("Error : " + ex.toString());
 	    }
 	
@@ -426,9 +427,11 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 	public static void main(String args[]){
 		Team_Controller team=new Team_Controller();
 		
-		TeamSeasonDataVO vo=team.getATeamData("13-14", "LAL");
+		double a[]= team.getTeamOneData("LAL", 10, "pointNum");
+		// TeamSeasonDataVO vo=team.getATeamData("13-14", "LAL");
 		
-		System.out.println("获取的dfsdadad:  "+vo.getTeamName());
+		 TeamMatchVO vo=team.getTeamMatch("2012-05-04", "ATL");
+		 System.out.println("获取的dfsdadad:  "+vo.getTeamName());
 		/*
 		ArrayList<TeamSeasonDataVO> list=team.getAllTeamSeasonData("13-14", "常规赛");
 		 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
@@ -657,9 +660,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		 * 获取某支球队某个某一天参加的比赛
 		 ********************************/
 		 TeamMatchVO vo=null;
-		
-	      
-       
+
 		try {  
 	         
 			String str="SELECT * FROM team_season_data WHERE date='"+date+"' and teamAbb='"+teamAbb+"'";
@@ -667,9 +668,6 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			 
 			char chr=39;
 			while(rs.next()){
-				
-				
- 
 				vo =new TeamMatchVO(rs.getString("season"),rs.getString("team"),rs.getInt("winNum"),
 						rs.getString("date"),rs.getString("team_opp"),
 						rs.getInt("pointNum"),rs.getInt("lost_points"),rs.getInt("reboundNum"),
@@ -804,7 +802,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			}
 	        
 			String str="SELECT "+item+" FROM team_season_data where "
-					+ " name='"+name+"' AND season='"+currentSeason+"'";
+					+ " teamAbb='"+name+"' AND season='"+currentSeason+"'";
 			 rs=stmt.executeQuery(str);
 			char chr=39;
 			
@@ -815,9 +813,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					break;
 				}
 				list[count]=rs.getDouble(item);
-				if(count==num){
-					break;
-				}
+				count++;
 			}
 			 conn.commit();
 		} catch (SQLException e) {
