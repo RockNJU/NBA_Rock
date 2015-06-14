@@ -479,7 +479,6 @@ public class Player implements PlayerBLService{
 	private ArrayList<SingleMatchPersonalDataVO> get_A_season_records(String season,
 			String name) {
 		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
-		 
 		try {
 			 
 			String str="SELECT * FROM (SELECT * FROM "
@@ -645,9 +644,7 @@ public class Player implements PlayerBLService{
 		}
 		return list;
 	}
-	
-	
-	
+
 	@Override
 	public ArrayList<SingleMatchPersonalDataVO> getASeasonMatchData(String name,
 			String season) {
@@ -665,7 +662,7 @@ public class Player implements PlayerBLService{
 		try {
 			 
 			String str="SELECT* FROM(SELECT * FROM "
-					+ "player_season_data where date='"+lastDate+"')as "
+					+ "player_season_data where date='"+lastDate+"' AND type='"+getType(lastDate)+"')as "
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
