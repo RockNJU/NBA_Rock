@@ -797,6 +797,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			
 	        if(num!=10&num!=20&num!=30){
 				num=n;
+				list=new double[num];
 			}
 	        
 			String str="SELECT "+item+" FROM team_season_data where "

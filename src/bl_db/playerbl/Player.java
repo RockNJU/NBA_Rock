@@ -661,6 +661,7 @@ public class Player implements PlayerBLService{
 			int count=0;
 			if(num!=10&num!=20&num!=30){
 				num=n;
+				list=new double[num];
 			}
 			while(rs.next()){
 				if(count==num){
