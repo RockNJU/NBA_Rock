@@ -103,8 +103,8 @@ public class ContrastTeam extends JDialog {
 		赛季胜率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		赛季胜率.setBounds(399, 31, 95, 36);
 		赛季胜率.setOpaque(false);
-		data[0][4] = OftenUseMethod.changedouble(teama.getWinRate())*100;
-		data[1][4] = OftenUseMethod.changedouble(teamb.getWinRate())*100;
+		data[0][4] = OftenUseMethod.changedouble(teama.getWinRate());
+		data[1][4] = OftenUseMethod.changedouble(teamb.getWinRate());
 		contentPane.add(赛季胜率);
 		jbs.add(赛季胜率);
 		
@@ -204,8 +204,8 @@ public class ContrastTeam extends JDialog {
 		防守效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		防守效率.setBounds(20, 145, 81, 36);
 		contentPane.add(防守效率);
-		data[0][15] = OftenUseMethod.changedouble(teama.getDefenseEfficiency_avg())*100;
-		data[1][15] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency_avg())*100;
+		data[0][15] = OftenUseMethod.changedouble(teama.getDefenseEfficiency_avg());
+		data[1][15] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency_avg());
 		jbs.add(防守效率);
 		
 		final JRadioButton 进攻效率 = new JRadioButton("\u8FDB\u653B\u6548\u7387");
@@ -213,8 +213,8 @@ public class ContrastTeam extends JDialog {
 		进攻效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		进攻效率.setBounds(133, 145, 106, 36);
 		contentPane.add(进攻效率);
-		data[0][16] = OftenUseMethod.changedouble(teama.getAssistEfficiency_avg())*100;
-		data[1][16] = OftenUseMethod.changedouble(teamb.getAssistEfficiency_avg())*100;
+		data[0][16] = OftenUseMethod.changedouble(teama.getAssistEfficiency_avg());
+		data[1][16] = OftenUseMethod.changedouble(teamb.getAssistEfficiency_avg());
 		jbs.add(进攻效率);
 		
 		final JRadioButton 抢断率 = new JRadioButton("\u62A2\u65AD\u7387");
@@ -222,8 +222,8 @@ public class ContrastTeam extends JDialog {
 		抢断率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		抢断率.setBounds(427, 107, 78, 36);
 		contentPane.add(抢断率);
-		data[0][17] = OftenUseMethod.changedouble(teama.getStealEfficiency_avg())*100;
-		data[1][17] = OftenUseMethod.changedouble(teamb.getStealEfficiency_avg())*100;
+		data[0][17] = OftenUseMethod.changedouble(teama.getStealEfficiency_avg());
+		data[1][17] = OftenUseMethod.changedouble(teamb.getStealEfficiency_avg());
 		jbs.add(抢断率);
 		
 		JButton btnNewButton = new JButton("\u53D6\u6D88");

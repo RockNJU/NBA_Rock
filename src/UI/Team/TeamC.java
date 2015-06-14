@@ -78,9 +78,9 @@ public class TeamC extends JPanel {
 		//playera = 联盟水平
 		
 		//获取信息
-		String nameA = name;
-		String portraitA = "newpic/TEAMPNG/"+nameA+".png";
-		String teamA = teama.getTeamName();
+		String nameA = teama.getTeamName();
+		String teamA = name;
+		String portraitA = "newpic/TEAMPNG/"+teamA+".png";
 		String infoA = teama.getLeague()+"|"+teama.getPartition();
 		
 		 String nameB = "联盟平均水平";
@@ -171,9 +171,9 @@ public class TeamC extends JPanel {
 					else{
 
 						teamb = tempplayer;
-						String nameB = teamb.getTeamAbb();
+						String nameB = teamb.getFullName();
 						String portraitB = "newpic/TEAMPNG/"+nameB+".png";
-						String teamB = teamb.getFullName();
+						String teamB = teamb.getTeamAbb();
 						String infoB = teamb.getLeague()+"|"+teamb.getPartition();
 						 ImageIcon playersecond = new ImageIcon(portraitB);
 						 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
@@ -181,6 +181,25 @@ public class TeamC extends JPanel {
 						 teamsecond.setText(teamB);
 						 infosecond.setText(infoB);
 						 namesecond.setText(nameB);
+						 
+						 
+							paintdataA[0] = OftenUseMethod.changedouble(teama.getMatchNum());
+							paintdataA[1] = OftenUseMethod.changedouble(teama.getPointNum_avg());
+							paintdataA[2] = OftenUseMethod.changedouble(teama.getAssistNum_avg());
+							paintdataA[3] = OftenUseMethod.changedouble(teama.getReboundNum_avg());
+							paintdataA[4] = OftenUseMethod.changedouble(teama.getT_shootNum_avg());
+							paintdataA[5] = OftenUseMethod.changedouble(teama.getFreeThrowNum_avg());
+							paintdataA[6] = OftenUseMethod.changedouble(teama.getShootNum_avg());
+							
+							paintdataB[0] = OftenUseMethod.changedouble(teamb.getMatchNum());
+							paintdataB[1] = OftenUseMethod.changedouble(teamb.getPointNum_avg());
+							paintdataB[2] = OftenUseMethod.changedouble(teamb.getAssistNum_avg());
+							paintdataB[3] = OftenUseMethod.changedouble(teamb.getReboundNum_avg());
+							paintdataB[4] = OftenUseMethod.changedouble(teamb.getT_shootNum_avg());
+							paintdataB[5] = OftenUseMethod.changedouble(teamb.getFreeThrowNum_avg());
+							paintdataB[6] = OftenUseMethod.changedouble(teamb.getShootNum_avg());
+							paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+							cardLayout.next(jp);
 					}
 				}
 			});
