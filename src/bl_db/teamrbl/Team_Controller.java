@@ -738,10 +738,13 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			String str="SELECT "+item+" FROM team_season_data where "
 					+ " teamAbb='"+name+"' AND season='"+currentSeason+"' order by date";
 			 rs=stmt.executeQuery(str);
-			char chr=39;
+			 
 			
 			int count=0;
-			
+			if(num!=10&num!=20&num!=30){
+				num=n;
+				list=new double[num];
+			}
 			while(rs.next()){
 				if(count==num){
 					break;
