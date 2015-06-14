@@ -122,7 +122,7 @@ public class Player implements PlayerBLService{
 					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
 					
 					+ "seasonDoubleNum as double_sum,seasonThreeNum as three_sum "
-					+ "FROM player_data WHERE season='"+season+"' ORDER BY '"+sortItem+"')as"
+					+ "FROM player_data WHERE season='"+season+"')as"
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 	
 		
@@ -163,6 +163,8 @@ public class Player implements PlayerBLService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
+		HotSort sort=new HotSort();
+		list=sort.hotPlayer_Sort(list, sortItem);
 		return list;
 	}
 	
@@ -711,8 +713,8 @@ public class Player implements PlayerBLService{
 		try {
 			 
 			String str="SELECT* FROM(SELECT * FROM "
-					+ "player_season_data where date='"+lastDate+"' ORDER BY '"+item+"')as "
-					+ "data left join teaminfo on data.name =teaminfo.teamAbb";
+					+ "player_season_data where date='"+lastDate+"')as "
+					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
@@ -739,6 +741,8 @@ public class Player implements PlayerBLService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
+		HotSort sort=new HotSort();
+		list=sort.hotSinglePlayer_Sort(list, item);
 		return list;
 		
 	}
