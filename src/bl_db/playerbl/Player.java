@@ -403,7 +403,7 @@ public class Player implements PlayerBLService{
 		ArrayList<PlayerSeasonDataVO> list=getAllPlayerSeasonData(season,type);
 		list=sort_position(list,position);
 		if(!partition.equals("所有分区")){
-			if(partition.equals("西区")|partition.equals("东区")){
+			if(partition.equals("西部")|partition.equals("东部")){
 				list=sort_division(list,partition);
 			}else{
 			list=sort_partition(list,partition);
