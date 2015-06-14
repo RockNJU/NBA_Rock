@@ -22,6 +22,7 @@ public class Player extends JPanel{
 	static JPanel mainp;
 	
 	JButton change;
+	String nowp="info";
 	final JButton find;
 	public static JTextField textField;
 	public Player(){
@@ -56,8 +57,13 @@ public class Player extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				//Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
-				//Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
+				if(nowp.equals("info")){
+					Object info[][]=Player_Info.getinfodata(init.pbl.getPlayerInfo(textField.getText()));
+				Player_Info.playerinfolist.updateTable(Player_Info.playerinfotitle, info);
+				Player_Info.playerinfolist.FitTableColumns(Player_Info.playerinfolist.getTable());
+				
+				}
+				else{
 				if(Player_Data.a_t.equals("avg")){
 					Object info2[][]=Player_Data.getAveragedata(init.pbl.keyfind(textField.getText()));
 					Player_Data.playerdatalist.updateTable(Player_Data.playerAvgdatatitle, info2);
@@ -68,7 +74,7 @@ public class Player extends JPanel{
 					Player_Data.playerdatalist.FitTableColumns(Player_Data.playerdatalist.getTable());
 				}
 				
-				
+				}
 				
 			}
 
@@ -111,11 +117,13 @@ public class Player extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(change.getToolTipText().equals("切换到比赛信息")){
+					nowp="data";
 					change.setToolTipText("切换到基础信息");
 					change.setIcon(new ImageIcon("newpic/基础信息前.png"));
 					Player_Data p=new Player_Data();
 					change(p);
 				}else{
+					nowp="info";
 					change.setToolTipText("切换到比赛信息");
 					change.setIcon(new ImageIcon("newpic/比赛信息前.png"));
 					Player_Info p=new Player_Info();

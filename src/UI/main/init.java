@@ -69,7 +69,7 @@ public class init extends JFrame {
 	public static PlayerBLService pbl=rmi.getPlayerObject();
 	public static TeamBLService tbl=rmi.getTeamObject();
 	public static MatchBLService mbl=rmi.getMatchObject();
-	public static String defaultseason="13-14";
+	public static String defaultseason="14-15";
 	public static String defaulttype="³£¹æÈü";
 	/**
 	 * Launch the application.

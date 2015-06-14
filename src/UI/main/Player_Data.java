@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 
+import javax.swing.JToolBar;
+
 import UI.Player.SinglePlayer;
 import UI.common.CreateTable;
 import UI.common.History;
@@ -36,10 +38,15 @@ import VO.PlayerSeasonDataVO;
 
 import javax.swing.JTextField;
 
+import bl_db.common.Team_map;
+
 public class Player_Data extends JPanel{
-	
+	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
+	JButton defen=new JButton(new ImageIcon("newpic/hotbut/篮板.jpg"));
+	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/助攻.jpg"));
+	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/盖帽.jpg"));
+	JToolBar toolBar=new JToolBar();
 	public static String[] types={"常规赛","季后赛"};
-	public static SearchHistory sh = new SearchHistory();
 	public static JComboBox position;
 	public static JComboBox partition;
 	public static JComboBox playerseason;
@@ -60,6 +67,7 @@ public class Player_Data extends JPanel{
 	public static JPanel choosep;
 	public static JButton sort_terms;
 	public static int choosetimes=0;
+	static Team_map tm=new Team_map();
 	SortPlayer spp;
 	JButton sort;
 	JButton sort_point;
@@ -73,15 +81,21 @@ public class Player_Data extends JPanel{
 	public static String[] playerAvgdatatitle = { "序号", "姓名", "球队", "场数",
 		"先发", "篮板", "助攻", "得分", "投篮(%)", "三分(%)",
 		"罚球(%)", "进攻", "防守", "抢断", "盖帽", "失误",
-		"场均犯规", "分钟", "效率", "GmSc效率值", "真实命中率(%)", "投篮效率",
+		"犯规", "分钟", "效率", "GmSc效率值", "真实命中率(%)", "投篮效率",
 		"篮板率(%)", "进攻篮板率(%)", "防守篮板率(%)", "助攻率(%)", "抢断率(%)", "盖帽率(%)",
 		"失误率(%)", "使用率(%)","近五场得分提升(%)","近五场助攻提升(%)","近五场篮板提升(%)","两双数","三双数"};
 	public static String[] playerTotaldatatitle={ "序号", "姓名", "球队", "场数",
 		"先发", "篮板", "助攻", "得分", "投篮(%)", "三分(%)",
 		"罚球(%)", "进攻", "防守", "抢断", "盖帽", "失误",
-		"场均犯规", "分钟", "效率", "GmSc效率值", "真实命中率(%)", "投篮效率",
+		"犯规", "分钟", "效率", "GmSc效率值", "真实命中率(%)", "投篮效率",
 		"篮板率(%)", "进攻篮板率(%)", "防守篮板率(%)", "助攻率(%)", "抢断率(%)", "盖帽率(%)",
 		"失误率(%)", "使用率(%)","近五场得分提升(%)","近五场助攻提升(%)","近五场篮板提升(%)","两双数","三双数"};
+	public static String[] avgtitle_point={"序号", "姓名", "球队", "篮板", "助攻", "得分",
+	 "抢断", "盖帽", "失误","犯规" ,"两双数","三双数","场数","先发","分钟"};
+	public static String[] avgtitle_rate={"序号", "姓名", "球队" ,"投篮(%)", "三分(%)","罚球(%)","真实命中率(%)", 
+		"投篮效率" ,"篮板率(%)","助攻率(%)","抢断率(%)", "盖帽率(%)","失误率(%)", "使用率(%)"};
+	public static String[] avgtitle_higher={"序号","姓名", "球队", "效率", "GmSc效率值","篮板率(%)", "进攻篮板率(%)", "防守篮板率(%)",
+		 "近五场得分提升(%)","近五场助攻提升(%)","近五场篮板提升(%)"};
 	public static Object[][] playerdata;
 	public static ArrayList<PlayerSeasonDataVO> pdvo;
 	
@@ -116,7 +130,7 @@ public class Player_Data extends JPanel{
 		partition = new JComboBox();
 		partition.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		partition.setToolTipText("\u6240\u5C5E\u7403\u961F\u5206\u533A");
-		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u533A", "\u897F\u533A", "\u5927\u897F\u6D0B", "\u4E2D\u592E", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317", "\u592A\u5E73\u6D0B"}));
+		partition.setModel(new DefaultComboBoxModel(new String[] {"\u6240\u6709\u5206\u533A", "\u4E1C\u90E8", "\u897F\u90E8", "\u5927\u897F\u6D0B", "\u4E2D\u592E", "\u4E1C\u5357", "\u897F\u5357", "\u897F\u5317", "\u592A\u5E73\u6D0B"}));
 		partition.setEditable(true);
 		partition.setBounds(126, 15, 89, 30);
 		add(partition);
@@ -133,7 +147,7 @@ public class Player_Data extends JPanel{
 		if (seasons.size() == 0 || seasons == null) {
 			seasons.add("13-14赛季");
 		}
-		for (int o = 0; o < seasons.size()-1; o++) {
+		for (int o = 0; o < seasons.size(); o++) {
 			playerseason.addItem(seasons.get(o));
 		}
 		playerseason.setEditable(true);
@@ -413,13 +427,7 @@ public class Player_Data extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString().substring(0, 5));
-					sh.add_player_History(his);
+
 				termsort();
 			
 			}
@@ -599,15 +607,7 @@ public class Player_Data extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				butisclick= "得分";
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString().substring(0, 5));
-					sh.add_player_History(his);
-				
+				butisclick= "得分";      
 				// TODO
 				String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
@@ -667,16 +667,7 @@ public class Player_Data extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "篮板";
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString()
-						.substring(0, 5));
-					sh.add_player_History(his);
-					avg_tol.setSelected(true);
-				// TODO
+            	
 				String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
 				String According = "篮板";
@@ -688,13 +679,8 @@ public class Player_Data extends JPanel{
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
-				//System.out.println(Season + Position + Partition + According);
-				playerdata = getAveragedata(pdvo);
-				/*init.currenttext=null;
-				init.currentunordown=null; 
-				init.currentisaverage=false;
-				init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
-				System.out.println(init.currentpanel);*/
+			    playerdata = getAveragedata(pdvo);
+			
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);
 				playerdatalist.setcolor(5);
 				playerdatalist.FitTableColumns(playerdatalist.getTable());
@@ -735,15 +721,7 @@ public class Player_Data extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "助攻";
 				avg_tol.setSelected(true);
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString()
-						.substring(0, 5));
-					sh.add_player_History(his);
-				
+            	//保存历史记录			
 				// TODO
 				String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
@@ -756,13 +734,7 @@ public class Player_Data extends JPanel{
 				Partition = map2.getItem(Partition);
 				According = map3.getItem(According);
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
-				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
-				/*init.currenttext=null;
-				init.currentunordown=null; 
-				init.currentisaverage=false;
-				init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
-				System.out.println(init.currentpanel);*/
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);
 				
 				playerdatalist.FitTableColumns(playerdatalist.getTable());
@@ -803,17 +775,7 @@ public class Player_Data extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "according";
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString()
-						.substring(0, 5));
-					sh.add_player_History(his);
-				
-				// TODO
-				String Position = position.getSelectedItem().toString();
+            	String Position = position.getSelectedItem().toString();
 				String Partition = partition.getSelectedItem().toString();
 				String According = according.getSelectedItem().toString();
 				String Season = playerseason.getSelectedItem().toString()
@@ -821,13 +783,7 @@ public class Player_Data extends JPanel{
 				SortItem_Map map3 = new SortItem_Map();
 				According = map3.getItem(According);
 				pdvo = init.pbl.sort(Season, seasontype,Position, Partition, According);
-				//System.out.println(Season + Position + Partition + According);
-				playerdata = getAveragedata(pdvo);
-				/*init.currenttext=null;
-				init.currentunordown=null; 
-				init.currentisaverage=false;
-				init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
-				System.out.println(init.currentpanel);*/
+				playerdata = getAveragedata(pdvo);			
 				avg_tol.setSelected(true);
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);		
 				int x=getcl(according.getSelectedItem().toString());
@@ -870,38 +826,20 @@ public class Player_Data extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "according";
-            	//保存历史记录
-			      Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"playerHistory","排列："+position.getSelectedItem().toString()
-						+","+partition.getSelectedItem().toString()+","+according.getSelectedItem().toString()
-						+","+playerseason.getSelectedItem().toString()
-						.substring(0, 5));
-					sh.add_player_History(his);
-				
-				// TODO
 					String Position = position.getSelectedItem().toString();
-					String Partition = partition.getSelectedItem().toString();
-					
+					String Partition = partition.getSelectedItem().toString();				
 					PlayerPosition_Map map1 = new PlayerPosition_Map();
 					PartitionMap map2 = new PartitionMap();
 					SortItem_Map map3 = new SortItem_Map();
 					Position = map1.getItem(Position);
-					Partition = map2.getItem(Partition);
-				
+					Partition = map2.getItem(Partition);			
 				String According = according_super.getSelectedItem().toString();
 				String Season = playerseason.getSelectedItem().toString().substring(0, 5);
 				
 				According = map3.getItem(According);
 				
 				pdvo = init.pbl.sort_super(Season, seasontype,Position,Partition, According, signs.getSelectedItem().toString(),Integer.parseInt(num.getText()));
-				//System.out.println(Season + Position + Partition + According);
 				playerdata = getAveragedata(pdvo);
-				/*init.currenttext=null;
-				init.currentunordown=null; 
-				init.currentisaverage=false;
-				init.currentpanel="3&"+Season+";" + Position+";" + Partition+";" + According;
-				System.out.println(init.currentpanel);*/
 				avg_tol.setSelected(true);
 				playerdatalist.updateTable(playerAvgdatatitle, playerdata);		
 				int x=getcl(according.getSelectedItem().toString());
@@ -911,9 +849,58 @@ public class Player_Data extends JPanel{
 
 		});
 		
-		pdvo=init.pbl.getPlayerSeasonData("13-14");
+		toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		toolBar.setBounds(10, 104, 1040, 25);
+		toolBar.setOpaque(false);
+		
+		toolBar.add(zongbiao);
+		toolBar.add(defen);
+		toolBar.add(xiaolv);
+		toolBar.add(gaojie);
+		add(toolBar);
+		//一坨监听 
+		zongbiao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playerdata = getAveragedata(pdvo);
+				avg_tol.setSelected(true);
+				playerdatalist.updateTable(playerAvgdatatitle, playerdata);		
+				playerdatalist.FitTableColumns(playerdatalist.getTable());
+			}
+		});
+		defen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playerdata = getAveragedata_ForPoints(pdvo);
+				avg_tol.setSelected(true);
+				playerdatalist.updateTable(avgtitle_point, playerdata);		
+				playerdatalist.newFitTableColumns(playerdatalist.getTable());
+				
+				//changl();
+			}
+		});
+		xiaolv.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playerdata = getAveragedata_ForRate(pdvo);
+				avg_tol.setSelected(true);
+				playerdatalist.updateTable(avgtitle_rate, playerdata);		
+				playerdatalist.FitTableColumns(playerdatalist.getTable());
+			}
+		});
+		gaojie.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playerdata = getAveragedata_ForHigher(pdvo);
+				avg_tol.setSelected(true);
+				playerdatalist.updateTable(avgtitle_higher, playerdata);		
+				playerdatalist.FitTableColumns(playerdatalist.getTable());
+			}
+		});
+		pdvo=init.pbl.getPlayerSeasonData(init.defaultseason);
 		playerdata=getAveragedata(pdvo);
-		playerdatalist = new CreateTable(playerAvgdatatitle, playerdata, 10, 100,1040, 480, 25,
+		playerdatalist = new CreateTable(playerAvgdatatitle, playerdata, 10, 135,1040, 445, 25,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(playerdatalist);
 		playerdatalist.FitTableColumns(playerdatalist.getTable());
@@ -1002,7 +989,7 @@ public class Player_Data extends JPanel{
 			for (int i = 0; i <length; i++) {
 				re[i][0] = Player_Info.changenumber(i + 1);
 				re[i][1] = da.get(i).getName();
-				re[i][2] = da.get(i).getTeamName();
+				re[i][2] = tm.getFullName(da.get(i).getTeamName());
 				re[i][3] = da.get(i).getMatchNum();
 				re[i][4] = da.get(i).getStartingNum();
 				re[i][5] = OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());
@@ -1102,7 +1089,7 @@ public class Player_Data extends JPanel{
 			for (int i = 0; i <length; i++) {
 				re[i][0] = Player_Info.changenumber(i + 1);
 				re[i][1] = da.get(i).getName();
-				re[i][2] = da.get(i).getTeamName();
+				re[i][2] = tm.getFullName(da.get(i).getTeamName());
 				re[i][3] = da.get(i).getMatchNum();
 				re[i][4] = da.get(i).getStartingNum();
 				re[i][5] = OftenUseMethod.changedouble(da.get(i).getReboundNum());
@@ -1137,7 +1124,147 @@ public class Player_Data extends JPanel{
 				re[i][34]=   da.get(i).getSeasonThreeNum();
 			}
 			return re;
+		}
+	}
 
+	public static Object[][] getAveragedata_ForPoints(ArrayList<PlayerSeasonDataVO> da) {
+		//System.out.println(da == null);
+		if (da == null||da.size()==0) {
+			Object[][] re = new Object[1][15];
+			re[0][0] = "";
+			re[0][1] = "";
+			re[0][2] = "";
+			re[0][3] = "";
+			re[0][4] = "没有信息";
+			re[0][5] = "";
+			re[0][6] = "";
+			re[0][7] = "";
+			re[0][8] = "";
+			re[0][9] = "";
+			re[0][10] = "";
+			re[0][11] = "";
+			re[0][12] = "";
+			re[0][13] = "";
+			re[0][14] = "";
+			return re;
+		} else {
+			int length=50;
+			if(da.size()<50){
+				length=da.size();
+			}
+			Object[][] re = new Object[length][15];		
+			for (int i = 0; i <length; i++) {
+				re[i][0] = Player_Info.changenumber(i + 1);
+				re[i][1] = da.get(i).getName();
+				re[i][2] =tm.getFullName( da.get(i).getTeamName());
+				re[i][3] = OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());
+				re[i][4] = OftenUseMethod.changedouble(da.get(i).getAssistNum_avg());
+				re[i][5] = OftenUseMethod.changedouble(da.get(i).getPointNum_avg());			
+				re[i][6] = OftenUseMethod.changedouble(da.get(i).getStealNum_avg());
+				re[i][7] = OftenUseMethod.changedouble(da.get(i).getBlockNum_avg());
+				re[i][8] = OftenUseMethod.changedouble(da.get(i).getTurnoverNum_avg());
+				re[i][9] = OftenUseMethod.changedouble(da.get(i).getFoulNum_avg());
+				re[i][10]=   da.get(i).getDoubleNum();
+				re[i][11]=   da.get(i).getThreeNum();
+				re[i][12] = da.get(i).getMatchNum();
+				re[i][13] = da.get(i).getStartingNum();
+				re[i][14] = OftenUseMethod.changedouble(da.get(i).getTime_avg());
+			}
+			return re;
+
+		}
+
+		
+		
+	}
+	public static Object[][] getAveragedata_ForRate(ArrayList<PlayerSeasonDataVO> da) {
+		//System.out.println(da == null);
+		if (da == null||da.size()==0) {
+			Object[][] re = new Object[1][14];
+			re[0][0] = "";
+			re[0][1] = "";
+			re[0][2] = "";
+			re[0][3] = "";
+			re[0][4] = "没有信息";
+			re[0][5] = "";
+			re[0][6] = "";
+			re[0][7] = "";
+			re[0][8] = "";
+			re[0][9] = "";
+			re[0][10] = "";
+			re[0][11] = "";
+			re[0][12] = "";
+			re[0][13] = "";
+			return re;
+		} else {
+			int length=50;
+			if(da.size()<50){
+				length=da.size();
+			}
+			Object[][] re = new Object[length][14];
+			for (int i = 0; i <length; i++) {
+				re[i][0] = Player_Info.changenumber(i + 1);
+				re[i][1] = da.get(i).getName();
+				re[i][2] = tm.getFullName(da.get(i).getTeamName());
+				re[i][3] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getShootPercentage()));				
+				re[i][4] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getT_shootPercentage()));
+				re[i][5] =OftenUseMethod.changeper( OftenUseMethod.changedouble(da.get(i).getFreeThrowPercentage()));
+				re[i][6] =OftenUseMethod.changeper( OftenUseMethod.changedouble(da.get(i).getRealShootPercentage()));
+				re[i][7] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getShootEfficiency()));
+				re[i][8] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getReboundEfficiency()));
+				re[i][9] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getAssistEfficiency()));
+				re[i][10] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getStealEfficiency()));
+				re[i][11] = (OftenUseMethod.changedouble(da.get(i).getBlockEfficiency()));
+				re[i][12] =OftenUseMethod.changeper( OftenUseMethod.changedouble(da.get(i).getTurnoverPercentage()));
+				re[i][13] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getUsingPercentage()));			
+			}
+			return re;
+
+		}
+
+		
+		
+	}
+	
+	
+	public static Object[][] getAveragedata_ForHigher(ArrayList<PlayerSeasonDataVO> da) {
+		//System.out.println(da == null);
+		if (da == null||da.size()==0) {
+
+			Object[][] re = new Object[1][11];
+			re[0][0] = "";
+			re[0][1] = "";
+			re[0][2] = "";
+			re[0][3] = "";
+			re[0][4] = "没有信息";
+			re[0][5] = "";
+			re[0][6] = "";
+			re[0][7] = "";
+			re[0][8] = "";
+			re[0][9] = "";
+			re[0][10] = "";
+			return re;
+		} else {
+			int length=50;
+			if(da.size()<50){
+				length=da.size();
+			}
+			Object[][] re = new Object[length][11];
+			for (int i = 0; i <length; i++) {
+				re[i][0] = Player_Info.changenumber(i + 1);
+				re[i][1] = da.get(i).getName();
+				re[i][2] = tm.getFullName(da.get(i).getTeamName());		
+				re[i][3] = OftenUseMethod.changedouble(da.get(i).getEfficiency());
+				re[i][4] = OftenUseMethod.changedouble(da.get(i).getGmSc());
+				re[i][5] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getReboundEfficiency()));
+				re[i][6] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getOffensiveReboundEff()));
+				re[i][7] = OftenUseMethod.changeper(OftenUseMethod.changedouble(da.get(i).getDefenseReboundEff()));			
+				re[i][8] = (OftenUseMethod.changedouble(da.get(i).getL_f_point_rate()));
+				re[i][9] = (OftenUseMethod.changedouble(da.get(i).getL_f_assist_rate()));
+				re[i][10] = (OftenUseMethod.changedouble(da.get(i).getL_f_rebound_rate()));
+				
+			}
+			return re;
 		}
 
 		
@@ -1286,5 +1413,22 @@ public class Player_Data extends JPanel{
 		c.add(getcl(term2.getText()));
 		c.add(getcl(term3.getText()));
 		playerdatalist.setcolors(c);
+	}
+	static void changl(){
+		playerdatalist.setNthWidth(0, 50);
+		playerdatalist.setNthWidth(3, 70);
+		playerdatalist.setNthWidth(4, 70);
+		playerdatalist.setNthWidth(5, 70);			
+		playerdatalist.setNthWidth(6, 70);
+
+		playerdatalist.setNthWidth(7, 70);
+		playerdatalist.setNthWidth(8, 70);
+		playerdatalist.setNthWidth(9, 70);
+		
+		playerdatalist.setNthWidth(10, 70);
+		playerdatalist.setNthWidth(11, 70);
+		playerdatalist.setNthWidth(12, 70);
+		playerdatalist.setNthWidth(13, 70);
+		playerdatalist.setNthWidth(14, 100);
 	}
 }

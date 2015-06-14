@@ -11,15 +11,17 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 import businessService.blservice.PlayerBLService;
 import businessService.blservice.TeamBLService;
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable_pic;
 import UI.common.CreateTableforhot;
 import UI.common.OftenUseMethod;
 import UI.common.PlayerPosition_Map;
+import UI.common.SortItem_ForHotTeam;
 import UI.common.SortItem_Map;
-
 import UI.main.init;
 import VO.PlayerSeasonDataVO;
 import VO.SingleMatchPersonalDataVO;
@@ -40,8 +42,8 @@ public class HotPlayers_Team extends JPanel {
 	Object[] no1=new Object[4];
 	Object [][] data;
 	CreateTable_pic ctfh;
-	SortItem_Map map1 = new SortItem_Map();
-
+	SortItem_ForHotTeam map1 = new SortItem_ForHotTeam();
+	Team_map tm=new Team_map();
 	PlayerPosition_Map map4 = new PlayerPosition_Map();	
 
 	/**
@@ -103,7 +105,9 @@ public class HotPlayers_Team extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					
+					SinglePlayer spi = new SinglePlayer(psdv.get(0).getName());
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 				}
 			}
 		});
@@ -139,7 +143,10 @@ public class HotPlayers_Team extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && ctfh.getSelectedRow() != -1) {
-					
+					String name=ctfh.getValueAt(ctfh.getSelectedRow(), 2);
+					SinglePlayer spi = new SinglePlayer(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 
 				}
 			}
@@ -147,38 +154,7 @@ public class HotPlayers_Team extends JPanel {
 	}
 	
 
-	public Object[][] getdata(ArrayList<SingleMatchPersonalDataVO> da){
-		Object[][] re=new Object[4][6];
-		for(int i=1;i<5;i++){
-			re[i-1][0]=i+1;
-			ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getPlayerName()+".png");
-			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
-		    re[i-1][1]=ddd;
-		    re[i-1][2]=da.get(i).getPlayerName();
-		    re[i-1][3]=da.get(i).getPlayerPosition();
-		    re[i-1][4]=(da.get(i).getTeamName());
-		    if(type.equals("得分总")){
-				re[i-1][5]= Integer.toString(da.get(i).getPointNum());
-			}
-			else if(type.equals("篮板数")){
-				re[i-1][5]= Integer.toString(da.get(i).getReboundNum());
-			}
-			else if(type.equals("助攻数")){
-				re[i-1][5]= Integer.toString(da.get(i).getAssistNum());
-			}
-			else if(type.equals("抢断数")){
-				re[i-1][5]= Integer.toString(da.get(i).getStealNum());
-			}
-			else if(type.equals("盖帽数")){
-				re[i-1][5]= Integer.toString(da.get(i).getBlockNum());
-			}
-			else{
-				re[i-1][5] = -1;
-			}			
-		
-		}
-		return re;
-	}
+	
 	
 	public Object[][] getdata1(ArrayList<PlayerSeasonDataVO> da){
 		if(da==null){

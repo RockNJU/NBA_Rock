@@ -193,6 +193,8 @@ public class TeamA extends JPanel {
 				tabletype="近几年";
 				normal.setEnabled(true);
 				after.setEnabled(true);
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				isAvg.setSelected(true);
 				isAvg.setEnabled(true);
 				/*
@@ -242,6 +244,7 @@ public class TeamA extends JPanel {
 		normal.setLocation(340, 219);
 		normal.setSize(55, 30);
 		add(normal);
+		normal.setEnabled(false);
 		normal.addActionListener(new ActionListener(){
 
 			@Override
@@ -257,6 +260,7 @@ public class TeamA extends JPanel {
 		after.setLocation(395, 219);
 		after.setSize(55, 30);
 		add(after);
+		after.setEnabled(false);
 		after.addActionListener(new ActionListener(){
 
 			@Override
@@ -514,7 +518,11 @@ public class TeamA extends JPanel {
 		}
 		TeamA_list.setOpaque(false);
 		TeamA_list.updateTable(newti, TeamA_data);
-		TeamA_list.FitTableColumns(TeamA_list.getTable());
+		if(tabletype.equals("近几年")){
+			TeamA_list.new2FitTableColumns(TeamA_list.getTable());
+		}else{
+			TeamA_list.new1FitTableColumns(TeamA_list.getTable());
+		}
 		TeamA_list.getRoll().getViewport().setOpaque(false);
 	}
 }
