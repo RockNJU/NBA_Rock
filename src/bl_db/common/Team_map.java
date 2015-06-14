@@ -57,7 +57,7 @@ public class Team_map {
 		   map.put("老鹰", "ATL");
 		   map.put("篮网", "BKN");
 		   map.put("凯尔特人", "BOS");
-		   map.put("Hornets", "CHA");
+		   map.put("黄蜂", "CHA");
 		   map.put("公牛", "CHI");
 		   map.put("骑士", "CLE");
 		   map.put("小牛", "DAL");

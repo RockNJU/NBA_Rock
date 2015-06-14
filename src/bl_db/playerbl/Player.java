@@ -175,13 +175,25 @@ public class Player implements PlayerBLService{
  * @param season
  * @return   获取某个赛季的  某个球员的某乡数据的总和
  */
+	private	String getType(String date){
+		String str[]=date.split("-");
+		if(str[2].compareTo("04")>0){
+			return "季后赛";
+		}else{
+			return "常规赛";
+		}
+			
+	}
+	
 	
 	@Override
 	public ArrayList<PlayerSeasonDataVO> getMost_Progress_Player(String item) {
-
+		  
+			
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
 		 
-			String str="SELECT * FROM (SELECT *FROM player_data WHERE season='"+currentSeason+"')as "
+			String str="SELECT * FROM (SELECT *FROM player_data WHERE "
+					+ "season='"+currentSeason+"' and type='"+getType(lastDate)+"')as "
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 		list=get_Data(str);
 	HotSort sort=new HotSort();
@@ -546,14 +558,15 @@ public class Player implements PlayerBLService{
 		 // System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
 		 
 		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
-		//ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
+		 ArrayList<PlayerSeasonDataVO> list=pl.getMost_Progress_Player("l_f_rebound_rate");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		/* 
 		System.out.println("大小："+list.size());*/
-		ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
+		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
 		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
-					+"  points:"+list.get(i).getPointNum()+"  partition:"+list.get(i).getPartition());
+					+"  points:"+list.get(i).getPointNum()+
+					"  partition:"+list.get(i).getPartition()+"  :"+list.get(i).getL_f_rebound_rate());
 		} 
 		
 		
