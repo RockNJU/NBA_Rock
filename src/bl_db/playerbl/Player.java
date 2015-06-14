@@ -313,50 +313,7 @@ public class Player implements PlayerBLService{
 /*****************************************************************************
  * 以下包含type的部分都是迭代三要求做的，type即为比赛类型（ＮＢＡ的常规赛和季后赛，季前赛）
  ****************************************************************************/
-	/*private ArrayList<PlayerSeasonDataVO> getData(String sqlStr){
-		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();	 
-		try {
-			ResultSet  rs=stmt.executeQuery(sqlStr);
-		
-			 
-			while(rs.next()){
-			//	System.out.println("name:  "+rs.getString("name"));
-				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(rs.getString("season"),rs.getString("type"),
-						rs.getString("name"),getAPlayerInfo(rs.getString("name")),
-						rs.getString("teamAbb"),rs.getString("division"),
-						rs.getString("partition"),rs.getString("position"),
-						rs.getInt("match_sum"),rs.getInt("start_sum"),
-						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
-						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
-						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
-						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
-						rs.getInt("d_rebound_sum"),rs.getInt("rebound_sum"),
-						rs.getInt("assist_sum"),rs.getInt("steal_sum"),
-						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
-						rs.getInt("foul_sum"),rs.getInt("point_sum"),
-						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
-						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
-						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
-						rs.getDouble("blockEff"),rs.getInt("double_sum"),
-						rs.getInt("three_sum"),
-						null);;
-						vo.setL_f_assist_rate(rs.getDouble("l_f_assist_rate"));
-						vo.setL_f_point_rate(rs.getDouble("l_f_point_rate"));
-						vo.setL_f_rebound_rate(rs.getDouble("l_f_rebound_rate"));
-				
-				if(rs.getString("division")==null){
-					System.out.println("name==null： "+rs.getString("name"));
-				}
-				list.add(vo);
-			}
-			  conn.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//
-		return list;
-	}
-	*/
+	
 	
 	private ArrayList<PlayerSeasonDataVO> getAllPlayerSeasonData(String season, String type){
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();
@@ -852,6 +809,29 @@ public class Player implements PlayerBLService{
 			}//
 		
 		return vo;
+	}
+
+
+
+	@Override
+	public String getEnglishName(String chinesename) {
+		String result="??";
+		String str="SELECT name FROM palyerinfo where Cname='"+chinesename+"'";
+		try {
+			ResultSet  rs=stmt.executeQuery(str);
+		
+			 
+			while(rs.next()){	
+				result=rs.getString("name");
+				break;
+			}
+			  conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+	
+		return result;
 	}
 
 }
