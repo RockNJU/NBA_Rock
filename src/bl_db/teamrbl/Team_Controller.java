@@ -781,8 +781,8 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		System.out.println("µ±Ç°Èü¼¾£º"+currentSeason);
 		try {
 			 
-			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data "
-					+ "where name='"+name+"' AND season='"+currentSeason+"' order by date";
+			String sqlStr="SELECT COUNT(*) AS num FROM team_season_data "
+					+ "where teamAbb='"+name+"' AND season='"+currentSeason+"' order by date";
 			rs=stmt.executeQuery(sqlStr);
 			int n=0;
 			while(rs.next()){
