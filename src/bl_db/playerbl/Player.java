@@ -523,7 +523,7 @@ public class Player implements PlayerBLService{
 		try {
 			 
 			String str="SELECT * FROM (SELECT * FROM "
-					+ "player_season_data where season='"+season+"' AND name='"+name+"') as "
+					+ "player_season_data where season='"+season+"' AND name='"+name+"' order by date desc) as "
 					+ "data left join teaminfo as info on data.team =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
@@ -564,8 +564,13 @@ public class Player implements PlayerBLService{
 		ArrayList<SingleMatchPersonalDataVO> list=get_A_season_records(currentSeason, name);
 		ArrayList<SingleMatchPersonalDataVO> result=new ArrayList<>();
 		
+		int num=list.size();
+		if(num>5){
+			num=5;
+		}
+		
 		int count=0;
-		for(int i=0;i<list.size();i++){
+		for(int i=0;i<num;i++){
 			result.add(list.get(i));
 			count++;
 			if(count==5)
@@ -582,12 +587,12 @@ public class Player implements PlayerBLService{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		// ArrayList<PlayerSeasonDataVO> list=pl.getAPlayerSeasonData("林书豪","常规赛");
-		 PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
+		ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
+		 //PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
 		 
 		 ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
-		 for(int i=0;i<infoList.size();i++){
-				System.out.println("name:"+infoList.get(i).getName());
+		 for(int i=0;i<list.size();i++){
+				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);
 			}
 		 
 		// System.out.println("name："+vo.getName());
@@ -740,7 +745,8 @@ public class Player implements PlayerBLService{
 		 
 		  
 		 
-			String str="SELECT * FROM (SELECT *FROM player_data WHERE name='"+name+"' AND type='"+type+"')as "
+			String str="SELECT * FROM (SELECT *FROM player_data WHERE name='"+name+"'"
+					+ " AND type='"+type+"' order by season desc)as "
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			list=get_Data(str);
 		return list;
