@@ -75,7 +75,7 @@ public class HotTeams extends JPanel {
 				}
 			}
 		});
-		System.out.println("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
+		//System.out.println("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
 		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
 		No1_Team.setImage(No1_Team.getImage().getScaledInstance(158, 158,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Team);		

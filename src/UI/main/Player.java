@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import UI.Sta.Statistics;
+
 
 
 public class Player extends JPanel{
@@ -47,7 +49,9 @@ public class Player extends JPanel{
 		statistics.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent e) {				
-				
+				Statistics spi = new Statistics();
+				spi.setVisible(true);
+				spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
