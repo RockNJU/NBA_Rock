@@ -73,15 +73,22 @@ public class MatchA extends JPanel {
 		String portraitA = "newpic/TEAMPNG/"+tm.getFullName(nameA)+".png";
 		String nameB = teamb.getTeamName();
 		String portraitB = "newpic/TEAMPNG/"+tm.getFullName(nameB)+".png";
-		int color[] = new int[dataA.length];
+
 		//获取比赛数据
 		int size = match.getScores().size();
 		dataA = new int[size];
 		dataB = new int[size];
+		int color[] = new int[dataA.length];
 		int tempnum = 0;
 		for(String text:match.getScores()){
+			if(!text.contains("?")){
 			dataA[tempnum] = Integer.valueOf(text.split("-")[0]);
 			dataB[tempnum] = Integer.valueOf(text.split("-")[1]);
+			}
+			else{
+				dataA[tempnum] = 0;
+				dataB[tempnum] = 0;
+			}
 			tempnum++;
 		}
 		
@@ -344,7 +351,7 @@ public class MatchA extends JPanel {
 	public void paintunder(int num,String[] contrat,double[] dataforB,double[] dataforA){
 		//数据保留两位有效小数，无对应数据则为0，数据尽量不要超过100
 		
-		int heightadjust = 0;
+		int heightadjust = 40;
 		//paintunder(paintcontentnum,paintcontent,paintdataA,paintdataC);
 		 JPanel contentPane = new JPanel();
 		 contentPane.setOpaque(false);

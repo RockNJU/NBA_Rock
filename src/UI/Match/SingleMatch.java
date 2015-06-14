@@ -67,7 +67,7 @@ public class SingleMatch extends JDialog {
             e.printStackTrace();
         }
 		try {
-			SingleMatch dialog = new SingleMatch("金州勇士","2015-06-11");
+			SingleMatch dialog = new SingleMatch("洛杉矶湖人","2012-05-01");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

@@ -236,8 +236,8 @@ public class ContrastMatch extends JDialog {
 		助攻率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		助攻率.setBounds(133, 180, 75, 36);
 		contentPane.add(助攻率);
-		data[0][18] = OftenUseMethod.changedouble(teama.getAssistEfficiency())*100;
-		data[1][18] = OftenUseMethod.changedouble(teamb.getAssistEfficiency())*100;
+		data[0][18] = OftenUseMethod.changedouble(teama.getAssistEfficiency());
+		data[1][18] = OftenUseMethod.changedouble(teamb.getAssistEfficiency());
 		jbs.add(助攻率);
 		
 		final JRadioButton 抢断率 = new JRadioButton("\u62A2\u65AD\u7387");
@@ -245,8 +245,8 @@ public class ContrastMatch extends JDialog {
 		抢断率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		抢断率.setBounds(248, 180, 78, 36);
 		contentPane.add(抢断率);
-		data[0][19] = OftenUseMethod.changedouble(teama.getStealEfficiency())*100;
-		data[1][19] = OftenUseMethod.changedouble(teamb.getStealEfficiency())*100;
+		data[0][19] = OftenUseMethod.changedouble(teama.getStealEfficiency());
+		data[1][19] = OftenUseMethod.changedouble(teamb.getStealEfficiency());
 		jbs.add(抢断率);
 		
 		final JRadioButton 进攻效率 = new JRadioButton("进攻效率");
@@ -254,8 +254,8 @@ public class ContrastMatch extends JDialog {
 		进攻效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		进攻效率.setBounds(341, 180, 95, 36);
 		contentPane.add(进攻效率);
-		data[0][20] = OftenUseMethod.changedouble(teama.getOffenseEfficiency())*100;
-		data[1][20] = OftenUseMethod.changedouble(teamb.getOffenseEfficiency())*100;
+		data[0][20] = OftenUseMethod.changedouble(teama.getOffenseEfficiency());
+		data[1][20] = OftenUseMethod.changedouble(teamb.getOffenseEfficiency());
 		jbs.add(进攻效率);
 		
 		final JRadioButton 防守效率 = new JRadioButton("防守效率");
@@ -263,8 +263,8 @@ public class ContrastMatch extends JDialog {
 		防守效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		防守效率.setBounds(251, 218, 111, 36);
 		contentPane.add(防守效率);
-		data[0][21] = OftenUseMethod.changedouble(teama.getDefenseEfficiency())*100;
-		data[1][21] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency())*100;
+		data[0][21] = OftenUseMethod.changedouble(teama.getDefenseEfficiency());
+		data[1][21] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency());
 		jbs.add(防守效率);
 
 		
