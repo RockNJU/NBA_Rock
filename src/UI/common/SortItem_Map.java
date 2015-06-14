@@ -88,7 +88,7 @@ public class SortItem_Map {
 	   map.put("盖帽数", "blockNum");
 	   map.put("抢断数", "stealNum");
 	   map.put("犯规数", "foulNum");
-	   map.put("失误数", "turoverNum");
+	   map.put("失误数", "turnoverNum");
 	   map.put("总分", "pointNum");
 	   
 	  
