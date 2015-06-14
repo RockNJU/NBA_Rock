@@ -47,13 +47,13 @@ public class PlayerB extends JPanel {
 	public PlayerB(String name) {
 		System.out.println(name);
 		playera = init.pbl.keyfind(name).get(0);
-		paintdataA[0] = OftenUseMethod.changedouble(playera.getStartingNum());
+	/*	paintdataA[0] = OftenUseMethod.changedouble(playera.getStartingNum());
 		paintdataA[1] = OftenUseMethod.changedouble(playera.getPointNum_avg());
 		paintdataA[2] = OftenUseMethod.changedouble(playera.getAssistNum_avg());
 		paintdataA[3] = OftenUseMethod.changedouble(playera.getReboundNum_avg());
 		paintdataA[4] = OftenUseMethod.changedouble(playera.getT_shootNum_avg());
 		paintdataA[5] = OftenUseMethod.changedouble(playera.getFreeThrowNum_avg());
-		paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());
+		paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());*/
 		
 		 jp.setBounds(0, 0, 1042, 580);
 		 jp.setOpaque(false);
@@ -109,7 +109,7 @@ public class PlayerB extends JPanel {
 			JLabel namefirst = new JLabel(nameA);
 			namefirst.setHorizontalAlignment(SwingConstants.RIGHT);
 			namefirst.setForeground(new Color(155, 106, 141));
-			namefirst.setFont(new Font("Verdana", Font.PLAIN, 30));
+			namefirst.setFont(new Font("ºÚÌå", Font.PLAIN, 30));
 			namefirst.setBounds(25, 9, 211, 36);
 			contentPane.add(namefirst);
 			
@@ -137,7 +137,7 @@ public class PlayerB extends JPanel {
 			final JLabel namesecond = new JLabel(nameB);
 			namesecond.setHorizontalAlignment(SwingConstants.LEFT);
 			namesecond.setForeground(new Color(155, 106, 141));
-			namesecond.setFont(new Font("Verdana", Font.PLAIN, 30));
+			namesecond.setFont(new Font("ºÚÌå", Font.PLAIN, 30));
 			namesecond.setBounds(804, 9, 211, 36);
 			contentPane.add(namesecond);
 			

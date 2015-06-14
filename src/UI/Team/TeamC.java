@@ -121,7 +121,7 @@ public class TeamC extends JPanel {
 			JLabel namefirst = new JLabel(nameA);
 			namefirst.setHorizontalAlignment(SwingConstants.RIGHT);
 			namefirst.setForeground(new Color(155, 106, 141));
-			namefirst.setFont(new Font("Verdana", Font.PLAIN, 30));
+			namefirst.setFont(new Font("ºÚÌå", Font.PLAIN, 30));
 			namefirst.setBounds(25, 9, 211, 36);
 			contentPane.add(namefirst);
 			
@@ -146,10 +146,10 @@ public class TeamC extends JPanel {
 			infosecond.setBounds(804, 44, 106, 24);
 			contentPane.add(infosecond);
 			
-			final JLabel namesecond = new JLabel("Average");
+			final JLabel namesecond = new JLabel("\u8054\u76DF\u5E73\u5747\u6C34\u5E73");
 			namesecond.setHorizontalAlignment(SwingConstants.LEFT);
 			namesecond.setForeground(new Color(155, 106, 141));
-			namesecond.setFont(new Font("Verdana", Font.PLAIN, 30));
+			namesecond.setFont(new Font("ºÚÌå", Font.PLAIN, 30));
 			namesecond.setBounds(804, 9, 211, 36);
 			contentPane.add(namesecond);
 			

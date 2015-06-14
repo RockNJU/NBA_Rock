@@ -76,6 +76,7 @@ public class SingleMatch extends JDialog {
 	@SuppressWarnings("null")
 	
 	public SingleMatch(String name,String date) {
+		System.out.println(date+";"+name);
 		mvo = init.mbl.getMatchByTeam(date,name);
 		
 		getContentPane().setLayout(null);
