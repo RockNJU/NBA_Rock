@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import UI.Team.SingleTeam;
 import UI.common.CreateTable;
 import UI.common.OftenUseMethod;
 import UI.common.PartitionMap;
@@ -21,6 +22,8 @@ import VO.SingleMatchPersonalDataVO;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
@@ -61,6 +64,7 @@ public class PlayerA extends JPanel {
 		setLayout(null);
 		setOpaque(false);
 		pivo=init.pbl.getAPlayerInfo(name);
+		Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason, init.defaulttype, name);
 		
 		jb1=new JLabel(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		jb1.setBounds(10, 10, 230, 185);
@@ -128,13 +132,48 @@ public class PlayerA extends JPanel {
 		lblxxxx.setBounds(515, 110, 145, 20);
 		add(lblxxxx);
 		
-		//ImageIcon pteam = new ImageIcon("newpic/TEAMPNG"+psvo.getTeamName()+".png");
-		pteam = new ImageIcon("newpic/TEAMPNG/"+"ATL"+".png");
+		pteam = new ImageIcon("newpic/TEAMPNG"+Apsvo.getTeamName()+".png");
+		//pteam = new ImageIcon("newpic/TEAMPNG/"+"ATL"+".png");
 		pteam.setImage(pteam.getImage().getScaledInstance(120,120,Image.SCALE_DEFAULT));
 		lblNewLabel = new JLabel(pteam);
 		lblNewLabel.setOpaque(false);
 		lblNewLabel.setBounds(623, 10, 120,120);
 		add(lblNewLabel);
+		lblNewLabel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SingleTeam spi = new SingleTeam(Apsvo.getTeamName());
+				spi.setVisible(true);
+				spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		bg.setImage(bg.getImage().getScaledInstance(510, 185,Image.SCALE_DEFAULT));
 		JLabel jb3=new JLabel(bg);
@@ -142,7 +181,7 @@ public class PlayerA extends JPanel {
 		add(jb3);
 		jb3.setOpaque(false);
 	
-		
+	
 		lastmatches=new JButton(new ImageIcon("newpic/近五场浮.png"));
 		lastmatches.setLocation(40, 219);
 		lastmatches.setSize(100, 30);
@@ -157,8 +196,7 @@ public class PlayerA extends JPanel {
 				process.setIcon(new ImageIcon("newpic/按钮赛程.png"));
 				normal.setEnabled(false);
 				after.setEnabled(false);
-				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
-				after.setIcon(new ImageIcon("newpic/季后赛.png"));
+
 				tabletype="近五场";
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
@@ -179,6 +217,8 @@ public class PlayerA extends JPanel {
 				process.setIcon(new ImageIcon("newpic/按钮赛程.png"));
 				tabletype="近几年";
 				normal.setEnabled(true);
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
+				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				after.setEnabled(true);
 				isAvg.setSelected(true);
 				isAvg.setEnabled(true);
@@ -201,7 +241,7 @@ public class PlayerA extends JPanel {
 				tabletype="赛程";
 				after.setEnabled(false);
 				normal.setEnabled(false);
-				normal.setIcon(new ImageIcon("newpic/常规赛.png"));
+				normal.setIcon(new ImageIcon("newpic/常规赛浮.png"));
 				after.setIcon(new ImageIcon("newpic/季后赛.png"));
 				isAvg.setSelected(true);
 				isAvg.setEnabled(false);
@@ -241,7 +281,8 @@ public class PlayerA extends JPanel {
 				updatePlayerA(na);
 			}			
 		});
-		
+		normal.setEnabled(false);
+		after.setEnabled(false);
 		isAvg = new JRadioButton("\u573A\u5747\u6570\u636E");
 		isAvg.setSelected(true);
 		isAvg.setFont(new Font("华文细黑", Font.PLAIN, 15));
@@ -460,8 +501,12 @@ public class PlayerA extends JPanel {
 			PlayerA_data=getmatch(smdvo);
 		}
 		PlayerA_list.updateTable(truetitle, PlayerA_data);
-		
-		PlayerA_list.FitTableColumns(PlayerA_list.getTable());
+		if(tabletype.equals("近几年")){
+			PlayerA_list.new2FitTableColumns(PlayerA_list.getTable());
+		}else{
+			PlayerA_list.new1FitTableColumns(PlayerA_list.getTable());
+		}
+		//PlayerA_list.FitTableColumns(PlayerA_list.getTable());
 		PlayerA_list.getRoll().getViewport().setOpaque(false);
 	}
 

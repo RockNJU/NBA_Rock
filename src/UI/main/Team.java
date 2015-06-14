@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 
 import bl_db.common.Team_map;
 import UI.Team.SingleTeam;
@@ -31,9 +32,13 @@ import VO.PlayerSeasonDataVO;
 import VO.TeamSeasonDataVO;
 
 public class Team extends JPanel{
-	SearchHistory sh = new SearchHistory();
 	JButton allteams;
 	final JButton find;
+	JButton zongbiao=new JButton(new ImageIcon("newpic/hotbut/得分.jpg"));
+	JButton defen=new JButton(new ImageIcon("newpic/hotbut/篮板.jpg"));
+	JButton xiaolv=new JButton(new ImageIcon("newpic/hotbut/助攻.jpg"));
+	JButton gaojie=new JButton(new ImageIcon("newpic/hotbut/盖帽.jpg"));
+	JToolBar toolBar=new JToolBar();
 	public static JComboBox Teamseason;
 	public static String seasontype;
 	JButton normal,after;
@@ -69,20 +74,14 @@ public class Team extends JPanel{
 	Team_map my=new Team_map();
 	public SingleTeam spi;
 	public static CreateTable teamdatalist;
-	/*public static String[] teamTotaltitle={"序号","球队","得分","篮板","助攻","三分命中数",
-			"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
-			"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
-			"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};	
-	public static String[] teamAveragetitle={"序号","球队","得分","篮板","助攻","三分命中数",
-			"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
-			"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
-			"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};
-			*/
 	public static String[] teamtitle={"序号","球队","得分","篮板","助攻","三分命中数",
 		"三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","进攻篮板数","防守篮板数",
 		"抢断","盖帽","失误","犯规","比赛场数","投篮(%)","三分(%)","罚球(%)",
 		"胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};
 
+	public static String[] teamtitle_point={"序号","球队","得分","篮板","助攻","抢断","盖帽","失误","犯规","比赛场数"};
+	public static String[] teamtitle_shoot={"序号","球队","三分命中数","三分出手数","罚球命中数","罚球出手数","投篮命中数","投篮出手数","投篮(%)","三分(%)","罚球(%)"};
+	public static String[] teamtitle_rate={"序号","球队","胜率","进攻回合","防守回合","进攻效率","防守效率","进攻篮板率","防守篮板率","抢断率","助攻率"};
 	
 	public Team(){
 		setLayout(null);
@@ -649,12 +648,7 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				avg_tol.setSelected(true);
 				butisclick= "得分";
-            	//保存历史记录
-				Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-					sh.add_team_History(his);
-				
+            	
 				
 				// TODO
 				
@@ -709,12 +703,7 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "篮板";
 				avg_tol.setSelected(true);
-            	//保存历史记录
-				Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-					sh.add_team_History(his);
-				
+            
 				
 				// TODO
 					String According = "篮板";
@@ -772,12 +761,7 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "助攻";
 				avg_tol.setSelected(true);
-            	//保存历史记录
-				Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-					sh.add_team_History(his);
-				
+            	
 				
 				// TODO
 					String According = "助攻";
@@ -835,12 +819,7 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				avg_tol.setSelected(true);
 				butisclick= "according";
-            	//保存历史记录
-				Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-					sh.add_team_History(his);
-				
+            
 				
 				// TODO
 					String According = according.getSelectedItem().toString();
@@ -899,12 +878,7 @@ public class Team extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				butisclick= "according";
 				avg_tol.setSelected(true);
-            	//保存历史记录
-				Calendar ca = Calendar.getInstance();
-				 String time = ca.getTime().toString();
-				History his = new History(time,"teamHistory","排列："+Teamseason.getSelectedItem().toString()+","+according.getSelectedItem().toString());
-					sh.add_team_History(his);
-				
+            
 				
 				// TODO
 				SortItem_Map map3 = new SortItem_Map();	
@@ -931,12 +905,59 @@ public class Team extends JPanel{
 		});
 		
 
+		toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		toolBar.setBounds(10, 140, 1040, 25);
+		toolBar.setOpaque(false);
+		
+		toolBar.add(zongbiao);
+		toolBar.add(defen);
+		toolBar.add(xiaolv);
+		toolBar.add(gaojie);
+		add(toolBar);
+		//一坨监听 
+		zongbiao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				teamdata = getAveragedata(tdvo);
+				avg_tol.setSelected(true);
+				teamdatalist.updateTable(teamtitle, teamdata);		
+				teamdatalist.FitTableColumns(teamdatalist.getTable());
+			}
+		});
+		defen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				teamdata = getAveragedata_piont(tdvo);
+				avg_tol.setSelected(true);
+				teamdatalist.updateTable(teamtitle_point, teamdata);		
+				teamdatalist.new3FitTableColumns(teamdatalist.getTable());
+				
+				//changl();
+			}
+		});
+		xiaolv.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				teamdata = getAveragedata_shoot(tdvo);
+				avg_tol.setSelected(true);
+				teamdatalist.updateTable(teamtitle_shoot, teamdata);		
+				teamdatalist.new1FitTableColumns(teamdatalist.getTable());
+			}
+		});
+		gaojie.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				teamdata = getAveragedata_rate(tdvo);
+				avg_tol.setSelected(true);
+				teamdatalist.updateTable(teamtitle_rate, teamdata);		
+				teamdatalist.new4FitTableColumns(teamdatalist.getTable());
+			}
+		});
 		tdvo=init.tbl.getAllTeamSeasonData(init.defaultseason,init.defaulttype);
 		teamdata=getAveragedata(tdvo);
-		teamdatalist = new CreateTable(teamtitle, teamdata, 10, 100,1040, 480, 25,
+		teamdatalist = new CreateTable(teamtitle, teamdata, 10, 170,1040, 445, 25,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
-		teamdatalist.setSize(1040, 480);
-		teamdatalist.setLocation(10, 131);
 		add(teamdatalist);
 		teamdatalist.FitTableColumns(teamdatalist.getTable());
 		// 双击进入球员界面
@@ -963,7 +984,6 @@ public class Team extends JPanel{
 		menubg.setBounds(10, 41, 1040, 82);
 		add(menubg);
 		menubg.setOpaque(true);
-		
 	}
 	public static Object[][] getTotaldata(ArrayList<TeamSeasonDataVO> da){
 		if(da==null){
@@ -1034,10 +1054,8 @@ public class Team extends JPanel{
 				re[i][28]=OftenUseMethod.changedouble(da.get(i).getStealEfficiency());
 				re[i][29]=OftenUseMethod.changedouble(da.get(i).getAssistEfficiency());
 			}		
-			return re;
-		
-		}
-		
+			return re;	
+		}	
 	}
 	static Object[][] getAveragedata(ArrayList<TeamSeasonDataVO> da){
 		//System.out.println(da==null);
@@ -1077,12 +1095,8 @@ public class Team extends JPanel{
 		}
 		else{
 			Object[][] re=new Object[da.size()][30];
-			for(int i=0;i<da.size();i++){			
-
-				
-				
-				re[i][0]=Player_Info.changenumber(i+1);
-				
+			for(int i=0;i<da.size();i++){						
+				re[i][0]=Player_Info.changenumber(i+1);				
 				re[i][1]=da.get(i).getTeamName();				
 				re[i][2]=OftenUseMethod.changedouble(da.get(i).getPointNum_avg());		
 				re[i][3]=OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());	
@@ -1112,6 +1126,114 @@ public class Team extends JPanel{
 				re[i][27]=OftenUseMethod.changedouble(da.get(i).getD_ReboundEfficiency());
 				re[i][28]=OftenUseMethod.changedouble(da.get(i).getStealEfficiency());
 				re[i][29]=OftenUseMethod.changedouble(da.get(i).getAssistEfficiency());
+			}		
+			return re;		
+		}			
+	}
+	static Object[][] getAveragedata_rate(ArrayList<TeamSeasonDataVO> da){
+		//System.out.println(da==null);
+		if(da==null){
+			Object[][] re=new Object[1][11];
+			re[0][0]="";
+			re[0][1]="";
+			re[0][2]="";
+			re[0][3]="";			
+			re[0][4]="";
+			re[0][5]="";
+			re[0][6]="";
+			re[0][7]="";
+			re[0][8]="";
+			re[0][9]="";
+			re[0][10]="";		
+			return re;
+		}
+		else{
+			Object[][] re=new Object[da.size()][11];
+			for(int i=0;i<da.size();i++){			
+				re[i][0]=Player_Info.changenumber(i+1);				
+				re[i][1]=da.get(i).getTeamName();												
+				re[i][2]=OftenUseMethod.changedouble(da.get(i).getWinRate());				
+				re[i][3]=OftenUseMethod.changedouble(da.get(i).getOffenseRound_avg());
+				re[i][4]=OftenUseMethod.changedouble(da.get(i).getDefenseRound());						
+				re[i][5]=OftenUseMethod.changedouble(da.get(i).getOffenseEfficiency());
+				re[i][6]=OftenUseMethod.changedouble(da.get(i).getDefenseEfficiency());
+				re[i][7]=OftenUseMethod.changedouble(da.get(i).getO_ReboundEfficiency());
+				re[i][8]=OftenUseMethod.changedouble(da.get(i).getD_ReboundEfficiency());
+				re[i][9]=OftenUseMethod.changedouble(da.get(i).getStealEfficiency());
+				re[i][10]=OftenUseMethod.changedouble(da.get(i).getAssistEfficiency());
+			}		
+			return re;	
+		}			
+	}
+	
+	static Object[][] getAveragedata_shoot(ArrayList<TeamSeasonDataVO> da){
+		//System.out.println(da==null);
+		if(da==null){
+			Object[][] re=new Object[1][11];
+			re[0][0]="";
+			re[0][1]="";
+			re[0][2]="";
+			re[0][3]="";			
+			re[0][4]="";
+			re[0][5]="";
+			re[0][6]="";
+			re[0][7]="";
+			re[0][8]="";
+			re[0][9]="";
+			re[0][10]="";
+		
+			return re;
+		}
+		else{
+			Object[][] re=new Object[da.size()][11];
+			for(int i=0;i<da.size();i++){									
+				re[i][0]=Player_Info.changenumber(i+1);				
+				re[i][1]=da.get(i).getTeamName();								
+				re[i][2]=OftenUseMethod.changedouble(da.get(i).getT_fieldGoal_avg());
+				re[i][3]=OftenUseMethod.changedouble(da.get(i).getT_shootNum_avg());				
+				re[i][4]=OftenUseMethod.changedouble(da.get(i).getFreeThrowGoalNum_avg());
+				re[i][5]=OftenUseMethod.changedouble(da.get(i).getFreeThrowNum_avg());
+				re[i][6]=OftenUseMethod.changedouble(da.get(i).getFieldGoal_avg());
+				re[i][7]=OftenUseMethod.changedouble(da.get(i).getShootNum_avg());			
+				re[i][8]=OftenUseMethod.changedouble(da.get(i).getShootPercentage());
+				re[i][9]=OftenUseMethod.changedouble(da.get(i).getT_shootPercentage());
+				re[i][10]=OftenUseMethod.changedouble(da.get(i).getFreeThrowPercentage());							
+			}		
+			return re;
+		
+		}
+			
+	}
+	static Object[][] getAveragedata_piont(ArrayList<TeamSeasonDataVO> da){
+		//System.out.println(da==null);
+		if(da==null){
+			Object[][] re=new Object[1][10];
+			re[0][0]="";
+			re[0][1]="";
+			re[0][2]="";
+			re[0][3]="";			
+			re[0][4]="";
+			re[0][5]="";
+			re[0][6]="";
+			re[0][7]="";
+			re[0][8]="";
+			re[0][9]="";
+
+			return re;
+		}
+		else{
+			Object[][] re=new Object[da.size()][30];
+			for(int i=0;i<da.size();i++){			
+				re[i][0]=Player_Info.changenumber(i+1);			
+				re[i][1]=da.get(i).getTeamName();				
+				re[i][2]=OftenUseMethod.changedouble(da.get(i).getPointNum_avg());		
+				re[i][3]=OftenUseMethod.changedouble(da.get(i).getReboundNum_avg());	
+				re[i][4]=OftenUseMethod.changedouble(da.get(i).getAssistNum_avg());			
+				re[i][5]=OftenUseMethod.changedouble(da.get(i).getStealNum_avg());
+				re[i][6]=OftenUseMethod.changedouble(da.get(i).getBlockNum_avg());
+				re[i][7]=OftenUseMethod.changedouble(da.get(i).getTurnoverNum_avg());
+				re[i][8]=OftenUseMethod.changedouble(da.get(i).getFoulNum_avg());							
+				re[i][9]=da.get(i).getMatchNum();			
 			}		
 			return re;
 		

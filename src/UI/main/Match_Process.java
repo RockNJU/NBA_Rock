@@ -498,9 +498,9 @@ public class Match_Process extends JPanel {
 			
 		});
 		
-		//mivo=init.mbl.getPro_NotOver(init.defaultseason, 6);
-		//String[] tempdates=init.mbl.getDatesOfPro_ByMonth(init.defaultseason, 6);
-		//pro_data=getProdata_HavingDays(changeProdata_ChooseAllTeam_ByDate(mivo,tempdates));
+		mivo=init.mbl.getPro_NotOver(init.defaultseason, 6);
+		ArrayList<String> tempdates=init.mbl.getDatesOfPro_ByMonth(init.defaultseason, 6);
+		pro_data=getProdata_HavingDays(changeProdata_ChooseAllTeam_ByDate(tempdates));
 		ctm=new CreateTable_M(pro_title, pro_data,10, 123,1040, 480, 25,new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 12));
 		add(ctm);
 		

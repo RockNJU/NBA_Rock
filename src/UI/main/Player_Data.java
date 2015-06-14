@@ -913,7 +913,7 @@ public class Player_Data extends JPanel{
 						// TODO Auto-generated method stub
 						if (e.getClickCount() == 2 && playerdatalist.getSelectedRow() != -1) {
 							
-							String name = playerdatalist.getValueAt(playerdatalist.getSelectedRow(), 2);
+							String name = playerdatalist.getValueAt(playerdatalist.getSelectedRow(), 1);
 							// System.out.println(name);
 							
 							spi = new SinglePlayer(name);

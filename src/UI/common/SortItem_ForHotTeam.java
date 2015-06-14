@@ -30,7 +30,7 @@ public class SortItem_ForHotTeam {
 		   
 		
 		   if(map.get(item)==null){
-			   return "pointNum_avg";
+			   return "pointNum";
 		   }
 		   return map.get(item).toString();
 	   }
