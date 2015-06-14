@@ -37,6 +37,7 @@ public class ContrastTeam extends JDialog {
 	TeamSeasonDataVO teama;
 	TeamSeasonDataVO teamb;
 	 TeamC tc;
+	boolean change = false;
 	
 	double[][] data = new double[2][30];
 	double[][] dataoutput = new double[2][10];
@@ -229,6 +230,7 @@ public class ContrastTeam extends JDialog {
 		btnNewButton.setBackground(init.sysdarkblue);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				change = false;
 			    dispose();
 			}
 		});
@@ -240,6 +242,7 @@ public class ContrastTeam extends JDialog {
 		button.setBackground(init.sysdarkblue);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				change = true;
 				for(int i=0;i<jbs.size();i++){
 					final JRadioButton tempjb = jbs.get(i);
 					if(tempjb.isSelected()){

@@ -97,7 +97,7 @@ public class TeamC extends JPanel {
 			
 		//头像
 		 ImageIcon playerfirst = new ImageIcon(portraitA);
-		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(215, 215,Image.SCALE_DEFAULT));
+		 playerfirst.setImage(playerfirst.getImage().getScaledInstance(205, 205,Image.SCALE_DEFAULT));
 			contentPane.setLayout(null);
 			JLabel photoplayer1 = new JLabel(playerfirst);
 			photoplayer1.setBounds(255, 10, 230, 185);
@@ -126,7 +126,7 @@ public class TeamC extends JPanel {
 			contentPane.add(namefirst);
 			
 			 ImageIcon playersecond = new ImageIcon(portraitB);
-			 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 215,Image.SCALE_DEFAULT));
+			 playersecond.setImage(playersecond.getImage().getScaledInstance(205, 205,Image.SCALE_DEFAULT));
 			final JLabel photoplayer2 = new JLabel((Icon) playersecond);
 			photoplayer2.setOpaque(false);
 			photoplayer2.setBounds(552, 10, 230, 185);
@@ -197,10 +197,12 @@ public class TeamC extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					ContrastTeam cp = new ContrastTeam(teama,teamb);//默认是联盟平均水平
 					cp.setModal(true);
-					cp.setLocation(init.SysStart_X+420, init.SysStart_Y+294);
+					cp.setLocation(init.SysStart_X+280, init.SysStart_Y+302);
 					cp.setVisible(true);
-				paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
-				cardLayout.next(jp);
+				if(cp.change == true){
+					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+					cardLayout.next(jp);
+				}
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));

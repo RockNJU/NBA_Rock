@@ -320,10 +320,12 @@ public class MatchA extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ContrastMatch cp = new ContrastMatch(teama,teamb);
 				cp.setModal(true);
-				cp.setLocation(init.SysStart_X+380, init.SysStart_Y+342);
+				cp.setLocation(init.SysStart_X+280, init.SysStart_Y+302);
 				cp.setVisible(true);
-				paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
-				cardLayout.next(jp);
+				if(cp.change==true){
+					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+					cardLayout.next(jp);
+				}
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));

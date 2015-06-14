@@ -35,6 +35,7 @@ public class ContrastPlayer extends JDialog {
 	private JPanel contentPane;
 	PlayerSeasonDataVO playera;
 	PlayerSeasonDataVO playerb;
+	boolean change = false;
 	
 	double[][] data = new double[2][30];
 	double[][] dataoutput = new double[2][10];
@@ -344,6 +345,7 @@ public class ContrastPlayer extends JDialog {
 		btnNewButton.setBackground(init.sysdarkblue);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 change = false;
 			    dispose();
 			}
 		});
@@ -355,6 +357,7 @@ public class ContrastPlayer extends JDialog {
 		button.setBackground(init.sysdarkblue);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 change = true;
 				for(int i=0;i<jbs.size();i++){
 					final JRadioButton tempjb = jbs.get(i);
 					if(tempjb.isSelected()){
