@@ -830,13 +830,13 @@ public class Player implements PlayerBLService{
 	@Override
 	public String getEnglishName(String chinesename) {
 		String result="??";
-		String str="SELECT name FROM playerinfo where name='"+chinesename+"'";
+		String str="SELECT Ename FROM playerinfo where name='"+chinesename+"'";
 		try {
 			ResultSet  rs=stmt.executeQuery(str);
 		
 			 
 			while(rs.next()){	
-				result=rs.getString("name");
+				result=rs.getString("Ename");
 				break;
 			}
 			  conn.commit();
