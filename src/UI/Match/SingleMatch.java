@@ -38,6 +38,8 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import bl_db.common.Team_map;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -54,6 +56,7 @@ public class SingleMatch extends JDialog {
 	 final CardLayout cardLayout = new CardLayout();
 	JPanel jp = new JPanel();
 	MatchVO mvo;
+	Team_map tm = new Team_map();
 	
 
 	public static void main(String[] args) {
@@ -64,7 +67,7 @@ public class SingleMatch extends JDialog {
             e.printStackTrace();
         }
 		try {
-			SingleMatch dialog = new SingleMatch("Aaron Brooks","11-11");
+			SingleMatch dialog = new SingleMatch("½ðÖÝÓÂÊ¿","2015-06-11");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -72,12 +75,11 @@ public class SingleMatch extends JDialog {
 		}
 	}
 
-
 	@SuppressWarnings("null")
 	
 	public SingleMatch(String name,String date) {
-		System.out.println(date+";"+name);
-		mvo = init.mbl.getMatchByTeam(date,name);
+		System.out.println(date+";"+tm.getFullName(name));
+		mvo = init.mbl.getMatchByTeam(date,tm.getFullName(name));
 		
 		getContentPane().setLayout(null);
 		setSize(1060,620);

@@ -107,7 +107,7 @@ public class PlayerC extends JPanel {
 		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(chossenShowData));
 		basicData = Changedouble(temp);
 		basicline = new Serie(basicName, basicData);
-		System.out.println(basicData[0]+";"+basicData[1]);
+		System.out.println(basicData[0]+";"+basicData[1]+";"+basicData.length+";"+lineChartState);
 		chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 		chartPanel.getChart().fireChartChanged();
 		
@@ -537,7 +537,7 @@ public class PlayerC extends JPanel {
 		comboBox_1.setBounds(244, 10, 75, 23);
 		contentPane.add(comboBox_1);
 		
-		JButton 球员区间 = new JButton("\u7403\u5458\u9884\u8BA1\u533A\u95F4");
+		JButton 球员区间 = new JButton("\u4E0B\u573A\u9884\u8BA1\u533A\u95F4");
 		球员区间.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showsectionline = !showsectionline;
