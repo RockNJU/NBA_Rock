@@ -93,7 +93,6 @@ public class PlayerC extends JPanel {
 	
 	public PlayerC(String name) {
 		//用于测试
-		name = "科比-布莱恩特";
 		basicName=name;
 		
 		setSize(1042,580);
@@ -108,6 +107,7 @@ public class PlayerC extends JPanel {
 		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(chossenShowData));
 		basicData = Changedouble(temp);
 		basicline = new Serie(basicName, basicData);
+		System.out.println(basicData[0]+";"+basicData[1]);
 		chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 		chartPanel.getChart().fireChartChanged();
 		
@@ -457,7 +457,7 @@ public class PlayerC extends JPanel {
 		赛季.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//线得到数据，然后修改
-				lineChartState = -1;
+				lineChartState = 0;
 				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				basicData = Changedouble(tempb);
 				basicline = new Serie(basicName, basicData);

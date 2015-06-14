@@ -48,7 +48,7 @@ public class SinglePlayer extends JDialog {
             e.printStackTrace();
         }
 		try {
-			SinglePlayer dialog = new SinglePlayer("Aaron Brooks");
+			SinglePlayer dialog = new SinglePlayer("阿隆-布鲁克斯");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -60,6 +60,7 @@ public class SinglePlayer extends JDialog {
 	 * Create the dialog.
 	 */
 	public SinglePlayer(String name) {
+		System.out.print(name);
 		getContentPane().setLayout(null);
 		setSize(1060,620);
 		setUndecorated(true);// 取消窗体修饰效果************		
