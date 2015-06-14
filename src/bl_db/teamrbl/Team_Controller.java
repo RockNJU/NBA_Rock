@@ -342,7 +342,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		
 		try {
 			 
-			String str="SELECT * FROM (SELECT name,position,"
+			String str="SELECT * FROM (SELECT name,position,type,"
 					+ "team,COUNT(*) as match_sum, "
 					+ "SUM(startingNum) as start_sum,SUM(time) as time_sum,"
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
