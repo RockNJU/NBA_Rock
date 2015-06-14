@@ -490,7 +490,14 @@ public class Player implements PlayerBLService{
 			boolean[] reverse) {
 		ArrayList<PlayerSeasonDataVO> list=getAllPlayerSeasonData(season,type);
 		list=sort_position(list,position);
-		list=sort_partition(list,partition);
+		if(!partition.equals("所有分区")){
+			if(partition.equals("西部")|partition.equals("东部")){
+				list=sort_division(list,partition);
+			}else{
+			list=sort_partition(list,partition);
+			}
+		}
+		
 		HotSort sort=new HotSort();
 		return sort.hotPlayer_Sort(list, condition, reverse);
 	}
