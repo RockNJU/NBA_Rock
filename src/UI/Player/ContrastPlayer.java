@@ -111,8 +111,8 @@ public class ContrastPlayer extends JDialog {
 		投篮命中率.setBounds(20, 69, 106, 36);
 		投篮命中率.setOpaque(false);
 		contentPane.add(投篮命中率);
-		data[0][5] = OftenUseMethod.changedouble(playera.getShootPercentage());
-		data[1][5] = OftenUseMethod.changedouble(playerb.getShootPercentage());
+		data[0][5] = OftenUseMethod.changedouble(playera.getShootPercentage())*100;
+		data[1][5] = OftenUseMethod.changedouble(playerb.getShootPercentage())*100;
 		jbs.add(投篮命中率);
 		
 		final JRadioButton 三分命中率 = new JRadioButton("\u4E09\u5206\u547D\u4E2D\u7387");
@@ -120,8 +120,8 @@ public class ContrastPlayer extends JDialog {
 		三分命中率.setBounds(130, 69, 106, 36);
 		三分命中率.setOpaque(false);
 		contentPane.add(三分命中率);
-		data[0][6] = OftenUseMethod.changedouble(playera.getT_shootPercentage());
-		data[1][6] = OftenUseMethod.changedouble(playerb.getT_shootPercentage());
+		data[0][6] = OftenUseMethod.changedouble(playera.getT_shootPercentage())*100;
+		data[1][6] = OftenUseMethod.changedouble(playerb.getT_shootPercentage())*100;
 		jbs.add(三分命中率);
 		
 		final JRadioButton 罚球命中率 = new JRadioButton("\u7F5A\u7403\u547D\u4E2D\u7387");
@@ -129,8 +129,8 @@ public class ContrastPlayer extends JDialog {
 		罚球命中率.setBounds(242, 69, 106, 36);
 		罚球命中率.setOpaque(false);
 		contentPane.add(罚球命中率);
-		data[0][7] = OftenUseMethod.changedouble(playera.getFreeThrowPercentage());
-		data[1][7] = OftenUseMethod.changedouble(playerb.getFreeThrowPercentage());
+		data[0][7] = OftenUseMethod.changedouble(playera.getFreeThrowPercentage())*100;
+		data[1][7] = OftenUseMethod.changedouble(playerb.getFreeThrowPercentage())*100;
 		jbs.add(罚球命中率);
 		
 		final JRadioButton 进攻 = new JRadioButton("\u8FDB\u653B");
@@ -207,8 +207,8 @@ public class ContrastPlayer extends JDialog {
 		效率.setBounds(20, 180, 61, 36);
 		效率.setOpaque(false);
 		contentPane.add(效率);
-		data[0][15] = OftenUseMethod.changedouble(playera.getEfficiency());
-		data[1][15] = OftenUseMethod.changedouble(playerb.getEfficiency());
+		data[0][15] = OftenUseMethod.changedouble(playera.getEfficiency())/100;
+		data[1][15] = OftenUseMethod.changedouble(playerb.getEfficiency())/100;
 		jbs.add(效率);
 		
 		final JRadioButton Gmsc = new JRadioButton("GmSC\u6548\u7387\u503C");
@@ -216,8 +216,8 @@ public class ContrastPlayer extends JDialog {
 		Gmsc.setBounds(87, 180, 105, 36);
 		Gmsc.setOpaque(false);
 		contentPane.add(Gmsc);
-		data[0][16] = OftenUseMethod.changedouble(playera.getGmSc());
-		data[1][16] = OftenUseMethod.changedouble(playerb.getGmSc());
+		data[0][16] = OftenUseMethod.changedouble(playera.getGmSc())/100;
+		data[1][16] = OftenUseMethod.changedouble(playerb.getGmSc())/100;
 		jbs.add(Gmsc);
 
 		final JRadioButton 真实命中率 = new JRadioButton("\u771F\u5B9E\u547D\u4E2D\u7387");
@@ -225,8 +225,8 @@ public class ContrastPlayer extends JDialog {
 		真实命中率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		真实命中率.setBounds(200, 180, 103, 36);
 		contentPane.add(真实命中率);
-		data[0][17] = OftenUseMethod.changedouble(playera.getRealShootPercentage());
-		data[1][17] = OftenUseMethod.changedouble(playerb.getRealShootPercentage());
+		data[0][17] = OftenUseMethod.changedouble(playera.getRealShootPercentage())*100;
+		data[1][17] = OftenUseMethod.changedouble(playerb.getRealShootPercentage())*100;
 		jbs.add(真实命中率);
 		
 		final JRadioButton 投篮效率 = new JRadioButton("\u6295\u7BEE\u6548\u7387");
@@ -234,8 +234,8 @@ public class ContrastPlayer extends JDialog {
 		投篮效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		投篮效率.setBounds(310, 180, 95, 36);
 		contentPane.add(投篮效率);
-		data[0][18] = OftenUseMethod.changedouble(playera.getShootEfficiency());
-		data[1][18] = OftenUseMethod.changedouble(playerb.getShootEfficiency());
+		data[0][18] = OftenUseMethod.changedouble(playera.getShootEfficiency())*100;
+		data[1][18] = OftenUseMethod.changedouble(playerb.getShootEfficiency())*100;
 		jbs.add(投篮效率);
 		
 		final JRadioButton 篮板率 = new JRadioButton("\u7BEE\u677F\u7387");
@@ -243,8 +243,8 @@ public class ContrastPlayer extends JDialog {
 		篮板率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		篮板率.setBounds(415, 180, 79, 36);
 		contentPane.add(篮板率);
-		data[0][19] = OftenUseMethod.changedouble(playera.getReboundEfficiency());
-		data[1][19] = OftenUseMethod.changedouble(playerb.getReboundEfficiency());
+		data[0][19] = OftenUseMethod.changedouble(playera.getReboundEfficiency())*100;
+		data[1][19] = OftenUseMethod.changedouble(playerb.getReboundEfficiency())*100;
 		jbs.add(篮板率);
 		
 		final JRadioButton 进攻篮板数 = new JRadioButton("\u8FDB\u653B\u7BEE\u677F\u6570");
@@ -252,8 +252,8 @@ public class ContrastPlayer extends JDialog {
 		进攻篮板数.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		进攻篮板数.setBounds(20, 218, 105, 36);
 		contentPane.add(进攻篮板数);
-		data[0][20] = OftenUseMethod.changedouble(playera.getOffensiveReboundEff_avg());
-		data[1][20] = OftenUseMethod.changedouble(playerb.getOffensiveReboundEff_avg());
+		data[0][20] = OftenUseMethod.changedouble(playera.getOffensiveReboundEff_avg())*100;
+		data[1][20] = OftenUseMethod.changedouble(playerb.getOffensiveReboundEff_avg())*100;
 		jbs.add(进攻篮板数);
 		
 		final JRadioButton 防守篮板数 = new JRadioButton("\u9632\u5B88\u7BEE\u677F\u6570");
@@ -261,8 +261,8 @@ public class ContrastPlayer extends JDialog {
 		防守篮板数.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		防守篮板数.setBounds(133, 218, 106, 36);
 		contentPane.add(防守篮板数);
-		data[0][21] = OftenUseMethod.changedouble(playera.getDefenseReboundEff_avg());
-		data[1][21] = OftenUseMethod.changedouble(playerb.getDefenseReboundEff_avg());
+		data[0][21] = OftenUseMethod.changedouble(playera.getDefenseReboundEff_avg())*100;
+		data[1][21] = OftenUseMethod.changedouble(playerb.getDefenseReboundEff_avg())*100;
 		jbs.add(防守篮板数);
 		
 		final JRadioButton 助攻率 = new JRadioButton("\u52A9\u653B\u7387");
@@ -270,8 +270,8 @@ public class ContrastPlayer extends JDialog {
 		助攻率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		助攻率.setBounds(248, 218, 75, 36);
 		contentPane.add(助攻率);
-		data[0][22] = OftenUseMethod.changedouble(playera.getAssistEfficiency_avg());
-		data[1][22] = OftenUseMethod.changedouble(playerb.getAssistEfficiency_avg());
+		data[0][22] = OftenUseMethod.changedouble(playera.getAssistEfficiency_avg())*100;
+		data[1][22] = OftenUseMethod.changedouble(playerb.getAssistEfficiency_avg())*100;
 		jbs.add(助攻率);
 		
 		final JRadioButton 抢断率 = new JRadioButton("\u62A2\u65AD\u7387");
@@ -279,8 +279,8 @@ public class ContrastPlayer extends JDialog {
 		抢断率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		抢断率.setBounds(333, 218, 78, 36);
 		contentPane.add(抢断率);
-		data[0][23] = OftenUseMethod.changedouble(playera.getStealEfficiency_avg());
-		data[1][23] = OftenUseMethod.changedouble(playerb.getStealEfficiency_avg());
+		data[0][23] = OftenUseMethod.changedouble(playera.getStealEfficiency_avg())*100;
+		data[1][23] = OftenUseMethod.changedouble(playerb.getStealEfficiency_avg())*100;
 		jbs.add(抢断率);
 		
 		final JRadioButton 盖帽率 = new JRadioButton("\u76D6\u5E3D\u7387");
@@ -288,8 +288,8 @@ public class ContrastPlayer extends JDialog {
 		盖帽率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		盖帽率.setBounds(415, 218, 79, 36);
 		contentPane.add(盖帽率);
-		data[0][24] = OftenUseMethod.changedouble(playera.getBlockEfficiency());
-		data[1][24] = OftenUseMethod.changedouble(playerb.getBlockEfficiency());
+		data[0][24] = OftenUseMethod.changedouble(playera.getBlockEfficiency())*100;
+		data[1][24] = OftenUseMethod.changedouble(playerb.getBlockEfficiency())*100;
 		jbs.add(盖帽率);
 		
 		final JRadioButton 失误率 = new JRadioButton("\u5931\u8BEF\u7387");
@@ -297,8 +297,8 @@ public class ContrastPlayer extends JDialog {
 		失误率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		失误率.setBounds(20, 256, 79, 36);
 		contentPane.add(失误率);
-		data[0][25] = OftenUseMethod.changedouble(playera.getTurnoverPercentage());
-		data[1][25] = OftenUseMethod.changedouble(playerb.getTurnoverPercentage());
+		data[0][25] = OftenUseMethod.changedouble(playera.getTurnoverPercentage())*100;
+		data[1][25] = OftenUseMethod.changedouble(playerb.getTurnoverPercentage())*100;
 		jbs.add(失误率);
 		
 		final JRadioButton 使用率 = new JRadioButton("\u4F7F\u7528\u7387");
@@ -306,8 +306,8 @@ public class ContrastPlayer extends JDialog {
 		使用率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		使用率.setBounds(107, 256, 78, 36);
 		getContentPane().add(使用率);
-		data[0][26] = OftenUseMethod.changedouble(playera.getUsingPercentage_avg());
-		data[1][26] = OftenUseMethod.changedouble(playerb.getUsingPercentage_avg());
+		data[0][26] = OftenUseMethod.changedouble(playera.getUsingPercentage_avg())*100;
+		data[1][26] = OftenUseMethod.changedouble(playerb.getUsingPercentage_avg())*100;
 		jbs.add(使用率);
 		
 		final JRadioButton 近五场得分提升率 = new JRadioButton(
@@ -316,8 +316,8 @@ public class ContrastPlayer extends JDialog {
 		近五场得分提升率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		近五场得分提升率.setBounds(193, 256, 145, 36);
 		contentPane.add(近五场得分提升率);
-		data[0][27] = OftenUseMethod.changedouble(playera.getL_f_point_rate());
-		data[1][27] = OftenUseMethod.changedouble(playerb.getL_f_point_rate());
+		data[0][27] = OftenUseMethod.changedouble(playera.getL_f_point_rate())*100;
+		data[1][27] = OftenUseMethod.changedouble(playerb.getL_f_point_rate())*100;
 		jbs.add(近五场得分提升率);
 		
 		final JRadioButton 近五场助攻提升率 = new JRadioButton(
@@ -326,8 +326,8 @@ public class ContrastPlayer extends JDialog {
 		近五场助攻提升率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		近五场助攻提升率.setBounds(349, 256, 145, 36);
 		contentPane.add(近五场助攻提升率);
-		data[0][28] = OftenUseMethod.changedouble(playera.getL_f_assist_rate());
-		data[1][28] = OftenUseMethod.changedouble(playerb.getL_f_assist_rate());
+		data[0][28] = OftenUseMethod.changedouble(playera.getL_f_assist_rate())*100;
+		data[1][28] = OftenUseMethod.changedouble(playerb.getL_f_assist_rate())*100;
 		jbs.add(近五场助攻提升率);
 		
 		final JRadioButton 近五场篮板提升率 = new JRadioButton(
@@ -336,8 +336,8 @@ public class ContrastPlayer extends JDialog {
 		近五场篮板提升率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		近五场篮板提升率.setBounds(20, 294, 159, 36);
 		contentPane.add(近五场篮板提升率);
-		data[0][29] = OftenUseMethod.changedouble(playera.getL_f_rebound_rate());
-		data[1][29] = OftenUseMethod.changedouble(playerb.getL_f_rebound_rate());
+		data[0][29] = OftenUseMethod.changedouble(playera.getL_f_rebound_rate())*100;
+		data[1][29] = OftenUseMethod.changedouble(playerb.getL_f_rebound_rate())*100;
 		jbs.add(近五场篮板提升率);
 		
 		

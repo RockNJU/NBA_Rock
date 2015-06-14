@@ -112,8 +112,8 @@ public class ContrastMatch extends JDialog {
 		投篮命中率.setBounds(20, 69, 106, 36);
 		投篮命中率.setOpaque(false);
 		contentPane.add(投篮命中率);
-		data[0][5] = OftenUseMethod.changedouble(teama.getShootPercentage());
-		data[1][5] = OftenUseMethod.changedouble(teamb.getShootPercentage());
+		data[0][5] = OftenUseMethod.changedouble(teama.getShootPercentage())*100;
+		data[1][5] = OftenUseMethod.changedouble(teamb.getShootPercentage())*100;
 		jbs.add(投篮命中率);
 		
 		final JRadioButton 三分命中率 = new JRadioButton("\u4E09\u5206\u547D\u4E2D\u7387");
@@ -121,8 +121,8 @@ public class ContrastMatch extends JDialog {
 		三分命中率.setBounds(130, 69, 106, 36);
 		三分命中率.setOpaque(false);
 		contentPane.add(三分命中率);
-		data[0][6] = OftenUseMethod.changedouble(teama.getThreePointPercentage());
-		data[1][6] = OftenUseMethod.changedouble(teamb.getThreePointPercentage());
+		data[0][6] = OftenUseMethod.changedouble(teama.getThreePointPercentage())*100;
+		data[1][6] = OftenUseMethod.changedouble(teamb.getThreePointPercentage())*100;
 		jbs.add(三分命中率);
 		
 		final JRadioButton 罚球命中率 = new JRadioButton("\u7F5A\u7403\u547D\u4E2D\u7387");
@@ -130,8 +130,8 @@ public class ContrastMatch extends JDialog {
 		罚球命中率.setBounds(242, 69, 106, 36);
 		罚球命中率.setOpaque(false);
 		contentPane.add(罚球命中率);
-		data[0][7] = OftenUseMethod.changedouble(teama.getFreeThrowPercentage());
-		data[1][7] = OftenUseMethod.changedouble(teamb.getFreeThrowPercentage());
+		data[0][7] = OftenUseMethod.changedouble(teama.getFreeThrowPercentage())*100;
+		data[1][7] = OftenUseMethod.changedouble(teamb.getFreeThrowPercentage())*100;
 		jbs.add(罚球命中率);
 		
 		final JRadioButton 进攻 = new JRadioButton("\u8FDB\u653B");
@@ -209,8 +209,8 @@ public class ContrastMatch extends JDialog {
 		投篮效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		投篮效率.setBounds(20, 180, 95, 36);
 		contentPane.add(投篮效率);
-		data[0][15] = OftenUseMethod.changedouble(teama.getShootPercentage());
-		data[1][15] = OftenUseMethod.changedouble(teamb.getShootPercentage());
+		data[0][15] = OftenUseMethod.changedouble(teama.getShootPercentage())*100;
+		data[1][15] = OftenUseMethod.changedouble(teamb.getShootPercentage())*100;
 		jbs.add(投篮效率);
 		
 		final JRadioButton 进攻篮板率 = new JRadioButton("进攻篮板率");
@@ -218,8 +218,8 @@ public class ContrastMatch extends JDialog {
 		进攻篮板率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		进攻篮板率.setBounds(20, 218, 105, 36);
 		contentPane.add(进攻篮板率);
-		data[0][16] = OftenUseMethod.changedouble(teama.getO_ReboundEfficiency());
-		data[1][16] = OftenUseMethod.changedouble(teamb.getO_ReboundEfficiency());
+		data[0][16] = OftenUseMethod.changedouble(teama.getO_ReboundEfficiency())*100;
+		data[1][16] = OftenUseMethod.changedouble(teamb.getO_ReboundEfficiency())*100;
 		jbs.add(进攻篮板率);
 		
 		final JRadioButton 防守篮板率 = new JRadioButton("防守篮板率");
@@ -227,8 +227,8 @@ public class ContrastMatch extends JDialog {
 		防守篮板率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		防守篮板率.setBounds(133, 218, 106, 36);
 		contentPane.add(防守篮板率);
-		data[0][17] = OftenUseMethod.changedouble(teama.getD_ReboundEfficiency());
-		data[1][17] = OftenUseMethod.changedouble(teamb.getD_ReboundEfficiency());
+		data[0][17] = OftenUseMethod.changedouble(teama.getD_ReboundEfficiency())*100;
+		data[1][17] = OftenUseMethod.changedouble(teamb.getD_ReboundEfficiency())*100;
 		jbs.add(防守篮板率);
 		
 		final JRadioButton 助攻率 = new JRadioButton("\u52A9\u653B\u7387");
@@ -236,8 +236,8 @@ public class ContrastMatch extends JDialog {
 		助攻率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		助攻率.setBounds(133, 180, 75, 36);
 		contentPane.add(助攻率);
-		data[0][18] = OftenUseMethod.changedouble(teama.getAssistEfficiency());
-		data[1][18] = OftenUseMethod.changedouble(teamb.getAssistEfficiency());
+		data[0][18] = OftenUseMethod.changedouble(teama.getAssistEfficiency())*100;
+		data[1][18] = OftenUseMethod.changedouble(teamb.getAssistEfficiency())*100;
 		jbs.add(助攻率);
 		
 		final JRadioButton 抢断率 = new JRadioButton("\u62A2\u65AD\u7387");
@@ -245,8 +245,8 @@ public class ContrastMatch extends JDialog {
 		抢断率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		抢断率.setBounds(248, 180, 78, 36);
 		contentPane.add(抢断率);
-		data[0][19] = OftenUseMethod.changedouble(teama.getStealEfficiency());
-		data[1][19] = OftenUseMethod.changedouble(teamb.getStealEfficiency());
+		data[0][19] = OftenUseMethod.changedouble(teama.getStealEfficiency())*100;
+		data[1][19] = OftenUseMethod.changedouble(teamb.getStealEfficiency())*100;
 		jbs.add(抢断率);
 		
 		final JRadioButton 进攻效率 = new JRadioButton("进攻效率");
@@ -254,8 +254,8 @@ public class ContrastMatch extends JDialog {
 		进攻效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		进攻效率.setBounds(341, 180, 95, 36);
 		contentPane.add(进攻效率);
-		data[0][20] = OftenUseMethod.changedouble(teama.getOffenseEfficiency());
-		data[1][20] = OftenUseMethod.changedouble(teamb.getOffenseEfficiency());
+		data[0][20] = OftenUseMethod.changedouble(teama.getOffenseEfficiency())*100;
+		data[1][20] = OftenUseMethod.changedouble(teamb.getOffenseEfficiency())*100;
 		jbs.add(进攻效率);
 		
 		final JRadioButton 防守效率 = new JRadioButton("防守效率");
@@ -263,8 +263,8 @@ public class ContrastMatch extends JDialog {
 		防守效率.setFont(new Font("华康雅宋体W9", Font.PLAIN, 14));
 		防守效率.setBounds(251, 218, 111, 36);
 		contentPane.add(防守效率);
-		data[0][21] = OftenUseMethod.changedouble(teama.getDefenseEfficiency());
-		data[1][21] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency());
+		data[0][21] = OftenUseMethod.changedouble(teama.getDefenseEfficiency())*100;
+		data[1][21] = OftenUseMethod.changedouble(teamb.getDefenseEfficiency())*100;
 		jbs.add(防守效率);
 
 		

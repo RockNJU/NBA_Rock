@@ -41,7 +41,7 @@ public class TeamC extends JPanel {
 	double[] paintdataA = {24,0,24,52,26,57.56,100};
 	double[] paintdataB = {74,12,86,1,59.3,23.1,99.6};
 	private JTextField textField;
-	String season = "13-14";
+	String season = "14-15";
 	 final CardLayout cardLayout = new CardLayout();
 	 JPanel jp = new JPanel();
 	
@@ -199,10 +199,10 @@ public class TeamC extends JPanel {
 					cp.setModal(true);
 					cp.setLocation(init.SysStart_X+280, init.SysStart_Y+302);
 					cp.setVisible(true);
-				if(cp.change == true){
-					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
-					cardLayout.next(jp);
-				}
+					if(cp.change == true){
+						paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+						cardLayout.next(jp);
+					}
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));

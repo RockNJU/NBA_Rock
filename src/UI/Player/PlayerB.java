@@ -187,13 +187,16 @@ public class PlayerB extends JPanel {
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ContrastPlayer cp = new ContrastPlayer(playera,playerb);//默认是联盟平均水平
+					cp.setModal(true);
 					cp.setLocation(init.SysStart_X+280, init.SysStart_Y+302);
 					cp.setVisible(true);
-					cp.setModal(true);
-					if(cp.change==true){
+					if(cp.change == true){
+						System.out.println("sadf");
+						System.out.println(cp.outputcontent[0]);
 						paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
 						cardLayout.next(jp);
 					}
+
 				}
 			});
 			btnNewButton.setIcon(new ImageIcon("newpic\\\u5BF9\u6BD4\u66F4\u66FF.png"));
