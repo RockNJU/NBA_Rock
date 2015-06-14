@@ -274,7 +274,7 @@ public class Player implements PlayerBLService{
 		
 			 
 			while(rs.next()){
-				System.out.println("name:  "+rs.getString("name"));
+				//System.out.println("name:  "+rs.getString("name"));
 				PlayerSeasonDataVO vo=new PlayerSeasonDataVO(rs.getString("season"),rs.getString("type"),
 						rs.getString("name"),getAPlayerInfo(rs.getString("name")),
 						rs.getString("teamAbb"),rs.getString("division"),
@@ -403,7 +403,15 @@ public class Player implements PlayerBLService{
 			String position, String partition, String item) {
 		ArrayList<PlayerSeasonDataVO> list=getAllPlayerSeasonData(season,type);
 		list=sort_position(list,position);
-		list=sort_partition(list,partition);
+		if(!partition.equals("所有分区")){
+			if(partition.equals("西区")|partition.equals("东区")){
+				list=sort_division(list,partition);
+			}else{
+			list=sort_partition(list,partition);
+			}
+		}
+		
+		
 		HotSort sort=new HotSort();
 		return sort.hotPlayer_Sort(list,item);
 	}
@@ -648,7 +656,7 @@ public class Player implements PlayerBLService{
 		double list[]=null;
 		ResultSet rs=null;
 		
-		System.out.println("当前赛季："+currentSeason);
+		//System.out.println("当前赛季："+currentSeason);
 		try {
 			 
 			String sqlStr="SELECT COUNT(*) AS num FROM player_season_data "
@@ -657,7 +665,7 @@ public class Player implements PlayerBLService{
 			int n=0;
 			while(rs.next()){
 				n=rs.getInt("num");
-				System.out.println("while中----"+n);
+				//System.out.println("while中----"+n);
 				break;
 			}
 			
