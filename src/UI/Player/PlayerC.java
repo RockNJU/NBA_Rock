@@ -49,6 +49,8 @@ public class PlayerC extends JPanel {
 	JButton 十场 = new JButton("");
 	JComboBox 队员选择3 = new JComboBox();
 	JComboBox 队伍选择3 = new JComboBox();
+	JComboBox 队员选择1 = new JComboBox();
+	JComboBox 队员选择4 = new JComboBox();
 	Team_map tm = new Team_map();
 	SortItem_Map sm = new SortItem_Map();
 	String season = "13-14";
@@ -124,7 +126,7 @@ public class PlayerC extends JPanel {
 		//对比项目选择
 		对比项目选择.setModel(new DefaultComboBoxModel(new String[] {"总分","篮板数","助攻数","盖帽数","抢断数","犯规数"
 				,"失误数"}));
-		对比项目选择.setBounds(10, 40, 75, 23);
+		对比项目选择.setBounds(10, 40, 109, 23);
 		对比项目选择.setSelectedIndex(0);
 		contentPane.add(对比项目选择);
 		对比项目选择.addActionListener(new ActionListener() {
@@ -191,6 +193,7 @@ public class PlayerC extends JPanel {
 				lineisshowed[2] = true;
 				thirdName = 队员选择3.getSelectedItem().toString();
 				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
@@ -513,31 +516,6 @@ public class PlayerC extends JPanel {
 				赛季.setIcon(new ImageIcon("newpic//赛季后.png"));
 			}
 		});
-		
-		
-
-		JButton button = new JButton((Icon) null);
-		button.setOpaque(true);
-		button.setForeground(Color.BLUE);
-		button.setContentAreaFilled(false);
-		button.setBounds(452, 10, 88, 23);
-		contentPane.add(button);
-		
-		JButton button_1 = new JButton((Icon) null);
-		button_1.setOpaque(true);
-		button_1.setForeground(Color.BLUE);
-		button_1.setContentAreaFilled(false);
-		button_1.setBounds(546, 10, 88, 23);
-		contentPane.add(button_1);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(323, 10, 125, 23);
-		contentPane.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(244, 10, 75, 23);
-		contentPane.add(comboBox_1);
-		
 		JButton 球员区间 = new JButton("\u9884\u8BA1\u533A\u95F4");
 		球员区间.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -554,17 +532,147 @@ public class PlayerC extends JPanel {
 				chartPanel.getChart().fireChartChanged();
 			}
 		});
-		球员区间.setBounds(88, 40, 87, 23);
+		球员区间.setBounds(124, 40, 110, 23);
 		contentPane.add(球员区间);
+		
+
+		JButton 加入对比1 = new JButton(new ImageIcon("newpic\\加入对比.png"));
+		加入对比1.setOpaque(true);
+		加入对比1.setForeground(Color.BLUE);
+		加入对比1.setContentAreaFilled(false);
+		加入对比1.setBounds(452, 10, 88, 23);
+		contentPane.add(加入对比1);
+		加入对比1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lineisshowed[0] = true;
+				firstName = 队员选择1.getSelectedItem().toString();
+				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
+				firstData = Changedouble(temp);
+				firsts = new Serie(firstName, firstData);
+				tempsave[0] = firsts;
+
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
+		
+		JButton 取消对比1 = new JButton(new ImageIcon("newpic\\取消对比.png"));
+		取消对比1.setOpaque(true);
+		取消对比1.setForeground(Color.BLUE);
+		取消对比1.setContentAreaFilled(false);
+		取消对比1.setBounds(546, 10, 88, 23);
+		contentPane.add(取消对比1);
+		取消对比1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lineisshowed[0] = false;
+				firstName = "NULL";
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
+		
+
+		队员选择1.setBounds(323, 10, 125, 23);
+		contentPane.add(队员选择1);
+		队员选择1.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
+		JComboBox 队伍选择1 = new JComboBox();
+		队伍选择1.setBounds(244, 10, 75, 23);
+		contentPane.add(队伍选择1);
+		队伍选择1.setModel(new DefaultComboBoxModel(new String[] {"老鹰","篮网","凯尔特人","黄蜂"
+				,"公牛","骑士","小牛","掘金","活塞","勇士","火箭","步行者","快船"
+				,"湖人","灰熊","热火","雄鹿","森林狼","鹈鹕","尼克斯","雷霆",
+				"魔术","76人", "太阳","开拓者","国王","马刺","猛龙","爵士", "奇才"}));
+		队伍选择1.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e) {
+				//可以改变队员选择中可选择的内容
+				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择3.getSelectedItem().toString()));
+				int length = playerdata.size();
+				String[] playerlist = new String[length];
+				int i  = 0;
+				for(PlayerInfoVO pinfo:playerdata){
+					playerlist[i] = pinfo.getName();
+					i++;
+				}
+				队员选择1.setModel(new DefaultComboBoxModel(playerlist));
+			}
+		});
+		
+
 		
 		textField_1 = new JTextField();
 		textField_1.setEditable(false);
 		textField_1.setText("\u4E0B\u573A\u9884\u8BA1");
-		textField_1.setBounds(179, 38, 66, 28);
+		textField_1.setBounds(244, 38, 204, 28);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
-	
+		JButton 取消对比4 = new JButton(new ImageIcon("newpic\\取消对比.png"));
+		取消对比4.setOpaque(true);
+		取消对比4.setForeground(Color.BLUE);
+		取消对比4.setContentAreaFilled(false);
+		取消对比4.setBounds(946, 40, 88, 23);
+		contentPane.add(取消对比4);
+		取消对比4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lineisshowed[3] = false;
+				fourthName = "NULL";
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
+		
+		JButton 加入对比4 = new JButton(new ImageIcon("newpic\\加入对比.png"));
+		加入对比4.setOpaque(true);
+		加入对比4.setForeground(Color.BLUE);
+		加入对比4.setContentAreaFilled(false);
+		加入对比4.setBounds(852, 40, 88, 23);
+		contentPane.add(加入对比4);
+		加入对比4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lineisshowed[3] = true;
+				fourthName = 队员选择4.getSelectedItem().toString();
+				double[] temp = init.pbl.getPlayerOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
+				fourthData = Changedouble(temp);
+				fourths = new Serie(fourthName, fourthData);
+				tempsave[3] = fourths;
+				
+				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
+				chartPanel.getChart().fireChartChanged();
+			}
+		});
+		
+
+		队员选择4.setBounds(723, 40, 125, 23);
+		contentPane.add(队员选择4);
+		队员选择4.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
+		JComboBox 队伍选择4 = new JComboBox();
+		队伍选择4.setBounds(644, 40, 75, 23);
+		队伍选择4.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e) {
+				//可以改变队员选择中可选择的内容
+				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择3.getSelectedItem().toString()));
+				int length = playerdata.size();
+				String[] playerlist = new String[length];
+				int i  = 0;
+				for(PlayerInfoVO pinfo:playerdata){
+					playerlist[i] = pinfo.getName();
+					i++;
+				}
+				队员选择4.setModel(new DefaultComboBoxModel(playerlist));
+			}
+		});
+
+		contentPane.add(队伍选择4);
+		队伍选择4.setModel(new DefaultComboBoxModel(new String[] {"老鹰","篮网","凯尔特人","黄蜂"
+				,"公牛","骑士","小牛","掘金","活塞","勇士","火箭","步行者","快船"
+				,"湖人","灰熊","热火","雄鹿","森林狼","鹈鹕","尼克斯","雷霆",
+				"魔术","76人", "太阳","开拓者","国王","马刺","猛龙","爵士", "奇才"}));
+		
+		
 		
 		}
 	
