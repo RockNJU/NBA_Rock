@@ -461,24 +461,28 @@ public class TeamD extends JPanel {
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;
@@ -568,5 +572,20 @@ public class TeamD extends JPanel {
 			i++;
 		}
 		return Data;
+	}
+	public double[] Addzero(double[] temp,int shouldput,int realput){
+		double[] output = new double[shouldput];
+		if(realput==shouldput)
+			return temp;
+		else if(realput<shouldput){
+			for(int i = 0;i<shouldput-realput;i++){
+				output[i] = 0;
+			}
+			for(int j = 0;j<realput;j++){
+				output[shouldput-realput+j] = temp[j];
+			}
+			return output;
+		}
+		return temp;
 	}
 }

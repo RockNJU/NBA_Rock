@@ -108,7 +108,6 @@ public class PlayerC extends JPanel {
 		double[] temp = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(chossenShowData));
 		basicData = Changedouble(temp);
 		basicline = new Serie(basicName, basicData);
-		System.out.println(basicData[0]+";"+basicData[1]+";"+basicData.length+";"+lineChartState);
 		chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 		chartPanel.getChart().fireChartChanged();
 		
@@ -195,10 +194,6 @@ public class PlayerC extends JPanel {
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
-				
-				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
-				basicData = Changedouble(tempb);
-				basicline = new Serie(basicName, basicData);			
 
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
@@ -462,9 +457,9 @@ public class PlayerC extends JPanel {
 				double[] tempb = init.pbl.getPlayerOneData(basicName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
 				basicData = Changedouble(tempb);
 				basicline = new Serie(basicName, basicData);
-				
+
 				lineChartState = basicData.length;
-				
+
 				categories = new String[lineChartState];
 				sectionupData = new Double[lineChartState];
 				sectiondownData = new Double[lineChartState];
@@ -481,24 +476,28 @@ public class PlayerC extends JPanel {
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(firstName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(secondName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(thirdName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
 				double[] temp = init.pbl.getPlayerOneData(fourthName,lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;
@@ -507,6 +506,7 @@ public class PlayerC extends JPanel {
 				chartPanel.getChart().getCategoryPlot().setDataset(lc.createDataset());
 				chartPanel.getChart().fireChartChanged();
 				chartPanel.getChart().setTitle("最近"+lineChartState+"场比赛的"+chossenShowData+"趋势");
+				
 				十场.setIcon(new ImageIcon("newpic//10场.png"));
 				二十场.setIcon(new ImageIcon("newpic//20场.png"));
 				三十场.setIcon(new ImageIcon("newpic//30场.png"));
@@ -619,5 +619,21 @@ public class PlayerC extends JPanel {
 			i++;
 		}
 		return Data;
+	}
+	
+	public double[] Addzero(double[] temp,int shouldput,int realput){
+		double[] output = new double[shouldput];
+		if(realput==shouldput)
+			return temp;
+		else if(realput<shouldput){
+			for(int i = 0;i<shouldput-realput;i++){
+				output[i] = 0;
+			}
+			for(int j = 0;j<realput;j++){
+				output[shouldput-realput+j] = temp[j];
+			}
+			return output;
+		}
+		return temp;
 	}
 }
