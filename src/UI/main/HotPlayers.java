@@ -122,9 +122,7 @@ public class HotPlayers extends JPanel {
 		else{
 			System.out.println("进步最快"+(tmptype));
 			psdv = pbs.getMost_Progress_Player((tmptype));
-			System.out.println("五个人是"+smpd.get(0).getPlayerName()+smpd.get(1).getPlayerName()
-					+smpd.get(2).getPlayerName()+smpd.get(3).getPlayerName()+smpd.get(4).getPlayerName());
-			
+			System.out.println(psdv.size());		
 			data=getdata1(psdv);		
 			no1[0]=psdv.get(0).getName();
 			no1[1]=tm.getFullName(psdv.get(0).getTeamName());

@@ -28,9 +28,9 @@ public interface MatchBLService {
 		public ArrayList<String> getAllSeason();
 		
 		
-		ArrayList<MatchVO> getMatchBySeason(String season,String type,String teamA);
+		ArrayList<MatchInfoVO> getMatchBySeason(String season,String type,String teamA);
 		
-		ArrayList<MatchVO> getMatchByTeamTime(String date);			
+		ArrayList<MatchInfoVO> getMatchByTeamTime(String date);			
         //  根据输入的日期获取这一天所有的比赛信息
       //比赛信息 MatchInfo 详见matchbl里的MAtchInfo定义，
       //我认为这比之前的用-隔开的String方便，省去你们的分割操作
