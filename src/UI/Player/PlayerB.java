@@ -47,7 +47,7 @@ public class PlayerB extends JPanel {
 	 */
 	public PlayerB(String name) {
 		System.out.println(name);
-		playera = init.pbl.keyfind(name).get(0);
+		playera = init.pbl.getAPlayerSeasonData(season,"常规赛",name);
 		paintdataA[0] = OftenUseMethod.changedouble(playera.getStartingNum());
 		paintdataA[1] = OftenUseMethod.changedouble(playera.getPointNum_avg());
 		paintdataA[2] = OftenUseMethod.changedouble(playera.getAssistNum_avg());
@@ -58,12 +58,12 @@ public class PlayerB extends JPanel {
 		
 		playerb = init.pbl.get_Avg_PlayerSeasonData(season,"常规赛");
 		paintdataB[0] = OftenUseMethod.changedouble(playerb.getStartingNum());
-		paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum()/playerb.getMatchNum());
-		paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum()/playerb.getMatchNum());
-		paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum()/playerb.getMatchNum());
-		paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum()/playerb.getMatchNum());
-		paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum()/playerb.getMatchNum());
-		paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum()/playerb.getMatchNum());
+		paintdataB[1] = OftenUseMethod.changedouble((double)playerb.getPointNum_avg());
+		paintdataB[2] = OftenUseMethod.changedouble((double)playerb.getAssistNum_avg());
+		paintdataB[3] = OftenUseMethod.changedouble((double)playerb.getReboundNum_avg());
+		paintdataB[4] = OftenUseMethod.changedouble((double)playerb.getT_shootNum_avg());
+		paintdataB[5] = OftenUseMethod.changedouble((double)playerb.getFreeThrowNum_avg());
+		paintdataB[6] = OftenUseMethod.changedouble((double)playerb.getShootNum_avg());
 		
 		 jp.setBounds(0, 0, 1042, 580);
 		 jp.setOpaque(false);
@@ -198,6 +198,8 @@ public class PlayerB extends JPanel {
 							paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum_avg());
 							paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum_avg());
 							
+							
+							
 							paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
 							cardLayout.next(jp);
 							
@@ -224,7 +226,7 @@ public class PlayerB extends JPanel {
 					if(cp.change == true){
 						System.out.println("sadf");
 						System.out.println(cp.outputcontent[0]);
-						paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+						paintunder(cp.now,cp.outputcontent,cp.dataoutput[1],cp.dataoutput[0]);
 						cardLayout.next(jp);
 					}
 

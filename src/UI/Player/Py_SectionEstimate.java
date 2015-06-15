@@ -212,7 +212,7 @@ public class Py_SectionEstimate {
 			result[0] = round(result[0],4);
 			result[1] = round(result[1],4);
 			
-			//System.out.println(sumX+"    "+sumDeltaX2+"    "+S+"    " +n);
+			System.out.println(sumX+"    "+sumDeltaX2+"    "+S+"    " +n);
 			//System.out.println(result[0]+"   "+result[1]);
 			return result;
 			
