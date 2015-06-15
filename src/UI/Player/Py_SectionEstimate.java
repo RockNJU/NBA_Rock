@@ -105,17 +105,17 @@ public class Py_SectionEstimate {
 
 	private void calculateSection() {
 
+		//ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
+				//.getASeasonMatchData(name, "11-12");
+		//ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
+				//.getASeasonMatchData(name, "12-13");
 		ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
-				.getASeasonMatchData(name, "11-12");
-		ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
-				.getASeasonMatchData(name, "12-13");
-		ArrayList<SingleMatchPersonalDataVO> season13data = init.pbl
 				.getASeasonMatchData(name, "13-14");
 		ArrayList<SingleMatchPersonalDataVO> season14data = init.pbl
 				.getASeasonMatchData(name, "14-15");
 
-		season11data.addAll(season12data);
-		season11data.addAll(season13data);
+		//season11data.addAll(season12data);
+		//season11data.addAll(season13data);
 		season11data.addAll(season14data);
         //用以存放某一属性的所有值
 		ArrayList<Double> pointlist = new ArrayList<Double>(); 
