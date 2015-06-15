@@ -357,7 +357,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		 //TeamMatchVO vo=team.getTeamMatch("2012-05-08", "LAL");
 		 System.out.println("lalallal:  "+a[3]);
 		 //ArrayList<SingleMatchPersonalDataVO> list=vo.getIndividualData();
-		 Team_Avg vo=team.get_avg_teamData("13-14", "常规赛");
+		 TeamSeasonDataVO vo=team.get_avg_teamData("13-14", "常规赛");
 		 
 		 System.out.println("球队信息："+vo.getPointNum());
 		//ArrayList<TeamSeasonDataVO> list=team.sort_super("13-14","常规赛","pointNum", "≥", 106);
@@ -768,9 +768,9 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 
 
 	@Override
-	public Team_Avg get_avg_teamData(String season, String type) {
+	public TeamSeasonDataVO get_avg_teamData(String season, String type) {
 		Team_map map=new Team_map();
-		Team_Avg vo=null;
+		TeamSeasonDataVO vo=null;
  ;
 		try {			  
 	        stmt = conn.createStatement(); 
@@ -796,7 +796,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			char chr=39;
 			
 			while(rs.next()){
-				vo=new Team_Avg(season,rs.getString("team"),
+				vo=new TeamSeasonDataVO(season,rs.getString("team"),
 						
 						new TeamInfoVO("team_avg",
 				    			  "--","--",

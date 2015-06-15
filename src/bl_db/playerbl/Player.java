@@ -538,7 +538,7 @@ public class Player implements PlayerBLService,Player_info{
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
 	ArrayList<SingleMatchPersonalDataVO> list=pl.getLastFiveMatchData("林书豪");
-		  Player_Avg vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
+		  PlayerSeasonDataVO vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
 		  System.out.println("name:"+vo.getPointNum());
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
 		 for(int i=0;i<list.size();i++){
@@ -798,9 +798,9 @@ public class Player implements PlayerBLService,Player_info{
 
 
 	@Override
-	public Player_Avg get_Avg_PlayerSeasonData(String season,
+	public PlayerSeasonDataVO get_Avg_PlayerSeasonData(String season,
 			String type) {
-		Player_Avg vo=null;
+		PlayerSeasonDataVO vo=null;
 		try {
 			 
 			String str=" SELECT type,"
@@ -829,7 +829,7 @@ public class Player implements PlayerBLService,Player_info{
 
 			
 			while(rs.next()){
-			vo=new Player_Avg(season,rs.getString("type"),
+			vo=new PlayerSeasonDataVO(season,rs.getString("type"),
 						"paly_avg",getAPlayerInfo("林书豪"),
 						"--","--",
 						"--","--",rs.getInt("match_sum")
