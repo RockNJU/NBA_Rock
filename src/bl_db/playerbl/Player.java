@@ -536,7 +536,7 @@ public class Player implements PlayerBLService,Player_info{
 		}*/
 		//ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
 		  PlayerSeasonDataVO vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
-		  System.out.println("name:"+vo.getPointNum());
+		  System.out.println("name:"+vo.getPointNum_avg());
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
 		 for(int i=0;i<list.size();i++){
 				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);

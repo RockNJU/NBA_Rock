@@ -43,6 +43,9 @@ public interface TeamBLService {
 	public TeamSeasonDataVO getATeamData(String season,String name);
 	
 	public double[] getTeamOneData(String name,int num,String what);
+	
+	
+	public TeamSeasonDataVO get_avg_teamData(String season,String type);
 	/*
 	//TODO 2015/5/18 ¼Ó
 	
