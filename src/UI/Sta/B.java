@@ -26,7 +26,7 @@ public class B extends JPanel {
 		setLayout(null);
 		setOpaque(false);
 		setBackground(init.syslightblue);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"勒布朗-詹姆斯"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"勒布朗-詹姆斯","雷-阿伦"}));
 		
 
 		comboBox.setBounds(28, 30, 125, 29);
@@ -38,6 +38,10 @@ public class B extends JPanel {
 				if(comboBox.getSelectedItem().toString().equals("勒布朗-詹姆斯")){
 					before = "13-14";
 					after = "14-15";
+				}
+				else if(comboBox.getSelectedItem().toString().equals("雷-阿伦")){
+					before = "11-12";
+					after = "12-13";
 				}
 				tt.useischangealot(comboBox.getSelectedItem().toString(),before,after);
 				textField.setText(tt.maxString+"数据在换队后波动最大");

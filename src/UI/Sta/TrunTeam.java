@@ -65,7 +65,7 @@ public class TrunTeam {
 		double [] output = new double[6];
 		
 		
-		for(int i = 0; i<6; i++){
+		for(int i = 1; i<6; i++){
 		double[] dataAfter = getdata(playerafter,input[i]);
 		double[] dataBefore = getdata(playerbefore,input[i]);
 		datasize = dataAfter.length;
