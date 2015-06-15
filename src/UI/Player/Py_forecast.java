@@ -72,7 +72,7 @@ public class Py_forecast {
 			return regressionAnalyse(formalData);
 
 		default:
-			return (Double) null;
+			return 0.0;
 
 		}
 
