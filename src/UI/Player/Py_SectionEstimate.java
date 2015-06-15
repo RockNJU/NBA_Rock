@@ -105,17 +105,17 @@ public class Py_SectionEstimate {
 
 	private void calculateSection() {
 
-		//ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
-				//.getASeasonMatchData(name, "11-12");
-		//ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
-				//.getASeasonMatchData(name, "12-13");
 		ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
+				.getASeasonMatchData(name, "11-12");
+		ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
+				.getASeasonMatchData(name, "12-13");
+		ArrayList<SingleMatchPersonalDataVO> season13data = init.pbl
 				.getASeasonMatchData(name, "13-14");
 		ArrayList<SingleMatchPersonalDataVO> season14data = init.pbl
 				.getASeasonMatchData(name, "14-15");
 
-		//season11data.addAll(season12data);
-		//season11data.addAll(season13data);
+		season11data.addAll(season12data);
+		season11data.addAll(season13data);
 		season11data.addAll(season14data);
         //用以存放某一属性的所有值
 		ArrayList<Double> pointlist = new ArrayList<Double>(); 
@@ -174,7 +174,7 @@ public class Py_SectionEstimate {
 	
 	
 	//内部类  用来实现单总体均值区间估计算法
-	class SectionEstimate {
+	public class SectionEstimate {
 		
 		private double sumX = 0;     //x的和
 		private double averageX;     //x的平均值
@@ -200,7 +200,7 @@ public class Py_SectionEstimate {
 			}
 			averageX = (double)(sumX/n);
 			for (int i = 0; i < datalist.size(); ++i) {
-				sumDeltaX2 = sumDeltaX2 + (data.get(i) - sumX)*(data.get(i) - sumX);
+				sumDeltaX2 = sumDeltaX2 + (data.get(i) - averageX)*(data.get(i) - averageX);
 			}
 			S = Math.sqrt((double)(sumDeltaX2/n));
 			
@@ -209,7 +209,11 @@ public class Py_SectionEstimate {
 			result[1] = averageX + (double)S*Z/Math.sqrt(n);
 			result[0] = round(result[0],4);
 			result[1] = round(result[1],4);
+			
+			//System.out.println(sumX+"    "+sumDeltaX2+"    "+S+"    " +n);
+			//System.out.println(result[0]+"   "+result[1]);
 			return result;
+			
 			
 			
 		}
@@ -229,4 +233,5 @@ public class Py_SectionEstimate {
 		}
   
 	}
+	
 }
