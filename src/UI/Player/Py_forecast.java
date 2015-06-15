@@ -124,8 +124,8 @@ public class Py_forecast {
 		private ArrayList<Double> listY ;
 		private int XMin, XMax, YMin, YMax;
 
-		private float a0;             //线性系数a0
-		private float a1;             //线性系数a1
+		private double a0;             //线性系数a0
+		private double a1;             //线性系数a1
 		private int pn;                //数据点的数量
 		private boolean coefsValid;     //系数是否有效
 
@@ -162,7 +162,7 @@ public class Py_forecast {
 		/**
 		 *返回系数a0
 		 */
-		public float getA0() {
+		public double getA0() {
 			validateCoefficients();
 			return a0;
 		}
@@ -170,7 +170,7 @@ public class Py_forecast {
 		/**
 		 * 返回系数a1
 		 */
-		public float getA1() {
+		public double getA1() {
 			validateCoefficients();
 			return a1;
 		}
@@ -264,9 +264,9 @@ public class Py_forecast {
 		/**
 		 * 返回值x的线性方程的值. (Implementation of Evaluatable.)
 		 */
-		public float at(int x) {
+		public double at(int x) {
 			if (pn < 2)
-				return Float.NaN;
+				return Double.NaN;
 
 			validateCoefficients();
 			return a0 + a1 * x;
@@ -289,14 +289,14 @@ public class Py_forecast {
 				return;
 
 			if (pn >= 2) {
-				float xBar = (float) sumX / pn;
-				float yBar = (float) sumY / pn;
+				double xBar = (double) sumX / pn;
+				double yBar = (double) sumY / pn;
 
-				a1 = (float) ((pn * sumXY - sumX * sumY) / (pn * sumXX - sumX
+				a1 = (double) ((pn * sumXY - sumX * sumY) / (pn * sumXX - sumX
 						* sumX));
-				a0 = (float) (yBar - a1 * xBar);
+				a0 = (double) (yBar - a1 * xBar);
 			} else {
-				a0 = a1 = Float.NaN;
+				a0 = a1 = Double.NaN;
 			}
 
 			coefsValid = true;
@@ -308,10 +308,10 @@ public class Py_forecast {
 		public double getR() {
 			// 遍历这个list并计算分母
 			for (int i = 0; i < pn - 1; i++) {
-				float Yi = (float) Integer.parseInt(listY.get(i).toString());
-				float Y = at(Integer.parseInt(listX.get(i).toString()));
-				float deltaY = Yi - Y;
-				float deltaY2 = deltaY * deltaY;
+				double Yi = (double) listY.get(i);
+				double Y = at(Integer.parseInt(listX.get(i).toString()));
+				double deltaY = Yi - Y;
+				double deltaY2 = deltaY * deltaY;
 				/*
 				 * System.out.println("Yi:" + Yi); System.out.println("Y:" + Y);
 				 * System.out.println("deltaY:" + deltaY);
@@ -341,19 +341,6 @@ public class Py_forecast {
 			BigDecimal b = new BigDecimal(Double.toString(v));
 			BigDecimal one = new BigDecimal("1");
 			return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-		}
-       //粗略的四舍五入
-		public float round(float v, int scale) {
-
-			if (scale < 0) {
-				throw new IllegalArgumentException(
-						"The scale must be a positive integer or zero");
-			}
-
-			BigDecimal b = new BigDecimal(Double.toString(v));
-			BigDecimal one = new BigDecimal("1");
-			return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();
 
 		}
 		
