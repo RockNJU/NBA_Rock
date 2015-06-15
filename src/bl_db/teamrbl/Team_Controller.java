@@ -343,7 +343,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>(); 
 		String str="SELECT * FROM (SELECT *FROM player_data WHERE team='"+teamname+"'"
-				+ " AND seanson='"+currentSeason+"')as "
+				+ " AND season='"+currentSeason+"')as "
 				+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 		list=info.get_Data(str);
 		
@@ -366,7 +366,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		 System.out.println("lalallal:  "+a[3]);
 		 //ArrayList<SingleMatchPersonalDataVO> list=vo.getIndividualData();
 		
-		ArrayList<TeamSeasonDataVO> list=team.getATeamSeasonData("LAL","常规赛");
+		ArrayList<PlayerSeasonDataVO> list=team.getKingPlayerForATeam("LAL", "pointNum");
 	/*	 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();*/
 		/* ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("ATL","2012-05-04");
@@ -379,10 +379,10 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPlayerName());
 		}  */
 		 
-		/* 
+		 
 		for(int i=0;i<list.size();i++){
-			System.out.println("球队信息："+list.get(i).getTeamName()+";"+list.get(i).getDivision());
-		} */ 
+			System.out.println("球队信息："+list.get(i).getTeamName()+";"+list.get(i).getPointNum());
+		}   
 	}
 
 
