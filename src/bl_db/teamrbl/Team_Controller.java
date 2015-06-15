@@ -119,7 +119,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			  
 	        stmt = conn.createStatement(); 
 					
-			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
+			String str="SELECT * from (SELECT season,team_season_data.team,team_season_data.teamAbb,"
 					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
@@ -139,16 +139,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ " GROUP BY season,type,team) as "
 					+ "data left join teaminfo as info on data.teamAbb =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
-			/********************************
-			 * String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
-	int fieldGoal,int shootNum,int T_fieldGoal,int T_shootNum,
-	int freeThrowGoalNum,int freeThrowNum,int O_ReboundNum,
-	int D_ReboundNum,int assistNum,int stealNum,int reboundNum,int blockNum,
-	int turnoverNum,int foulNum,int points,
-	double offenseRound,double offenseEfficiency,
-	double defenseEfficiency,double O_ReboundEfficiency,double D_ReboundEfficiency,
-	double stealEfficiency ,double ,TeamMatchVO first_match
-			 *******************************/
+			 
 			char chr=39;
 			while(rs.next()){
 				
@@ -218,7 +209,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
           
 		try {
 			 
-			String str="SELECT * from(SELECT team_season_data.team,team_season_data.teamAbb,"
+			String str="SELECT * from(SELECT season,team_season_data.team,team_season_data.teamAbb,"
 					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
@@ -373,16 +364,17 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		/*for(int i=0;i<volist.size();i++){
 			System.out.println("  队名："+volist.get(i).getTeamName()+"  对手："+volist.get(i).getOpp_team()+"  得分："+volist.get(i).getPointNum()+" date: "+volist.get(i).getDate());
 		}*/
-		/*
+		/**/
+		ArrayList<TeamSeasonDataVO> inlist=team.getHotTeam("14-15", "pointNum");
 		  for(int i=0;i<inlist.size();i++){
 			System.out.println("球队数据：  队名"+inlist.get(i).getTeamName()+
-					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPlayerName());
-		}  */
+					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPointNum());
+		}  
 		 
-		 
+		 /*
 		for(int i=0;i<list.size();i++){
 			System.out.println("球队信息："+list.get(i).getTeamName()+";"+list.get(i).getPointNum());
-		}   
+		}  */ 
 	}
 
 
