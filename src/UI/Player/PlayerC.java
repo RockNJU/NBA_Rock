@@ -576,7 +576,7 @@ public class PlayerC extends JPanel {
 		队员选择1.setBounds(323, 10, 125, 23);
 		contentPane.add(队员选择1);
 		队员选择1.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
-		JComboBox 队伍选择1 = new JComboBox();
+		final JComboBox 队伍选择1 = new JComboBox();
 		队伍选择1.setBounds(244, 10, 75, 23);
 		contentPane.add(队伍选择1);
 		队伍选择1.setModel(new DefaultComboBoxModel(new String[] {"老鹰","篮网","凯尔特人","黄蜂"
@@ -587,7 +587,7 @@ public class PlayerC extends JPanel {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				//可以改变队员选择中可选择的内容
-				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择3.getSelectedItem().toString()));
+				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择1.getSelectedItem().toString()));
 				int length = playerdata.size();
 				String[] playerlist = new String[length];
 				int i  = 0;
@@ -648,13 +648,13 @@ public class PlayerC extends JPanel {
 		队员选择4.setBounds(723, 40, 125, 23);
 		contentPane.add(队员选择4);
 		队员选择4.setModel(new DefaultComboBoxModel(new String[] {"NULL"}));
-		JComboBox 队伍选择4 = new JComboBox();
+		final JComboBox 队伍选择4 = new JComboBox();
 		队伍选择4.setBounds(644, 40, 75, 23);
 		队伍选择4.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				//可以改变队员选择中可选择的内容
-				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择3.getSelectedItem().toString()));
+				ArrayList<PlayerInfoVO> playerdata = init.pbl.getTeamAllPlayer(season,tm.getFullName(队伍选择4.getSelectedItem().toString()));
 				int length = playerdata.size();
 				String[] playerlist = new String[length];
 				int i  = 0;

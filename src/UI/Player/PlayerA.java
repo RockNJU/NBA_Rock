@@ -363,7 +363,7 @@ public class PlayerA extends JPanel {
 				re[i][6] = String.valueOf(da.get(i).getFieldGoal())+"/"+String.valueOf(da.get(i).getShootNum());		
 				re[i][7] = OftenUseMethod.changedouble(da.get(i).getShootPercentage());
 				re[i][8] = String.valueOf(da.get(i).getT_fieldGoal())+"/"+String.valueOf(da.get(i).getT_shootNum());
-				re[i][3] = OftenUseMethod.changedouble(da.get(i).getThreePointPercentage());
+				re[i][9] = OftenUseMethod.changedouble(da.get(i).getThreePointPercentage());
 				re[i][10] = String.valueOf(da.get(i).getFreeThrowGoalNum())+"/"+String.valueOf(da.get(i).getFreeThrowNum());	
 				re[i][11] = OftenUseMethod.changedouble(da.get(i).getFreeThrowPercentage());				
 				re[i][12] = da.get(i).getStealNum();
@@ -415,7 +415,7 @@ public class PlayerA extends JPanel {
 				re[i][12] = OftenUseMethod.changedouble(da.get(i).getBlockNum_avg());
 				re[i][13] = OftenUseMethod.changedouble(da.get(i).getTurnoverNum_avg());
 				re[i][14] = OftenUseMethod.changedouble(da.get(i).getFoulNum_avg());
-				re[i][15] = String.valueOf(da.get(i).getO_ReboundNum_avg())+"/"+String.valueOf( da.get(i).getD_ReboundNum_avg());									
+				re[i][15] = OftenUseMethod.changedouble((da.get(i).getO_ReboundNum_avg()))+"/"+OftenUseMethod.changedouble(( da.get(i).getD_ReboundNum_avg()));									
 			}
 			return re;
 		}

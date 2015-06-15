@@ -390,7 +390,13 @@ public class A extends JPanel {
 			B2.setText(point_apart[0]+"~"+point_apart[1]);
 			B3.setText(point_apart[1]+"~"+point_apart[2]);
 			B4.setText(">="+point_apart[2]);
-		}		
+		}
+		if(according.equals("Àº°å")){
+			B1.setText("<="+rebound_apart[0]);
+			B2.setText(rebound_apart[0]+"~"+rebound_apart[1]);
+			B3.setText(rebound_apart[1]+"~"+rebound_apart[2]);
+			B4.setText(">="+rebound_apart[2]);
+		}	
 	}
 /*
 	void changeC_R(Object[][] da){

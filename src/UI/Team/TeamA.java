@@ -518,8 +518,7 @@ public class TeamA extends JPanel {
 		tpic.setImage(tpic.getImage().getScaledInstance( 200, 200,Image.SCALE_DEFAULT));
 		jb1.setIcon(tpic);
 		pname.setText(tivo.getTeam());
-		PartitionMap a=new PartitionMap();
-		label.setText("联盟:"+a.getItem(tivo.getPartition())+";  #排名:"+String.valueOf(init.tbl.getRank(name)));
+		label.setText("联盟:"+(tivo.getPartition())+";  #排名:"+String.valueOf(init.tbl.getRank(name)));
 		lblabalabala.setText("位置："+tivo.getLocation());
 		pnumwin.setText(String.valueOf(tsd.getWinNum()));
 		//System.out.println(tsd.getMatchNum()+" "+tsd.getWinNum()+"  "+init.tbl.getRank(name));
@@ -535,7 +534,9 @@ public class TeamA extends JPanel {
 		}else if(tabletype.equals("近几年")){
 			newti=TeamA_yeartitle;
 			Team_map tm=new Team_map();
-			tsdvo=UI.main.init.tbl.getAllTeamSeasonData(tm.getFullName(na), seasontype);
+			System.out.println("球队近几年"+tm.getFullName(na)+seasontype);
+			tsdvo=UI.main.init.tbl.getATeamSeasonData(tm.getFullName(na), seasontype);
+			System.out.println(tsdvo.size());
 			if(isAvg.equals("avg")){
 				TeamA_data=getyearavg(tsdvo);
 			}else{
