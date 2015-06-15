@@ -26,17 +26,8 @@ public class Py_forecast {
 	private double calculateForecast(String property, String name) {
 
 		ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
-				.getASeasonMatchData(name, "11-12");
-		ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
-				.getASeasonMatchData(name, "12-13");
-		ArrayList<SingleMatchPersonalDataVO> season13data = init.pbl
-				.getASeasonMatchData(name, "13-14");
-		ArrayList<SingleMatchPersonalDataVO> season14data = init.pbl
 				.getASeasonMatchData(name, "14-15");
 
-		season11data.addAll(season12data);
-		season11data.addAll(season13data);
-		season11data.addAll(season14data);
 
 		ArrayList<Double> formalData = new ArrayList<Double>();     //用以存放某一属性的所有值
 		switch (property) {
@@ -78,10 +69,9 @@ public class Py_forecast {
 
 	}
 
-	/*
-	 * 
-	 * 做球员某一项属性与其比赛场数的线性回归分析    显著性检验    与预测
-	 * */
+	
+	//  做球员某一项属性与其比赛场数的线性回归分析    显著性检验    与预测
+	 
 	private double regressionAnalyse(ArrayList<Double> list) {
 
 		double estimatedValue = 0;
@@ -100,6 +90,7 @@ public class Py_forecast {
 	
 	
 	
+	
 	//内部类   用来封装X和Y坐标点
 	class DataPoint {
 
@@ -114,7 +105,7 @@ public class Py_forecast {
 	
 	
 	//内部类  用来实现线性回归算法
-	class RegressionLine {// implements Evaluatable
+	 class RegressionLine {// implements Evaluatable
 		
 		private double sumX;     //x的和
 		private double sumY;     //y的和
@@ -128,9 +119,9 @@ public class Py_forecast {
 		private double sse;
 		private double sst;
 		private double E;
-		private String[] xy;
-		private ArrayList listX;
-		private ArrayList listY;
+		private Double[] xy;
+		private ArrayList<Double> listX;
+		private ArrayList<Double> listY ;
 		private int XMin, XMax, YMin, YMax;
 
 		private float a0;             //线性系数a0
@@ -143,9 +134,9 @@ public class Py_forecast {
 			XMax = 0;
 			YMax = 0;
 			pn = 0;
-			xy = new String[2];
-			listX = new ArrayList();
-			listY = new ArrayList();
+			xy = new Double[2];
+			listX = new ArrayList<Double>();
+			listY = new ArrayList<Double>();
 		}
 
 		/**
@@ -153,9 +144,9 @@ public class Py_forecast {
 		 */
 		public RegressionLine(DataPoint data[]) {
 			pn = 0;
-			xy = new String[2];
-			listX = new ArrayList();
-			listY = new ArrayList();
+			xy = new Double[2];
+			listX = new ArrayList<Double>();
+			listY = new ArrayList<Double>();
 			for (int i = 0; i < data.length; ++i) {
 				addDataPoint(data[i]);
 			}
@@ -253,19 +244,14 @@ public class Py_forecast {
 
 			// 把每个点的具体坐标存入ArrayList中，备用
 
-			xy[0] = (int) dataPoint.x + "";
-			xy[1] = (int) dataPoint.y + "";
+			xy[0] =  dataPoint.x ;
+			xy[1] =  dataPoint.y;
 			if (dataPoint.x != 0 && dataPoint.y != 0) {
 				System.out.print(xy[0] + ",");
 				System.out.println(xy[1]);
 
-				try {
-					// System.out.println("n:"+n);
 					listX.add(pn, xy[0]);
 					listY.add(pn, xy[1]);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 
 			}
 			++pn;
@@ -367,5 +353,19 @@ public class Py_forecast {
 			return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();
 
 		}
+		
+		
+	/*	public static void main(String[] args){
+			
+			DataPoint[] dplist = new DataPoint[10];
+			for(int i=0;i<10;i++){
+				dplist[i] = new DataPoint(i+1,4+i);
+				
+			}
+			RegressionLine rl = new RegressionLine(dplist);
+			double r = rl.at(11);
+			System.out.println(r+" regression result");
+			
+		}*/
 	}
 }
