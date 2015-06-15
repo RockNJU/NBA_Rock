@@ -137,7 +137,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "FROM team_season_data WHERE season='"+season+"'"
 					+ " AND type='"+type+"'"
 					+ " GROUP BY season,type,team) as "
-					+ "data right join teaminfo as info on data.teamAbb =info.teamAbb";
+					+ "data left join teaminfo as info on data.teamAbb =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			/********************************
 			 * String season,String teamName,TeamInfoVO info,int matchNum,int winNum,
@@ -236,7 +236,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "FROM team_season_data WHERE season='"+season+"'"
 					+ " AND type='"+type+"'"
 					+ " GROUP BY season,type,team HAVING AVG("+item+")"+""+sign+" "+num+") as "
-					+ "data right join teaminfo as info on data.teamAbb =info.teamAbb";
+					+ "data left join teaminfo as info on data.teamAbb =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			
 			char chr=39;
@@ -415,7 +415,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "FROM team_season_data WHERE type='"+type+"'"
 					+ " AND teamAbb='"+team+"'"
 					+ " GROUP BY season,type,team) as "
-					+ "data right join teaminfo as info on data.team =info.teamAbb";
+					+ "data left join teaminfo as info on data.team =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 
 			char chr=39;
