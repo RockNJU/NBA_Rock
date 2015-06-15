@@ -591,7 +591,7 @@ public class Match_Process extends JPanel {
 			if(temp==null||temp.size()==0){
 								
 			}else{re.add(daymivo);
-			//System.out.println("daodishishuod"+temp.size());
+			System.out.println("daodishishuod"+temp.size());
 				for(int m=0;m<temp.size();m++){
 					re.add(temp.get(m));
 				}	
@@ -659,7 +659,7 @@ public class Match_Process extends JPanel {
 			    if(temp==null||temp.size()==0){
 			    	
 			    }else{
-			    	//System.out.println("daSSShuod"+temp.size());
+			    	System.out.println("daSSShuod"+temp.size());
 			    	re.add(daymivo);
 			    	for(int m=0;m<temp.size();m++){
 					
