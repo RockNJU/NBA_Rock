@@ -535,8 +535,8 @@ public class Player implements PlayerBLService,Player_info{
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
 		//ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
-		 //PlayerSeasonDataVO vo=pl.getAPlayerSeasonData("14-15","常规赛","林书豪 ");
-		 
+		  PlayerSeasonDataVO vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
+		  System.out.println("name:"+vo.getPointNum());
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
 		 for(int i=0;i<list.size();i++){
 				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);
@@ -547,16 +547,16 @@ public class Player implements PlayerBLService,Player_info{
 		 //ArrayList<SingleMatchPersonalDataVO> list=pl.getTodayHotPlayer("pointNum");
 		// System.out.println("vlidt...  :"+list.size());
 		 
-		  ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
+		/*   ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
-		/* 
-		System.out.println("大小："+list.size());*/
+		
+		System.out.println("大小："+list.size());
 		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
 		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
 					+"  points:"+list.get(i).getPointNum()+
 					"  partition:"+list.get(i).getPartition()+"  :");
-		} 
+		} */
 		
 		
 		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
@@ -790,6 +790,70 @@ public class Player implements PlayerBLService,Player_info{
 		}//
 	
 		return result;
+	}
+
+
+
+	@Override
+	public PlayerSeasonDataVO get_Avg_PlayerSeasonData(String season,
+			String type) {
+		PlayerSeasonDataVO vo=null;
+		try {
+			 
+			String str=" SELECT type,"
+					+ "avg(time) as time_sum,SUM(matchNum)as match_sum,"
+					+ "avg(fieldGoal) as fieldGoal_sum,avg(shootNum) as shoot_sum,"
+					+ "avg(t_fieldGoal) as t_fieldGoal_sum,avg(t_shootNum)as t_shoot_sum,"
+					+ "avg(freeThrowGoal) as freeThrowGoal_sum,"
+					+ "avg(freeThrowNum) as freeThrow_sum,"
+					+ "avg(o_ReboundNum) as o_rebound_sum,"
+					+ "avg(d_reboundNum)as d_rebound_sum,"
+					+ "avg(assistNum)as assist_sum,avg(stealNum) as steal_sum,"
+					+ "avg(reboundNum)as rebound_sum,avg(blockNum)as block_sum,"
+					+ "avg(turnoverNum) as turnover_sum,avg(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,"
+					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(reboundEfficiency) as reboundEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
+					
+					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
+					+ "FROM player_data WHERE type='"+type+"'"
+					+ "and season='"+season+"' GROUP BY season,type";
+			ResultSet  rs=stmt.executeQuery(str);
+
+			
+			while(rs.next()){
+			vo=new PlayerSeasonDataVO(season,rs.getString("type"),
+						"paly_avg",getAPlayerInfo("林书豪"),
+						"--","--",
+						"--","--",rs.getInt("match_sum")
+						,25,
+						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),
+						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
+						rs.getDouble("blockEff"),rs.getInt("double_sum"),
+						rs.getInt("three_sum"),
+						null);
+			  
+				 
+			}
+			 conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		return vo;
 	}
 
 }

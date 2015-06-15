@@ -1064,6 +1064,72 @@ public class PlayerController implements PlayerBLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	@Override
+	public PlayerSeasonDataVO get_Avg_PlayerSeasonData(String season,
+			String type) {
+		PlayerSeasonDataVO vo=null;
+		try {
+			 
+			String str=" SELECT "
+					+ "teamAbb,COUNT(*) as match_sum, "
+					+ "avg(time) as time_sum,"
+					+ "avg(fieldGoal) as fieldGoal_sum,avg(shootNum) as shoot_sum,"
+					+ "avg(t_fieldGoal) as t_fieldGoal_sum,avg(t_shootNum)as t_shoot_sum,"
+					+ "avg(freeThrowGoal) as freeThrowGoal_sum,"
+					+ "avg(freeThrowNum) as freeThrow_sum,"
+					+ "avg(o_ReboundNum) as o_rebound_sum,"
+					+ "avg(d_reboundNum)as d_rebound_sum,"
+					+ "avg(assistNum)as assist_sum,avg(stealNum) as steal_sum,"
+					+ "avg(reboundNum)as rebound_sum,avg(blockNum)as block_sum,"
+					+ "avg(turnoverNum) as turnover_sum,avg(foulNum)as foul_sum,"
+					+ "SUM(pointNum)as point_sum,"
+					+ "AVG(efficiency) as eff,AVG(blockEfficiency)as blockEff,"
+					+ "AVG(assistEfficiency)as assistEff,"
+					+ "AVG(reboundEfficiency) as reboundEff,"
+					+ "AVG(o_reboundEfficiency) as o_reboundEff,"
+					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
+					+ "AVG(stealEfficiency) as stealEff,AVG(usingPercentage) as usingPct,"
+					
+					+ "SUM(seasonDoubleNum) as double_sum,SUM(seasonThreeNum) as three_sum "
+					+ "FROM player_data,playerinfo WHERE type='"+type+"'"
+					+ "and season='"+season+"' GROUP BY season,type";
+			ResultSet  rs=stmt.executeQuery(str);
+
+			
+			while(rs.next()){
+			vo=new PlayerSeasonDataVO(rs.getString("season"),rs.getString("type"),
+					rs.getString("name"),getAPlayerInfo(rs.getString("name")),
+						rs.getString("team"),rs.getString("division"),
+						rs.getString("partition"),rs.getString("position"),
+						rs.getInt("match_sum"),rs.getInt("start_sum"),
+						rs.getDouble("time_sum"),rs.getInt("fieldGoal_sum"),
+						rs.getInt("shoot_sum"),rs.getInt("t_fieldGoal_sum"),
+						rs.getInt("t_shoot_sum"),rs.getInt("freeThrowGoal_sum"),
+						rs.getInt("freeThrow_sum"),rs.getInt("o_rebound_sum"),
+						rs.getInt("d_rebound_sum"),rs.getInt("rebound_sum"),
+						rs.getInt("assist_sum"),rs.getInt("steal_sum"),
+						rs.getInt("block_sum"),rs.getInt("turnover_sum"),
+						rs.getInt("foul_sum"),rs.getInt("point_sum"),
+						rs.getDouble("assistEff"),rs.getDouble("reboundEff"),
+						rs.getDouble("o_reboundEff"),rs.getDouble("d_reboundEff"),
+						rs.getDouble("stealEff"),rs.getDouble("usingPct"),
+						rs.getDouble("blockEff"),rs.getInt("double_sum"),
+						rs.getInt("three_sum"),
+						null);
+			  
+				 
+			}
+			 conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//
+		vo=addImproveData(vo,vo.getName());
+		return vo;
+	}
 	
 
 }

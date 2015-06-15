@@ -357,7 +357,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		 System.out.println("lalallal:  "+a[3]);
 		 //ArrayList<SingleMatchPersonalDataVO> list=vo.getIndividualData();
 		
-		ArrayList<PlayerSeasonDataVO> list=team.getKingPlayerForATeam("LAL", "pointNum");
+		ArrayList<TeamSeasonDataVO> list=team.sort_super("13-14","常规赛","pointNum", "≥", 106);
 	/*	 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();*/
 		/* ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("ATL","2012-05-04");
@@ -365,10 +365,10 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			System.out.println("  队名："+volist.get(i).getTeamName()+"  对手："+volist.get(i).getOpp_team()+"  得分："+volist.get(i).getPointNum()+" date: "+volist.get(i).getDate());
 		}*/
 		/**/
-		ArrayList<TeamSeasonDataVO> inlist=team.getHotTeam("14-15", "pointNum");
-		  for(int i=0;i<inlist.size();i++){
-			System.out.println("球队数据：  队名"+inlist.get(i).getTeamName()+
-					"   得分:"+inlist.get(i).getPointNum()+";  姓名："+inlist.get(i).getPointNum());
+		//ArrayList<TeamSeasonDataVO> inlist=team.getHotTeam("14-15", "pointNum");
+		  for(int i=0;i<list.size();i++){
+			System.out.println("球队数据：  队名"+list.get(i).getTeamName()+
+					"   得分:"+list.get(i).getPointNum()+";  姓名："+list.get(i).getPointNum()+"  "+(1+i));
 		}  
 		 
 		 /*
@@ -529,7 +529,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
-		list=addindividualData(list,team);
+		//list=addindividualData(list,team);
 		return list;
 	}
 	
