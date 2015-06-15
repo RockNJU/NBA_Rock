@@ -38,66 +38,82 @@ public class Py_SectionEstimate {
 	
 	
 	public Double[] getEstimatePoint(){
-		return estimatePoint;
+		Double[] d = {estimatePoint[0]-1,estimatePoint[1]+1};
+		return d;
 	}
 	
 	public Double[] getEstimateBlock(){
-		return estimateBlock;
+		Double[] d = {estimateBlock[0]-0.5,estimateBlock[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateRebound(){
-		return estimateRebound;
+		Double[] d = {estimateRebound[0]-0.5,estimateRebound[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateAssist(){
-		return estimateAssist;
+		Double[] d = {estimateAssist[0]-0.5,estimateAssist[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateSteal(){
-		return estimateSteal;
+		Double[] d = {estimateSteal[0]-0.5,estimateSteal[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateFoul(){
-		return estimateFoul;
+		Double[] d = {estimateFoul[0]-0.5,estimateFoul[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateTurnover(){
-		return estimateTurnover;
+		Double[] d = {estimateTurnover[0]-0.5,estimateTurnover[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateOR(){
-		return estimateOR;
+		Double[] d = {estimateOR[0]-0.5,estimateOR[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateDR(){
-		return estimateDR;
+		Double[] d = {estimateDR[0]-0.5,estimateDR[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateFreeThrow(){
-		return estimateFreeThrow;
+		Double[] d = {estimateFreeThrow[0]-0.5,estimateFreeThrow[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateFreeThrowGoal(){
-		return estimateFreeThrowGoal;
+		Double[] d = {estimateFreeThrowGoal[0]-0.5,estimateFreeThrowGoal[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateTShoot(){
-		return estimateTShoot;
+		Double[] d = {estimateTShoot[0]-0.5,estimateTShoot[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateTField(){
-		return estimateTField;
+		Double[] d = {estimateTField[0]-0.5,estimateTField[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateShoot(){
-		return estimateShoot;
+		Double[] d = {estimateShoot[0]-0.5,estimateShoot[1]+0.5};
+		return d;
 	}
 	
 	public Double[] getEstimateFieldGoal(){
-		return estimateFieldGoal;
+		Double[] d = {estimateFieldGoal[0]-0.5,estimateFieldGoal[1]+0.5};
+		return d;
 	}
 	
 	public Py_SectionEstimate(String name){
+		
 		this.name = name;
 		calculateSection();
 	}
