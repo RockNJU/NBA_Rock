@@ -583,9 +583,6 @@ public class TeamD extends JPanel {
 			chartPanel.setBounds(10, 70, 1022, 500);
 			return chartPanel;
 		}
-
-
-
 	}
 	
 	public Double[] Changedouble(double[] temp){

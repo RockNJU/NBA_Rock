@@ -83,8 +83,10 @@ public class PlayerC extends JPanel {
 	boolean[] lineisshowed = {false,false,false,false,false,false};
 	Serie[] tempsave = {firsts,seconds,thirds,fourths,sectionup,sectiondown};
 	
-	double sectionupnum = 40;
-	double sectiondownnum = 30;	
+	double sectionupnum = 30;
+	double sectiondownnum = 40;	
+	Py_SectionEstimate pys;
+	Py_forecast pf;
 	
 	boolean showsectionline = false;
 	int lineChartState = 10;//选择的可以是10，20,30，赛季
@@ -92,11 +94,24 @@ public class PlayerC extends JPanel {
 	LineChart lc = new LineChart();
 	ChartPanel chartPanel = lc.createChart();//下方图表
 	String na;
-	private JTextField textField_1;
+	private JTextField 预计;
 	
 	public PlayerC(String name) {
 		//用于测试
 		basicName=name;
+		pys = new Py_SectionEstimate(name);
+		
+		sectionupnum = pys.getEstimatePoint()[1];
+		sectiondownnum = pys.getEstimatePoint()[0];
+		for(int i = 0;i<10;i++){
+			sectionupData[i] = sectionupnum;
+			sectiondownData[i] = sectiondownnum;
+		}
+		sectionup = new Serie(sectionupName, sectionupData);
+		sectiondown = new Serie(sectiondownName, sectiondownData);
+		tempsave[4] = sectionup;
+		tempsave[5]	= sectiondown;
+
 		
 		setSize(1042,580);
 		setLayout(null);
@@ -132,6 +147,9 @@ public class PlayerC extends JPanel {
 		对比项目选择.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chossenShowData = 对比项目选择.getSelectedItem().toString();
+				//String forecast = String.valueOf(pf.getForecastProperty(chossenShowData,basicName));
+			//	预计.setText("\u4E0B\u573A\u6BD4\u8D5B\u7684\u9884\u8BA1\u503C\uFF1A"+forecast);
+				getsectionnum(chossenShowData);
 
 				sectionupData = new Double[lineChartState];
 				sectiondownData = new Double[lineChartState];
@@ -516,6 +534,7 @@ public class PlayerC extends JPanel {
 				赛季.setIcon(new ImageIcon("newpic//赛季后.png"));
 			}
 		});
+		
 		JButton 球员区间 = new JButton("\u9884\u8BA1\u533A\u95F4");
 		球员区间.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -601,12 +620,12 @@ public class PlayerC extends JPanel {
 		
 
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setText("\u4E0B\u573A\u9884\u8BA1");
-		textField_1.setBounds(244, 38, 204, 28);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		预计 = new JTextField();
+		预计.setEditable(false);
+		预计.setText("\u4E0B\u573A\u6BD4\u8D5B\u7684\u9884\u8BA1\u503C\uFF1A");
+		预计.setBounds(244, 38, 204, 28);
+		contentPane.add(预计);
+		预计.setColumns(10);
 		
 		JButton 取消对比4 = new JButton(new ImageIcon("newpic\\取消对比.png"));
 		取消对比4.setOpaque(true);
@@ -676,6 +695,49 @@ public class PlayerC extends JPanel {
 		
 		}
 	
+
+	protected void getsectionnum(String chossenShowData2) {
+		//"总分","篮板数","助攻数","盖帽数","抢断数","犯规数","失误数"
+
+
+		if(chossenShowData2.equals("总分")){
+			sectionupnum = pys.getEstimatePoint()[1];
+			sectiondownnum = pys.getEstimatePoint()[0];
+		}
+		else if(chossenShowData2.equals("篮板数")){
+			sectionupnum = pys.getEstimateRebound()[1];
+			sectiondownnum = pys.getEstimateRebound()[0];
+		}
+		else if(chossenShowData2.equals("助攻数")){
+			sectionupnum = pys.getEstimateAssist()[1];
+			sectiondownnum = pys.getEstimateAssist()[0];
+		}
+		else if(chossenShowData2.equals("盖帽数")){
+			sectionupnum = pys.getEstimateBlock()[1];
+			sectiondownnum = pys.getEstimateBlock()[0];
+		}
+		else if(chossenShowData2.equals("抢断数")){
+			sectionupnum = pys.getEstimateSteal()[1];
+			sectiondownnum = pys.getEstimateSteal()[0];
+		}
+		else if(chossenShowData2.equals("犯规数")){
+			sectionupnum = 0;
+			sectiondownnum = 0;
+		}
+		else if(chossenShowData2.equals("失误数")){
+			sectionupnum = 0;
+			sectiondownnum = 0;
+		}
+		for(int i = 0;i<10;i++){
+			sectionupData[i] = sectionupnum;
+			sectiondownData[i] = sectiondownnum;
+		}
+		sectionup = new Serie(sectionupName, sectionupData);
+		sectiondown = new Serie(sectiondownName, sectiondownData);
+		tempsave[4] = sectionup;
+		tempsave[5]	= sectiondown;
+	}
+
 
 	public class LineChart {
 		public LineChart() {

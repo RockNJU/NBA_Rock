@@ -74,7 +74,7 @@ public class PlayerB extends JPanel {
 		
 		//获取信息
 		String nameA = name;
-		String portraitA = "newpic/fortest/"+init.pbl.getAPlayerInfo(name).getEname()+".png";
+		String portraitA = "newpic/portrait/"+init.pbl.getAPlayerInfo(name).getEname()+".png";
 		String teamA = playera.getTeamName();
 		String infoA = playera.getInfo().getNumber()+"|"+playera.getInfo().getPosition();
 		
@@ -161,7 +161,7 @@ public class PlayerB extends JPanel {
 						}
 						playerb = tempplayer.get(0);
 						String nameB = playerb.getName();
-						 String portraitB = "newpic/fortest/"+init.pbl.getAPlayerInfo(nameB).getEname()+".png";
+						String portraitB = "newpic/portrait/"+init.pbl.getAPlayerInfo(nameB).getEname()+".png";
 						 String  teamB = playerb.getTeamName();
 						 String	infoB = playerb.getInfo().getNumber()+"|"+playerb.getInfo().getPosition();
 					
