@@ -250,9 +250,12 @@ public class Py_forecast {
 				System.out.print(xy[0] + ",");
 				System.out.println(xy[1]);
 
-					listX.add(pn, xy[0]);
-					listY.add(pn, xy[1]);
+					listX.add(xy[0]);
+					listY.add(xy[1]);
 
+			}else{
+				listX.add(xy[0]);
+				listY.add(0.0);
 			}
 			++pn;
 			coefsValid = false;
