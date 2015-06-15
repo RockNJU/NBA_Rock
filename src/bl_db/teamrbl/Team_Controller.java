@@ -388,7 +388,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 
 	@Override
 	public ArrayList<TeamSeasonDataVO> getATeamSeasonData(String team,
-			String season) {
+			String type) {
 		ArrayList<TeamSeasonDataVO> list=new ArrayList<>();
 		
 	      
@@ -412,7 +412,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "AVG(d_reboundEfficiency) as d_reboundEff,"
 					+ "AVG(stealEfficiency) as stealEff,AVG(offenseEfficiency) as offenseEff,"
 					+ "AVG(defenseEfficiency) as defenseEff "
-					+ "FROM team_season_data WHERE season='"+season+"'"
+					+ "FROM team_season_data WHERE type='"+type+"'"
 					+ " AND teamAbb='"+team+"'"
 					+ " GROUP BY season,type,team) as "
 					+ "data right join teaminfo as info on data.team =info.team";
@@ -423,7 +423,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 				
 				 
 				
-				list.add(new TeamSeasonDataVO(season,rs.getString("team"),
+				list.add(new TeamSeasonDataVO(rs.getString("season"),rs.getString("team"),
 						
 						new TeamInfoVO(rs.getString("team"),
 				    			  rs.getString("Cname"),rs.getString("TEname"),
@@ -489,7 +489,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 				i++;
 			}
 			  conn.commit();
-		} catch (SQLException   e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
@@ -510,7 +510,8 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
        
 		try {  
 	         
-			String str="SELECT * FROM team_season_data WHERE season='"+season+"' and teamAbb='"+team+"'";
+			String str="SELECT * FROM team_season_data WHERE season='"+season+"' "
+					+ " and teamAbb='"+team+"' order by date desc";
 			ResultSet  rs=stmt.executeQuery(str);
 			 
 			char chr=39;
@@ -710,11 +711,11 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		double list[]=null;
 		ResultSet rs=null;
 		
-		System.out.println("当前赛季："+currentSeason);
+		//System.out.println("当前赛季："+currentSeason);
 		try {
 			 
 			String sqlStr="SELECT COUNT(*) AS num FROM team_season_data "
-					+ "where teamAbb='"+name+"' AND season='"+currentSeason+"' order by date";
+					+ "where teamAbb='"+name+"' AND season='"+currentSeason+"'";
 			rs=stmt.executeQuery(sqlStr);
 			int n=0;
 			while(rs.next()){
@@ -724,32 +725,32 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			}
 			
 			System.out.println("----"+n);
+			 
 			
-		
 			list=new double[num];
 			list=addValue(list,num);
 	        conn.commit();
 			
-	        if(num!=10&num!=20&num!=30){
-				num=n;
-				list=new double[num];
-			}
-	        
 			String str="SELECT "+item+" FROM team_season_data where "
-					+ " teamAbb='"+name+"' AND season='"+currentSeason+"' order by date";
+					+ " teamAbb='"+name+"' AND season='"+currentSeason+"'";
 			 rs=stmt.executeQuery(str);
-			 
+			char chr=39;
 			
 			int count=0;
 			if(num!=10&num!=20&num!=30){
 				num=n;
 				list=new double[num];
+				list=addValue(list,num);
 			}
 			while(rs.next()){
 				if(count==num){
 					break;
 				}
+				//System.out.println("要得到的项目  ："+);
 				list[count]=rs.getDouble(item);
+				if(count==num){
+					break;
+				}
 				count++;
 			}
 			 conn.commit();
