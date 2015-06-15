@@ -94,10 +94,10 @@ public class Py_forecast {
 	//内部类   用来封装X和Y坐标点
 	class DataPoint {
 
-		public double x;      //x值
+		public int x;      //x值
 		public double y;      //y值
 
-		public DataPoint(double x, double y) {
+		public DataPoint(int x, double y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -120,7 +120,7 @@ public class Py_forecast {
 		private double sst;
 		private double E;
 		private Double[] xy;
-		private ArrayList<Double> listX;
+		private ArrayList<Integer> listX;
 		private ArrayList<Double> listY ;
 		private int XMin, XMax, YMin, YMax;
 
@@ -135,7 +135,7 @@ public class Py_forecast {
 			YMax = 0;
 			pn = 0;
 			xy = new Double[2];
-			listX = new ArrayList<Double>();
+			listX = new ArrayList<Integer>();
 			listY = new ArrayList<Double>();
 		}
 
@@ -145,7 +145,7 @@ public class Py_forecast {
 		public RegressionLine(DataPoint data[]) {
 			pn = 0;
 			xy = new Double[2];
-			listX = new ArrayList<Double>();
+			listX = new ArrayList<Integer>();
 			listY = new ArrayList<Double>();
 			for (int i = 0; i < data.length; ++i) {
 				addDataPoint(data[i]);
@@ -244,17 +244,16 @@ public class Py_forecast {
 
 			// 把每个点的具体坐标存入ArrayList中，备用
 
-			xy[0] =  dataPoint.x ;
-			xy[1] =  dataPoint.y;
+			
 			if (dataPoint.x != 0 && dataPoint.y != 0) {
-				System.out.print(xy[0] + ",");
-				System.out.println(xy[1]);
+				System.out.print(dataPoint.x+ ",");
+				System.out.println(dataPoint.y+ ",");
 
-					listX.add(xy[0]);
-					listY.add(xy[1]);
+					listX.add(dataPoint.x);
+					listY.add(dataPoint.y);
 
 			}else{
-				listX.add(xy[0]);
+				listX.add(dataPoint.x);
 				listY.add(0.0);
 			}
 			++pn;
@@ -309,7 +308,7 @@ public class Py_forecast {
 			// 遍历这个list并计算分母
 			for (int i = 0; i < pn - 1; i++) {
 				double Yi = (double) listY.get(i);
-				double Y = at(Integer.parseInt(listX.get(i).toString()));
+				double Y = at(listX.get(i));
 				double deltaY = Yi - Y;
 				double deltaY2 = deltaY * deltaY;
 				/*
