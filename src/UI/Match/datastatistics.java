@@ -48,6 +48,7 @@ public class datastatistics extends JPanel {
 		teamAButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pivo=mvo.getHostTeam().getIndividualData();
+				System.out.println(pivo.size());
 				playerinfodata=getinfodata(pivo);
 				playerinfolist.updateTable(playerinfotitle, playerinfodata);
 			}
@@ -119,7 +120,7 @@ public class datastatistics extends JPanel {
 					"Èý·Ö", "·£Çò", "Àº°å", "Öú¹¥", "·¸¹æ","ÇÀ¶Ï","Ê§Îó","¸ÇÃ±","·ÖÊý" };*/
 			for (int i = 0; i < da.size(); i++) {
 				re[i][0] =changenumber( i + 1);
-				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getPlayerName()+".png");
+				ImageIcon image = new ImageIcon("newpic/portrait/"+init.pbl.getEnglishName(da.get(i).getPlayerName())+".png");
 				image.setImage(image.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT));
 				re[i][1] = image;
 				re[i][2] = da.get(i).getPlayerName();
