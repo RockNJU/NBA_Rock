@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
+import VO.Player_Avg;
 import VO.SingleMatchPersonalDataVO;
 import bl_db.common.EndDayInfo;
 import bl_db.common.HotSort;
@@ -535,8 +536,8 @@ public class Player implements PlayerBLService,Player_info{
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
 		//ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
-		  PlayerSeasonDataVO vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
-		  System.out.println("name:"+vo.getPointNum_avg());
+		  Player_Avg vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
+		  System.out.println("name:"+vo.getPointNum());
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
 		 for(int i=0;i<list.size();i++){
 				System.out.println("name:"+list.get(i).getPlayerName()+"  :"+list.get(i).getDate()+  "   "+i);
@@ -795,9 +796,9 @@ public class Player implements PlayerBLService,Player_info{
 
 
 	@Override
-	public PlayerSeasonDataVO get_Avg_PlayerSeasonData(String season,
+	public Player_Avg get_Avg_PlayerSeasonData(String season,
 			String type) {
-		PlayerSeasonDataVO vo=null;
+		Player_Avg vo=null;
 		try {
 			 
 			String str=" SELECT type,"
@@ -826,7 +827,7 @@ public class Player implements PlayerBLService,Player_info{
 
 			
 			while(rs.next()){
-			vo=new PlayerSeasonDataVO(season,rs.getString("type"),
+			vo=new Player_Avg(season,rs.getString("type"),
 						"paly_avg",getAPlayerInfo("林书豪"),
 						"--","--",
 						"--","--",rs.getInt("match_sum")

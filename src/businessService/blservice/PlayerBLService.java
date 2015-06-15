@@ -45,7 +45,7 @@ public interface PlayerBLService{
 		public PlayerInfoVO getAPlayerInfo(String name);
 		public PlayerSeasonDataVO getAPlayerSeasonData(String season,String type,String name);
 		
-		public PlayerSeasonDataVO get_Avg_PlayerSeasonData(String season,String type);
+		public Player_Avg get_Avg_PlayerSeasonData(String season,String type);
 		
 		public ArrayList<PlayerInfoVO> getTeamAllPlayer(String season,String teamAbb);    
 		//根据球队的缩写获取球队所有的球员姓名，其实你可以考虑返回所有的基本信息，这容易做到	

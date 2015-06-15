@@ -7,6 +7,7 @@ import VO.TeamInfoVO;
 import VO.TeamMatchVO;
 import VO.TeamSeasonDataVO;
 import VO.TeamVO;
+import VO.Team_Avg;
 
 public interface TeamBLService {
 	//TODO 获得默认赛季
@@ -45,7 +46,7 @@ public interface TeamBLService {
 	public double[] getTeamOneData(String name,int num,String what);
 	
 	
-	public TeamSeasonDataVO get_avg_teamData(String season,String type);
+	public Team_Avg get_avg_teamData(String season,String type);
 	/*
 	//TODO 2015/5/18 加
 	

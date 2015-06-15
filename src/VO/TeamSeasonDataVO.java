@@ -73,8 +73,7 @@ public class TeamSeasonDataVO {
 	double offensiveReboundEff_avg;
 	private double d_ReboundEfficiency =0;
 	double defenseReboundEff_avg;
-	
-	private ArrayList<TeamMatchVO> last_five_match;
+ 
 
     	
 	public TeamSeasonDataVO(String season,String teamName,
@@ -88,9 +87,8 @@ public class TeamSeasonDataVO {
 	double defenseEfficiency,double O_ReboundEfficiency,
 	double D_ReboundEfficiency,double stealEfficiency ,
 	double assistEfficiency,TeamMatchVO first_match){
-		
-		last_five_match=new ArrayList<>();
-		 last_five_match.add(first_match);
+		this.o_ReboundEfficiency=O_ReboundEfficiency;
+		this.d_ReboundEfficiency=D_ReboundEfficiency;
 		this.season=season;
 		this.teamAbb = teamName; 
 		 this.info=info;
@@ -162,83 +160,6 @@ public class TeamSeasonDataVO {
 	}
 	
 
-	 public void add_A_Match_Data(TeamMatchVO vo){
-		
-		 if(last_five_match.size()<5){
-			 last_five_match.add(vo);
-		 }else{
-			 last_five_match.remove(0);
-			 last_five_match.add(vo);
-		 }
-		 
-		 matchNum++;
-		 offenseRound=offenseRound+vo.getOffenseRound();
-		 defenseRound=defenseRound+vo.getDefenseRound();
-		 fieldGoal=fieldGoal+vo.getFieldGoal();
-		 shootNum=vo.getShootNum()+shootNum;
-		 t_fieldGoal=t_fieldGoal+vo.getT_fieldGoal();
-		 t_shootNum=t_shootNum+vo.getT_shootNum();
-		 freeThrowGoalNum=freeThrowGoalNum+vo.getFreeThrowGoalNum();
-		 freeThrowNum=vo.getFreeThrowNum()+freeThrowNum;
-		 o_ReboundNum=o_ReboundNum+vo.getO_ReboundNum();
-		 d_ReboundNum=d_ReboundNum+vo.getD_ReboundNum();
-		 
-		 reboundNum=reboundNum+vo.getReboundNum();
-		 assistNum=assistNum+vo.getAssistNum();
-		 stealNum=stealNum+vo.getStealNum();
-		 blockNum=blockNum+vo.getBlockNum();
-		 turnoverNum=turnoverNum+vo.getTurnoverNum();
-		 
-		 foulNum=foulNum+vo.getFoulNum();
-		 pointNum=pointNum+vo.getPointNum();
-		 winNum=winNum+vo.getWinNum();
-		 winRate=(double)winNum/matchNum;
-		 
-		 
-		  shootPercentage=(double)fieldGoal/shootNum; 		 
-		  t_shootPercentage=(double)t_fieldGoal/t_shootNum; 	 
-		  freeThrowPercentage=(double)freeThrowGoalNum/freeThrowNum; 	
-			  	
-			  
-		 offenseEfficiency = offenseEfficiency+vo.getOffenseEfficiency(); 	 
-		 defenseEfficiency = defenseEfficiency+vo.getDefenseEfficiency(); 	 
-			
- 	 
-		 stealEfficiency = stealEfficiency+vo.getStealEfficiency(); 	
-		 assistEfficiency = assistEfficiency+vo.getAssistEfficiency(); 	 
-			 
-		 o_ReboundEfficiency = o_ReboundEfficiency+vo.getO_ReboundEfficiency(); 
-		 d_ReboundEfficiency = d_ReboundEfficiency+vo.getD_ReboundEfficiency();
-		 
-		 
-		 
-		 /////////////////////
-		     fieldGoal_avg=(double)fieldGoal/matchNum;				    
-			 shootNum_avg=(double)shootNum/matchNum;
-			  t_fieldGoal_avg=(double)t_fieldGoal/matchNum;
-			  t_shootNum_avg=(double)t_shootNum/matchNum;
-			  freeThrowGoalNum_avg=(double)freeThrowGoalNum/matchNum;
-			  freeThrowNum_avg=(double)freeThrowNum/matchNum;		 
-			  o_ReboundNum_avg=(double)o_ReboundNum/matchNum;	 
-			  d_ReboundNum_avg=(double)d_ReboundNum/matchNum;		 
-			  assistNum_avg=(double)assistNum/matchNum;		 
-			  stealNum_avg=(double)stealNum/matchNum;	 
-			  reboundNum_avg=(double)reboundNum/matchNum;	 
-			  blockNum_avg=(double)blockNum/matchNum;		 
-			  turnoverNum_avg=(double)turnoverNum/matchNum;		 
-			  foulNum_avg=(double)foulNum/matchNum;
-			  pointNum_avg=(double)pointNum/matchNum;
-			  
-			  //////
-			   defenseRound_avg=defenseRound/matchNum;
-			   offenseEfficiency_avg=offenseEfficiency/matchNum;
-              defenseEfficiency_avg=defenseEfficiency/matchNum;
-             stealEfficiency_avg=stealEfficiency/matchNum;
-             assistEfficiency_avg=assistEfficiency/matchNum;
-			  offensiveReboundEff_avg=o_ReboundEfficiency/matchNum;
-			 defenseReboundEff_avg=d_ReboundEfficiency/matchNum;
-		 
-	 }
 	
 	public String getSreason(){
 		return season;
@@ -489,11 +410,7 @@ public class TeamSeasonDataVO {
 			return info;
 		}
 
-
-		public ArrayList<TeamMatchVO> getLast_five_match() {
-			return last_five_match;
-		}
-
+ 
 
 		public double getFreeThrowPercentage() {
 			return freeThrowPercentage;
