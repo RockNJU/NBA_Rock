@@ -2,6 +2,7 @@ package UI.Sta;
 
 import java.util.ArrayList;
 
+import UI.common.OftenUseMethod;
 import UI.main.init;
 import VO.PlayerInfoVO;
 import VO.PlayerSeasonDataVO;
@@ -43,6 +44,7 @@ public class TrunTeam {
 				.getASeasonMatchData(name, "13-14");// MIA
 		ArrayList<SingleMatchPersonalDataVO> playerafter = init.pbl
 				.getASeasonMatchData(name, "14-15");// CLE
+		
 		ischangealot(playerbefore, playerafter);
 	}
 	
@@ -73,6 +75,7 @@ public class TrunTeam {
 		afterU = calculateU(dataAfter, afterX);
 		K = calculateK( beforeU, afterU);
 		output[i] = K;
+		System.out.print(afterU);
 		if(afterU > max){
 			max = afterU;
 			maxString = input[i];
@@ -99,7 +102,14 @@ public class TrunTeam {
 		afterU = calculateU(dataAfter, afterX);
 		Z = calculateZ(beforeX, beforeU, afterX);
 		P =  calc(Z);
-		output[i] = P;
+		output[i] = OftenUseMethod.changedouble(P);
+		if(P>0.02)
+		{
+			outputisornot[i] = "сп";
+		}
+		else{
+			outputisornot[i] = "нч";
+		}
 		}
 		//System.out.println(beforeX + ";" +afterX+";"+ beforeU + ";" + Z + ";" + P);
 	return output;
