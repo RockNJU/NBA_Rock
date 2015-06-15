@@ -86,7 +86,7 @@ public class PlayerC extends JPanel {
 	double sectionupnum = 30;
 	double sectiondownnum = 40;	
 	Py_SectionEstimate pys;
-	Py_forecast pf;
+	Py_forecast pf = new Py_forecast();
 	
 	boolean showsectionline = false;
 	int lineChartState = 10;//选择的可以是10，20,30，赛季
@@ -147,8 +147,11 @@ public class PlayerC extends JPanel {
 		对比项目选择.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chossenShowData = 对比项目选择.getSelectedItem().toString();
-				//String forecast = String.valueOf(pf.getForecastProperty(chossenShowData,basicName));
-			//	预计.setText("\u4E0B\u573A\u6BD4\u8D5B\u7684\u9884\u8BA1\u503C\uFF1A"+forecast);
+				System.out.print(chossenShowData+basicName);
+				double forecastd = pf.getForecastProperty(chossenShowData,basicName);
+				String forecast = String.valueOf(forecastd);
+				预计.setText("\u4E0B\u573A\u6BD4\u8D5B\u7684\u9884\u8BA1\u503C\uFF1A"+forecast);
+				
 				getsectionnum(chossenShowData);
 
 				sectionupData = new Double[lineChartState];
@@ -721,12 +724,12 @@ public class PlayerC extends JPanel {
 			sectiondownnum = pys.getEstimateSteal()[0];
 		}
 		else if(chossenShowData2.equals("犯规数")){
-			sectionupnum = 0;
-			sectiondownnum = 0;
+			sectionupnum = pys.getEstimateFoul()[1];
+			sectiondownnum = pys.getEstimateFoul()[0];
 		}
 		else if(chossenShowData2.equals("失误数")){
-			sectionupnum = 0;
-			sectiondownnum = 0;
+			sectionupnum = pys.getEstimateFreeThrow()[1];
+			sectiondownnum = pys.getEstimateFreeThrow()[0];
 		}
 		for(int i = 0;i<10;i++){
 			sectionupData[i] = sectionupnum;
