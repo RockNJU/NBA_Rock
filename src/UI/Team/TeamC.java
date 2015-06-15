@@ -63,7 +63,15 @@ public class TeamC extends JPanel {
 		paintdataA[4] = OftenUseMethod.changedouble(teama.getT_shootNum_avg());
 		paintdataA[5] = OftenUseMethod.changedouble(teama.getFreeThrowNum_avg());
 		paintdataA[6] = OftenUseMethod.changedouble(teama.getShootNum_avg());
-
+		
+		teamb = init.tbl.get_avg_teamData(season,"³£¹æÈü");
+		paintdataB[0] = OftenUseMethod.changedouble(teamb.getMatchNum());
+		paintdataB[1] = OftenUseMethod.changedouble(teamb.getPointNum_avg());
+		paintdataB[2] = OftenUseMethod.changedouble(teamb.getAssistNum_avg());
+		paintdataB[3] = OftenUseMethod.changedouble(teamb.getReboundNum_avg());
+		paintdataB[4] = OftenUseMethod.changedouble(teamb.getT_shootNum_avg());
+		paintdataB[5] = OftenUseMethod.changedouble(teamb.getFreeThrowNum_avg());
+		paintdataB[6] = OftenUseMethod.changedouble(teamb.getShootNum_avg());
 
 		this.na=name;
 		setSize(1042,580);
