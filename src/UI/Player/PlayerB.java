@@ -58,12 +58,12 @@ public class PlayerB extends JPanel {
 		
 		playerb = init.pbl.get_Avg_PlayerSeasonData(season,"³£¹æÈü");
 		paintdataB[0] = OftenUseMethod.changedouble(playerb.getStartingNum());
-		paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum_avg());
-		paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum_avg());
-		paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum_avg());
-		paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum_avg());
-		paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum_avg());
-		paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum_avg());
+		paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum()/playerb.getMatchNum());
+		paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum()/playerb.getMatchNum());
+		paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum()/playerb.getMatchNum());
+		paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum()/playerb.getMatchNum());
+		paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum()/playerb.getMatchNum());
+		paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum()/playerb.getMatchNum());
 		
 		 jp.setBounds(0, 0, 1042, 580);
 		 jp.setOpaque(false);
@@ -181,6 +181,27 @@ public class PlayerB extends JPanel {
 						 teamsecond.setText(teamB);
 						 infosecond.setText(infoB);
 						 namesecond.setText(nameB);
+						 
+							paintdataA[0] = OftenUseMethod.changedouble(playera.getStartingNum());
+							paintdataA[1] = OftenUseMethod.changedouble(playera.getPointNum_avg());
+							paintdataA[2] = OftenUseMethod.changedouble(playera.getAssistNum_avg());
+							paintdataA[3] = OftenUseMethod.changedouble(playera.getReboundNum_avg());
+							paintdataA[4] = OftenUseMethod.changedouble(playera.getT_shootNum_avg());
+							paintdataA[5] = OftenUseMethod.changedouble(playera.getFreeThrowNum_avg());
+							paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());
+							
+							paintdataB[0] = OftenUseMethod.changedouble(playerb.getStartingNum());
+							paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum_avg());
+							paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum_avg());
+							paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum_avg());
+							paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum_avg());
+							paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum_avg());
+							paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum_avg());
+							
+							paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+							cardLayout.next(jp);
+							
+							
 					}
 				}
 			});
