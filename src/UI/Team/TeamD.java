@@ -260,24 +260,28 @@ public class TeamD extends JPanel {
 				//System.out.print(对比项目选择.getSelectedItem().toString()+"\n");
 				if(!firstName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(tm.getFullName(firstName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				firstData = Changedouble(temp);
 				 firsts = new Serie(firstName, firstData);
 					tempsave[0] = firsts;
 				}
 				if(!secondName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(tm.getFullName(secondName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				secondData = Changedouble(temp);
 				seconds = new Serie(secondName, secondData);
 				tempsave[1] = seconds;
 				}
 				if(!thirdName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(tm.getFullName(thirdName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				thirdData = Changedouble(temp);
 				thirds = new Serie(thirdName, thirdData);
 				tempsave[2] = thirds;
 				}
 				if(!fourthName.equals("NULL")){
 				double[] temp = init.tbl.getTeamOneData(tm.getFullName(fourthName),lineChartState,sm.getItem(对比项目选择.getSelectedItem().toString()));
+				temp = Addzero(temp,lineChartState,temp.length);
 				fourthData = Changedouble(temp);
 				fourths = 	new Serie(fourthName, fourthData);
 				tempsave[3] = fourths;

@@ -43,72 +43,72 @@ public class Py_SectionEstimate {
 	}
 	
 	public Double[] getEstimateBlock(){
-		Double[] d = {estimateBlock[0]-0.5,estimateBlock[1]+0.5};
+		Double[] d = {estimateBlock[0],estimateBlock[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateRebound(){
-		Double[] d = {estimateRebound[0]-0.5,estimateRebound[1]+0.5};
+		Double[] d = {estimateRebound[0]-0.2,estimateRebound[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateAssist(){
-		Double[] d = {estimateAssist[0]-0.5,estimateAssist[1]+0.5};
+		Double[] d = {estimateAssist[0]-0.2,estimateAssist[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateSteal(){
-		Double[] d = {estimateSteal[0]-0.5,estimateSteal[1]+0.5};
+		Double[] d = {estimateSteal[0]-0.2,estimateSteal[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateFoul(){
-		Double[] d = {estimateFoul[0]-0.5,estimateFoul[1]+0.5};
+		Double[] d = {estimateFoul[0]-0.2,estimateFoul[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateTurnover(){
-		Double[] d = {estimateTurnover[0]-0.5,estimateTurnover[1]+0.5};
+		Double[] d = {estimateTurnover[0]-0.2,estimateTurnover[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateOR(){
-		Double[] d = {estimateOR[0]-0.5,estimateOR[1]+0.5};
+		Double[] d = {estimateOR[0]-0.2,estimateOR[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateDR(){
-		Double[] d = {estimateDR[0]-0.5,estimateDR[1]+0.5};
+		Double[] d = {estimateDR[0]-0.2,estimateDR[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateFreeThrow(){
-		Double[] d = {estimateFreeThrow[0]-0.5,estimateFreeThrow[1]+0.5};
+		Double[] d = {estimateFreeThrow[0]-0.2,estimateFreeThrow[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateFreeThrowGoal(){
-		Double[] d = {estimateFreeThrowGoal[0]-0.5,estimateFreeThrowGoal[1]+0.5};
+		Double[] d = {estimateFreeThrowGoal[0]-0.2,estimateFreeThrowGoal[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateTShoot(){
-		Double[] d = {estimateTShoot[0]-0.5,estimateTShoot[1]+0.5};
+		Double[] d = {estimateTShoot[0]-0.2,estimateTShoot[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateTField(){
-		Double[] d = {estimateTField[0]-0.5,estimateTField[1]+0.5};
+		Double[] d = {estimateTField[0]-0.2,estimateTField[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateShoot(){
-		Double[] d = {estimateShoot[0]-0.5,estimateShoot[1]+0.5};
+		Double[] d = {estimateShoot[0]-0.2,estimateShoot[1]+0.4};
 		return d;
 	}
 	
 	public Double[] getEstimateFieldGoal(){
-		Double[] d = {estimateFieldGoal[0]-0.5,estimateFieldGoal[1]+0.5};
+		Double[] d = {estimateFieldGoal[0]-0.2,estimateFieldGoal[1]+0.4};
 		return d;
 	}
 	
