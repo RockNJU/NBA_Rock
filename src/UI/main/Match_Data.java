@@ -29,6 +29,7 @@ import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable;
 import UI.common.CreateTable_M;
 import UI.common.DateChooser;
+import UI.common.TeamTwoMap;
 import VO.MatchInfoVO;
 import VO.MatchVO;
 
@@ -285,8 +286,11 @@ public class Match_Data extends JPanel {
 						if (e.getClickCount() == 2 && matchdatalist.getSelectedRow() != -1) {
 							String date = matchdatalist.getValueAt(matchdatalist.getSelectedRow(), 1);						
 							
-							String name = matchdatalist.getValueAt(matchdatalist.getSelectedRow(), 3);						
-							spi = new SingleMatch(name,date);
+							String name = matchdatalist.getValueAt(matchdatalist.getSelectedRow(), 3);	
+							System.out.println(name);
+							TeamTwoMap tt=new TeamTwoMap();
+							System.out.println("chuangeimatch"+tt.getFullName(name));
+							spi = new SingleMatch(tt.getFullName(name),date);
 							spi.setVisible(true);
 							spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 						}
@@ -328,7 +332,7 @@ public class Match_Data extends JPanel {
 				re[i][1]=mdata.get(i).getDate();
 				re[i][2]=SeasonInfo.getSeason(mdata.get(i).getDate())+"Èü¼¾";
 				
-					re[i][3]=mdata.get(i).getTeam_H();
+				re[i][3]=mdata.get(i).getTeam_H();
 				
 			 	
 				re[i][4]=mdata.get(i).getScore();

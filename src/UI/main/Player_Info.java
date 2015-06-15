@@ -170,7 +170,11 @@ public class Player_Info extends JPanel {
 				ImageIcon image = new ImageIcon("newpic/portrait/"+da.get(i).getEname()+".png");
 				image.setImage(image.getImage().getScaledInstance(30, 30,Image.SCALE_DEFAULT));
 				re[i][1] = image;
-				re[i][2] = da.get(i).getName();
+				if(da.get(i).getName().equals("null")){
+					re[i][2] = da.get(i).getEname();
+				}else{
+					re[i][2] = da.get(i).getName();
+				}
 				re[i][3] = da.get(i).getNumber();
 				re[i][4] = da.get(i).getPosition();
 				re[i][5] = da.get(i).getHeight();

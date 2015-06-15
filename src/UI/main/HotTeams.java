@@ -14,6 +14,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.apache.batik.apps.rasterizer.SVGConverterException;
 
+import bl_db.common.Team_map;
 import businessService.blservice.MatchBLService;
 import businessService.blservice.TeamBLService;
 import UI.Team.SingleTeam;
@@ -32,7 +33,8 @@ import VO.TeamSeasonDataVO;
 public class HotTeams extends JPanel {
 	//SortItem_Map map1 = new SortItem_Map();
 	SortItem_ForHotTeam map1 = new SortItem_ForHotTeam();
-	PlayerPosition_Map map4 = new PlayerPosition_Map();	
+	//PlayerPosition_Map map4 = new PlayerPosition_Map();	
+	Team_map tm=new Team_map();
 	Object [][] data;
 	String type;
 	String according;
@@ -50,9 +52,9 @@ public class HotTeams extends JPanel {
 		setOpaque(false);
 		setSize(1040, 257);
 		
-		System.out.println("type"+map1.getItem(tmptype));
+		//System.out.println("type"+map1.getItem(tmptype));
 		tsdv = tbs.getHotTeam(saiji,map1.getItem(tmptype));
-		System.out.println(tsdv.size());
+		//System.out.println(tsdv.size());
 		data=getdata(tsdv);
 		
 		String[] title = {"序号","LOGO","球队","分区","建立时间","缩写",tmptype};
@@ -66,17 +68,16 @@ public class HotTeams extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && ctfh.getSelectedRow() != -1) {
 					String name = ctfh.getValueAt(ctfh.getSelectedRow(), 2);
-					//System.out.println(name);
-					
-					SingleTeam spi = new SingleTeam(name);
+					System.out.println("asdafafafa"+tm.getFullName(name));					
+					SingleTeam spi = new SingleTeam(tm.getFullName(name));
 					spi.setVisible(true);
 					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 
 				}
 			}
 		});
-		//System.out.println("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
-		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tsdv.get(0).getFullName()+".png");
+		System.out.println("是不是休斯顿火箭"+"newpic/TEAMPNG/"+tsdv.get(0).getTeamName()+".png");
+		ImageIcon No1_Team = new ImageIcon("newpic/TEAMPNG/"+tm.getFullName(tsdv.get(0).getTeamName())+".png");
 		No1_Team.setImage(No1_Team.getImage().getScaledInstance(158, 158,Image.SCALE_DEFAULT)); 		
 		JLabel No1_p = new JLabel(No1_Team);		
 		No1_p.setBounds(35,45, 180, 158);		
@@ -149,7 +150,7 @@ public class HotTeams extends JPanel {
 		Object[][] re=new Object[4][7];
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
-			ImageIcon ddd = new ImageIcon("newpic/TEAMPNG/"+da.get(i).getFullName()+".png");
+			ImageIcon ddd = new ImageIcon("newpic/TEAMPNG/"+tm.getFullName(tsdv.get(i).getTeamName())+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=(da.get(i).getTeamName());

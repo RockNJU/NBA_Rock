@@ -37,7 +37,7 @@ public class TeamA extends JPanel {
 	CreateTable TeamA_list;
 	ImageIcon tpic;
 	JLabel jb1,pname,label,lblabalabala,pnumwin,pnumlose,time,label_1,label_2,ground,coach;
-	
+	Team_map tm=new Team_map();
 	String[]anatitle={"","场均得分","场均助攻","场均篮板"};
 	Object[][]anadata;
 	String[] TeamA_matchtitle={"日期","对手","得分","篮板","助攻","投篮","投篮%","三分","三分%","罚球","罚球%","抢断","失误","盖帽","犯规","攻/防"};
@@ -158,13 +158,15 @@ public class TeamA extends JPanel {
 				// TODO Auto-generated method stub
 				if (e.getClickCount() == 2 && TeamA_list.getSelectedRow() != -1) {
 					if(tabletype.equals("近五场")){
-						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);					
-						SingleMatch spi = new SingleMatch(na,date);
+						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);	
+						String name=TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 1);
+						SingleMatch spi = new SingleMatch((name),date);
 						spi.setVisible(true);
 						spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 					}else if(tabletype.equals("赛程")){
-						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);					
-						SingleMatch spi = new SingleMatch(na,date);
+						String date = TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 0);
+						String name=TeamA_list.getValueAt(TeamA_list.getSelectedRow(), 1);
+						SingleMatch spi = new SingleMatch((name),date);
 						spi.setVisible(true);
 						spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 					}else{
@@ -310,6 +312,7 @@ public class TeamA extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				updateTeamA(na);
 				// TODO Auto-generated method stub
 				/*
@@ -464,7 +467,7 @@ public class TeamA extends JPanel {
 				re[i][9] = OftenUseMethod.changedouble(da.get(i).getBlockNum_avg());
 				re[i][10] = OftenUseMethod.changedouble(da.get(i).getTurnoverNum_avg());
 				re[i][11] = OftenUseMethod.changedouble(da.get(i).getFoulNum_avg());
-				re[i][12] = String.valueOf(da.get(i).getO_ReboundNum_avg())+"/"+String.valueOf( da.get(i).getD_ReboundNum_avg());									
+				re[i][12] =  OftenUseMethod.changedouble(da.get(i).getO_ReboundNum_avg())+"/"+ OftenUseMethod.changedouble( da.get(i).getD_ReboundNum_avg());									
 			}
 			return re;
 		}
@@ -511,7 +514,7 @@ public class TeamA extends JPanel {
 
 	}
 	public void updateTeamA(String name){
-		
+		System.out.println(name);
 		tivo=init.tbl.getATeamInfo(init.defaultseason, name);
 		tsd=init.tbl.getATeamData(init.defaultseason, name);
 		tpic=new ImageIcon("newpic/TEAMPNG/"+name+".png");
@@ -534,10 +537,11 @@ public class TeamA extends JPanel {
 		}else if(tabletype.equals("近几年")){
 			newti=TeamA_yeartitle;
 			Team_map tm=new Team_map();
+			System.out.println("判断传入值"+na);
 			System.out.println("球队近几年"+tm.getFullName(na)+seasontype);
-			tsdvo=UI.main.init.tbl.getATeamSeasonData(tm.getFullName(na), seasontype);
+			tsdvo=UI.main.init.tbl.getATeamSeasonData((na), seasontype);
 			System.out.println(tsdvo.size());
-			if(isAvg.equals("avg")){
+			if(isAvg.isSelected()){
 				TeamA_data=getyearavg(tsdvo);
 			}else{
 				TeamA_data=getyeartol(tsdvo);

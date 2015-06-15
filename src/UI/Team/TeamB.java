@@ -135,8 +135,8 @@ public class TeamB extends JPanel {
 		});
 		
 		
-		
-		info=new JButton(new ImageIcon("newpic/常规赛浮.png"));
+		/*
+		info=new JButton(new ImageIcon("newpic/信息浮.png"));
 		info.setLocation(915, 283);
 		info.setSize(55, 30);
 		add(info);
@@ -145,11 +145,15 @@ public class TeamB extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				info.setIcon(new ImageIcon("newpic/常规赛浮.png"));
-				data.setIcon(new ImageIcon("newpic/季后赛.png"));
+				info.setIcon(new ImageIcon("newpic/信息浮.png"));
+				data.setIcon(new ImageIcon("newpic/新数据.png"));
+				pivo = init.pbl.getTeamAllPlayer(init.defaultseason, na);
+				tp_data=getinfodata(pivo);
+				tp_list.updateTable(tp_title, tp_data);
+				setinfolist();
 			}			
 		});
-		data=new JButton(new ImageIcon("newpic/季后赛.png"));
+		data=new JButton(new ImageIcon("newpic/新数据.png"));
 		data.setLocation(970, 283);
 		data.setSize(55, 30);
 		add(data);
@@ -158,23 +162,28 @@ public class TeamB extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				info.setIcon(new ImageIcon("newpic/常规赛.png"));
-				data.setIcon(new ImageIcon("newpic/季后赛浮.png"));
+				info.setIcon(new ImageIcon("newpic/信息.png"));
+				data.setIcon(new ImageIcon("newpic/新数据浮.png"));
+				pivo = init.pbl.getTeamAllPlayer(init.defaultseason, na);
+				tp_data=getinfodata(pivo);
+				tp_list.updateTable(tp_title, tp_data);
+				setinfolist();
 			}			
 		});
-		
+		*/
 		JLabel lblNewLabel = new JLabel("\u5F53\u524D\u8D5B\u5B63\u9635\u5BB9\uFF1A");
 		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 18));
 		lblNewLabel.setBounds(10, 288, 139, 32);
 		add(lblNewLabel);
 		lblNewLabel.setForeground(init.syspurple);
 		
-		//pivo = init.pbl.getPlayerInfo(na);
+		System.out.println(name);
+		pivo = init.pbl.getTeamAllPlayer(init.defaultseason, name);
 		tp_data=getinfodata(pivo);
-		tp_list = new CreateTable_pic(tp_title, tp_data, 10, 315,1015, 250, 25,
+		tp_list = new CreateTable_pic(tp_title, tp_data, 10, 315,1015, 250, 35,
 				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(tp_list);
-		
+		setinfolist();
 		JLabel label = new JLabel("\u8D5B\u5B63\u6570\u636E\u738B\uFF1A");
 		label.setForeground(new Color(155, 106, 141));
 		label.setFont(new Font("微软雅黑", Font.BOLD, 18));
@@ -182,7 +191,7 @@ public class TeamB extends JPanel {
 		add(label);
 		
 
-		setinfolist();
+		
 		//tp_list.FitTableColumns(tp_list.getTable());
 	}
 	

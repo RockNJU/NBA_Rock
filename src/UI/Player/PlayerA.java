@@ -65,7 +65,13 @@ public class PlayerA extends JPanel {
 		setOpaque(false);
 
 		pivo=init.pbl.getAPlayerInfo(name);
-		Apsvo=init.pbl.keyfind(name).get(0);
+		if(init.pbl.getAPlayerSeasonData(init.defaultseason,seasontype, name)!=null){
+			Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason,seasontype, name);
+		}else if(init.pbl.keyfind(name).size()!=0){
+			Apsvo=init.pbl.keyfind(name).get(0);
+		}else{
+			Apsvo=init.pbl.getAPlayerSeasonData("14-15", "常规赛", "斯蒂芬-库里");
+		}
 		
 		jb1=new JLabel(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		jb1.setBounds(10, 10, 230, 185);
@@ -470,7 +476,15 @@ public class PlayerA extends JPanel {
 	public void updatePlayerA(String name){
 	//	System.out.println(tabletype);
 		pivo=init.pbl.getAPlayerInfo(name);
-		Apsvo=init.pbl.keyfind(name).get(0);
+		if(init.pbl.getAPlayerSeasonData(init.defaultseason,seasontype, name)!=null){
+			Apsvo=init.pbl.getAPlayerSeasonData(init.defaultseason,seasontype, name);
+		}else if(init.pbl.keyfind(name).size()!=0){
+			Apsvo=init.pbl.keyfind(name).get(0);
+		}else{
+			Apsvo=init.pbl.getAPlayerSeasonData("14-15", "常规赛", "斯蒂芬-库里");
+		}
+		
+		
 		jb1.setIcon(new ImageIcon("newpic/portrait/"+pivo.getEname()+".png"));
 		pname.setText(name);
 		lblLocation.setText((pivo.getPosition())+"   "+Apsvo.getPartition());

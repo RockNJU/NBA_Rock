@@ -25,6 +25,7 @@ import bl_db.common.Team_map;
 import UI.Team.SingleTeam;
 import UI.common.CreateTable;
 import UI.common.History;
+import UI.common.NewSortItem;
 import UI.common.OftenUseMethod;
 import UI.common.SearchHistory;
 import UI.common.SortItem_Map;
@@ -312,7 +313,7 @@ public class Team extends JPanel{
 		according_super = new JComboBox();
 		according_super.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
 		according_super.setToolTipText("\u7B5B\u9009\u6761\u4EF6");
-		according_super.setModel(new DefaultComboBoxModel(new String[] {"\u53C2\u8D5B\u573A\u6570", "\u5148\u53D1\u573A\u6570", "\u4E0A\u573A\u65F6\u95F4", "\u6295\u7BEE\u547D\u4E2D\u7387", "\u4E09\u5206\u547D\u4E2D\u7387", "\u7F5A\u7403\u547D\u4E2D\u7387", "\u8FDB\u653B", "\u9632\u5B88", "\u62A2\u65AD", "\u76D6\u5E3D", "\u5931\u8BEF", "\u72AF\u89C4", "\u6548\u7387", "\u4E24\u53CC\u6570", "\u4E09\u53CC\u6570", "GmSc\u6548\u7387\u503C", "\u771F\u5B9E\u547D\u4E2D\u7387", "\u6295\u7BEE\u6548\u7387", "\u7BEE\u677F\u7387", "\u8FDB\u653B\u7BEE\u677F\u6570", "\u9632\u5B88\u7BEE\u677F\u6570", "\u52A9\u653B\u7387", "\u62A2\u65AD\u7387", "\u76D6\u5E3D\u7387", "\u5931\u8BEF\u7387", "\u4F7F\u7528\u7387", "\u8FD1\u4E94\u573A\u5F97\u5206\u63D0\u5347\u7387", "\u8FD1\u4E94\u573A\u52A9\u653B\u63D0\u5347\u7387", "\u8FD1\u4E94\u573A\u7BEE\u677F\u63D0\u5347\u7387", "\u4E24\u53CC\u6570", "\u4E09\u53CC\u6570"}));
+		according_super.setModel(new DefaultComboBoxModel(new String[] {"\u5F97\u5206", "\u7BEE\u677F", "\u52A9\u653B", "\u53C2\u8D5B\u573A\u6570", "\u5F97\u5206", "\u7BEE\u677F", "\u52A9\u653B", "\u62A2\u65AD", "\u76D6\u5E3D", "\u5931\u8BEF", "\u72AF\u89C4", "\u4E24\u53CC\u6570", "\u4E09\u53CC\u6570", "\u7BEE\u677F\u7387", "\u8FDB\u653B\u7BEE\u677F\u6570", "\u9632\u5B88\u7BEE\u677F\u6570", "\u52A9\u653B\u7387", "\u62A2\u65AD\u7387", "\u76D6\u5E3D\u7387", "\u5931\u8BEF\u7387"}));
 		according_super.setEditable(true);
 		according_super.setBounds(470, 46, 105, 30);
 		add(according_super);
@@ -880,7 +881,7 @@ public class Team extends JPanel{
             
 				
 				// TODO
-				SortItem_Map map3 = new SortItem_Map();	
+				NewSortItem map3 = new NewSortItem();	
 				String According = according_super.getSelectedItem().toString();
 				String Season = Teamseason.getSelectedItem().toString().substring(0, 5);
 				
@@ -896,7 +897,7 @@ public class Team extends JPanel{
 				System.out.println(init.currentpanel);*/
 				avg_tol.setSelected(true);
 				teamdatalist.updateTable(teamtitle, teamdata);		
-				int x=getcl(according.getSelectedItem().toString());
+				int x=getcl(according_super.getSelectedItem().toString());
 				teamdatalist.setcolor(x);
 				teamdatalist.FitTableColumns(teamdatalist.getTable());
 			}

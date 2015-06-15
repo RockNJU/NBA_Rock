@@ -3,6 +3,8 @@ package UI.Sta;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -24,7 +26,6 @@ public class Statistics extends JDialog {
 	public static JPanel rightpanel;
 	public JButton A;
 	public JButton B;
-	public JButton C;
 
 	String na;
 	/**
@@ -63,11 +64,34 @@ public class Statistics extends JDialog {
 		getContentPane().add(rightpanel);
 		
 
-	
-	
+	A=new JButton("球员属性分析");
+	A.setLocation(85, 0);
+	A.setSize(156, 29);
+	getContentPane().add(A);
+	A.addActionListener(new ActionListener(){
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			A a=new A();
+			change(a);
+		}
 		
+	});
 
+	B = new JButton("\u8F6C\u4F1A\u7403\u5458\u5206\u6790");
+	B.setBounds(280, 0, 156, 29);
+	getContentPane().add(B);
+	B.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			B a=new B();
+			change(a);
+		}
+		
+	});
 		back = new LimpidButton("","newpic/关闭.png");
 		back.setBounds(1030, 6,16, 17);
 		getContentPane().add(back);
@@ -136,9 +160,26 @@ public class Statistics extends JDialog {
 		photo.setBounds(0, 0, 1060, 620);		
 		photo.setOpaque(false);
 		getContentPane().add(photo);
+		
+		
 
 		setLocationRelativeTo(null);
 		
 	}
-	
+	static void change(A ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0, 1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
+	static void change(B ppanel){
+		rightpanel.removeAll();
+		rightpanel.add(ppanel);
+		ppanel.setVisible(true);
+		ppanel.setBounds(0, 0,1042,580);
+		rightpanel.validate();
+		rightpanel.repaint();
+	}
 }

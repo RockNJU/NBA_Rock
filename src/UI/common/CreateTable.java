@@ -395,7 +395,7 @@ public class CreateTable extends JPanel{
 		           
 		         }
 		         header.setResizingColumn(column); // 此行很重要
-		         column.setWidth(35+width+myTable.getIntercellSpacing().width);		        
+		         column.setWidth(30+width+myTable.getIntercellSpacing().width);		        
 		     }
 	}
 		public void new3FitTableColumns(JTable myTable){

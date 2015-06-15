@@ -55,9 +55,9 @@ public class HotPlayers_Team extends JPanel {
 		this.type=tmptype;
 		String[] title = {"序号","肖像","姓名","位置","球队",this.type};
 
-	
-		System.out.println(map1.getItem(tmptype));
-			psdv = tbs.getKingPlayerForATeam(init.defaultseason,map1.getItem(tmptype));
+	//System.out.println(teamname);
+		//System.out.println(map1.getItem(tmptype));
+			psdv = tbs.getKingPlayerForATeam(teamname,map1.getItem(tmptype));
 			System.out.println(psdv.size());
 			data=getdata1(psdv);
 			no1[0]=psdv.get(0).getName();
@@ -138,7 +138,7 @@ public class HotPlayers_Team extends JPanel {
 
 		ctfh = new CreateTable_pic(title,data,
 				381, 0,655, 205,43,
-				new Font("黑体", 0, 15), new Font("Dialog", 0, 14));
+				new Font("黑体", 0, 15), new Font("Dialog", 0, 12));
 		add(ctfh);
 		
 		ctfh.getTable().addMouseListener(new MouseAdapter() {
@@ -167,7 +167,7 @@ public class HotPlayers_Team extends JPanel {
 		for(int i=1;i<5;i++){		
 			re[i-1][0]=i+1;
 			System.out.println("图片是什么"+da.get(i).getName());
-			ImageIcon ddd = new ImageIcon("newpic/portrait/"+da.get(i).getName()+".png");
+			ImageIcon ddd = new ImageIcon("newpic/portrait/"+init.pbl.getEnglishName(da.get(i).getName())+".png");
 			ddd.setImage(ddd.getImage().getScaledInstance(53, 42,Image.SCALE_DEFAULT)); 					
 		    re[i-1][1]=ddd;
 		    re[i-1][2]=da.get(i).getName();

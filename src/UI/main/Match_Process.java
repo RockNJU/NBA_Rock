@@ -29,6 +29,7 @@ import UI.Match.SingleMatch;
 import UI.common.ComboBoxRenderer;
 import UI.common.CreateTable_M;
 import UI.common.DateChooser;
+import UI.common.TeamTwoMap;
 import VO.MatchInfoVO;
 
 import javax.swing.DefaultComboBoxModel;
@@ -513,8 +514,10 @@ public class Match_Process extends JPanel {
 				// TODO Auto-generated method stub
 				if (e.getClickCount() == 2 && ctm.getValueAt(ctm.getSelectedRow(),7).equals("技术统计")) {
 					String date = ctm.getValueAt(ctm.getSelectedRow(), 6);									
-					String name = ctm.getValueAt(ctm.getSelectedRow(), 2);						
-					SingleMatch spi = new SingleMatch(name,date);
+					String name = ctm.getValueAt(ctm.getSelectedRow(), 2);	
+					TeamTwoMap tt=new TeamTwoMap();
+					System.out.println("chuangrudaduiwu"+tt.getFullName(name));
+					SingleMatch spi = new SingleMatch(tt.getFullName(name),date);
 					spi.setVisible(true);
 					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
 				}				
