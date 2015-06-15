@@ -364,12 +364,12 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 		
 		 //TeamMatchVO vo=team.getTeamMatch("2012-05-08", "LAL");
 		 System.out.println("lalallal:  "+a[3]);
-		/* ArrayList<SingleMatchPersonalDataVO> list=vo.getIndividualData();
-		/*
-		ArrayList<TeamSeasonDataVO> list=team.getAllTeamSeasonData("13-14", "常规赛");
-		 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
+		 //ArrayList<SingleMatchPersonalDataVO> list=vo.getIndividualData();
+		
+		ArrayList<TeamSeasonDataVO> list=team.getATeamSeasonData("LAL","常规赛");
+	/*	 ArrayList<TeamMatchVO> volist=team.getASeasonMatchData("LAL", "11-12");
 		ArrayList<TeamInfoVO> infoList=team.getTeamInfoList();*/
-		 ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("ATL","2012-05-04");
+		/* ArrayList<SingleMatchPersonalDataVO> inlist=team.getIndividualData("ATL","2012-05-04");
 		/*for(int i=0;i<volist.size();i++){
 			System.out.println("  队名："+volist.get(i).getTeamName()+"  对手："+volist.get(i).getOpp_team()+"  得分："+volist.get(i).getPointNum()+" date: "+volist.get(i).getDate());
 		}*/
@@ -397,7 +397,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 			 
 	        stmt = conn.createStatement(); 
 					
-			String str="SELECT * from (SELECT team_season_data.team,team_season_data.teamAbb,"
+			String str="SELECT * from (SELECT team_season_data.team,season,team_season_data.teamAbb,"
 					+ "COUNT(*) as match_sum,SUM(winNum) as win_sum, "
 					+ "SUM(fieldGoal) as fieldGoal_sum,SUM(shootNum) as shoot_sum,"
 					+ "SUM(t_fieldGoal) as t_fieldGoal_sum,SUM(t_shootNum)as t_shoot_sum,"
@@ -415,7 +415,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 					+ "FROM team_season_data WHERE type='"+type+"'"
 					+ " AND teamAbb='"+team+"'"
 					+ " GROUP BY season,type,team) as "
-					+ "data right join teaminfo as info on data.team =info.team";
+					+ "data right join teaminfo as info on data.team =info.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 
 			char chr=39;
