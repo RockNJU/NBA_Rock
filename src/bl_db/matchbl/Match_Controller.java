@@ -183,6 +183,7 @@ public class Match_Controller implements MatchBLService{
 	       String score;
 	      while (rs.next())
 	      {        	  
+	    	  
 	    	  score=rs.getString("scores");
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
@@ -224,10 +225,17 @@ public class Match_Controller implements MatchBLService{
 		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
 		try
 	    { 
+			ArrayList<String> ss=new ArrayList<>();
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE date='"+date+"'");
 	       String score;
 	      while (rs.next())
 	      {      
+	    	  String ds=rs.getString("date")+";"+rs.getString("teamA");
+	    	  if(contains(ss,ds)){
+	    		 continue; 
+	    	  }
+	    	  
+	    	  ss.add(ds);
 	    	  score=rs.getString("scores");
 	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
@@ -289,7 +297,7 @@ public class Match_Controller implements MatchBLService{
 	ArrayList<String> daylist=getData(season,month);
 		try
 	    {
-			 
+			 ArrayList<String> ss=new ArrayList<>();
 	       ResultSet  rs=stmt.executeQuery("SELECT * FROM(SELECT * FROM matchinfo WHERE "
 	       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"') "
 	       		+ " as new_match WHERE isOver='Î´Èü'");
@@ -300,6 +308,13 @@ public class Match_Controller implements MatchBLService{
 	       String score;
 	      while (rs.next())
 	      {        	  
+	    	  
+	    	  String ds=rs.getString("date")+";"+rs.getString("teamA");
+	    	  if(contains(ss,ds)){
+	    		 continue; 
+	    	  }
+	    	  
+	    	  ss.add(ds);
 	    	  score=rs.getString("scores");
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 	    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
@@ -324,7 +339,7 @@ public class Match_Controller implements MatchBLService{
 		ArrayList<String> daylist=getData(season,month);
 			try
 		    {
-				
+				ArrayList<String> ss=new ArrayList<>();
 		       ResultSet  rs=stmt.executeQuery("SELECT * FROM matchinfo WHERE "
 		       		+ "date BETWEEN '"+daylist.get(0)+"' AND '"+daylist.get(1)+"'");
 		       /***************
@@ -334,6 +349,13 @@ public class Match_Controller implements MatchBLService{
 		       String score;
 		      while (rs.next())
 		      {        	  
+		    	  
+		    	  String ds=rs.getString("date")+";"+rs.getString("teamA");
+		    	  if(contains(ss,ds)){
+		    		 continue; 
+		    	  }
+		    	  
+		    	  ss.add(ds);
 		    	  score=rs.getString("scores");
 		    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
 		    			  rs.getString("teamH"),rs.getString("teamG"),rs.getString("isOver"),
@@ -377,7 +399,16 @@ public class Match_Controller implements MatchBLService{
 			return list;
 		 
 	}
-
+	private boolean contains(ArrayList<String> list,String date){
+		boolean result=false;
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).equals(date)){
+				return true;
+			}
+		}
+		return result;
+	}	
+	
 	@Override
 	public ArrayList<MatchInfoVO> getPro_ByDay(String season, int month, int day) {
 		ArrayList<MatchInfoVO> infoList = new ArrayList<>();
@@ -387,7 +418,7 @@ public class Match_Controller implements MatchBLService{
 		 * 
 		 * *******************/
 		String date=getDate(season,month,day);
-		
+		ArrayList<String> ss=new ArrayList<>();
 		try
 	    {
 			 
@@ -397,6 +428,13 @@ public class Match_Controller implements MatchBLService{
 	       
 	      while (rs.next())
 	      {      
+	    	  
+	    	  String ds=rs.getString("date")+";"+rs.getString("teamA");
+	    	  if(contains(ss,ds)){
+	    		 continue; 
+	    	  }
+	    	  
+	    	  ss.add(ds);
 	    	  score=rs.getString("scores");
 	    	  
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),rs.getString("time"),
@@ -419,6 +457,8 @@ public class Match_Controller implements MatchBLService{
 		
 		ArrayList<String> day=getData(season,month);
 		Team_map map=new Team_map();
+		ArrayList<String> ss=new ArrayList<>();
+		
 		
 		try
 	    {
@@ -433,7 +473,13 @@ public class Match_Controller implements MatchBLService{
 	       String score;
 	       
 	      while (rs.next())
-	      {      
+	      {    
+	    	  String ds=rs.getString("date")+";"+rs.getString("teamA");
+	    	  if(contains(ss,ds)){
+	    		 continue; 
+	    	  }
+	    	  
+	    	  ss.add(ds);
 	    	  score=rs.getString("scores");
 	    	  infoList.add(new MatchInfoVO(rs.getString("date"),
 	    			  rs.getString("time"), rs.getString("teamH"),
@@ -662,16 +708,7 @@ public class Match_Controller implements MatchBLService{
 			}*/
 		}
 
-	private boolean contains(ArrayList<String> list,String date){
-		boolean result=false;
-		for(int i=0;i<list.size();i++){
-			if(list.get(i).equals(date)){
-				return true;
-			}
-		}
-		return result;
-	}	
-		
+	
 		@Override
 		public MatchVO getMatchByTeam(String date, String teamA) {
 			Team_map map=new Team_map();
