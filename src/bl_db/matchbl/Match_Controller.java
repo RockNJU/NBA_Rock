@@ -262,11 +262,11 @@ public class Match_Controller implements MatchBLService{
 		}//
 		return list;
 	}
-
+/*
 	public ArrayList<MatchVO> getMatchBySeason(String season, String teamA) {
-		/***********************
+	 
 		 * 感觉这个方法可能会出问题、、、、、、、、、o(╯□╰)o，先待定吧
-		 */
+		  
 		Team_map map=new Team_map();
 		String team=map.getFullName(teamA);
 		String sqlStr="SELECT * FROM matchinfo where (date BETWEEN '"+SeasonInfo.getStartDate(season)+"' "
@@ -275,7 +275,7 @@ public class Match_Controller implements MatchBLService{
 	    ArrayList<MatchVO> list= getMatch( sqlStr);
 		return list;
 	}
-
+*/
 	@Override
 	public ArrayList<MatchInfoVO> getPro_NotOver(String season, int month) {
 		// TODO Auto-generated method stub
@@ -627,8 +627,8 @@ public class Match_Controller implements MatchBLService{
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
 			 * */
-			
-			   ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
+			/*
+			   ArrayList<MatchVO> amlist=match.getMatch(sqlStr);
 			
 		 	for(int i=0;i<amlist.size();i++){
 				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores()+";;"
@@ -637,7 +637,7 @@ public class Match_Controller implements MatchBLService{
 				
 				TeamMatchVO voo=amlist.get(i).getHostTeam();
 				System.out.println("队924974\\名 ："+voo.getTeamName());
-			}   
+			} */  
 					
 			/*
 			ArrayList<SingleMatchPersonalDataVO> list=match.getTodayHotPlayer("pointNum",6);
@@ -662,6 +662,16 @@ public class Match_Controller implements MatchBLService{
 			}*/
 		}
 
+	private boolean contains(ArrayList<String> list,String date){
+		boolean result=false;
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).equals(date)){
+				return true;
+			}
+		}
+		return result;
+	}	
+		
 		@Override
 		public MatchVO getMatchByTeam(String date, String teamA) {
 			Team_map map=new Team_map();
@@ -673,6 +683,7 @@ public class Match_Controller implements MatchBLService{
 			 /********************
 			  * 
 			  ********************/
+		    ArrayList<String> strl=new ArrayList<>();
 		    try
 		    {
 				 
@@ -684,7 +695,11 @@ public class Match_Controller implements MatchBLService{
 		       String score;
 		      while (rs.next())
 		      {        	  
+		    	  if(contains(strl,rs.getString("date"))){
+		    		  continue;
+		    	  }
 		    	  
+		    	  strl.add(rs.getString("date"));
 		    	  System.out.println("---*-*-*-/*"+rs.getString("teamH"));
 		    	   score=rs.getString("scores");
 		    	  infovo=new MatchInfoVO(rs.getString("date"),rs.getString("time"),
