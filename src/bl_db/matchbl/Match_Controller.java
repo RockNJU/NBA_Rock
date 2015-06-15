@@ -271,7 +271,7 @@ public class Match_Controller implements MatchBLService{
 		String team=map.getFullName(teamA);
 		String sqlStr="SELECT * FROM matchinfo where (date BETWEEN '"+SeasonInfo.getStartDate(season)+"' "
 				+ "AND '"+SeasonInfo.getEndDate(season)+"') "
-				+ "AND(teamH='"+team+"' OR teamG='"+team+"')";
+				+ "AND (teamH='"+team+"' OR teamG='"+team+"')";
 	    ArrayList<MatchVO> list= getMatch( sqlStr);
 		return list;
 	}
@@ -614,7 +614,7 @@ public class Match_Controller implements MatchBLService{
 			Match_Controller match=new Match_Controller();
 			
 			
-			String date=match.getLastHavingMatchDate();
+			/*String date=match.getLastHavingMatchDate();
 			System.out.println("最后一天有比赛的日期："+date);
 			ArrayList<MatchInfoVO> llist=match.getPro_ByDay("14-15", 3, 2);
 			
@@ -626,15 +626,18 @@ public class Match_Controller implements MatchBLService{
 				} 
 			//ArrayList<MatchInfoVO> list=match.get_A_matchInfo("快船");
 			//ArrayList<MatchInfoVO> list=match.getPro_ByMonth("14-15", 1);
-			  //ArrayList<MatchVO> amlist=match.getMatchByTeamTime("2015-06-01");
+			 * */
 			
-		/*	for(int i=0;i<amlist.size();i++){
+			   ArrayList<MatchVO> amlist=match.getMatchBySeason("14-15", "LAL");
+			
+		 	for(int i=0;i<amlist.size();i++){
 				System.out.println("daet："+amlist.get(i).getDate()+"  比分："+amlist.get(i).getScores()+";;"
 						+amlist.get(i).getHostTeam().getReboundNum());
 				System.out.println("主队是否为空： "+amlist.get(i).getGuestTeam()==null);
-				TeamMatchVO vo=amlist.get(i).getHostTeam();
-				System.out.println("队名 ："+vo.getTeamName());
-			}  */
+				
+				TeamMatchVO voo=amlist.get(i).getHostTeam();
+				System.out.println("队924974\\名 ："+voo.getTeamName());
+			}   
 					
 			/*
 			ArrayList<SingleMatchPersonalDataVO> list=match.getTodayHotPlayer("pointNum",6);

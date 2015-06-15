@@ -611,6 +611,7 @@ public class Team_Controller implements TeamBLService ,TeamInfo{
 				
 			}
 			  conn.commit();
+			  if(vo!=null)
 			  vo.setIndividualData(getIndividualData(teamAbb,date));
 		} catch (SQLException  e) {
 			// TODO Auto-generated catch block
