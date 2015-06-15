@@ -13,6 +13,7 @@ import VO.SingleMatchPersonalDataVO;
  
 import VO.TeamMatchVO;
 import bl_db.common.EndDayInfo;
+import bl_db.common.HotSort;
 import bl_db.common.SeasonInfo;
 import bl_db.common.Team_map;
 import bl_db.teamrbl.Team_Controller;
@@ -468,18 +469,13 @@ public class Match_Controller implements MatchBLService{
 		 
 		try {
 			 
-			String str="SELECT * FROM (SELECT * FROM "
-					+ "player_season_data where date='"+lastDate+"'  ORDER BY '"+item+"' desc) as "
-					+ "data left join teaminfo as info on data.team =info.team";
+			String str="SELECT* FROM(SELECT * FROM "
+					+ "player_season_data where date='"+lastDate+"')as "
+					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
-			int count=0;
 			while(rs.next()){
-				if(count>=n){
-					break;
-				}
-				
-				System.out.println("µÃ·Ö£º"+rs.getInt("pointNum"));
+				System.out.println("name***:"+rs.getString("name"));
 				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
 						rs.getString("date"),rs.getString("name"),
 						rs.getString("team"),rs.getString("division"),
@@ -496,14 +492,23 @@ public class Match_Controller implements MatchBLService{
 						rs.getDouble("o_reboundEfficiency"), rs.getDouble("d_reboundEfficiency"),
 						rs.getDouble("stealEfficiency"), rs.getDouble("usingPercentage"),
 						rs.getDouble("blockEfficiency")));
-				count++;
 			}
 			conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//
-		return list;
+		HotSort sort=new HotSort();
+		list=sort.hotSinglePlayer_Sort(list, item);
+		
+		ArrayList<SingleMatchPersonalDataVO> result=new ArrayList<>();
+		if(n>list.size()){
+			n=list.size();
+		}
+		for(int i=0;i<n;i++){
+			result.add(list.get(i));
+		}
+		return result;
 	}
 
 	
