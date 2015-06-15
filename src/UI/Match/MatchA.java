@@ -47,22 +47,7 @@ public class MatchA extends JPanel {
 		JLabel photoleft;
 		teama = mvo.getHostTeam();
 		teamb = mvo.getGuestTeam();
-		
-		//初始数据
-		paintdataA[0] = teama.getPointNum();
-		paintdataA[1] = teama.getAssistNum();
-		paintdataA[2] = teama.getReboundNum();
-		paintdataA[3] = teama.getT_shootNum();
-		paintdataA[4] = teama.getFreeThrowNum();
-		paintdataA[5] = teama.getFoulNum();
-		paintdataA[6] = teama.getShootNum();
-		paintdataB[0] = teamb.getPointNum();
-		paintdataB[1] = teamb.getAssistNum();
-		paintdataB[2] = teamb.getReboundNum();
-		paintdataB[3] = teamb.getT_shootNum();
-		paintdataB[4] = teamb.getFreeThrowNum();
-		paintdataB[5] = teamb.getFoulNum();
-		paintdataB[6] = teamb.getShootNum();
+
 		
 		 jp.setBounds(0, 0, 1042, 580);
 		 jp.setOpaque(false);
@@ -116,6 +101,23 @@ public class MatchA extends JPanel {
 		else{
 			colort = -1;
 		}
+		
+		
+		//初始数据
+		paintdataA[0] = teama.getPointNum();
+		paintdataA[1] = teama.getAssistNum();
+		paintdataA[2] = teama.getReboundNum();
+		paintdataA[3] = teama.getT_shootNum();
+		paintdataA[4] = teama.getFreeThrowNum();
+		paintdataA[5] = teama.getFoulNum();
+		paintdataA[6] = teama.getShootNum();
+		paintdataB[0] = totald;
+		paintdataB[1] = teamb.getAssistNum();
+		paintdataB[2] = teamb.getReboundNum();
+		paintdataB[3] = teamb.getT_shootNum();
+		paintdataB[4] = teamb.getFreeThrowNum();
+		paintdataB[5] = teamb.getFoulNum();
+		paintdataB[6] = teamb.getShootNum();
 		
 		JLabel Nameleft = new JLabel(nameA);
 		Nameleft.setForeground(new Color(102, 51, 153));
@@ -330,7 +332,7 @@ public class MatchA extends JPanel {
 				cp.setLocation(init.SysStart_X+280, init.SysStart_Y+302);
 				cp.setVisible(true);
 				if(cp.change==true){
-					paintunder(cp.now,cp.outputcontent,cp.dataoutput[0],cp.dataoutput[1]);
+					paintunder(cp.now,cp.outputcontent,cp.dataoutput[1],cp.dataoutput[0]);
 					cardLayout.next(jp);
 				}
 			}
