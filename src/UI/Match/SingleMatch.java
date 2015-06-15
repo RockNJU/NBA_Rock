@@ -120,7 +120,7 @@ public class SingleMatch extends JDialog {
             	if(!B.getToolTipText().equals("数据对比 "))
             		B.setIcon(new ImageIcon("newpic/add/数据对比.png"));
             	else
-            		B.setIcon(new ImageIcon("newpic/add/数据对比后.png"));
+            		B.setIcon(new ImageIcon("newpic/add/数据对比浮.png"));
             }           
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -128,7 +128,7 @@ public class SingleMatch extends JDialog {
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
-            	B.setIcon(new ImageIcon("newpic/add/数据对比后.png"));
+            	B.setIcon(new ImageIcon("newpic/add/数据对比浮.png"));
             	C.setIcon(new ImageIcon("newpic/add/技术统计.png"));
             	cardLayout.show(jp, "基础");
             	B.setToolTipText("数据对比 ");
@@ -156,7 +156,7 @@ public class SingleMatch extends JDialog {
             	if(!C.getToolTipText().equals("技术统计 "))
             		C.setIcon(new ImageIcon("newpic/add/技术统计.png"));
             	else
-            		C.setIcon(new ImageIcon("newpic/add/技术统计后.png"));
+            		C.setIcon(new ImageIcon("newpic/add/技术统计浮.png"));
               
             }           
             @Override
@@ -165,7 +165,7 @@ public class SingleMatch extends JDialog {
             }            
             @Override
             public void mouseClicked(MouseEvent e) {
-            	C.setIcon(new ImageIcon("newpic/add/技术统计后.png"));
+            	C.setIcon(new ImageIcon("newpic/add/技术统计浮.png"));
             	B.setIcon(new ImageIcon("newpic/add/数据对比.png"));
             	cardLayout.show(jp, "统计");
             	B.setToolTipText("数据对比");

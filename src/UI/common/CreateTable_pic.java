@@ -169,7 +169,7 @@ public class CreateTable_pic extends JPanel{
 		                        	label.setForeground(Color.black);
 		                        	label.setBackground(init.syslightblue);
 		                        }
-		                        //label.setBackground(table.getSelectionBackground());
+		                        label.setBackground(table.getSelectionBackground());
 		                        if (isSelected)// 把选择的标签设置为不透明
 		                            label.setOpaque(true);
 		                        return label;// 把进度条作为渲染控件

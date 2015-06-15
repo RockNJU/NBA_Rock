@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import UI.Player.SinglePlayer;
 import UI.common.CreateTable_pic;
 import UI.main.init;
 import VO.MatchVO;
@@ -19,6 +20,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class datastatistics extends JPanel {
@@ -43,6 +46,20 @@ public class datastatistics extends JPanel {
 		playerinfolist = new CreateTable_pic(playerinfotitle, playerinfodata, 14, 60,1018, 510, 35,
 				new Font("ºÚÌå", 0, 15), new Font("Dialog", 0, 12));
 		add(playerinfolist);
+		playerinfolist.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && playerinfolist.getSelectedRow() != -1) {
+					String name = playerinfolist.getValueAt(playerinfolist.getSelectedRow(), 2);
+					// System.out.println(name);
+					
+					SinglePlayer spi = new SinglePlayer(name);
+					spi.setVisible(true);
+					spi.setLocation(init.SysStart_X+0,init.SysStart_Y+60);
+
+				}
+			}
+		});
 		
 		JButton teamAButton = new JButton(teamnameA);
 		teamAButton.addActionListener(new ActionListener() {
@@ -51,6 +68,7 @@ public class datastatistics extends JPanel {
 				System.out.println(pivo.size());
 				playerinfodata=getinfodata(pivo);
 				playerinfolist.updateTable(playerinfotitle, playerinfodata);
+				playerinfolist.FitTableColumns(playerinfolist.getTable());
 			}
 		});
 		teamAButton.setBackground(init.sysdarkblue);
@@ -65,6 +83,7 @@ public class datastatistics extends JPanel {
 				pivo=mvo.getGuestTeam().getIndividualData();
 				playerinfodata=getinfodata(pivo);
 				playerinfolist.updateTable(playerinfotitle, playerinfodata);
+				playerinfolist.FitTableColumns(playerinfolist.getTable());
 			}
 		});
 		teamBButton.setBackground(init.sysdarkblue);

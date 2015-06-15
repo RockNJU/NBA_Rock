@@ -53,9 +53,8 @@ public class HotPlayers extends JPanel {
 		String[] title = {"序号","肖像","姓名","位置","球队",this.type};
 		if(tmpsaccording.equals("每日")){
 			smpd = pbs.getTodayHotPlayer(map1.getItem(tmptype));
-			System.out.println("五个人是"+smpd.get(0).getPlayerName()+smpd.get(1).getPlayerName()
-					+smpd.get(2).getPlayerName()+smpd.get(3).getPlayerName()+smpd.get(4).getPlayerName());
-			System.out.println(map1.getItem(tmptype));
+			//smpd = pbs.getTodayHotPlayer("pointNum_avg");
+			System.out.println(map1.getItem(tmptype)+" "+smpd.size());
 			no1[0]=smpd.get(0).getPlayerName();
 			no1[1]=tm.getFullName(smpd.get(0).getTeamName());
 			no1[2]=smpd.get(0).getPlayerPosition();
