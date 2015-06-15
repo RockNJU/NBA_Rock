@@ -557,17 +557,19 @@ public class Player implements PlayerBLService,Player_info{
 		 
 		 // System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
 		 
-		//ArrayList<SinglePlayerMatchDataVO> vlist=pl.
+		 ArrayList<SingleMatchPersonalDataVO> vlist=pl.getTodayHotPlayer("pointNum");
+		 System.out.println("vlidt...  :"+vlist.size());
+		 
 		 ArrayList<PlayerSeasonDataVO> list=pl.getMost_Progress_Player("l_f_rebound_rate");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		/* 
 		System.out.println("大小："+list.size());*/
 		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
-		for(int i=0;i<list.size();i++){
+		/*for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
 					+"  points:"+list.get(i).getPointNum()+
 					"  partition:"+list.get(i).getPartition()+"  :"+list.get(i).getL_f_rebound_rate());
-		} 
+		} */
 		
 		
 		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
@@ -658,17 +660,18 @@ public class Player implements PlayerBLService,Player_info{
 		/*****************************************
 		 *获取最后一天有比赛的某一个项目的热点球员 
 		 * */
+		//System.out.println("最后一天；；；；"+lastDate);
 		ArrayList<SingleMatchPersonalDataVO> list=new ArrayList<>();
 		 
 		try {
 			 
 			String str="SELECT* FROM(SELECT * FROM "
-					+ "player_season_data where date='"+lastDate+"' AND type='"+getType(lastDate)+"')as "
+					+ "player_season_data where date='"+lastDate+"')as "
 					+ "data left join teaminfo on data.team =teaminfo.teamAbb";
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
-				
+				System.out.println("name***:"+rs.getString("name"));
 				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
 						rs.getString("date"),rs.getString("name"),
 						rs.getString("team"),rs.getString("division"),
@@ -783,7 +786,7 @@ public class Player implements PlayerBLService,Player_info{
 
 	@Override
 	public String getEnglishName(String chinesename) {
-		String result="??";
+		String result=chinesename;
 		String str="SELECT Ename FROM playerinfo where name='"+chinesename+"'";
 		try {
 			ResultSet  rs=stmt.executeQuery(str);
