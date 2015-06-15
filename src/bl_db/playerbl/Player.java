@@ -208,19 +208,6 @@ public class Player implements PlayerBLService,Player_info{
 		return sort.hotPlayer_Sort(list,sortItem);
 	}
 
-	 
-	public ArrayList<PlayerSeasonDataVO> getSeasonHotPlayer(String sortItem,
-			int n) {
-		ArrayList<PlayerSeasonDataVO> list= getAllPlayerSeasonData(currentSeason,"常规赛");
-		HotSort sort=new HotSort();
-		list=sort.hotPlayer_Sort(list,sortItem);
-		ArrayList<PlayerSeasonDataVO> result=new ArrayList<>();
-		for(int i=0;i<n;i++){
-			result.add(list.get(i));
-		}
-		return result;
-	}
-
 	
 	public ArrayList<PlayerSeasonDataVO> get_Data(String sqlStr){
 		ArrayList<PlayerSeasonDataVO> list=new ArrayList<>();	 
@@ -541,7 +528,7 @@ public class Player implements PlayerBLService,Player_info{
 
 	
 	public static void main(String args[]){
-		Player pl=new Player();
+		PlayerBLService pl=new Player();
 		//ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15", "LAL");
 		/*
 		for(int i=0;i<infoList.size();i++){
@@ -560,7 +547,7 @@ public class Player implements PlayerBLService,Player_info{
 		 //ArrayList<SingleMatchPersonalDataVO> list=pl.getTodayHotPlayer("pointNum");
 		// System.out.println("vlidt...  :"+list.size());
 		 
-		  ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("pointNum");
+		  ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("14-15", "pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		/* 
 		System.out.println("大小："+list.size());*/
