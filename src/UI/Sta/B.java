@@ -15,6 +15,8 @@ public class B extends JPanel {
 	JComboBox comboBox = new JComboBox();
 	JTextPane textPane = new JTextPane();
 	TrunTeam tt = new TrunTeam();
+	String before;
+	String after;
 	private JTextField textField;
 	/**
 	 * Create the panel.
@@ -33,9 +35,13 @@ public class B extends JPanel {
 		JButton 提交 = new JButton("\u63D0\u4EA4");
 		提交.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tt.useischangealot(comboBox.getSelectedItem().toString());
+				if(comboBox.getSelectedItem().toString().equals("勒布朗-詹姆斯")){
+					before = "13-14";
+					after = "14-15";
+				}
+				tt.useischangealot(comboBox.getSelectedItem().toString(),before,after);
 				textField.setText(tt.maxString+"数据在换队后波动最大");
-				double data[] = tt.useisbetterafterturn(comboBox.getSelectedItem().toString());
+				double data[] = tt.useisbetterafterturn(comboBox.getSelectedItem().toString(),before,after);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0;i<6;i++){
 					sb.append(tt.input[i]+"的p值为"+Double.toString(data[i])+",所以"+tt.outputisornot[i]+"显著提升\n");
@@ -49,7 +55,7 @@ public class B extends JPanel {
 
 		textPane.setText("\u5404\u6570\u636E\u6CE2\u52A8\u60C5\u51B5\r");
 		textPane.setEditable(false);
-		textPane.setBounds(38, 106, 220, 209);
+		textPane.setBounds(38, 106, 220, 250);
 		add(textPane);
 		
 		textField = new JTextField();

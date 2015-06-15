@@ -152,6 +152,56 @@ public class PlayerB extends JPanel {
 			contentPane.add(namesecond);
 			
 			textField = new JTextField();
+			textField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					String secondname = textField.getText();
+					ArrayList<PlayerSeasonDataVO> tempplayer =  init.pbl.keyfind(secondname);
+					if(tempplayer.isEmpty()){
+						textField.setText("未查到对应球员");
+					}
+					else{
+						if(tempplayer.size()>1){
+							textField.setText("未能精确查到到对应球员");
+						}
+						playerb = tempplayer.get(0);
+						String nameB = playerb.getName();
+						String portraitB = "newpic/portrait/"+init.pbl.getAPlayerInfo(nameB).getEname()+".png";
+						 String  teamB = playerb.getTeamName();
+						 String	infoB = playerb.getInfo().getNumber()+"|"+playerb.getInfo().getPosition();
+					
+						 ImageIcon playersecond = new ImageIcon(portraitB);
+						 playersecond.setImage(playersecond.getImage().getScaledInstance(215, 180,Image.SCALE_DEFAULT));
+						 photoplayer2.setIcon(playersecond);
+						 teamsecond.setText(teamB);
+						 infosecond.setText(infoB);
+						 namesecond.setText(nameB);
+						 
+							paintdataA[0] = OftenUseMethod.changedouble(playera.getStartingNum());
+							paintdataA[1] = OftenUseMethod.changedouble(playera.getPointNum_avg());
+							paintdataA[2] = OftenUseMethod.changedouble(playera.getAssistNum_avg());
+							paintdataA[3] = OftenUseMethod.changedouble(playera.getReboundNum_avg());
+							paintdataA[4] = OftenUseMethod.changedouble(playera.getT_shootNum_avg());
+							paintdataA[5] = OftenUseMethod.changedouble(playera.getFreeThrowNum_avg());
+							paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());
+							
+							paintdataB[0] = OftenUseMethod.changedouble(playerb.getStartingNum());
+							paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum_avg());
+							paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum_avg());
+							paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum_avg());
+							paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum_avg());
+							paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum_avg());
+							paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum_avg());
+							
+							
+							
+							paintunder(paintcontentnum,paintcontent,paintdataB,paintdataA);
+							cardLayout.next(jp);
+							
+							
+					}
+				}
+			});
 			textField.setBackground(new Color(219, 241, 241));
 			textField.setBounds(797, 162, 184, 24);
 			contentPane.add(textField);

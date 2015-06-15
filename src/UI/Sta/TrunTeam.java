@@ -39,20 +39,20 @@ public class TrunTeam {
 		tt.isbetterafterturn(playerbefore, playerafter);
 	}
 	
-	public void useischangealot(String name){
+	public void useischangealot(String name,String before,String after){
 		ArrayList<SingleMatchPersonalDataVO> playerbefore = init.pbl
-				.getASeasonMatchData(name, "13-14");// MIA
+				.getASeasonMatchData(name, before);// MIA
 		ArrayList<SingleMatchPersonalDataVO> playerafter = init.pbl
-				.getASeasonMatchData(name, "14-15");// CLE
+				.getASeasonMatchData(name, after);// CLE
 		
 		ischangealot(playerbefore, playerafter);
 	}
 	
-	public double[] useisbetterafterturn(String name){
+	public double[] useisbetterafterturn(String name,String before,String after){
 		ArrayList<SingleMatchPersonalDataVO> playerbefore = init.pbl
-				.getASeasonMatchData(name, "13-14");// MIA
+				.getASeasonMatchData(name, before);// MIA
 		ArrayList<SingleMatchPersonalDataVO> playerafter = init.pbl
-				.getASeasonMatchData(name, "14-15");// CLE
+				.getASeasonMatchData(name, after);// CLE
 		return isbetterafterturn(playerbefore, playerafter);
 	}
 	

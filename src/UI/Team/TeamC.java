@@ -174,7 +174,7 @@ public class TeamC extends JPanel {
 					String secondname = textField.getText();
 					TeamSeasonDataVO tempplayer =  init.tbl.getATeamData(season,secondname);
 					if(tempplayer==null){
-						textField.setText("未查到对应球员");
+						textField.setText("未查到对应球队");
 					}
 					else{
 
