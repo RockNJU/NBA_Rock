@@ -41,6 +41,7 @@ public class PlayerB extends JPanel {
 	 final CardLayout cardLayout = new CardLayout();
 	 JPanel jp = new JPanel();
 	private JTextField textField;
+	String season = "14-15";
 	/**
 	 * Create the panel.
 	 */
@@ -54,6 +55,15 @@ public class PlayerB extends JPanel {
 		paintdataA[4] = OftenUseMethod.changedouble(playera.getT_shootNum_avg());
 		paintdataA[5] = OftenUseMethod.changedouble(playera.getFreeThrowNum_avg());
 		paintdataA[6] = OftenUseMethod.changedouble(playera.getShootNum_avg());
+		
+		playerb = init.pbl.get_Avg_PlayerSeasonData(season,"³£¹æÈü");
+		paintdataB[0] = OftenUseMethod.changedouble(playerb.getStartingNum());
+		paintdataB[1] = OftenUseMethod.changedouble(playerb.getPointNum_avg());
+		paintdataB[2] = OftenUseMethod.changedouble(playerb.getAssistNum_avg());
+		paintdataB[3] = OftenUseMethod.changedouble(playerb.getReboundNum_avg());
+		paintdataB[4] = OftenUseMethod.changedouble(playerb.getT_shootNum_avg());
+		paintdataB[5] = OftenUseMethod.changedouble(playerb.getFreeThrowNum_avg());
+		paintdataB[6] = OftenUseMethod.changedouble(playerb.getShootNum_avg());
 		
 		 jp.setBounds(0, 0, 1042, 580);
 		 jp.setOpaque(false);
