@@ -88,10 +88,6 @@ public class PlayerSeasonDataVO {
 	
 	private ArrayList<SingleMatchPersonalDataVO> last_five_match_data; //最近五场比赛的数据
 	
-	private ArrayList<Integer> last_f_point=new ArrayList<>();
-	private ArrayList<Integer> last_f_assist=new ArrayList<>();
-	private ArrayList<Integer> last_f_rebound=new ArrayList<>();
-	
 	private double l_f_point_rate=0;         //最近五场得分的提升率
 	private double l_f_assist_rate=0; 		//最近五场助攻的提升率
 	private double l_f_rebound_rate=0;		//最近五场篮板的提升率
@@ -128,7 +124,7 @@ public class PlayerSeasonDataVO {
 			
 				this.league=division;
 				this.partition=partition;
-				this.position=position;
+				this.position=info.getPosition();
 				this.matchNum=matchNum;
 				this.startingNum=startingNum;
 				this.time=time;
@@ -224,11 +220,6 @@ public class PlayerSeasonDataVO {
 					 			 turnoverPercentage=0.44*(freeThrowNum+turnoverNum)/matchNum;
 					 		 }
 					      
-					      last_five_match_data=new ArrayList<>(); 
-					     last_five_match_data.add(firstMatch);
-					     last_f_point.add( pointNum );
-						 last_f_assist.add(assistNum );
-						 last_f_rebound.add(reboundNum);
 	}
 	
 
@@ -274,172 +265,7 @@ public class PlayerSeasonDataVO {
 		  return l_f_rebound_rate;
 	  }
 	
-	 public void add_A_MatchData(SingleMatchPersonalDataVO vo){
-		 
-		 matchNum++;
-		 time=time+vo.getTime();
-		 fieldGoal=fieldGoal+vo.getFieldGoal();
-		 shootNum=vo.getShootNum()+shootNum;
-		 t_fieldGoal=t_fieldGoal+vo.getT_fieldGoal();
-		 
-		 t_shootNum=t_shootNum+vo.getT_shootNum();
-		 freeThrowGoalNum=freeThrowGoalNum+vo.getFreeThrowGoalNum();
-		 freeThrowNum=vo.getFreeThrowNum()+freeThrowNum;
-		 o_ReboundNum=o_ReboundNum+vo.getO_ReboundNum();
-		 d_ReboundNum=d_ReboundNum+vo.getD_ReboundNum();
-		 
-		 reboundNum=reboundNum+vo.getReboundNum();
-		 assistNum=assistNum+vo.getAssistNum();
-		 stealNum=stealNum+vo.getStealNum();
-		 blockNum=blockNum+vo.getBlockNum();
-		 turnoverNum=turnoverNum+vo.getTurnoverNum();
-		 
-		 foulNum=foulNum+vo.getFoulNum();
-		 pointNum=pointNum+vo.getPointNum();
-		 
-		 
-		 gmSc=(pointNum+fieldGoal*0.4-0.7*shootNum-
-				  0.4*(freeThrowNum-freeThrowGoalNum)+0.7*o_ReboundNum+0.3*d_ReboundNum
-				  +stealNum+0.7*assistNum+0.7*blockNum-0.4*foulNum-turnoverNum)/matchNum;
-		 if((shootNum+0.44*freeThrowNum)!=0)
-				realShootPercentage=pointNum/(2*(shootNum+0.44*freeThrowNum));
-		 
-		 if(shootNum!=0){
-			   
-			   shootEfficiency=(fieldGoal+0.5*t_fieldGoal)/shootNum;
-		 // 
-		  }else{
-			  shootEfficiency=0;
-		  }
-		 
-		 int count=0;
-		 if(vo.getPointNum()>=10)
-			 count++;
-		 if(vo.getReboundNum()>=10)
-			 count++;
-		 if(vo.getBlockNum()>=10)
-			 count++;
-		 if(vo.getStealNum()>=10)
-			 count++;
-		 if(vo.getAssistNum()>=10)
-			 count++;
-		 
-		 if(count==2){
-		 seasonDoubleNum++;
-		 }else if(count==3){
-		 seasonThreeNum++;   //计算三双数
-		 }
-		 
-		 if(vo.getPlayerPosition()!=null&vo.getPlayerPosition().length()!=0)
-			 startingNum++;
-		 
-		 
-		 
-		 assistEfficiency= assistEfficiency+vo.getAssistEfficiency();
-		  reboundEfficiency=reboundEfficiency+vo.getReboundEfficiency();
-		  offensiveReboundEff=offensiveReboundEff + vo.getOffensiveReboundEff();
-		  defenseReboundEff=defenseReboundEff+ vo.getDefenseReboundEff();
-		 stealEfficiency=stealEfficiency+vo.getStealEfficiency();
-		 usingPercentage=usingPercentage+ vo.getUsingPercentage();
-		 blockEfficiency=blockEfficiency+vo.getBlockEfficiency();
-		 
-		 efficiency= (double)(pointNum+reboundNum+assistNum+stealNum+blockNum-
-				   (shootNum-fieldGoal)  -(double)(freeThrowNum-freeThrowGoalNum)-turnoverNum)/matchNum;
-		 
-		 
-		 if(freeThrowNum!=0)
-			    freeThrowPercentage=(double)freeThrowGoalNum/freeThrowNum;		//罚球命中率
-			      if(shootNum!=0)
-				 shootPercentage=(double)fieldGoal/shootNum;			//投篮命中率
-			      if(t_shootNum!=0)
-				  t_shootPercentage=(double)t_fieldGoal/t_shootNum;		//三分球命中率
-		 
-		 if(shootNum!=0)
-			 shootPercentage=(double)fieldGoal/shootNum ;
-		 if(freeThrowNum!=0)
-				freeThrowPercentage=(double)freeThrowGoalNum/freeThrowNum;
-		 if(t_shootNum!=0)
-				t_shootPercentage=(double)t_fieldGoal/t_shootNum;
-		 
-		 if(last_f_point.size()<5){
-			 last_f_point.add(vo.getPointNum());
-			 last_f_assist.add(vo.getAssistNum());
-			 last_f_rebound.add(vo.getReboundNum());
-			 last_five_match_data.add(vo);
-		 }else{
-			 
-			 last_f_point.remove(0);
-			 last_f_assist.remove(0);
-			 last_f_rebound.remove(0);
-			 
-			 last_five_match_data.remove(0);
-			 last_five_match_data.add(vo);
-			 
-			 last_f_point.add(vo.getPointNum());
-			 last_f_assist.add(vo.getAssistNum());
-			 last_f_rebound.add(vo.getReboundNum());
-			 
-			  
-			 double p_avg=(pointNum-get_last_five_Sum(last_f_point))/matchNum;
-			 double a_avg=(assistNum-get_last_five_Sum(last_f_assist))/matchNum;
-			 double r_avg=(reboundNum-get_last_five_Sum(last_f_rebound))/matchNum;
-			 
-			 if(p_avg!=0)
-				 l_f_point_rate=(get_last_five_Sum(last_f_point)/5-p_avg)/p_avg;      //最近5场得分提升率
-			 if(a_avg!=0)
-				 l_f_assist_rate=(get_last_five_Sum(last_f_assist)/5-a_avg)/a_avg;    //最近5场助攻提升率
-			 if(r_avg!=0)
-			 	l_f_rebound_rate=(get_last_five_Sum(last_f_rebound)/5-r_avg)/r_avg;  //最近5场篮板提升率
-			 
-			 
-		 }
-		 
-		 
-		 
-		 
-		 /////////////////////////
-		 time_avg=time/matchNum;
-		 fieldGoal_avg=(double)fieldGoal/matchNum;				    
-		 shootNum_avg=(double)shootNum/matchNum;
-		  t_fieldGoal_avg=(double)t_fieldGoal/matchNum;
-		  t_shootNum_avg=(double)t_shootNum/matchNum;
-		  freeThrowGoalNum_avg=(double)freeThrowGoalNum/matchNum;
-		  freeThrowNum_avg=(double)freeThrowNum/matchNum;		 
-		  o_ReboundNum_avg=(double)o_ReboundNum/matchNum;	 
-		  d_ReboundNum_avg=(double)d_ReboundNum/matchNum;		 
-		  assistNum_avg=(double)assistNum/matchNum;		 
-		  stealNum_avg=(double)stealNum/matchNum;	 
-		  reboundNum_avg=(double)reboundNum/matchNum;	 
-		  blockNum_avg=(double)blockNum/matchNum;		 
-		  turnoverNum_avg=(double)turnoverNum/matchNum;		 
-		  foulNum_avg=(double)foulNum/matchNum;
-		  pointNum_avg=(double)pointNum/matchNum;
-		  /////////////
-		  assistEfficiency_avg=assistEfficiency/matchNum;        //助攻率
-		  reboundEfficiency_avg=reboundEfficiency/matchNum;       //篮板率
-		  offensiveReboundEff_avg=offensiveReboundEff/matchNum;     //进攻篮板率
-		  defenseReboundEff_avg=defenseReboundEff/matchNum;	    //防守篮板率
-		  stealEfficiency_avg=stealEfficiency/matchNum;			//抢断率
-		  blockEfficiency_avg=blockEfficiency/matchNum;
-		  usingPercentage_avg=usingPercentage/matchNum;         //使用率
-		  
-		  if((shootNum-t_shootNum)!=0){	  
-		 turnoverPercentage=(double)turnoverNum/((shootNum-t_shootNum)+0.44*
-				   (double)freeThrowNum/matchNum+(double)turnoverNum/matchNum);
-		 }else{ 
-			 turnoverPercentage=0.44*(freeThrowNum+turnoverNum)/matchNum;
-		 }
-		 
-	 }
-	 
-	private double get_last_five_Sum(ArrayList<Integer> list){
-		 int sum=0;
-		 for(int i=0;i<list.size();i++){
-			 sum=sum+list.get(i);
-		 }
-		 return sum;
-	 }
-	
+
 	 
 	public double getFreeThrowPercentage() {
 		 
@@ -716,20 +542,6 @@ public class PlayerSeasonDataVO {
 	public int getSeasonThreeNum() {
 		return seasonThreeNum;
 	}
-
-
-
-	public ArrayList<Integer> getLast_f_point() {
-		return last_f_point;
-	}
-
-
-
-	public ArrayList<Integer> getLast_f_rebound() {
-		return last_f_rebound;
-	}
-
-
 
 	public void setPosition(String position) {
 		this.position = position;
