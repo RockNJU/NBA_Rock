@@ -102,6 +102,7 @@ public class TrunTeam {
 		afterU = calculateU(dataAfter, afterX);
 		Z = calculateZ(beforeX, beforeU, afterX);
 		P =  calc(Z);
+		System.out.println(Z);
 		output[i] = OftenUseMethod.changedouble(P);
 		if(P>0.02)
 		{

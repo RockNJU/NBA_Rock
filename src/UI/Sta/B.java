@@ -44,7 +44,7 @@ public class B extends JPanel {
 					after = "12-13";
 				}
 				tt.useischangealot(comboBox.getSelectedItem().toString(),before,after);
-				textField.setText(tt.maxString+"数据在换队后波动最大");
+				textField.setText("除得分外，"+tt.maxString+"数据在换队后波动最大");
 				double data[] = tt.useisbetterafterturn(comboBox.getSelectedItem().toString(),before,after);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0;i<6;i++){
