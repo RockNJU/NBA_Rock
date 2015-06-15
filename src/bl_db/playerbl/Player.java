@@ -513,6 +513,7 @@ public class Player implements PlayerBLService,Player_info{
 		ArrayList<SingleMatchPersonalDataVO> result=new ArrayList<>();
 		
 		int num=list.size();
+		
 		if(num>5){
 			num=5;
 		}
@@ -520,11 +521,12 @@ public class Player implements PlayerBLService,Player_info{
 		int count=0;
 		for(int i=0;i<num;i++){
 			result.add(list.get(i));
-			count++;
-			if(count==5)
+			if(count==5){
 				break;			
-		}	
-		return list;
+			}	
+			count++;
+		}
+		return result;
 	}
 
 	
@@ -535,7 +537,7 @@ public class Player implements PlayerBLService,Player_info{
 		for(int i=0;i<infoList.size();i++){
 			System.out.println("name:"+infoList.get(i).getName());
 		}*/
-		//ArrayList<SingleMatchPersonalDataVO> list=pl.get_A_season_records("14-15", "林书豪");
+	ArrayList<SingleMatchPersonalDataVO> list=pl.getLastFiveMatchData("林书豪");
 		  Player_Avg vo=pl.get_Avg_PlayerSeasonData("14-15", "常规赛");
 		  System.out.println("name:"+vo.getPointNum());
 		/* ArrayList<PlayerInfoVO> infoList=pl.getTeamAllPlayer("14-15","GSW");
@@ -560,14 +562,14 @@ public class Player implements PlayerBLService,Player_info{
 		} */
 		
 		
-		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
+		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");;*/
 		System.out.println("size："+list.size());
 		for(int i=0;i<list.size();i++){
-			System.out.println("name: "+list.get(i).getName()+
-					" position:"+list.get(i).getPosition());
+			System.out.println("name: "+list.get(i).getPlayerName()+
+					" position:"+list.get(i).getPartition());
 			}
 		double[] aa=pl.getPlayerOneData("科比-布莱恩特",20, "pointNum");
-		System.out.println("科比的得分："+aa[0]);*/
+		System.out.println("科比的得分："+aa[0]);
 	}
 
 	
