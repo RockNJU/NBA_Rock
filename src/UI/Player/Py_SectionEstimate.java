@@ -105,18 +105,18 @@ public class Py_SectionEstimate {
 
 	private void calculateSection() {
 
+		//ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
+				//.getASeasonMatchData(name, "11-12");
+		//ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
+				//.getASeasonMatchData(name, "12-13");
+		//ArrayList<SingleMatchPersonalDataVO> season13data = init.pbl
+				//.getASeasonMatchData(name, "13-14");
 		ArrayList<SingleMatchPersonalDataVO> season11data = init.pbl
-				.getASeasonMatchData(name, "11-12");
-		ArrayList<SingleMatchPersonalDataVO> season12data = init.pbl
-				.getASeasonMatchData(name, "12-13");
-		ArrayList<SingleMatchPersonalDataVO> season13data = init.pbl
-				.getASeasonMatchData(name, "13-14");
-		ArrayList<SingleMatchPersonalDataVO> season14data = init.pbl
 				.getASeasonMatchData(name, "14-15");
 
-		season11data.addAll(season12data);
-		season11data.addAll(season13data);
-		season11data.addAll(season14data);
+		//season11data.addAll(season12data);
+		//season11data.addAll(season13data);
+		//season11data.addAll(season14data);
         //用以存放某一属性的所有值
 		ArrayList<Double> pointlist = new ArrayList<Double>(); 
 		ArrayList<Double> blocklist = new ArrayList<Double>();
@@ -181,7 +181,9 @@ public class Py_SectionEstimate {
 		private double S;    //样本标注差
 		private double n;    //样本容量
 		private double sumDeltaX2;  //(Xi-X)^2 的和
-		private double Z = 0.5987;    //查正太分布表所得
+		private double Z1 = 0.5987;    //查正太分布表所得
+		private double Z2 = 0.5398;    //查正太分布表所得
+
 		ArrayList<Double> datalist = new ArrayList<Double>();
 
 		
@@ -205,8 +207,8 @@ public class Py_SectionEstimate {
 			S = Math.sqrt((double)(sumDeltaX2/n));
 			
 			Double result[] = new Double[2];
-			result[0] = averageX - (double)S*Z/Math.sqrt(n);
-			result[1] = averageX + (double)S*Z/Math.sqrt(n);
+			result[0] = averageX - (double)S*Z1/Math.sqrt(n);
+			result[1] = averageX + (double)S*Z1/Math.sqrt(n);
 			result[0] = round(result[0],4);
 			result[1] = round(result[1],4);
 			
