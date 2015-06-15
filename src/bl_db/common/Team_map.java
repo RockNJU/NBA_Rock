@@ -69,7 +69,7 @@ public class Team_map {
 		   //---------------------
 		   map.put("火箭", "HOU");
 		   map.put("步行者", "IND");
-		   map.put("快创", "LAC");
+		   map.put("快船", "LAC");
 		   map.put("湖人", "LAL");	   
 		   
 		   map.put("灰熊", "MEM");
