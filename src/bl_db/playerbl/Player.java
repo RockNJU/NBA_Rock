@@ -557,19 +557,19 @@ public class Player implements PlayerBLService,Player_info{
 		 
 		 // System.out.println("na*****me："+pl.getPlayerOneData("林书豪", 10, "pointNum").length);
 		 
-		 ArrayList<SingleMatchPersonalDataVO> vlist=pl.getTodayHotPlayer("pointNum");
-		 System.out.println("vlidt...  :"+vlist.size());
+		 //ArrayList<SingleMatchPersonalDataVO> list=pl.getTodayHotPlayer("pointNum");
+		// System.out.println("vlidt...  :"+list.size());
 		 
-		 ArrayList<PlayerSeasonDataVO> list=pl.getMost_Progress_Player("l_f_rebound_rate");
+		  ArrayList<PlayerSeasonDataVO> list=pl.getSeasonHotPlayer("pointNum");
 		//ArrayList<SingleMatchPersonalDataVO> volist=pl.getASeasonMatchData("林书豪","14-15");
 		/* 
 		System.out.println("大小："+list.size());*/
 		//ArrayList<PlayerSeasonDataVO> list=pl.getAllPlayerSeasonData("14-15","常规赛");
-		/*for(int i=0;i<list.size();i++){
+		for(int i=0;i<list.size();i++){
 			System.out.println("id:"+(1+i)+"   name:"+list.get(i).getName() 
 					+"  points:"+list.get(i).getPointNum()+
-					"  partition:"+list.get(i).getPartition()+"  :"+list.get(i).getL_f_rebound_rate());
-		} */
+					"  partition:"+list.get(i).getPartition()+"  :");
+		} 
 		
 		
 		/*ArrayList<PlayerInfoVO> list=pl.getPlayerInfoByFirstChar("A");
@@ -671,7 +671,7 @@ public class Player implements PlayerBLService,Player_info{
 			ResultSet  rs=stmt.executeQuery(str);
 			char chr=39;
 			while(rs.next()){
-				System.out.println("name***:"+rs.getString("name"));
+				//System.out.println("name***:"+rs.getString("name"));
 				list.add( new SingleMatchPersonalDataVO(rs.getString("season"), 
 						rs.getString("date"),rs.getString("name"),
 						rs.getString("team"),rs.getString("division"),
